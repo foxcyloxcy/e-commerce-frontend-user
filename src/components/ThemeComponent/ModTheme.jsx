@@ -3,6 +3,10 @@ import { createTheme } from '@mui/material/styles';
 
 const ModTheme = createTheme({
     palette: {
+        background:{
+            default: '#F5F5F2',
+            paper: '#F5F5F2'
+        },
         primary: {
             main: '#255773',
             light: '#5E97C3',
@@ -71,9 +75,9 @@ const ModTheme = createTheme({
             styleOverrides: {
                 root: {
                     borderRadius: 0,
-                    '&:hover': {
-                        color: '#F5F5F2', // secondary contrast text color
-                    },
+                    // '&:hover': {
+                    //     color: '#F5F5F2', // secondary contrast text color
+                    // },
                 },
             },
         },
