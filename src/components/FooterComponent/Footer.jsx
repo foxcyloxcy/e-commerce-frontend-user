@@ -64,7 +64,7 @@ const Footer = () => {
                 }}
             >
                 <Container>
-                    <Copyright sx={{ mt: 2 }} />
+                    <Copyright sx={{ mt: 1, mb: 1 }} />
                 </Container>
             </Box>
         </ThemeProvider>
