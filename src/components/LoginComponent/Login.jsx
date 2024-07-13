@@ -10,19 +10,6 @@ import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
 import ModTheme from '../ThemeComponent/ModTheme';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Reloved
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 
 export default function Login() {
   const handleSubmit = (event) => {
@@ -40,10 +27,11 @@ export default function Login() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 4,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            marginBottom: 4
           }}
         >
           {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -77,6 +65,9 @@ export default function Login() {
             <ButtonComponent
                 type="submit"
                 label="Submit"
+                                                buttonVariant="contained"
+                textColor='primary.contrastText'
+                hoverTextColor='secondary.main'
             />
             <Grid container>
               <Grid item xs>
@@ -92,7 +83,6 @@ export default function Login() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );
