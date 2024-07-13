@@ -5,24 +5,26 @@ import { ThemeProvider } from '@mui/material/styles';
 import ModTheme from '../ThemeComponent/ModTheme';
 
 export default function ButtonComponent(props) {
-    console.log(ModTheme)
+    const { label, height, width, textColor, hoverTextColor, buttonVariant } = props;
+
     return (
         <ThemeProvider theme={ModTheme}>
             <Button
                 fullWidth
-                variant="contained"
+                variant={buttonVariant}
                 sx={{ 
                     mt: 3, 
                     mb: 2,
-                    color: 'primary.contrastText',
+                    color: textColor,
                     '&:hover': {
-                        color: 'secondary.main',
+                        color: hoverTextColor,
                     },
+                    height: height || 'auto',
+                    width: width || '100%',
                 }}
             >
-                {props.label}
+                {label}
             </Button>
         </ThemeProvider>
     );
 }
-
