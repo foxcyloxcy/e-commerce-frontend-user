@@ -75,9 +75,6 @@ const ModTheme = createTheme({
             styleOverrides: {
                 root: {
                     borderRadius: 0,
-                    // '&:hover': {
-                    //     color: '#F5F5F2', // secondary contrast text color
-                    // },
                 },
             },
         },
