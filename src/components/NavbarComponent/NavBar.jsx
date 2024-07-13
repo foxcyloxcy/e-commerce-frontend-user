@@ -29,7 +29,7 @@ const NavBar = ({ isLoggedIn }) => {
   if (isLoggedIn) {
     const trigger = useScrollTrigger({
       disableHysteresis: true,
-      threshold: 0,
+      threshold: 10,
     });
 
     useEffect(() => {
@@ -45,7 +45,7 @@ const NavBar = ({ isLoggedIn }) => {
       <ThemeProvider theme={ModTheme}>
         <CssBaseline />
         <AppBar
-          position={elevate ? 'sticky' : 'absolute'}
+          position={isLoggedIn ? 'fixed' : 'absolute'}
           color="transparent"
           elevation={elevate ? 4 : 0}
           sx={{
