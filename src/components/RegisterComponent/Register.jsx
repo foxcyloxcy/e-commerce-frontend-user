@@ -12,18 +12,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import ModTheme from '../ThemeComponent/ModTheme';
 import ButtonComponent from '../ButtonComponent/ButtonComponent'
 
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Reloved
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 
 export default function Register() {
@@ -43,10 +31,11 @@ export default function Register() {
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 8,
+                        marginTop: 4,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        marginBottom: 4
                     }}
                 >
                     {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -124,10 +113,13 @@ export default function Register() {
                             control={<Checkbox value="remember" color="primary" />}
                             label="I accept the Terms & Conditions and have read the Privacy Policy."
                             />
-                        <ButtonComponent
-                            type="submit"
-                            label="Submit"
-                        />
+                            <ButtonComponent
+                                type="submit"
+                                label="Submit"
+                                buttonVariant="contained"
+                                textColor='primary.contrastText'
+                                hoverTextColor='secondary.main'
+                            />
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link href="#" variant="body2">
@@ -137,7 +129,6 @@ export default function Register() {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 5 }} />
             </Container>
         </ThemeProvider>
     );
