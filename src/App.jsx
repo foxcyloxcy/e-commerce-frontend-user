@@ -5,6 +5,7 @@ import Register from './components/RegisterComponent/Register'
 import NavBar from './components/NavbarComponent/NavBar'
 import Footer from './components/FooterComponent/Footer';
 import FeaturedHero from './components/HeroComponent/FeaturedHero'
+import ProductList from './components/ProductListComponent/ProductList';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     <>
       <NavBar isLoggedIn={isLoggedIn} />
       <FeaturedHero/>
+      <ProductList/>
       <Login />
       <Register />
       <Footer/>
