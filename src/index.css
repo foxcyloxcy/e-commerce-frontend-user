@@ -4,3 +4,18 @@
     padding: 0;
     box-sizing: border-box;
   }
+
+  :root {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #255773;
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 6px;
+    background: #B8D4E6;
+  }
