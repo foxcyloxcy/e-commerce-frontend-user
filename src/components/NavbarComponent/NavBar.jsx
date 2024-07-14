@@ -7,7 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider, Box, useMediaQuery, Button, Drawer, List, ListItem, ListItemText, Divider, Backdrop } from '@mui/material';
+import { ThemeProvider, Box, useMediaQuery, Drawer, List, ListItem, ListItemText, Divider, Backdrop } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
@@ -112,13 +112,13 @@ const NavBar = ({ isLoggedIn }) => {
               <Box
                 sx={{
                   width: '100%',
-                  height: '20%',
+                  height: '10%',
                   backgroundColor: ModTheme.palette.background.default,
                   display: 'flex',
                   flexDirection: 'column', // Changed to column alignment
                   justifyContent: 'space-between', // Adjusted for spacing
                   alignItems: 'center',
-                  padding: '10px',
+                  padding: '5px',
                 }}
               >
                 <IconButton color="inherit" onClick={handleClose} sx={{ alignSelf: 'flex-end' }}>
