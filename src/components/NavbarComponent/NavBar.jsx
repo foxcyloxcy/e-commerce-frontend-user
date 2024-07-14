@@ -112,19 +112,20 @@ const NavBar = ({ isLoggedIn }) => {
               <Box
                 sx={{
                   width: '100%',
-                  height: '10%',
-                  backgroundColor: ModTheme.palette.background.default,
+                  backgroundColor: ModTheme.palette.primary.dark,
                   display: 'flex',
                   flexDirection: 'column', // Changed to column alignment
                   justifyContent: 'space-between', // Adjusted for spacing
                   alignItems: 'center',
                   padding: '5px',
+                  boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.3)',
                 }}
               >
-                <IconButton color="inherit" onClick={handleClose} sx={{ alignSelf: 'flex-end' }}>
+                <IconButton color="inherit"
+                onClick={handleClose} sx={{ alignSelf: 'flex-end' }}>
                   <CloseIcon />
                 </IconButton>
-                <List component="nav" sx={{ display: 'flex', flexDirection: 'row', gap: 2, }}>
+                <List component="nav" sx={{ display: 'flex', flexDirection: 'row', gap: 1, }}>
                   <ButtonComponent
                     label="Login"
                     buttonVariant="contained"
