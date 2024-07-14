@@ -21,6 +21,19 @@ export default function ButtonComponent(props) {
                     },
                     height: height || 'auto',
                     width: width || '100%',
+                    fontSize: '0.50rem',
+                    '@media (min-width:400px)': {
+                        fontSize: '0.5rem',
+                    },
+                    '@media (min-width:600px)': {
+                        fontSize: '0.6rem',
+                    },
+                    '@media (min-width:960px)': {
+                        fontSize: '0.8rem',
+                    },
+                    '@media (min-width:1280px)': {
+                        fontSize: '0.9rem',
+                    },
                 }}
             >
                 {label}
