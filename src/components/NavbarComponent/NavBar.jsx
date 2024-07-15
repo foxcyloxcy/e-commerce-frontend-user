@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, Box, useMediaQuery, Drawer, List, ListItem, ListItemText, Divider, Backdrop } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 
-const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const NavBar = ({ isLoggedIn }) => {
+  console.log(Link)
   const [anchorEl, setAnchorEl] = useState(null);
   const [elevate, setElevate] = useState(false);
 
@@ -71,27 +71,37 @@ const NavBar = ({ isLoggedIn }) => {
             ) : (
               <Box sx={{ display: 'flex', gap: 2 }}>
                 <ButtonComponent
+                  component={Link}
+                  to="/"
                   label="Home"
                   textColor={elevate ? 'secondary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
                 <ButtonComponent
+                  component={Link}
+                  to="/shop"
                   label="Shop"
                   textColor={elevate ? 'secondary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
                 <ButtonComponent
+                  component={Link}
+                  to="/about"
                   label="About"
                   textColor={elevate ? 'secondary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
                 <ButtonComponent
+                  component={Link}
+                  to="/login"
                   label="Login"
                   buttonVariant="contained"
                   textColor='primary.contrastText'
                   hoverTextColor='secondary.main'
                 />
                 <ButtonComponent
+                  component={Link}
+                  to="/register"
                   label="Register"
                   buttonVariant="contained"
                   textColor='primary.contrastText'
@@ -114,8 +124,8 @@ const NavBar = ({ isLoggedIn }) => {
                   width: '100%',
                   backgroundColor: ModTheme.palette.primary.dark,
                   display: 'flex',
-                  flexDirection: 'column', // Changed to column alignment
-                  justifyContent: 'space-between', // Adjusted for spacing
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
                   padding: '5px',
                   boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.3)',
@@ -125,8 +135,10 @@ const NavBar = ({ isLoggedIn }) => {
                 onClick={handleClose} sx={{ alignSelf: 'flex-end' }}>
                   <CloseIcon />
                 </IconButton>
-                <List component="nav" sx={{ display: 'flex', flexDirection: 'row', gap: 1, }}>
+                <List component="nav" sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
                   <ButtonComponent
+                    component={Link}
+                    to="/login"
                     label="Login"
                     buttonVariant="contained"
                     textColor='primary.contrastText'
@@ -134,6 +146,8 @@ const NavBar = ({ isLoggedIn }) => {
                   />
                   <Divider orientation="vertical" flexItem />
                   <ButtonComponent
+                    component={Link}
+                    to="/register"
                     label="Register"
                     buttonVariant="contained"
                     textColor='primary.contrastText'
@@ -153,15 +167,15 @@ const NavBar = ({ isLoggedIn }) => {
                 }}
               >
                 <List component="nav">
-                  <ListItem button>
+                  <ListItem button component={Link} to="/" onClick={handleClose}>
                     <ListItemText primary="Home" />
                   </ListItem>
                   <Divider />
-                  <ListItem button>
+                  <ListItem button component={Link} to="/shop" onClick={handleClose}>
                     <ListItemText primary="Shop" />
                   </ListItem>
                   <Divider />
-                  <ListItem button>
+                  <ListItem button component={Link} to="/about" onClick={handleClose}>
                     <ListItemText primary="About" />
                   </ListItem>
                 </List>
@@ -172,7 +186,7 @@ const NavBar = ({ isLoggedIn }) => {
                 open={Boolean(anchorEl)}
                 onClick={handleClose}
                 sx={{
-                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                  backgroundColor: 'rgba(0, 0, 0, 0)',
                   zIndex: (theme) => theme.zIndex.drawer - 1,
                 }}
               />
