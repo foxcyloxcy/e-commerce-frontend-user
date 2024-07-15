@@ -31,11 +31,11 @@ export default function Register() {
                 <CssBaseline />
                 <Box
                     sx={{
-                        marginTop: 4,
+                        marginTop: 15,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        marginBottom: 4
+                        marginBottom: 10
                     }}
                 >
                     {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
