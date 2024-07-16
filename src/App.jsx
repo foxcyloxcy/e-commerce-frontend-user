@@ -5,8 +5,9 @@ import Login from './components/LoginComponent/Login'
 import Register from './components/RegisterComponent/Register'
 import NavBar from './components/NavbarComponent/NavBar'
 import Footer from './components/FooterComponent/Footer';
-import FeaturedHero from './components/HeroComponent/FeaturedHero'
+import Home from './components/HomeComponent/Home';
 import ProductList from './components/ProductListComponent/ProductList';
+
 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
     <>
       <NavBar isLoggedIn={isLoggedIn} />
       <Routes>
-        <Route path="/" element={<FeaturedHero />} />
+        <Route path="/" element={<Home />} />
         <Route path="/shop" element={<ProductList />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
