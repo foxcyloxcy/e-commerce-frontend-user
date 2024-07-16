@@ -56,6 +56,21 @@ const products = [
 
 const QuickViewButton = styled(Button)(({ theme }) => ({
     position: 'absolute',
+    bottom: theme.spacing(4),
+    left: '50%',
+    transform: 'translateX(-50%)',
+    background: ModTheme.palette.primary.main,
+    color: '#fff',
+    padding: theme.spacing(0.1, 1),
+    fontSize: '0.75rem',
+    '&:hover': {
+        background: ModTheme.palette.primary.dark,
+        color: ModTheme.palette.secondary.main
+    },
+}));
+
+const ViewInDetailsButton = styled(Button)(({ theme }) => ({
+    position: 'absolute',
     bottom: theme.spacing(1),
     left: '50%',
     transform: 'translateX(-50%)',
@@ -92,7 +107,7 @@ const FeaturedProducts = () => {
                     marginBottom: 10,
                 }}
             >
-                <Typography variant="h1" align="center" gutterBottom marginBottom={10}>
+                <Typography variant="h1" align="center" gutterBottom marginBottom={5}>
                     Featured Products
                 </Typography>
                 <Grid container spacing={4}>
@@ -130,6 +145,11 @@ const FeaturedProducts = () => {
                                     <QuickViewButton onClick={() => handleOpenModal(product)}>
                                         Quick View
                                     </QuickViewButton>
+                                </CardActions>
+                                <CardActions>
+                                    <ViewInDetailsButton onClick={() => handleOpenModal(product)}>
+                                        Detail View
+                                    </ViewInDetailsButton>
                                 </CardActions>
                             </Card>
                         </Grid>
