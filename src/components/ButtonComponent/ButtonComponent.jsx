@@ -4,7 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import ModTheme from '../ThemeComponent/ModTheme';
 
 export default function ButtonComponent(props) {
-    const { label, height, width, textColor, hoverTextColor, buttonVariant, component, to } = props;
+    const { label, height, width, textColor, hoverTextColor, buttonVariant, component, to, size } = props;
     return (
         <ThemeProvider theme={ModTheme}>
             <Button
@@ -12,6 +12,7 @@ export default function ButtonComponent(props) {
                 to={to}
                 fullWidth
                 variant={buttonVariant}
+                size={size}
                 sx={{
                     mt: 3,
                     mb: 2,
