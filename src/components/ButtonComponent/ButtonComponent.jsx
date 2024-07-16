@@ -7,8 +7,7 @@ export default function ButtonComponent(props) {
     const { label, height, width, textColor, hoverTextColor, buttonVariant, component, to, size, startIcon, position,
         bottom
      } = props;
-     console.log(position)
-     console.log(bottom)
+
     return (
         <ThemeProvider theme={ModTheme}>
             <Button
