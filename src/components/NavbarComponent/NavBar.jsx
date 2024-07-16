@@ -14,7 +14,7 @@ import ButtonComponent from '../ButtonComponent/ButtonComponent';
 
 
 const NavBar = ({ isLoggedIn }) => {
-  console.log(Link)
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [elevate, setElevate] = useState(false);
 
