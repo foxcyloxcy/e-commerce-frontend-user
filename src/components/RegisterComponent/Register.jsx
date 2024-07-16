@@ -111,7 +111,9 @@ export default function Register() {
                         </Grid>
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}
-                            label="I accept the Terms & Conditions and have read the Privacy Policy."
+                              label={<span style={{ fontSize: ModTheme.typography.body2 }}>
+                                I accept the Terms & Conditions and have read the Privacy Policy.
+                                </span>}
                             />
                             <ButtonComponent
                                 type="submit"

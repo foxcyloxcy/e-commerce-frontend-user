@@ -12,7 +12,7 @@ import ProductList from './components/ProductListComponent/ProductList';
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
     <>
