@@ -5,7 +5,7 @@ import ModTheme from '../ThemeComponent/ModTheme';
 
 function Copyright(props) {
     return (
-        <Typography variant="body2" color="secondary.contrastText" align="center" {...props}>
+        <Typography variant="body2" color="secondary.dark" align="center" {...props}>
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
                 Reloved
@@ -21,8 +21,8 @@ const Footer = () => {
         <ThemeProvider theme={ModTheme}>
             <Box
                 sx={{
-                    backgroundColor: 'secondary.main',
-                    color: 'secondary.contrastText',
+                    backgroundColor: 'primary.dark',
+                    color: 'secondary.main',
                     py: 3,
                     mt: 'auto',
                     borderTop: `1px solid ${ModTheme.palette.primary.light}`,
@@ -31,7 +31,7 @@ const Footer = () => {
                 <Container>
                     <Grid container spacing={2} textAlign="left">
                         <Grid item xs={12} sm={6} md={3}>
-                            <Box component="img" src="pre-amada-white.png" alt="Reloved Icon" sx={{ width: '100%', maxWidth: 150,}} />
+                            <Box component="img" src="reloved_footer_icon.png" alt="Reloved Icon" sx={{ width: '100%', maxWidth: 150,}} />
                             <br />
                             The UAE's easiest marketplace for pre-loved items.
                         </Grid>
@@ -59,7 +59,7 @@ const Footer = () => {
             <Box
                 sx={{
                     backgroundColor: 'primary.main',
-                    color: 'secondary.contrastText',
+                    color: 'secondary.dark',
                     py: 1,
                 }}
             >
