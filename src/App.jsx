@@ -7,6 +7,7 @@ import NavBar from './components/NavbarComponent/NavBar'
 import Footer from './components/FooterComponent/Footer';
 import Home from './components/HomeComponent/Home';
 import ProductList from './components/ProductListComponent/ProductList';
+import ProductDetails from './components/ProductDetailsComponent/ProductDetails';
 
 
 
@@ -19,6 +20,7 @@ function App() {
       <NavBar isLoggedIn={isLoggedIn} />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/product-details" element={<ProductDetails />} />
         <Route path="/shop" element={<ProductList />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
