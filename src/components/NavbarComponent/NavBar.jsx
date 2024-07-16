@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -16,7 +16,9 @@ import ButtonComponent from '../ButtonComponent/ButtonComponent';
 const NavBar = ({ isLoggedIn }) => {
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const linkPathName = useLocation(Link);
   const [elevate, setElevate] = useState(false);
+
 
   const handleMenu = () => {
     setAnchorEl(true);
@@ -74,21 +76,21 @@ const NavBar = ({ isLoggedIn }) => {
                   component={Link}
                   to="/"
                   label="Home"
-                  textColor={elevate ? 'secondary.main' : 'primary.contrastText'}
+                  textColor={elevate || linkPathName.pathname !== '/' ? 'secondary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
                 <ButtonComponent
                   component={Link}
                   to="/shop"
                   label="Shop"
-                  textColor={elevate ? 'secondary.main' : 'primary.contrastText'}
+                  textColor={elevate || linkPathName.pathname !== '/' ? 'secondary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
                 <ButtonComponent
                   component={Link}
                   to="/about"
                   label="About"
-                  textColor={elevate ? 'secondary.main' : 'primary.contrastText'}
+                  textColor={elevate || linkPathName.pathname !== '/' ? 'secondary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
                 <ButtonComponent
