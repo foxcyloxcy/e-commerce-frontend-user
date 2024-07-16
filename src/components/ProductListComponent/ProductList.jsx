@@ -3,6 +3,7 @@ import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { Card, CardMedia, CardContent, Typography, CardActions, Button, Grid, Container } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
+import ButtonComponent from '../ButtonComponent/ButtonComponent';
 
 const products = [
     {
@@ -52,9 +53,13 @@ const ProductList = () => {
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <Button size="small" color="primary">
-                                        Add to Cart
-                                    </Button>
+                                    <ButtonComponent
+                                        label="Add to cart"
+                                        size="small"
+                                        buttonVariant="contained"
+                                        textColor='primary.contrastText'
+                                        hoverTextColor='secondary.main'
+                                    />
                                 </CardActions>
                             </Card>
                         </Grid>
