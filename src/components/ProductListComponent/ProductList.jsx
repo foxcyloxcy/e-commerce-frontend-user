@@ -94,7 +94,7 @@ const ProductList = () => {
                                 sx={{
                                     position: 'relative',
                                     backgroundColor: ModTheme.palette.secondary.background,
-                                    height: 500, // Fixed height for the card
+                                    height: 550, // Fixed height for the card
                                     display: 'flex',
                                     flexDirection: 'column',
                                     justifyContent: 'space-between',
@@ -113,11 +113,14 @@ const ProductList = () => {
                                         <Typography variant="h6" component="div">
                                             {product.name}
                                         </Typography>
+                                        <Typography variant="body2" component="div" color="primary">
+                                            {product.price}
+                                        </Typography>
                                         <Typography variant="body2" color="text.secondary">
                                             {product.description}
                                         </Typography>
-                                        <Typography variant="h6" component="div" color="primary">
-                                            {product.price}
+                                        <Typography variant="body2" color="text.secondary">
+                                            Dubai, United Arab Emirates
                                         </Typography>
                                     </CardContent>
                                 </Box>
