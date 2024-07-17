@@ -104,7 +104,7 @@ const ModTheme = createTheme({
         },
         h6: {
             fontFamily: 'Playfair Display, serif',
-            fontSize: '0.5rem',
+            fontSize: '0.7rem',
             '@media (min-width:400px)': {
                 fontSize: '0.75rem',
             },
@@ -134,18 +134,18 @@ const ModTheme = createTheme({
             },
         },
         body2: {
-            fontSize: '0.625rem',
+            fontSize: '0.6rem',
             '@media (min-width:400px)': {
-                fontSize: '0.75rem',
+                fontSize: '0.625rem',
             },
             '@media (min-width:600px)': {
-                fontSize: '0.875rem',
+                fontSize: '0.75rem',
             },
             '@media (min-width:960px)': {
-                fontSize: '1rem',
+                fontSize: '0.875rem',
             },
             '@media (min-width:1280px)': {
-                fontSize: '1.125rem',
+                fontSize: '1rem',
             },
         },
     },
