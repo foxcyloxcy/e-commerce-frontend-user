@@ -110,10 +110,12 @@ export default function Register() {
                             </Grid>
                         </Grid>
                         <FormControlLabel
+                            sx={{
+                                mt:1,
+                                mb:0
+                            }}
                             control={<Checkbox value="remember" color="primary" />}
-                              label={<span style={{ fontSize: ModTheme.typography.body2 }}>
-                                I accept the Terms & Conditions and have read the Privacy Policy.
-                                </span>}
+                                label={<Typography sx={{ fontSize: { xs: '0.4rem', sm: '0.5rem', md: '0.7rem', lg: '0.8rem', xl: '1rem' } }}>I accept the Terms & Conditions and have read the Privacy Policy.</Typography>}
                             />
                             <ButtonComponent
                                 type="submit"
