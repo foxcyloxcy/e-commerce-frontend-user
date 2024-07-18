@@ -51,6 +51,9 @@ const NavBar = ({ isLoggedIn }) => {
           color="transparent"
           elevation={elevate ? 4 : 0}
           sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            height:'60px',
             transform: 'translate(0, 0)',
             backgroundColor: elevate ? ModTheme.palette.primary.dark : 'transparent',
             transition: 'background-color 0.75s, box-shadow 0.75s',
