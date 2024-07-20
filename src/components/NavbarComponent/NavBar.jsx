@@ -56,8 +56,8 @@ const NavBar = ({ isLoggedIn }) => {
             height:'60px',
             transform: 'translate(0, 0)',
             backgroundColor: elevate ? ModTheme.palette.primary.dark : 'transparent',
-            transition: 'background-color 0.75s, box-shadow 0.75s',
-            boxShadow: elevate ? '0px 4px 20px rgba(0, 0, 0, 0.3)' : 'none',
+            transition: linkPathName.pathname !== '/shop' ? 'background-color 0.75s, box-shadow 0.75s': 'none',
+            boxShadow: elevate && linkPathName.pathname !== '/shop' ? '0px 4px 20px rgba(0, 0, 0, 0.3)' : 'none',
           }}
         >
           <Toolbar>
