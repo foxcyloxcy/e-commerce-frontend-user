@@ -21,12 +21,13 @@ const ProductDetails = () => {
 
     return (
         <ThemeProvider theme={ModTheme}>
-            <Container maxWidth="md" sx={{ 
+            <Container  sx={{ 
                 backgroundColor: 'secondary.background', 
                 padding: 2, 
                 mt: 10,
                 mb: 10,
-                boxShadow: 10
+                boxShadow: 10,
+                maxWidth: {xs:'xs', sm:'sm', md:'md', lg:'lg', xl:'xl'}
             }}>
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={6}>
