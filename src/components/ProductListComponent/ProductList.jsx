@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -30,6 +30,7 @@ import { Search as SearchIcon, Menu as MenuIcon, ChevronLeft, ChevronRight, Star
 import InputBase from '@mui/material/InputBase';
 import ModTheme from '../ThemeComponent/ModTheme';
 import { styled, alpha } from '@mui/material/styles';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
 
 const categories = {
     Men: ['Shirts', 'Pants', 'Shoes'],
@@ -44,6 +45,8 @@ const ProductList = () => {
     const [subCategories, setSubCategories] = useState([]);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('lg'));
+    const [elevate, setElevate] = useState(false);
+    const isLoggedIn = true
 
     const handleMenuOpen = (event, category) => {
         setAnchorEl(event.currentTarget);
@@ -85,7 +88,7 @@ const ProductList = () => {
     }));
 
     const StyledInputBase = styled(InputBase)(({ theme }) => ({
-        color: 'inherit',
+        color: 'secondary',
         '& .MuiInputBase-input': {
             padding: theme.spacing(1, 1, 1, 0),
             // vertical padding + font size from searchIcon
@@ -98,8 +101,19 @@ const ProductList = () => {
         },
     }));
 
+    if (isLoggedIn) {
+        const trigger = useScrollTrigger({
+          disableHysteresis: true,
+          threshold: 10,
+        });
+    
+        useEffect(() => {
+          setElevate(trigger);
+        }, [trigger]);
+      }
+
     const drawerContent = (
-        <div style={{ width: 250 }}>
+        <div style={{ width: 300 }}>
             <Typography variant="h6" sx={{ padding: 2 }}>Filters</Typography>
 
             {isSmallScreen && (
@@ -214,8 +228,19 @@ const ProductList = () => {
 
     return (
         <ThemeProvider theme={ModTheme}>
-            <div style={{ marginTop: 60 }}>
-                <AppBar position="static">
+            <Container sx={{ marginTop: 15,
+                        maxWidth: {xs:'sm', sm:'md', md:'lg', lg:'xl', xl:'xl'},
+                        paddingLeft:0,
+                        paddingRight: 0
+             }}>
+                <AppBar sx={{
+                    position: 'fixed',
+                    top: 59,
+                    transform: 'translate(0, 0)',
+                    backgroundColor: elevate ? ModTheme.palette.primary.dark : 'transparent',
+                    transition: 'background-color 0.10s, box-shadow 0.10s',
+                    boxShadow: elevate ? '4px 4px 5px 0px rgba(0, 0, 0, 0.3)' : 'none',
+                }}>
                     <Toolbar>
                         {isSmallScreen && (
                             <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer}>
@@ -234,7 +259,7 @@ const ProductList = () => {
                         {!isSmallScreen && Object.keys(categories).map((category) => (
                             <Button
                                 key={category}
-                                color="inherit"
+                                color='secondary'
                                 onClick={(event) => handleMenuOpen(event, category)}
                             >
                                 {category}
@@ -258,7 +283,8 @@ const ProductList = () => {
                 </Drawer>
                 <Container sx={{
                     paddingTop: 2,
-                    paddingBottom: 2
+                    paddingBottom: 2,
+                    
                 }}>
                     <Grid container spacing={3}>
                         {!isSmallScreen && (
@@ -345,7 +371,7 @@ const ProductList = () => {
                         </Grid>
                     </Grid>
                 </Container>
-            </div>
+            </Container>
         </ThemeProvider>
     );
 };
