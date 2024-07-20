@@ -10,7 +10,6 @@ import {
   Grid,
   FormControl,
   Input,
-  InputAdornment,
   Checkbox,
   Slider,
   Button,
@@ -25,7 +24,8 @@ import {
   Card,
   CardContent,
   Drawer,
-  useMediaQuery
+  useMediaQuery,
+  ThemeProvider
 } from '@mui/material';
 import { Search as SearchIcon, Menu as MenuIcon, ChevronLeft, ChevronRight, Star, StarBorder, FavoriteBorder } from '@mui/icons-material';
 import InputBase from '@mui/material/InputBase';
@@ -198,7 +198,8 @@ const ProductList = () => {
   );
 
   return (
-    <div style={{ marginTop: 100 }}>
+    <ThemeProvider theme={ModTheme}>
+            <div style={{ marginTop: 60 }}>
       <AppBar position="static">
         <Toolbar>
           {isSmallScreen && (
@@ -333,6 +334,7 @@ const ProductList = () => {
         </Container>
       </section>
     </div>
+    </ThemeProvider>
   );
 };
 
