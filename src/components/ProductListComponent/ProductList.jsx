@@ -242,6 +242,8 @@ const ProductList = () => {
                     backgroundColor: elevate ? ModTheme.palette.primary.dark : 'transparent',
                     transition: 'background-color 0.30s, box-shadow 0.30s',
                     boxShadow: elevate ? '4px 4px 0px 2px rgba(0, 0, 0, 0.3)' : 'none',
+                    borderBottom: elevate ? 'none' : `1px #606060 solid`,
+                    borderTop: elevate ? `1px #606060 solid`: 'none'
                 }}>
                     <Toolbar>
                         {isSmallScreen && (
