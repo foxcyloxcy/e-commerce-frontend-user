@@ -5,12 +5,12 @@ import ModTheme from '../ThemeComponent/ModTheme';
 
 export default function ButtonComponent(props) {
     const { label, height, width, textColor, hoverTextColor, buttonVariant, component, to, size, startIcon, position,
-        bottom
+        bottom, type
      } = props;
-
     return (
         <ThemeProvider theme={ModTheme}>
             <Button
+                type={type}
                 bottom={bottom}
                 position={position}
                 component={component}
