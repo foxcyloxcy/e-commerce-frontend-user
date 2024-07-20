@@ -112,41 +112,41 @@ const ProductList = () => {
             )}
             {isSmallScreen && (
                 <>
-                                            <Toolbar sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'left',
-                                background: ModTheme.palette.secondary.contrastText
-                            }}>
-                                 {Object.keys(categories).map((category) => (
-                                    <Button
-                                        key={category}
-                                        color="inherit"
-                                        onClick={(event) => handleMenuOpen(event, category)}
-                                    >
-                                        {category}
-                                    </Button>
-                                ))}
-                                <Menu
-                                    anchorEl={anchorEl}
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleMenuClose}
-                                >
-                                    {subCategories.map((subCategory) => (
-                                        <MenuItem key={subCategory} onClick={handleMenuClose}>
-                                            {subCategory}
-                                        </MenuItem>
-                                    ))}
-                                </Menu>
-                            </Toolbar>
-                            <Divider sx={{ marginY: '20px' }} />
+                    <Toolbar sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'left',
+                        background: ModTheme.palette.secondary.contrastText
+                    }}>
+                        {Object.keys(categories).map((category) => (
+                            <Button
+                                key={category}
+                                color="inherit"
+                                onClick={(event) => handleMenuOpen(event, category)}
+                            >
+                                {category}
+                            </Button>
+                        ))}
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={handleMenuClose}
+                        >
+                            {subCategories.map((subCategory) => (
+                                <MenuItem key={subCategory} onClick={handleMenuClose}>
+                                    {subCategory}
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Toolbar>
+                    <Divider sx={{ marginY: '20px' }} />
                 </>
             )}
 
             <div style={{ padding: 16 }}>
-            {!isSmallScreen && (
-                            <Divider />
-            )}
+                {!isSmallScreen && (
+                    <Divider />
+                )}
                 <Typography variant="h6" component="h3" gutterBottom>
                     Brands
                 </Typography>
