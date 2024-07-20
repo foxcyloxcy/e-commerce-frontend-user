@@ -113,7 +113,9 @@ const ProductList = () => {
       }
 
     const drawerContent = (
-        <div style={{ width: 300 }}>
+        <Container sx={{ width: 300,
+            paddingLeft: 0
+         }}>
             <Typography variant="h6" sx={{ padding: 2 }}>Filters</Typography>
 
             {isSmallScreen && (
@@ -223,12 +225,12 @@ const ProductList = () => {
                     ))}
                 </RadioGroup>
             </div>
-        </div>
+        </Container>
     );
 
     return (
         <ThemeProvider theme={ModTheme}>
-            <Container sx={{ marginTop: 15,
+            <Container sx={{ marginTop: 16,
                         maxWidth: {xs:'sm', sm:'md', md:'lg', lg:'xl', xl:'xl'},
                         paddingLeft:0,
                         paddingRight: 0
@@ -238,8 +240,8 @@ const ProductList = () => {
                     top: 59,
                     transform: 'translate(0, 0)',
                     backgroundColor: elevate ? ModTheme.palette.primary.dark : 'transparent',
-                    transition: 'background-color 0.10s, box-shadow 0.10s',
-                    boxShadow: elevate ? '4px 4px 5px 0px rgba(0, 0, 0, 0.3)' : 'none',
+                    transition: 'background-color 0.30s, box-shadow 0.30s',
+                    boxShadow: elevate ? '4px 4px 0px 2px rgba(0, 0, 0, 0.3)' : 'none',
                 }}>
                     <Toolbar>
                         {isSmallScreen && (
@@ -286,7 +288,7 @@ const ProductList = () => {
                     paddingBottom: 2,
                     
                 }}>
-                    <Grid container spacing={3}>
+                    <Grid container spacing={2}>
                         {!isSmallScreen && (
                             <Grid item xs={12} md={3} className='filter-grid'>
                                 {drawerContent}
@@ -323,7 +325,7 @@ const ProductList = () => {
                                 </Grid>
                             </header>
                             {[1, 2, 3, 4].map((product) => (
-                                <Card key={product} sx={{ marginBottom: '20px', background: '#fff' }}>
+                                <Card key={product} sx={{ marginBottom: '20px', background: '#fff', }}>
                                     <Grid container spacing={0}>
                                         <Grid item xs={12} md={3}>
                                             <div style={{ position: 'relative' }}>
