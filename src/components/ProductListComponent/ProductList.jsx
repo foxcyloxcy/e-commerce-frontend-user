@@ -28,7 +28,9 @@ import {
   useMediaQuery
 } from '@mui/material';
 import { Search as SearchIcon, Menu as MenuIcon, ChevronLeft, ChevronRight, Star, StarBorder, FavoriteBorder } from '@mui/icons-material';
+import InputBase from '@mui/material/InputBase';
 import ModTheme from '../ThemeComponent/ModTheme';
+import { styled, alpha } from '@mui/material/styles';
 
 const categories = {
   Men: ['Shirts', 'Pants', 'Shoes'],
@@ -56,6 +58,46 @@ const ProductList = () => {
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
+
+  const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+  }));
+  
+  const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }));
+  
+  const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+      transition: theme.transitions.create('width'),
+      width: '100%',
+      [theme.breakpoints.up('md')]: {
+        width: '20ch',
+      },
+    },
+  }));
 
   const drawerContent = (
     <div style={{ width: 250 }}>
@@ -89,18 +131,6 @@ const ProductList = () => {
             </Toolbar>
       <Divider />
       <div style={{ padding: 16 }}>
-        <FormControl fullWidth>
-          <Input
-            placeholder="Search"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton>
-                  <SearchIcon />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
         <Divider sx={{ marginY: '20px' }} />
         <Typography variant="h6" component="h3" gutterBottom>
           Brands
@@ -176,9 +206,15 @@ const ProductList = () => {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Shop
-          </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
           {!isSmallScreen && Object.keys(categories).map((category) => (
             <Button
               key={category}
