@@ -44,7 +44,7 @@ const ProductList = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [subCategories, setSubCategories] = useState([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
+  const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('lg'));
 
   const handleMenuOpen = (event, category) => {
     setAnchorEl(event.currentTarget);
@@ -241,8 +241,10 @@ const ProductList = () => {
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
         {drawerContent}
       </Drawer>
-      <section style={{ padding: '20px 0' }}>
-        <Container>
+        <Container sx={{
+            paddingTop: 2,
+            paddingBottom: 2
+        }}>
           <Grid container spacing={3}>
             {!isSmallScreen && (
               <Grid item xs={12} md={3} className='filter-grid'>
@@ -328,11 +330,9 @@ const ProductList = () => {
                   </Grid>
                 </Card>
               ))}
-              <Pagination count={3} color="primary" />
             </Grid>
           </Grid>
         </Container>
-      </section>
     </div>
     </ThemeProvider>
   );
