@@ -15,15 +15,21 @@ import secure from '../../assets/baseURL/secure';
 
 
 export default function Login() {
-  console.log(secure)
+  const storageKey = secure.storageKey
+  const storagePrefix = secure.storagePrefix;
   const [formValues, setFormValues] = useState({ email: '', password: '' });
   const [formErrors, setFormErrors] = useState({ email: '', password: '' });
   const [userData, setUserData] = useState([]);
   const [userToken, setUserToken] = useState('');
 
   useEffect(() => {
-    secureLocalStorage.setItem('userData', JSON.stringify(userData));
-    secureLocalStorage.setItem('userToken', JSON.stringify(userToken));
+    secureLocalStorage.setItem(`${storagePrefix}_userData`, JSON.stringify(userData), {
+      hash: storageKey,
+    });
+    secureLocalStorage.setItem(`${storagePrefix}_userToken`, userToken, {
+      hash: storageKey,
+    });
+    
   }, [userData]);
 
   const validateEmail = (email) => {
@@ -60,8 +66,6 @@ export default function Login() {
         const data = res.data.data
         setUserData(data.user)
         setUserToken(data.access_token)
-        let fromLocalStorage = secureLocalStorage.getItem('userData');
-        console.log(JSON.parse(fromLocalStorage))
 
       }
     }
