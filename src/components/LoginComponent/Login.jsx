@@ -60,17 +60,6 @@ export default function Login() {
     // Clear the error message for the current input field
     setFormErrors({ ...formErrors, [name]: '' });
   };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault()
-  //   const res = await api.post("api/login", {
-  //     email: 'email',
-  //     password: 'password',
-  //   });
-  //   if (res.status === 200) {
-  //     // Log response and update the unread status locally
-  //     console.log(res);
-  //   }
-  // };
 
   return (
     <ThemeProvider theme={ModTheme}>
