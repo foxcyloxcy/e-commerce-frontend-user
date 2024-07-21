@@ -19,23 +19,16 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [userData, setUserData] = useState([]);
 
-  if(secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
-    hash: storageKey,
-  })){
-    let value = secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
-      hash: storageKey,
-    })
-    console.log(value)
-  }
+    // let tokenValue = secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
+    //   hash: storageKey,
+    // })
 
-  if(secureLocalStorage.getItem(`${storagePrefix}_userData`, {
-    hash: storageKey,
-  })){
-    let value = secureLocalStorage.getItem(`${storagePrefix}_userData`, {
-      hash: storageKey,
-    })
-    console.log(value)
-  }
+    // let userDataValue = secureLocalStorage.getItem(`${storagePrefix}_userData`, {
+    //   hash: storageKey,
+    // })
+    // setUserData(userDataValue)
+
+    // console.log(userDataValue)
 
 
 
