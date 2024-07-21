@@ -9,16 +9,21 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
 import ModTheme from '../ThemeComponent/ModTheme';
+import api from '../../assets/baseURL/api'
 
 
 export default function Login() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const res = await api.post("api/login", {
+      email: 'email',
+      password: 'password',
     });
+    if (res.status === 200) {
+      // Log response and update the unread status locally
+      console.log(res);
+    }
   };
 
   return (
