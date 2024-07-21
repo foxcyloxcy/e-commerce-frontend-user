@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ButtonComponent from '../ButtonComponent/ButtonComponent'
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -14,8 +14,34 @@ import api from '../../assets/baseURL/api'
 
 export default function Login() {
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const [formValues, setFormValues] = useState({ email: '', password: '' });
+  const [formErrors, setFormErrors] = useState({ email: '', password: '' });
+
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const handleSubmit  = async (event) => {
+    event.preventDefault();
+    let errors = {};
+
+    if (!formValues.email) {
+      errors.email = 'Email field is required.';
+    } else if (!validateEmail(formValues.email)) {
+      errors.email = 'Please enter a valid email address.';
+    }
+
+    if (!formValues.password) {
+      errors.password = 'Password field is required.';
+    }
+
+    setFormErrors(errors);
+
+    // Check if there are no errors before proceeding with form submission logic
+    if (Object.keys(errors).length === 0) {
+      // Perform form submission logic here
+      console.log('Form submitted', formValues);
     const res = await api.post("api/login", {
       email: 'email',
       password: 'password',
@@ -24,7 +50,27 @@ export default function Login() {
       // Log response and update the unread status locally
       console.log(res);
     }
+    }
   };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues({ ...formValues, [name]: value });
+
+    // Clear the error message for the current input field
+    setFormErrors({ ...formErrors, [name]: '' });
+  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault()
+  //   const res = await api.post("api/login", {
+  //     email: 'email',
+  //     password: 'password',
+  //   });
+  //   if (res.status === 200) {
+  //     // Log response and update the unread status locally
+  //     console.log(res);
+  //   }
+  // };
 
   return (
     <ThemeProvider theme={ModTheme}>
@@ -45,8 +91,10 @@ export default function Login() {
           <Typography component="h1" variant="h1">
             Login
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }} autoComplete="off">
             <TextField
+              error={!!formErrors.email}
+              helperText={formErrors.email}
               size='small'
               margin="normal"
               required
@@ -54,10 +102,13 @@ export default function Login() {
               id="email"
               label="Email or Phone No."
               name="email"
-              autoComplete="email"
               autoFocus
+              value={formValues.email}
+              onChange={handleInputChange}
             />
             <TextField
+              error={!!formErrors.password}
+              helperText={formErrors.password}
               size='small'
               margin="normal"
               required
@@ -66,7 +117,8 @@ export default function Login() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
+              value={formValues.password}
+              onChange={handleInputChange}
             />
 
             <ButtonComponent
