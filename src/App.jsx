@@ -8,12 +8,36 @@ import Footer from './components/FooterComponent/Footer';
 import Home from './components/HomeComponent/Home';
 import ProductList from './components/ProductListComponent/ProductList';
 import ProductDetails from './components/ProductDetailsComponent/ProductDetails';
+import  secureLocalStorage  from  "react-secure-storage";
+import secure from './assets/baseURL/secure';
 
 
 
 function App() {
-
+  const storageKey = secure.storageKey
+  const storagePrefix = secure.storagePrefix;
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [userData, setUserData] = useState([]);
+
+  if(secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
+    hash: storageKey,
+  })){
+    let value = secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
+      hash: storageKey,
+    })
+    console.log(value)
+  }
+
+  if(secureLocalStorage.getItem(`${storagePrefix}_userData`, {
+    hash: storageKey,
+  })){
+    let value = secureLocalStorage.getItem(`${storagePrefix}_userData`, {
+      hash: storageKey,
+    })
+    console.log(value)
+  }
+
+
 
   return (
     <>
