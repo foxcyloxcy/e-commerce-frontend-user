@@ -48,6 +48,7 @@ export default function Register() {
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    size='small'
                                     autoComplete="given-name"
                                     name="firstName"
                                     required
@@ -59,6 +60,7 @@ export default function Register() {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    size='small'
                                     required
                                     fullWidth
                                     id="lastName"
@@ -69,6 +71,7 @@ export default function Register() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    size='small'
                                     required
                                     fullWidth
                                     id="email"
@@ -79,6 +82,7 @@ export default function Register() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    size='small'
                                     required
                                     fullWidth
                                     id="phoneNo"
@@ -89,6 +93,7 @@ export default function Register() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    size='small'
                                     required
                                     fullWidth
                                     name="password"
@@ -100,6 +105,7 @@ export default function Register() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
+                                    size='small'
                                     required
                                     fullWidth
                                     name="confirmPassword"
