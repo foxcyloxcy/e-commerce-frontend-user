@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ButtonComponent from '../ButtonComponent/ButtonComponent'
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -10,12 +10,21 @@ import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api'
+import  secureLocalStorage  from  "react-secure-storage";
+import secure from '../../assets/baseURL/secure';
 
 
 export default function Login() {
-
+  console.log(secure)
   const [formValues, setFormValues] = useState({ email: '', password: '' });
   const [formErrors, setFormErrors] = useState({ email: '', password: '' });
+  const [userData, setUserData] = useState([]);
+  const [userToken, setUserToken] = useState('');
+
+  useEffect(() => {
+    secureLocalStorage.setItem('userData', JSON.stringify(userData));
+    secureLocalStorage.setItem('userToken', JSON.stringify(userToken));
+  }, [userData]);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -43,12 +52,17 @@ export default function Login() {
       // Perform form submission logic here
       console.log('Form submitted', formValues);
       const res = await api.post("api/login", {
-        email: 'email',
-        password: 'password',
+        username: formValues.email,
+        password: formValues.password,
       });
       if (res.status === 200) {
         // Log response and update the unread status locally
-        console.log(res);
+        const data = res.data.data
+        setUserData(data.user)
+        setUserToken(data.access_token)
+        let fromLocalStorage = secureLocalStorage.getItem('userData');
+        console.log(JSON.parse(fromLocalStorage))
+
       }
     }
   };
