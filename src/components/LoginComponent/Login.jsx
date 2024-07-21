@@ -47,6 +47,7 @@ export default function Login() {
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
+              size='small'
               margin="normal"
               required
               fullWidth
@@ -57,6 +58,7 @@ export default function Login() {
               autoFocus
             />
             <TextField
+              size='small'
               margin="normal"
               required
               fullWidth
