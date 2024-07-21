@@ -22,7 +22,7 @@ export default function Login() {
     return re.test(String(email).toLowerCase());
   };
 
-  const handleSubmit  = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     let errors = {};
 
@@ -42,14 +42,14 @@ export default function Login() {
     if (Object.keys(errors).length === 0) {
       // Perform form submission logic here
       console.log('Form submitted', formValues);
-    const res = await api.post("api/login", {
-      email: 'email',
-      password: 'password',
-    });
-    if (res.status === 200) {
-      // Log response and update the unread status locally
-      console.log(res);
-    }
+      const res = await api.post("api/login", {
+        email: 'email',
+        password: 'password',
+      });
+      if (res.status === 200) {
+        // Log response and update the unread status locally
+        console.log(res);
+      }
     }
   };
 
