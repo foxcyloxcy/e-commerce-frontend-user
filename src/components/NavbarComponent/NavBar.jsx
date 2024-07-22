@@ -34,6 +34,15 @@ const NavBar = (props) => {
     setAnchorEl(true);
   };
 
+  const handleLogout = () => {
+    setIsLoggedIn(false)
+    setUserData("")
+    setUserToken("")
+
+    // Redirect to the login page or home page
+    // history.push("/");
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -108,6 +117,7 @@ const NavBar = (props) => {
                     <ButtonComponent
                       component={Link}
                       label="Logout"
+                      onClick={handleLogout}
                       buttonVariant="contained"
                       textColor='primary.contrastText'
                       hoverTextColor='secondary.main'
@@ -166,6 +176,7 @@ const NavBar = (props) => {
                     <ButtonComponent
                       component={Link}
                       label="Logout"
+                      onClick={handleLogout}
                       buttonVariant="contained"
                       textColor='primary.contrastText'
                       hoverTextColor='secondary.main'
