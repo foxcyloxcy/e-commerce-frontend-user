@@ -31,7 +31,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product-details" element={<ProductDetails />} />
-        <Route path="/shop" element={<ProductList />} />
+        <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn}/>} />
         <Route path="/login" element={<Login refreshParent={handleClick}/>} />
         <Route path="/register" element={<Register />} />
       </Routes>
