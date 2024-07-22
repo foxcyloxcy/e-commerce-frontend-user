@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -23,6 +23,7 @@ const NavBar = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userData, setUserData] = useState("")
   const [usertoken, setUserToken] = useState("")
+  const history = useNavigate();
 
 
   const trigger = useScrollTrigger({
@@ -40,7 +41,7 @@ const NavBar = (props) => {
     setUserToken("")
 
     // Redirect to the login page or home page
-    // history.push("/");
+    history.push("/");
   };
 
   const handleClose = () => {
