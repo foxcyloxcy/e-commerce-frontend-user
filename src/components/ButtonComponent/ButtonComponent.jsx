@@ -4,13 +4,15 @@ import { ThemeProvider } from '@mui/material/styles';
 import ModTheme from '../ThemeComponent/ModTheme';
 
 export default function ButtonComponent(props) {
+    console.log(props)
     const { label, height, width, textColor, hoverTextColor, buttonVariant, component, to, size, startIcon, position,
-        bottom, type
+        bottom, type, onClick
      } = props;
     return (
         <ThemeProvider theme={ModTheme}>
             <Button
                 type={type}
+                onClick={onClick}
                 bottom={bottom}
                 position={position}
                 component={component}
