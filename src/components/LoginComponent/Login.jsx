@@ -16,8 +16,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function Login(props) {
-
-
+  
+  const { refreshParent } = props;
   const history = useNavigate();
   const storageKey = secure.storageKey
   const storagePrefix = secure.storagePrefix;
@@ -70,6 +70,7 @@ export default function Login(props) {
           hash: storageKey,
         });
 
+        refreshParent(data.user, data.access_token, true)
         history("/");
       }
     }
