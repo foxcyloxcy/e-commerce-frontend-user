@@ -107,7 +107,6 @@ const NavBar = (props) => {
                   {isLoggedIn ? (
                     <ButtonComponent
                       component={Link}
-                      to="/login"
                       label="Logout"
                       buttonVariant="contained"
                       textColor='primary.contrastText'
@@ -166,7 +165,6 @@ const NavBar = (props) => {
                   {isLoggedIn ? (
                     <ButtonComponent
                       component={Link}
-                      to="/login"
                       label="Logout"
                       buttonVariant="contained"
                       textColor='primary.contrastText'
