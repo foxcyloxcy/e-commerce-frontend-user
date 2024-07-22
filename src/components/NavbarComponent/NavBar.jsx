@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,15 +11,20 @@ import { ThemeProvider, Box, useMediaQuery, Drawer, List, ListItem, ListItemText
 import ModTheme from '../ThemeComponent/ModTheme';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
+import secureLocalStorage from "react-secure-storage";
+import secure from '../../assets/baseURL/secure';
 
 
-const NavBar = ({ isLoggedIn }) => {
-
+const NavBar = (props) => {
+  const {parentUserData, parentUserToken, parentIsLoggedIn} = props
   const [anchorEl, setAnchorEl] = useState(null);
   const linkPathName = useLocation(Link);
   const [elevate, setElevate] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-
+  console.log(parentUserData)
+  console.log(parentUserToken)
+  console.log(parentIsLoggedIn)
   const handleMenu = () => {
     setAnchorEl(true);
   };
@@ -53,10 +58,10 @@ const NavBar = ({ isLoggedIn }) => {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            height:'60px',
+            height: '60px',
             transform: 'translate(0, 0)',
             backgroundColor: elevate ? ModTheme.palette.primary.dark : 'transparent',
-            transition: linkPathName.pathname !== '/shop' ? 'background-color 0.75s, box-shadow 0.75s': 'none',
+            transition: linkPathName.pathname !== '/shop' ? 'background-color 0.75s, box-shadow 0.75s' : 'none',
             boxShadow: elevate && linkPathName.pathname !== '/shop' ? '0px 4px 20px rgba(0, 0, 0, 0.3)' : 'none',
           }}
         >
@@ -137,7 +142,7 @@ const NavBar = ({ isLoggedIn }) => {
                 }}
               >
                 <IconButton color="inherit"
-                onClick={handleClose} sx={{ alignSelf: 'flex-end' }}>
+                  onClick={handleClose} sx={{ alignSelf: 'flex-end' }}>
                   <CloseIcon />
                 </IconButton>
                 <List component="nav" sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
