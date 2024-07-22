@@ -44,9 +44,14 @@ const ProductList = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [subCategories, setSubCategories] = useState([]);
     const [drawerOpen, setDrawerOpen] = useState(false);
-    const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('lg'));
+    const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
     const [elevate, setElevate] = useState(false);
-    const isLoggedIn = true
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const trigger = useScrollTrigger({
+        disableHysteresis: true,
+        threshold: 10,
+      });
 
     const handleMenuOpen = (event, category) => {
         setAnchorEl(event.currentTarget);
@@ -64,6 +69,12 @@ const ProductList = () => {
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
+            "& .MuiOutlinedInput-notchedOutline" : {
+                borderColor : "red",
+             },
+            "&:hover > .MuiOutlinedInput-notchedOutline" : {
+                borderColor : "lime"
+             },
         backgroundColor: alpha(theme.palette.common.white, 0.15),
         '&:hover': {
             backgroundColor: alpha(theme.palette.common.white, 0.25),
@@ -71,7 +82,7 @@ const ProductList = () => {
         marginRight: theme.spacing(2),
         marginLeft: 0,
         width: '100%',
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             marginLeft: theme.spacing(3),
             width: 'auto',
         },
@@ -88,7 +99,7 @@ const ProductList = () => {
     }));
 
     const StyledInputBase = styled(InputBase)(({ theme }) => ({
-        color: 'secondary',
+        color: 'secondary.main',
         '& .MuiInputBase-input': {
             padding: theme.spacing(1, 1, 1, 0),
             // vertical padding + font size from searchIcon
@@ -100,17 +111,6 @@ const ProductList = () => {
             },
         },
     }));
-
-    if (isLoggedIn) {
-        const trigger = useScrollTrigger({
-          disableHysteresis: true,
-          threshold: 10,
-        });
-    
-        useEffect(() => {
-          setElevate(trigger);
-        }, [trigger]);
-      }
 
     const drawerContent = (
         <Container sx={{ width: 300,
@@ -228,15 +228,22 @@ const ProductList = () => {
         </Container>
     );
 
+    useEffect(() => {
+        if (isLoggedIn) {
+            setElevate(trigger);
+          }
+      }, [trigger]);
+
     return (
         <ThemeProvider theme={ModTheme}>
             <Container sx={{ marginTop: 16,
-                        maxWidth: {xs:'sm', sm:'md', md:'lg', lg:'xl', xl:'xl'},
+                        maxWidth: {xs:'sm', sm:'md', md:'xl', lg:'xl', xl:'xl'},
                         paddingLeft:0,
                         paddingRight: 0
              }}>
-                <AppBar sx={{
-                    position: 'fixed',
+                <AppBar 
+                position={isLoggedIn ? 'fixed' : 'absolute'}
+                sx={{
                     top: 59,
                     transform: 'translate(0, 0)',
                     backgroundColor: elevate ? ModTheme.palette.primary.dark : 'transparent',
@@ -247,13 +254,13 @@ const ProductList = () => {
                 }}>
                     <Toolbar>
                         {isSmallScreen && (
-                            <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer}>
+                            <IconButton edge="start" color="secondary.main" aria-label="menu" onClick={toggleDrawer}>
                                 <MenuIcon />
                             </IconButton>
                         )}
                         <Search>
                             <SearchIconWrapper>
-                                <SearchIcon />
+                                <SearchIcon color="secondary.main"/>
                             </SearchIconWrapper>
                             <StyledInputBase
                                 placeholder="Search…"
@@ -292,11 +299,11 @@ const ProductList = () => {
                 }}>
                     <Grid container spacing={2}>
                         {!isSmallScreen && (
-                            <Grid item xs={12} md={3} className='filter-grid'>
+                            <Grid item xs={12} md={4} className='filter-grid'>
                                 {drawerContent}
                             </Grid>
                         )}
-                        <Grid item xs={12} md={9}>
+                        <Grid item xs={12} md={8}>
                             <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
                                 <Grid container alignItems="center">
                                     <Grid item xs={12} md>
