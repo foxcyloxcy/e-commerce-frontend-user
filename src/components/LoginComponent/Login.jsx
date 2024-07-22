@@ -12,25 +12,18 @@ import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api'
 import  secureLocalStorage  from  "react-secure-storage";
 import secure from '../../assets/baseURL/secure';
+import { useNavigate } from 'react-router-dom';
 
 
-export default function Login() {
+export default function Login(props) {
+
+
+  const history = useNavigate();
   const storageKey = secure.storageKey
   const storagePrefix = secure.storagePrefix;
   const [formValues, setFormValues] = useState({ email: '', password: '' });
   const [formErrors, setFormErrors] = useState({ email: '', password: '' });
-  const [userData, setUserData] = useState([]);
-  const [userToken, setUserToken] = useState('');
 
-  useEffect(() => {
-    secureLocalStorage.setItem(`${storagePrefix}_userData`, JSON.stringify(userData), {
-      hash: storageKey,
-    });
-    secureLocalStorage.setItem(`${storagePrefix}_userToken`, userToken, {
-      hash: storageKey,
-    });
-    
-  }, [userData]);
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -64,9 +57,20 @@ export default function Login() {
       if (res.status === 200) {
         // Log response and update the unread status locally
         const data = res.data.data
-        setUserData(data.user)
-        setUserToken(data.access_token)
+        //userData
+        secureLocalStorage.setItem(`${storagePrefix}_userData`, JSON.stringify(data.user), {
+          hash: storageKey,
+        });
+        //userToken
+        secureLocalStorage.setItem(`${storagePrefix}_userToken`, data.access_token, {
+          hash: storageKey,
+        });
+        //isLoggedIn
+        secureLocalStorage.setItem(`${storagePrefix}_isLoggedIn`, 'true', {
+          hash: storageKey,
+        });
 
+        history("/");
       }
     }
   };
