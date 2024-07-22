@@ -8,38 +8,35 @@ import Footer from './components/FooterComponent/Footer';
 import Home from './components/HomeComponent/Home';
 import ProductList from './components/ProductListComponent/ProductList';
 import ProductDetails from './components/ProductDetailsComponent/ProductDetails';
-import  secureLocalStorage  from  "react-secure-storage";
-import secure from './assets/baseURL/secure';
 
 
 
 function App() {
-  const storageKey = secure.storageKey
-  const storagePrefix = secure.storagePrefix;
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [userData, setUserData] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState("")
+  const [userData, setUserData] = useState("")
+  const [userToken, setUserToken] = useState("")
 
-    // let tokenValue = secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
-    //   hash: storageKey,
-    // })
-
-    // let userDataValue = secureLocalStorage.getItem(`${storagePrefix}_userData`, {
-    //   hash: storageKey,
-    // })
-    // setUserData(userDataValue)
-
-    // console.log(userDataValue)
-
-
+  const handleClick = (loginUserData, loginUserToken, loginIsLoggedIn) => {
+    setIsLoggedIn(loginIsLoggedIn)
+    setUserData(loginUserData)
+    setUserToken(loginUserToken)
+  }
 
   return (
     <>
-      <NavBar isLoggedIn={isLoggedIn} />
-      <Routes>
+      <NavBar
+      isLoggedIn={isLoggedIn}
+      userData={userData}
+      userToken={userToken}/>
+      <Routes
+        isLoggedIn={isLoggedIn}
+        userData={userData}
+        userToken={userToken}
+      >
         <Route path="/" element={<Home />} />
         <Route path="/product-details" element={<ProductDetails />} />
         <Route path="/shop" element={<ProductList />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login refreshParent={handleClick}/>} />
         <Route path="/register" element={<Register />} />
       </Routes>
       <Footer />
