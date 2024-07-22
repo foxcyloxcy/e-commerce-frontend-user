@@ -40,7 +40,8 @@ const categories = {
     'Baby & Children': ['Clothing', 'Toys', 'Furniture'],
 };
 
-const ProductList = () => {
+const ProductList = (props) => {
+    const { parentIsLoggedIn} = props
     const [anchorEl, setAnchorEl] = useState(null);
     const [subCategories, setSubCategories] = useState([]);
     const [drawerOpen, setDrawerOpen] = useState(false);
@@ -229,6 +230,9 @@ const ProductList = () => {
     );
 
     useEffect(() => {
+        if(parentIsLoggedIn){
+            setIsLoggedIn(parentIsLoggedIn)
+        }
         if (isLoggedIn) {
             setElevate(trigger);
           }
