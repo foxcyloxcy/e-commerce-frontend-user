@@ -25,9 +25,9 @@ function App() {
   return (
     <>
       <NavBar
-      isLoggedIn={isLoggedIn}
-      userData={userData}
-      userToken={userToken}/>
+      parentIsLoggedIn={isLoggedIn}
+      parentUserData={userData}
+      parentUserToken={userToken}/>
       <Routes
         isLoggedIn={isLoggedIn}
         userData={userData}
