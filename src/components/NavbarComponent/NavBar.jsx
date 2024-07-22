@@ -16,7 +16,7 @@ import secure from '../../assets/baseURL/secure';
 
 
 const NavBar = (props) => {
-  const {parentUserData, parentUserToken, parentIsLoggedIn} = props
+  const { parentUserData, parentUserToken, parentIsLoggedIn } = props
   const [anchorEl, setAnchorEl] = useState(null);
   const linkPathName = useLocation(Link);
   const [elevate, setElevate] = useState(false);
@@ -104,22 +104,36 @@ const NavBar = (props) => {
                   textColor={elevate || linkPathName.pathname !== '/' ? 'secondary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
-                <ButtonComponent
-                  component={Link}
-                  to="/login"
-                  label="Login"
-                  buttonVariant="contained"
-                  textColor='primary.contrastText'
-                  hoverTextColor='secondary.main'
-                />
-                <ButtonComponent
-                  component={Link}
-                  to="/register"
-                  label="Register"
-                  buttonVariant="contained"
-                  textColor='primary.contrastText'
-                  hoverTextColor='secondary.main'
-                />
+                  {isLoggedIn ? (
+                    <ButtonComponent
+                      component={Link}
+                      to="/login"
+                      label="Logout"
+                      buttonVariant="contained"
+                      textColor='primary.contrastText'
+                      hoverTextColor='secondary.main'
+                    />
+                  ) : (
+                    <>
+                      <ButtonComponent
+                        component={Link}
+                        to="/login"
+                        label="Login"
+                        buttonVariant="contained"
+                        textColor='primary.contrastText'
+                        hoverTextColor='secondary.main'
+                      />
+                      <Divider orientation="vertical" flexItem />
+                      <ButtonComponent
+                        component={Link}
+                        to="/register"
+                        label="Register"
+                        buttonVariant="contained"
+                        textColor='primary.contrastText'
+                        hoverTextColor='secondary.main'
+                      />
+                    </>
+                  )}
               </Box>
             )}
             <Drawer
@@ -149,23 +163,36 @@ const NavBar = (props) => {
                   <CloseIcon />
                 </IconButton>
                 <List component="nav" sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
-                  <ButtonComponent
-                    component={Link}
-                    to="/login"
-                    label="Login"
-                    buttonVariant="contained"
-                    textColor='primary.contrastText'
-                    hoverTextColor='secondary.main'
-                  />
-                  <Divider orientation="vertical" flexItem />
-                  <ButtonComponent
-                    component={Link}
-                    to="/register"
-                    label="Register"
-                    buttonVariant="contained"
-                    textColor='primary.contrastText'
-                    hoverTextColor='secondary.main'
-                  />
+                  {isLoggedIn ? (
+                    <ButtonComponent
+                      component={Link}
+                      to="/login"
+                      label="Logout"
+                      buttonVariant="contained"
+                      textColor='primary.contrastText'
+                      hoverTextColor='secondary.main'
+                    />
+                  ) : (
+                    <>
+                      <ButtonComponent
+                        component={Link}
+                        to="/login"
+                        label="Login"
+                        buttonVariant="contained"
+                        textColor='primary.contrastText'
+                        hoverTextColor='secondary.main'
+                      />
+                      <Divider orientation="vertical" flexItem />
+                      <ButtonComponent
+                        component={Link}
+                        to="/register"
+                        label="Register"
+                        buttonVariant="contained"
+                        textColor='primary.contrastText'
+                        hoverTextColor='secondary.main'
+                      />
+                    </>
+                  )}
                 </List>
               </Box>
               <Box
