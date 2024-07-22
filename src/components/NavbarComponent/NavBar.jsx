@@ -21,10 +21,15 @@ const NavBar = (props) => {
   const linkPathName = useLocation(Link);
   const [elevate, setElevate] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userData, setUserData] = useState("")
+  const [usertoken, setUserToken] = useState("")
 
-  console.log(parentUserData)
-  console.log(parentUserToken)
-  console.log(parentIsLoggedIn)
+
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 10,
+  });
+
   const handleMenu = () => {
     setAnchorEl(true);
   };
@@ -33,16 +38,14 @@ const NavBar = (props) => {
     setAnchorEl(null);
   };
 
-  if (isLoggedIn) {
-    const trigger = useScrollTrigger({
-      disableHysteresis: true,
-      threshold: 10,
-    });
-
-    useEffect(() => {
+  useEffect(() => {
+    setIsLoggedIn(parentIsLoggedIn)
+    setUserData(parentUserData)
+    setUserToken(parentUserToken)
+    if (isLoggedIn) {
       setElevate(trigger);
-    }, [trigger]);
-  }
+    }
+  }, [parentIsLoggedIn, trigger]);
 
   const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('sm'));
   const isMediumScreen = useMediaQuery(ModTheme.breakpoints.down('md')) && !isSmallScreen;
