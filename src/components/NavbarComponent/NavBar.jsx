@@ -41,7 +41,7 @@ const NavBar = (props) => {
     setUserToken("")
 
     // Redirect to the login page or home page
-    history.push("/");
+    history("/");
   };
 
   const handleClose = () => {
