@@ -28,11 +28,7 @@ function App() {
       parentIsLoggedIn={isLoggedIn}
       parentUserData={userData}
       parentUserToken={userToken}/>
-      <Routes
-        isLoggedIn={isLoggedIn}
-        userData={userData}
-        userToken={userToken}
-      >
+      <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product-details" element={<ProductDetails />} />
         <Route path="/shop" element={<ProductList />} />
