@@ -16,13 +16,13 @@ import secure from '../../assets/baseURL/secure';
 
 
 const NavBar = (props) => {
-  const { parentUserData, parentUserToken, parentIsLoggedIn } = props
+  const { parentUserData, parentUserToken, parentIsLoggedIn, refreshParent } = props
   const [anchorEl, setAnchorEl] = useState(null);
   const linkPathName = useLocation(Link);
   const [elevate, setElevate] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userData, setUserData] = useState("")
-  const [usertoken, setUserToken] = useState("")
+  const [userToken, setUserToken] = useState("")
   const history = useNavigate();
 
 
@@ -35,13 +35,14 @@ const NavBar = (props) => {
     setAnchorEl(true);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    refreshParent(0, 0, false)
     setIsLoggedIn(false)
     setUserData("")
     setUserToken("")
-
     // Redirect to the login page or home page
-    history("/");
+    history('/');
+
   };
 
   const handleClose = () => {
