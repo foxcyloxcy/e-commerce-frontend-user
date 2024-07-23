@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Checkbox, FormControlLabel, FormGroup, MenuItem, Select, InputLabel, FormControl, Grid, Typography, Container, ThemeProvider } from '@mui/material';
+import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider } from '@mui/material';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import ModTheme from '../ThemeComponent/ModTheme';
 
@@ -14,6 +14,9 @@ const AddProduct = () => {
   const [brands, setBrands] = useState([]);
   const [colors, setColors] = useState([]);
   const [acceptOffers, setAcceptOffers] = useState(false);
+
+  const brandOptions = ["Brand1", "Brand2", "Brand3"];
+  const colorOptions = ["Red", "Blue", "Green"];
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: 'YOUR_GOOGLE_MAPS_API_KEY',
@@ -33,11 +36,13 @@ const AddProduct = () => {
   };
 
   const handleBrandChange = (event) => {
-    setBrands(event.target.value);
+    const { value, checked } = event.target;
+    setBrands((prev) => checked ? [...prev, value] : prev.filter((brand) => brand !== value));
   };
 
   const handleColorChange = (event) => {
-    setColors(event.target.value);
+    const { value, checked } = event.target;
+    setColors((prev) => checked ? [...prev, value] : prev.filter((color) => color !== value));
   };
 
   const handleSubmit = (e) => {
@@ -61,7 +66,7 @@ const AddProduct = () => {
         padding: 3, 
         marginTop: 10,
         marginBottom: 5,
-        maxWidth: { xs: '90%', sm: '70%', md: '60%', lg: '50%', xl: '40%' },
+        maxWidth: { xs: '100%', sm: '80%', md: '60%', lg: '50%', xl: '40%' },
         boxSizing: 'border-box' 
       }}>
         <Typography variant="h4" component="h1" gutterBottom>
@@ -124,35 +129,29 @@ const AddProduct = () => {
                 <Typography>Loading map...</Typography>
               )}
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel id="brand-label">Brands</InputLabel>
-                <Select
-                  labelId="brand-label"
-                  multiple
-                  value={brands}
-                  onChange={handleBrandChange}
-                >
-                  <MenuItem value="Brand1">Brand1</MenuItem>
-                  <MenuItem value="Brand2">Brand2</MenuItem>
-                  <MenuItem value="Brand3">Brand3</MenuItem>
-                </Select>
-              </FormControl>
+            <Grid item xs={12}>
+              <Typography variant="h6">Brands</Typography>
+              <FormGroup>
+                {brandOptions.map((brand) => (
+                  <FormControlLabel
+                    key={brand}
+                    control={<Checkbox value={brand} checked={brands.includes(brand)} onChange={handleBrandChange} />}
+                    label={brand}
+                  />
+                ))}
+              </FormGroup>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <FormControl fullWidth>
-                <InputLabel id="color-label">Colors</InputLabel>
-                <Select
-                  labelId="color-label"
-                  multiple
-                  value={colors}
-                  onChange={handleColorChange}
-                >
-                  <MenuItem value="Red">Red</MenuItem>
-                  <MenuItem value="Blue">Blue</MenuItem>
-                  <MenuItem value="Green">Green</MenuItem>
-                </Select>
-              </FormControl>
+            <Grid item xs={12}>
+              <Typography variant="h6">Colors</Typography>
+              <FormGroup>
+                {colorOptions.map((color) => (
+                  <FormControlLabel
+                    key={color}
+                    control={<Checkbox value={color} checked={colors.includes(color)} onChange={handleColorChange} />}
+                    label={color}
+                  />
+                ))}
+              </FormGroup>
             </Grid>
             <Grid item xs={12}>
               <FormGroup>
