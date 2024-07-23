@@ -117,7 +117,6 @@ const NavBar = (props) => {
                 />
                   {isLoggedIn ? (
                     <ButtonComponent
-                      component={Link}
                       label="Logout"
                       onClick={handleLogout}
                       buttonVariant="contained"
@@ -176,7 +175,6 @@ const NavBar = (props) => {
                 <List component="nav" sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
                   {isLoggedIn ? (
                     <ButtonComponent
-                      component={Link}
                       label="Logout"
                       onClick={handleLogout}
                       buttonVariant="contained"
