@@ -16,10 +16,12 @@ function App() {
   const [userData, setUserData] = useState("")
   const [userToken, setUserToken] = useState("")
 
-  const handleClick = (loginUserData, loginUserToken, loginIsLoggedIn) => {
+  const handleClick = async (loginUserData, loginUserToken, loginIsLoggedIn) => {
     setIsLoggedIn(loginIsLoggedIn)
     setUserData(loginUserData)
     setUserToken(loginUserToken)
+
+    console.log(loginUserData, loginUserToken, loginIsLoggedIn)
   }
 
   return (
@@ -27,7 +29,8 @@ function App() {
       <NavBar
       parentIsLoggedIn={isLoggedIn}
       parentUserData={userData}
-      parentUserToken={userToken}/>
+      parentUserToken={userToken}
+      refreshParent={handleClick}/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product-details" element={<ProductDetails />} />
