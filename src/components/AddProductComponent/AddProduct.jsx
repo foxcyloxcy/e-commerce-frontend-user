@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider } from '@mui/material';
+import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, } from '@mui/material';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import ModTheme from '../ThemeComponent/ModTheme';
 
@@ -76,6 +76,7 @@ const AddProduct = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                size='small'
                 fullWidth
                 label="Product Name"
                 value={productName}
@@ -85,6 +86,7 @@ const AddProduct = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                size='small'
                 fullWidth
                 label="Price"
                 type="number"
@@ -95,6 +97,7 @@ const AddProduct = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                size='small'
                 fullWidth
                 label="Description"
                 multiline
@@ -162,7 +165,7 @@ const AddProduct = () => {
               </FormGroup>
             </Grid>
             <Grid item xs={12}>
-              <Button type="submit" variant="contained" color="primary" fullWidth>
+              <Button type="submit" variant="contained" color="primary" halfWidth>
                 Add Product
               </Button>
             </Grid>
