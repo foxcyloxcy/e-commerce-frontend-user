@@ -8,6 +8,7 @@ import Footer from './components/FooterComponent/Footer';
 import Home from './components/HomeComponent/Home';
 import ProductList from './components/ProductListComponent/ProductList';
 import ProductDetails from './components/ProductDetailsComponent/ProductDetails';
+import AddProduct from './components/AddProductComponent/AddProduct';
 
 
 
@@ -34,6 +35,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product-details" element={<ProductDetails />} />
+        <Route path="/add-product" element={<AddProduct />} />
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn}/>} />
         <Route path="/login" element={<Login refreshParent={handleClick}/>} />
         <Route path="/register" element={<Register />} />
