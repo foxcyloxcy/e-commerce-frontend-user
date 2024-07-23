@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { TextField, Button, Checkbox, FormControlLabel, FormGroup, MenuItem, Select, InputLabel, FormControl, Grid, Typography, Paper } from '@mui/material';
+import { TextField, Button, Checkbox, FormControlLabel, FormGroup, MenuItem, Select, InputLabel, FormControl, Grid, Typography, Container, ThemeProvider } from '@mui/material';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import ModTheme from '../ThemeComponent/ModTheme';
 
 const libraries = ['places'];
 
@@ -55,18 +56,33 @@ const AddProduct = () => {
   };
 
   return (
-    <Paper sx={{ padding: 3, maxWidth: 800, margin: '0 auto' }}>
+    <ThemeProvider theme={ModTheme}>
+    <Container sx={{ 
+        padding: 3, 
+        marginTop: 16,
+        maxWidth: {xs:'sm', sm:'md', md:'xl', lg:'xl', xl:'xl'}, 
+        boxSizing: 'border-box' }}>
       <Typography variant="h4" component="h1" gutterBottom>
         Add Product
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
               label="Product Name"
               value={productName}
               onChange={(e) => setProductName(e.target.value)}
+              required
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              fullWidth
+              label="Price"
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
               required
             />
           </Grid>
@@ -93,16 +109,6 @@ const AddProduct = () => {
             ))}
           </Grid>
           <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Price"
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
             {isLoaded ? (
               <GoogleMap
                 mapContainerStyle={{ width: '100%', height: '400px' }}
@@ -116,7 +122,7 @@ const AddProduct = () => {
               <Typography>Loading map...</Typography>
             )}
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
               <InputLabel id="brand-label">Brands</InputLabel>
               <Select
@@ -131,7 +137,7 @@ const AddProduct = () => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} sm={6}>
             <FormControl fullWidth>
               <InputLabel id="color-label">Colors</InputLabel>
               <Select
@@ -155,13 +161,15 @@ const AddProduct = () => {
             </FormGroup>
           </Grid>
           <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary">
+            <Button type="submit" variant="contained" color="primary" fullWidth>
               Add Product
             </Button>
           </Grid>
         </Grid>
       </form>
-    </Paper>
+    </Container>
+    </ThemeProvider>
+
   );
 };
 
