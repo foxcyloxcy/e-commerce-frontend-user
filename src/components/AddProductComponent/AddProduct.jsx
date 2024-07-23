@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, } from '@mui/material';
+import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider } from '@mui/material';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import ModTheme from '../ThemeComponent/ModTheme';
 
@@ -10,6 +10,7 @@ const AddProduct = () => {
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
   const [price, setPrice] = useState('');
+  const [priceError, setPriceError] = useState('');
   const [location, setLocation] = useState(null);
   const [brands, setBrands] = useState([]);
   const [colors, setColors] = useState([]);
@@ -45,8 +46,21 @@ const AddProduct = () => {
     setColors((prev) => checked ? [...prev, value] : prev.filter((color) => color !== value));
   };
 
+  const handlePriceChange = (e) => {
+    const value = e.target.value;
+    setPrice(value);
+    if (value < 50 || value > 50000) {
+      setPriceError('Price must be between AED 50 and AED 50,000');
+    } else {
+      setPriceError('');
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (priceError) {
+      return;
+    }
     const productData = {
       productName,
       description,
@@ -76,7 +90,7 @@ const AddProduct = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
-                size='small'
+                size="small"
                 fullWidth
                 label="Product Name"
                 value={productName}
@@ -86,18 +100,20 @@ const AddProduct = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                size='small'
+                size="small"
                 fullWidth
                 label="Price"
                 type="number"
                 value={price}
-                onChange={(e) => setPrice(e.target.value)}
+                onChange={handlePriceChange}
+                error={Boolean(priceError)}
+                helperText={priceError}
                 required
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-                size='small'
+                size="small"
                 fullWidth
                 label="Description"
                 multiline
@@ -165,7 +181,7 @@ const AddProduct = () => {
               </FormGroup>
             </Grid>
             <Grid item xs={12}>
-              <Button type="submit" variant="contained" color="primary" halfWidth>
+              <Button type="submit" variant="contained" color="primary">
                 Add Product
               </Button>
             </Grid>
