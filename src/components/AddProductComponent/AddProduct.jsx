@@ -57,119 +57,120 @@ const AddProduct = () => {
 
   return (
     <ThemeProvider theme={ModTheme}>
-    <Container sx={{ 
+      <Container sx={{ 
         padding: 3, 
-        marginTop: 16,
-        maxWidth: {xs:'sm', sm:'md', md:'xl', lg:'xl', xl:'xl'}, 
-        boxSizing: 'border-box' }}>
-      <Typography variant="h4" component="h1" gutterBottom>
-        Add Product
-      </Typography>
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Product Name"
-              value={productName}
-              onChange={(e) => setProductName(e.target.value)}
-              required
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              fullWidth
-              label="Price"
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              fullWidth
-              label="Description"
-              multiline
-              rows={4}
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button variant="contained" component="label">
-              Upload Images (max 10)
-              <input type="file" accept="image/*" multiple hidden onChange={handleImageUpload} />
-            </Button>
-          </Grid>
-          <Grid item xs={12}>
-            {images.map((image, index) => (
-              <Typography key={index}>{image.name}</Typography>
-            ))}
-          </Grid>
-          <Grid item xs={12}>
-            {isLoaded ? (
-              <GoogleMap
-                mapContainerStyle={{ width: '100%', height: '400px' }}
-                zoom={8}
-                center={{ lat: -3.745, lng: -38.523 }}
-                onClick={handleMapClick}
-              >
-                {location && <Marker position={location} />}
-              </GoogleMap>
-            ) : (
-              <Typography>Loading map...</Typography>
-            )}
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel id="brand-label">Brands</InputLabel>
-              <Select
-                labelId="brand-label"
-                multiple
-                value={brands}
-                onChange={handleBrandChange}
-              >
-                <MenuItem value="Brand1">Brand1</MenuItem>
-                <MenuItem value="Brand2">Brand2</MenuItem>
-                <MenuItem value="Brand3">Brand3</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
-              <InputLabel id="color-label">Colors</InputLabel>
-              <Select
-                labelId="color-label"
-                multiple
-                value={colors}
-                onChange={handleColorChange}
-              >
-                <MenuItem value="Red">Red</MenuItem>
-                <MenuItem value="Blue">Blue</MenuItem>
-                <MenuItem value="Green">Green</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12}>
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox checked={acceptOffers} onChange={(e) => setAcceptOffers(e.target.checked)} />}
-                label="Accept Offers"
+        marginTop: 10,
+        marginBottom: 5,
+        maxWidth: { xs: '90%', sm: '70%', md: '60%', lg: '50%', xl: '40%' },
+        boxSizing: 'border-box' 
+      }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Add Product
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Product Name"
+                value={productName}
+                onChange={(e) => setProductName(e.target.value)}
+                required
               />
-            </FormGroup>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                label="Price"
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Description"
+                multiline
+                rows={4}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                required
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button variant="contained" component="label">
+                Upload Images (max 10)
+                <input type="file" accept="image/*" multiple hidden onChange={handleImageUpload} />
+              </Button>
+            </Grid>
+            <Grid item xs={12}>
+              {images.map((image, index) => (
+                <Typography key={index}>{image.name}</Typography>
+              ))}
+            </Grid>
+            <Grid item xs={12}>
+              {isLoaded ? (
+                <GoogleMap
+                  mapContainerStyle={{ width: '100%', height: '400px' }}
+                  zoom={8}
+                  center={{ lat: -3.745, lng: -38.523 }}
+                  onClick={handleMapClick}
+                >
+                  {location && <Marker position={location} />}
+                </GoogleMap>
+              ) : (
+                <Typography>Loading map...</Typography>
+              )}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel id="brand-label">Brands</InputLabel>
+                <Select
+                  labelId="brand-label"
+                  multiple
+                  value={brands}
+                  onChange={handleBrandChange}
+                >
+                  <MenuItem value="Brand1">Brand1</MenuItem>
+                  <MenuItem value="Brand2">Brand2</MenuItem>
+                  <MenuItem value="Brand3">Brand3</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <FormControl fullWidth>
+                <InputLabel id="color-label">Colors</InputLabel>
+                <Select
+                  labelId="color-label"
+                  multiple
+                  value={colors}
+                  onChange={handleColorChange}
+                >
+                  <MenuItem value="Red">Red</MenuItem>
+                  <MenuItem value="Blue">Blue</MenuItem>
+                  <MenuItem value="Green">Green</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox checked={acceptOffers} onChange={(e) => setAcceptOffers(e.target.checked)} />}
+                  label="Accept Offers"
+                />
+              </FormGroup>
+            </Grid>
+            <Grid item xs={12}>
+              <Button type="submit" variant="contained" color="primary" fullWidth>
+                Add Product
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Button type="submit" variant="contained" color="primary" fullWidth>
-              Add Product
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Container>
+        </form>
+      </Container>
     </ThemeProvider>
-
   );
 };
 
