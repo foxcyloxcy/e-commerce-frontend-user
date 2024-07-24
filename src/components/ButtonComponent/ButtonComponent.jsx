@@ -4,7 +4,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import ModTheme from '../ThemeComponent/ModTheme';
 
 export default function ButtonComponent(props) {
-    console.log(props)
     const { label, height, width, textColor, hoverTextColor, buttonVariant, component, to, size, startIcon, position,
         bottom, type, onClick
      } = props;
@@ -32,22 +31,22 @@ export default function ButtonComponent(props) {
                     width: width || '100%',
                     fontSize: '0.50rem',
                     '@media (min-width:200px)': {
-                        fontSize: '0.2rem',
-                    },
-                    '@media (min-width:300px)': {
                         fontSize: '0.3rem',
                     },
-                    '@media (min-width:400px)': {
+                    '@media (min-width:300px)': {
                         fontSize: '0.4rem',
                     },
-                    '@media (min-width:600px)': {
+                    '@media (min-width:400px)': {
                         fontSize: '0.5rem',
+                    },
+                    '@media (min-width:600px)': {
+                        fontSize: '0.6rem',
                     },
                     '@media (min-width:960px)': {
                         fontSize: '0.8rem',
                     },
                     '@media (min-width:1280px)': {
-                        fontSize: '0.9rem',
+                        fontSize:  '1rem',
                     },
                 }}
             >
