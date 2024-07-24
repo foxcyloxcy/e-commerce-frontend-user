@@ -75,7 +75,6 @@ function App() {
     });
 
     setIsLoggedIn(false);
-    console.log(isLoggedIn)
   };
 
   return (
