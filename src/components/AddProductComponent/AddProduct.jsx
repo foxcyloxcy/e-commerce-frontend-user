@@ -124,6 +124,14 @@ const AddProduct = () => {
               />
             </Grid>
             <Grid item xs={12}>
+              <FormGroup>
+                <FormControlLabel
+                  control={<Checkbox checked={acceptOffers} onChange={(e) => setAcceptOffers(e.target.checked)} />}
+                  label="Accept Offers"
+                />
+              </FormGroup>
+            </Grid>
+            <Grid item xs={12}>
               <Button variant="contained" component="label">
                 Upload Images (max 10)
                 <input type="file" accept="image/*" multiple hidden onChange={handleImageUpload} />
@@ -170,14 +178,6 @@ const AddProduct = () => {
                     label={color}
                   />
                 ))}
-              </FormGroup>
-            </Grid>
-            <Grid item xs={12}>
-              <FormGroup>
-                <FormControlLabel
-                  control={<Checkbox checked={acceptOffers} onChange={(e) => setAcceptOffers(e.target.checked)} />}
-                  label="Accept Offers"
-                />
               </FormGroup>
             </Grid>
             <Grid item xs={12}>
