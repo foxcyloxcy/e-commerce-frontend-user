@@ -1,29 +1,28 @@
-import React, { useState, useEffect } from 'react'
-import ButtonComponent from '../ButtonComponent/ButtonComponent'
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { ThemeProvider } from '@mui/material/styles';
-import ModTheme from '../ThemeComponent/ModTheme';
-import api from '../../assets/baseURL/api'
-import  secureLocalStorage  from  "react-secure-storage";
-import secure from '../../assets/baseURL/secure';
+import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  Button,
+  CssBaseline,
+  TextField,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  CircularProgress
+} from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+
+import ModTheme from '../ThemeComponent/ModTheme';
+import api from '../../assets/baseURL/api';
 
 
-export default function Login(props) {
-  
-  const { refreshParent } = props;
+export default function Login({ refreshParent }) {
   const history = useNavigate();
-  const storageKey = secure.storageKey
-  const storagePrefix = secure.storagePrefix;
   const [formValues, setFormValues] = useState({ email: '', password: '' });
   const [formErrors, setFormErrors] = useState({ email: '', password: '' });
-
+  const [loading, setLoading] = useState(false);
+  const [loginError, setLoginError] = useState('');
 
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -35,7 +34,7 @@ export default function Login(props) {
     let errors = {};
 
     if (!formValues.email) {
-      errors.email = 'Email field is required.';
+      errors.email = 'Email or Phone no. field is required.';
     } else if (!validateEmail(formValues.email)) {
       errors.email = 'Please enter a valid email address.';
     }
@@ -46,43 +45,33 @@ export default function Login(props) {
 
     setFormErrors(errors);
 
-    // Check if there are no errors before proceeding with form submission logic
     if (Object.keys(errors).length === 0) {
-      // Perform form submission logic here
-      console.log('Form submitted', formValues);
-      const res = await api.post("api/login", {
-        username: formValues.email,
-        password: formValues.password,
-      });
-      if (res.status === 200) {
-        // Log response and update the unread status locally
-        const data = res.data.data
-        //userData
-        secureLocalStorage.setItem(`${storagePrefix}_userData`, JSON.stringify(data.user), {
-          hash: storageKey,
+      setLoading(true);
+      try {
+        const res = await api.post("api/login", {
+          username: formValues.email,
+          password: formValues.password,
         });
-        //userToken
-        secureLocalStorage.setItem(`${storagePrefix}_userToken`, data.access_token, {
-          hash: storageKey,
-        });
-        //isLoggedIn
-        secureLocalStorage.setItem(`${storagePrefix}_isLoggedIn`, 'true', {
-          hash: storageKey,
-        });
+        if (res.status === 200) {
+          const data = res.data.data;
 
-        refreshParent(data.user, data.access_token, true)
-        history("/");
+          refreshParent(data.user, data.access_token, true);
+          history("/");
+        }
+      } catch (error) {
+        setLoginError('Login failed. Please check your credentials and try again.');
+      } finally {
+        setLoading(false);
       }
     }
   };
 
-  const handleInputChange = (event) => {
+  const handleInputChange = useCallback((event) => {
     const { name, value } = event.target;
     setFormValues({ ...formValues, [name]: value });
-
-    // Clear the error message for the current input field
     setFormErrors({ ...formErrors, [name]: '' });
-  };
+    setLoginError('');
+  }, [formValues, formErrors]);
 
   return (
     <ThemeProvider theme={ModTheme}>
@@ -97,9 +86,6 @@ export default function Login(props) {
             marginBottom: 10
           }}
         >
-          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar> */}
           <Typography component="h1" variant="h1">
             Login
           </Typography>
@@ -132,14 +118,22 @@ export default function Login(props) {
               value={formValues.password}
               onChange={handleInputChange}
             />
-
-            <ButtonComponent
-              type="submit"
-              label="Submit"
-              buttonVariant="contained"
-              textColor='primary.contrastText'
-              hoverTextColor='secondary.main'
-            />
+            {loginError && (
+              <Typography color="error" variant="body2">
+                {loginError}
+              </Typography>
+            )}
+            <Box sx={{ position: 'relative' }}>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                disabled={loading}
+              >
+                {loading ? <CircularProgress size={24} /> : 'Submit'}
+              </Button>
+            </Box>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
