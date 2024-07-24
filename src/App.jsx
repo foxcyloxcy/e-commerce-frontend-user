@@ -20,46 +20,69 @@ function App() {
   const storagePrefix = secure.storagePrefix;
 
   useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem('IsLoggedIn');
-    const storedUserData = localStorage.getItem('UserData');
-    const storedUserToken = localStorage.getItem('UserToken');
+    const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
+      hash: storageKey,
+    });
+    const storedUserData =  secureLocalStorage.getItem(`${storagePrefix}_userData`, {
+      hash: storageKey,
+    });
+    const storedUserToken = secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
+      hash: storageKey,
+    });
 
     if (storedIsLoggedIn) {
       setIsLoggedIn(storedIsLoggedIn);
     }
     if (storedUserData) {
-      setUserData(JSON.parse(storedUserData));
+      setUserData(storedUserData);
     }
     if (storedUserToken) {
       setUserToken(storedUserToken);
     }
   }, []);
 
-  const handleClick = async (loginUserData, loginUserToken, loginIsLoggedIn) => {
-    setIsLoggedIn(loginIsLoggedIn);
-    setUserData(loginUserData);
-    setUserToken(loginUserToken);
-
-    secureLocalStorage.setItem(`${storagePrefix}_userData`, JSON.stringify(loginUserData), {
+  const handleClick = async () => {
+    const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
       hash: storageKey,
     });
-    secureLocalStorage.setItem(`${storagePrefix}_userToken`, loginUserToken, {
+    const storedUserData =  secureLocalStorage.getItem(`${storagePrefix}_userData`, {
       hash: storageKey,
     });
-    secureLocalStorage.setItem(`${storagePrefix}_isLoggedIn`, loginIsLoggedIn, {
+    const storedUserToken = secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
       hash: storageKey,
     });
 
+    if (storedIsLoggedIn) {
+      setIsLoggedIn(storedIsLoggedIn);
+    }
+    if (storedUserData) {
+      setUserData(storedUserData);
+    }
+    if (storedUserToken) {
+      setUserToken(storedUserToken);
+    }
+  };
+
+  const handleClickLogout = async () => {
+    secureLocalStorage.removeItem(`${storagePrefix}_userData`, {
+      hash: storageKey,
+    });
+    secureLocalStorage.removeItem(`${storagePrefix}_userToken`, {
+      hash: storageKey,
+    });
+    secureLocalStorage.removeItem(`${storagePrefix}_isLoggedIn`,{
+      hash: storageKey,
+    });
+
+    setIsLoggedIn(false);
+    console.log(isLoggedIn)
   };
 
   return (
     <>
       <NavBar
-        parentIsLoggedIn={isLoggedIn}
-        parentUserData={userData}
-        parentUserToken={userToken}
-        refreshParent={handleClick}
-      />
+      parentIsLoggedIn={isLoggedIn}
+      refreshParent={handleClickLogout}/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product-details" element={<ProductDetails />} />
