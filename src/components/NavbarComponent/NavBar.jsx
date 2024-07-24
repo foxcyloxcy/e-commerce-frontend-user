@@ -11,16 +11,19 @@ import { ThemeProvider, Box, useMediaQuery, Drawer, List, ListItem, ListItemText
 import ModTheme from '../ThemeComponent/ModTheme';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
+import secureLocalStorage from "react-secure-storage";
+import secure from '../../assets/baseURL/secure';
 
 const NavBar = (props) => {
-  const { parentUserData, parentUserToken, parentIsLoggedIn, refreshParent } = props;
+
+  const { parentIsLoggedIn, refreshParent } = props;
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [elevate, setElevate] = useState(false);
   const linkPathName = useLocation(Link);
-  const [isLoggedIn, setIsLoggedIn] = useState(parentIsLoggedIn);
-  const [userData, setUserData] = useState(parentUserData);
-  const [userToken, setUserToken] = useState(parentUserToken);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const storageKey = secure.storageKey;
+  const storagePrefix = secure.storagePrefix;
 
   const trigger = useScrollTrigger({
     disableHysteresis: true,
@@ -29,28 +32,39 @@ const NavBar = (props) => {
 
   const handleMenu = useCallback(() => {
     setDrawerOpen(true);
-  }, []);
+  }, []); 
 
   const handleLogout = useCallback(() => {
-    refreshParent(0, 0, false);
-    setIsLoggedIn(false);
-    setUserData("");
-    setUserToken("");
-    navigate('/');
-  }, [navigate, refreshParent]);
+    refreshParent()
+    navigate('/login');
+  }, [navigate]);
 
   const handleClose = useCallback(() => {
     setDrawerOpen(false);
   }, []);
 
   useEffect(() => {
-    setIsLoggedIn(parentIsLoggedIn);
-    setUserData(parentUserData);
-    setUserToken(parentUserToken);
-    if (parentIsLoggedIn) {
+    const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
+      hash: storageKey,
+    });
+
+    if (storedIsLoggedIn) {
+      setIsLoggedIn(storedIsLoggedIn);
+    }else{
+      setIsLoggedIn(false)
+    }
+
+    if (parentIsLoggedIn === true) {
+      setIsLoggedIn(parentIsLoggedIn);
+    }else{
+      setIsLoggedIn(false)
+    }
+
+    if (isLoggedIn === true) {
       setElevate(trigger);
     }
-  }, [parentIsLoggedIn, parentUserData, parentUserToken, trigger]);
+
+  }, [parentIsLoggedIn, trigger]);
 
   const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('sm'));
   const isMediumScreen = useMediaQuery(ModTheme.breakpoints.down('md')) && !isSmallScreen;
@@ -109,7 +123,7 @@ const NavBar = (props) => {
                   textColor={elevate || linkPathName.pathname !== '/' ? 'secondary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
-                {isLoggedIn ? (
+                {isLoggedIn === true ? (
                   <ButtonComponent
                     label="Logout"
                     onClick={handleLogout}
@@ -166,7 +180,7 @@ const NavBar = (props) => {
                   <CloseIcon />
                 </IconButton>
                 <List component="nav" sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
-                  {isLoggedIn ? (
+                  {isLoggedIn === true ? (
                     <ButtonComponent
                       label="Logout"
                       onClick={handleLogout}
