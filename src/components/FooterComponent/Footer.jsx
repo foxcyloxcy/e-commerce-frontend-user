@@ -21,8 +21,10 @@ const Footer = () => {
         <ThemeProvider theme={ModTheme}>
             <Box
                 sx={{
+                    // backgroundColor: 'primary.light',
+                    // color: 'secondary.background',
                     backgroundColor: 'primary.dark',
-                    color: 'secondary.main',
+                    color: 'primary.main',
                     py: 3,
                     mt: 'auto',
                     borderTop: `1px solid ${ModTheme.palette.primary.light}`,

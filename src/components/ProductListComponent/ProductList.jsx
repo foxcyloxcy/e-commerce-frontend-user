@@ -117,7 +117,11 @@ const ProductList = (props) => {
         <Container sx={{ width: 300,
             paddingLeft: 0
          }}>
-            <Typography variant="h6" sx={{ padding: 2 }}>Filters</Typography>
+            <Typography variant="h6" sx={{ 
+                paddingTop: 2,
+                paddingBottom: 2
+             }}
+             >Filters</Typography>
 
             {isSmallScreen && (
                 <>
@@ -160,7 +164,7 @@ const ProductList = (props) => {
                 </>
             )}
 
-            <div style={{ padding: 16 }}>
+            <div style={{ padding: 2 }}>
                 {!isSmallScreen && (
                     <Divider />
                 )}
@@ -187,7 +191,6 @@ const ProductList = (props) => {
                 <Typography variant="h6" component="h3" gutterBottom>
                     Price range
                 </Typography>
-                <Slider defaultValue={50} />
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <FormControl fullWidth>
@@ -196,7 +199,7 @@ const ProductList = (props) => {
                     </Grid>
                     <Grid item xs={6}>
                         <FormControl fullWidth>
-                            <Input placeholder="AED 50000" type="number" />
+                            <Input placeholder="AED 50,000" type="number" />
                         </FormControl>
                     </Grid>
                 </Grid>
@@ -303,11 +306,11 @@ const ProductList = (props) => {
                 }}>
                     <Grid container spacing={2}>
                         {!isSmallScreen && (
-                            <Grid item xs={12} md={4} className='filter-grid'>
+                            <Grid item xs={12} md={4} lg={3} className='filter-grid'>
                                 {drawerContent}
                             </Grid>
                         )}
-                        <Grid item xs={12} md={8}>
+                        <Grid item xs={12} md={8} lg={9}>
                             <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
                                 <Grid container alignItems="center">
                                     <Grid item xs={12} md>

@@ -7,17 +7,17 @@ const ModTheme = createTheme({
             paper: '#F5F5F2'
         },
         primary: {
-            main: '#255773',
-            light: '#5E97C3',
-            dark: '#B8D4E6',
-            contrastText: '#E3F2F7',
+            main: '#255773', // deep teal
+            light: '#5E97C3', // azul
+            dark: '#B8D4E6', // baby blue
+            contrastText: '#E3F2F7', // sky blue
         },
         secondary: {
-            main: '#606060',
-            light: '#BDB6B0',
-            dark: '#EAEAE7',
-            contrastText: '#F5F5F2',
-            background: '#FFFFFF',
+            main: '#606060', //charcoal
+            light: '#BDB6B0', //stone
+            dark: '#EAEAE7', // medium gray
+            contrastText: '#F5F5F2', // light gray
+            background: '#FFFFFF', //white
         },
     },
     typography: {
