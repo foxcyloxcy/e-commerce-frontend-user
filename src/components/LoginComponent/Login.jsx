@@ -12,12 +12,15 @@ import {
   CircularProgress
 } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
+import secureLocalStorage from "react-secure-storage";
+import secure from '../../assets/baseURL/secure';
 
 
 export default function Login({ refreshParent }) {
+  const storageKey = secure.storageKey;
+  const storagePrefix = secure.storagePrefix;
   const history = useNavigate();
   const [formValues, setFormValues] = useState({ email: '', password: '' });
   const [formErrors, setFormErrors] = useState({ email: '', password: '' });
@@ -55,10 +58,21 @@ export default function Login({ refreshParent }) {
         if (res.status === 200) {
           const data = res.data.data;
 
-          refreshParent(data.user, data.access_token, true);
+          secureLocalStorage.setItem(`${storagePrefix}_userData`, JSON.stringify(data.user), {
+            hash: storageKey,
+          });
+          secureLocalStorage.setItem(`${storagePrefix}_userToken`, data.access_token, {
+            hash: storageKey,
+          });
+          secureLocalStorage.setItem(`${storagePrefix}_isLoggedIn`, true, {
+            hash: storageKey,
+          });
+
+          refreshParent();
           history("/");
         }
       } catch (error) {
+        console.log(error)
         setLoginError('Login failed. Please check your credentials and try again.');
       } finally {
         setLoading(false);
