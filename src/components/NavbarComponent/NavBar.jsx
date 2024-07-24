@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,52 +11,46 @@ import { ThemeProvider, Box, useMediaQuery, Drawer, List, ListItem, ListItemText
 import ModTheme from '../ThemeComponent/ModTheme';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
-import secureLocalStorage from "react-secure-storage";
-import secure from '../../assets/baseURL/secure';
-
 
 const NavBar = (props) => {
-  const { parentUserData, parentUserToken, parentIsLoggedIn, refreshParent } = props
-  const [anchorEl, setAnchorEl] = useState(null);
-  const linkPathName = useLocation(Link);
+  const { parentUserData, parentUserToken, parentIsLoggedIn, refreshParent } = props;
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [elevate, setElevate] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userData, setUserData] = useState("")
-  const [userToken, setUserToken] = useState("")
-  const history = useNavigate();
-
+  const linkPathName = useLocation(Link);
+  const [isLoggedIn, setIsLoggedIn] = useState(parentIsLoggedIn);
+  const [userData, setUserData] = useState(parentUserData);
+  const [userToken, setUserToken] = useState(parentUserToken);
+  const navigate = useNavigate();
 
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 10,
   });
 
-  const handleMenu = () => {
-    setAnchorEl(true);
-  };
+  const handleMenu = useCallback(() => {
+    setDrawerOpen(true);
+  }, []);
 
-  const handleLogout = async () => {
-    refreshParent(0, 0, false)
-    setIsLoggedIn(false)
-    setUserData("")
-    setUserToken("")
-    // Redirect to the login page or home page
-    history('/');
+  const handleLogout = useCallback(() => {
+    refreshParent(0, 0, false);
+    setIsLoggedIn(false);
+    setUserData("");
+    setUserToken("");
+    navigate('/');
+  }, [navigate, refreshParent]);
 
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClose = useCallback(() => {
+    setDrawerOpen(false);
+  }, []);
 
   useEffect(() => {
-    setIsLoggedIn(parentIsLoggedIn)
-    setUserData(parentUserData)
-    setUserToken(parentUserToken)
-    if (isLoggedIn) {
+    setIsLoggedIn(parentIsLoggedIn);
+    setUserData(parentUserData);
+    setUserToken(parentUserToken);
+    if (parentIsLoggedIn) {
       setElevate(trigger);
     }
-  }, [parentIsLoggedIn, trigger]);
+  }, [parentIsLoggedIn, parentUserData, parentUserToken, trigger]);
 
   const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('sm'));
   const isMediumScreen = useMediaQuery(ModTheme.breakpoints.down('md')) && !isSmallScreen;
@@ -115,44 +109,44 @@ const NavBar = (props) => {
                   textColor={elevate || linkPathName.pathname !== '/' ? 'secondary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
-                  {isLoggedIn ? (
+                {isLoggedIn ? (
+                  <ButtonComponent
+                    label="Logout"
+                    onClick={handleLogout}
+                    buttonVariant="contained"
+                    textColor='primary.contrastText'
+                    hoverTextColor='secondary.main'
+                  />
+                ) : (
+                  <>
                     <ButtonComponent
-                      label="Logout"
-                      onClick={handleLogout}
+                      component={Link}
+                      to="/login"
+                      label="Login"
                       buttonVariant="contained"
                       textColor='primary.contrastText'
                       hoverTextColor='secondary.main'
                     />
-                  ) : (
-                    <>
-                      <ButtonComponent
-                        component={Link}
-                        to="/login"
-                        label="Login"
-                        buttonVariant="contained"
-                        textColor='primary.contrastText'
-                        hoverTextColor='secondary.main'
-                      />
-                      <Divider orientation="vertical" flexItem />
-                      <ButtonComponent
-                        component={Link}
-                        to="/register"
-                        label="Register"
-                        buttonVariant="contained"
-                        textColor='primary.contrastText'
-                        hoverTextColor='secondary.main'
-                      />
-                    </>
-                  )}
+                    <Divider orientation="vertical" flexItem />
+                    <ButtonComponent
+                      component={Link}
+                      to="/register"
+                      label="Register"
+                      buttonVariant="contained"
+                      textColor='primary.contrastText'
+                      hoverTextColor='secondary.main'
+                    />
+                  </>
+                )}
               </Box>
             )}
             <Drawer
               anchor="right"
-              open={Boolean(anchorEl)}
+              open={drawerOpen}
               onClose={handleClose}
               sx={{
                 '& .MuiDrawer-paper': {
-                  width: '50%',
+                  width: isSmallScreen ? '75%' : '50%',
                 },
               }}
             >
@@ -168,8 +162,7 @@ const NavBar = (props) => {
                   boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.3)',
                 }}
               >
-                <IconButton color="inherit"
-                  onClick={handleClose} sx={{ alignSelf: 'flex-end' }}>
+                <IconButton color="inherit" onClick={handleClose} sx={{ alignSelf: 'flex-end' }}>
                   <CloseIcon />
                 </IconButton>
                 <List component="nav" sx={{ display: 'flex', flexDirection: 'row', gap: 1 }}>
@@ -232,7 +225,7 @@ const NavBar = (props) => {
             </Drawer>
             {isMediumScreen && (
               <Backdrop
-                open={Boolean(anchorEl)}
+                open={drawerOpen}
                 onClick={handleClose}
                 sx={{
                   backgroundColor: 'rgba(0, 0, 0, 0)',
@@ -243,7 +236,6 @@ const NavBar = (props) => {
           </Toolbar>
         </AppBar>
       </ThemeProvider>
-      {/* Content goes here */}
     </>
   );
 };
