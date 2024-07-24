@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Link from '@mui/material/Link';
@@ -9,22 +9,101 @@ import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { ThemeProvider } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from 'react-router-dom';
 import ModTheme from '../ThemeComponent/ModTheme';
-import ButtonComponent from '../ButtonComponent/ButtonComponent'
-
-
+import api from '../../assets/baseURL/api';
+import secure from '../../assets/baseURL/secure';
 
 export default function Register() {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+    const history = useNavigate();
+    const [formValues, setFormValues] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '+971' });
+    const [formErrors, setFormErrors] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '' });
+    const [loading, setLoading] = useState(false);
+    const [emailErrorMessage, setEmailErrorMessage] = useState(false);
+    const [registerError, setRegisterError] = useState('');
+
+    const validateEmail = (email) => {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(String(email).toLowerCase());
     };
-    console.log(ModTheme)
-    console.log(FormControlLabel)
+
+    const validatePhoneNo = (phoneNo) => {
+        const uaePrefix = '+971';
+        return phoneNo !== uaePrefix;
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        let errors = {};
+
+        if (!formValues.firstName) {
+            errors.firstName = 'First Name is required.';
+        }
+
+        if (!formValues.lastName) {
+            errors.lastName = 'Last Name is required.';
+        }
+
+        if (!formValues.email) {
+            errors.email = 'Email field is required.';
+        } else if (!validateEmail(formValues.email)) {
+            errors.email = 'Please enter a valid email address.';
+        } else if(emailErrorMessage){
+            errors.email = emailErrorMessage
+        }
+
+        if (!formValues.password) {
+            errors.password = 'Password field is required.';
+        } else if (formValues.password !== formValues.confirmPassword) {
+            errors.confirmPassword = 'Passwords do not match.';
+        }
+
+        if (!formValues.phoneNo) {
+            errors.phoneNo = 'Phone Number field is required.';
+        } else if (!validatePhoneNo(formValues.phoneNo)) {
+            errors.phoneNo = 'Sorry, this is not a valid number. Please use a phone number with the UAE country code.';
+        }
+
+        setFormErrors(errors);
+
+        if (Object.keys(errors).length === 0) {
+            setLoading(true);
+            try {
+                const res = await api.post("api/sign-up", {
+                    email: formValues.email,
+                    password: formValues.password,
+                    password_confirmation: formValues.confirmPassword,
+                    mobile_number: formValues.phoneNo,
+                    first_name: formValues.firstName,
+                    last_name: formValues.lastName,
+                });
+                if (res.status === 200) {
+                    console.log(res.data)
+                    history("/login");
+                }else if(res.status === 422){
+                    console.log("test console")
+
+                }
+            } catch (error) {
+                console.log(error.response)
+                if(error.response.data.message.email[0]){
+                    setEmailErrorMessage(error.response.data.message.email[0])
+                }
+            } finally {
+                setLoading(false);
+            }
+        }
+    };
+
+    const handleInputChange = useCallback((event) => {
+        const { name, value } = event.target;
+        setFormValues({ ...formValues, [name]: value });
+        setFormErrors({ ...formErrors, [name]: '' });
+        setRegisterError('');
+    }, [formValues, formErrors]);
+
     return (
         <ThemeProvider theme={ModTheme}>
             <Container component="main" maxWidth="xs">
@@ -38,9 +117,6 @@ export default function Register() {
                         marginBottom: 10
                     }}
                 >
-                    {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                        <LockOutlinedIcon />
-                    </Avatar> */}
                     <Typography component="h1" variant="h1">
                         Register
                     </Typography>
@@ -49,6 +125,8 @@ export default function Register() {
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     size='small'
+                                    error={!!formErrors.firstName}
+                                    helperText={formErrors.firstName}
                                     autoComplete="given-name"
                                     name="firstName"
                                     required
@@ -56,44 +134,60 @@ export default function Register() {
                                     id="firstName"
                                     label="First Name"
                                     autoFocus
+                                    value={formValues.firstName}
+                                    onChange={handleInputChange}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     size='small'
+                                    error={!!formErrors.lastName}
+                                    helperText={formErrors.lastName}
                                     required
                                     fullWidth
                                     id="lastName"
                                     label="Last Name"
                                     name="lastName"
                                     autoComplete="family-name"
+                                    value={formValues.lastName}
+                                    onChange={handleInputChange}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     size='small'
+                                    error={!!formErrors.email}
+                                    helperText={formErrors.email}
                                     required
                                     fullWidth
                                     id="email"
                                     label="Email Address"
                                     name="email"
                                     autoComplete="email"
+                                    value={formValues.email}
+                                    onChange={handleInputChange}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     size='small'
+                                    error={!!formErrors.phoneNo}
+                                    helperText={formErrors.phoneNo}
                                     required
                                     fullWidth
                                     id="phoneNo"
                                     label="Phone Number"
                                     name="phoneNo"
                                     autoComplete="phoneNo"
+                                    value={formValues.phoneNo}
+                                    onChange={handleInputChange}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     size='small'
+                                    error={!!formErrors.password}
+                                    helperText={formErrors.password}
                                     required
                                     fullWidth
                                     name="password"
@@ -101,35 +195,50 @@ export default function Register() {
                                     type="password"
                                     id="password"
                                     autoComplete="new-password"
+                                    value={formValues.password}
+                                    onChange={handleInputChange}
                                 />
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     size='small'
+                                    error={!!formErrors.confirmPassword}
+                                    helperText={formErrors.confirmPassword}
                                     required
                                     fullWidth
                                     name="confirmPassword"
                                     label="Confirm Password"
                                     type="password"
                                     id="confirmPassword"
+                                    value={formValues.confirmPassword}
+                                    onChange={handleInputChange}
                                 />
                             </Grid>
                         </Grid>
+                        {registerError && (
+                            <Typography color="error" variant="body2">
+                                {registerError}
+                            </Typography>
+                        )}
                         <FormControlLabel
                             sx={{
-                                mt:1,
-                                mb:0
+                                mt: 1,
+                                mb: 0
                             }}
                             control={<Checkbox value="remember" color="primary" />}
-                                label={<Typography sx={{ fontSize: { xs: '0.4rem', sm: '0.5rem', md: '0.7rem', lg: '0.8rem', xl: '1rem' } }}>I accept the Terms & Conditions and have read the Privacy Policy.</Typography>}
-                            />
-                            <ButtonComponent
+                            label={<Typography sx={{ fontSize: { xs: '0.4rem', sm: '0.5rem', md: '0.7rem', lg: '0.8rem', xl: '1rem' } }}>I accept the Terms & Conditions and have read the Privacy Policy.</Typography>}
+                        />
+                        <Box sx={{ position: 'relative' }}>
+                            <Button
                                 type="submit"
-                                label="Submit"
-                                buttonVariant="contained"
-                                textColor='primary.contrastText'
-                                hoverTextColor='secondary.main'
-                            />
+                                fullWidth
+                                variant="contained"
+                                color="primary"
+                                disabled={loading}
+                            >
+                                {loading ? <CircularProgress size={24} /> : 'Submit'}
+                            </Button>
+                        </Box>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link href="#" variant="body2">
