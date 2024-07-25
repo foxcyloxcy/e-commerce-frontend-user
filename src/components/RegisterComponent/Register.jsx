@@ -21,7 +21,6 @@ export default function Register() {
     const [formValues, setFormValues] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '+971' });
     const [formErrors, setFormErrors] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '' });
     const [loading, setLoading] = useState(false);
-    const [emailErrorMessage, setEmailErrorMessage] = useState(false);
     const [registerError, setRegisterError] = useState('');
 
     const validateEmail = (email) => {
@@ -50,14 +49,10 @@ export default function Register() {
             errors.email = 'Email field is required.';
         } else if (!validateEmail(formValues.email)) {
             errors.email = 'Please enter a valid email address.';
-        } else if(emailErrorMessage){
-            errors.email = emailErrorMessage
         }
 
         if (!formValues.password) {
             errors.password = 'Password field is required.';
-        } else if (formValues.password !== formValues.confirmPassword) {
-            errors.confirmPassword = 'Passwords do not match.';
         }
 
         if (!formValues.phoneNo) {
@@ -80,22 +75,30 @@ export default function Register() {
                     last_name: formValues.lastName,
                 });
                 if (res.status === 200) {
-                    console.log(res.data)
                     history("/login");
-                }else if(res.status === 422){
-                    console.log("test console")
-
                 }
             } catch (error) {
                 console.log(error.response)
-                if(error.response.data.message.email[0]){
-                    setEmailErrorMessage(error.response.data.message.email[0])
-                }
+                await handleErrorMessage(error.response)
             } finally {
                 setLoading(false);
             }
         }
     };
+
+    const handleErrorMessage = useCallback((props)=>{
+        let errors = {};
+
+        if(props.data.message.email[0]){
+            errors.email = props.data.message.email[0]
+         }
+
+         if(props.data.message.password[0]){
+            errors.confirmPassword = props.data.message.password[0]
+         }
+
+         setFormErrors(errors);
+    })
 
     const handleInputChange = useCallback((event) => {
         const { name, value } = event.target;
