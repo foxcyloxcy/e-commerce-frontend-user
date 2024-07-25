@@ -73,12 +73,22 @@ export default function Login({ refreshParent }) {
         }
       } catch (error) {
         console.log(error)
-        setLoginError('Login failed. Please check your credentials and try again.');
+        await handleErrorMessage(error.response)
       } finally {
         setLoading(false);
       }
     }
   };
+
+  const handleErrorMessage = useCallback((props)=>{
+    let errors = {};
+
+    if(props.data.message){
+        setLoginError("Login failed! "+ props.data.message[0].password)
+     }
+
+     setFormErrors(errors);
+})
 
   const handleInputChange = useCallback((event) => {
     const { name, value } = event.target;
