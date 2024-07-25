@@ -89,11 +89,11 @@ export default function Register() {
     const handleErrorMessage = useCallback((props)=>{
         let errors = {};
 
-        if(props.data.message.email[0]){
+        if(props.data.message.email){
             errors.email = props.data.message.email[0]
          }
 
-         if(props.data.message.password[0]){
+         if(props.data.message.password){
             errors.confirmPassword = props.data.message.password[0]
          }
 
