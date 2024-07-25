@@ -62,6 +62,8 @@ const NavBar = (props) => {
 
     if (isLoggedIn === true) {
       setElevate(trigger);
+    }else{
+      setElevate(false)
     }
 
   }, [parentIsLoggedIn, trigger]);
