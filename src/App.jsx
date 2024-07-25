@@ -7,8 +7,8 @@ import NavBar from './components/NavbarComponent/NavBar';
 import Footer from './components/FooterComponent/Footer';
 import Home from './components/HomeComponent/Home';
 import ProductList from './components/ProductListComponent/ProductList';
-import ProductDetails from './components/ProductDetailsComponent/ProductDetails';
-import AddProduct from './components/AddProductComponent/AddProduct';
+import ProductDetails from './components/ProductsComponent/ProductDetails';
+import AddProduct from './components/ProductsComponent/AddProduct';
 import secureLocalStorage from "react-secure-storage";
 import secure from './assets/baseURL/secure';
 
