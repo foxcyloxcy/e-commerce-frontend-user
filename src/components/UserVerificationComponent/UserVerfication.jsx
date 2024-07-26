@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Box, Grid, Typography, Link, CircularProgress } from '@mui/material';
+import './UserVerification.css'; 
 
 const UserVerification = () => {
   const [code, setCode] = useState(Array(6).fill(''));
   const [countdown, setCountdown] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const email = ""
 
   const handleChange = (e, index) => {
     const newCode = [...code];
