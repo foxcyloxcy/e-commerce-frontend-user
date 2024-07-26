@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -31,23 +31,28 @@ import InputBase from '@mui/material/InputBase';
 import ModTheme from '../ThemeComponent/ModTheme';
 import { styled, alpha } from '@mui/material/styles';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-
-const categories = {
-    Men: ['Shirts', 'Pants', 'Shoes'],
-    Women: ['Dresses', 'Tops', 'Shoes'],
-    Home: ['Furniture', 'Decor', 'Kitchen'],
-    Pets: ['Food', 'Toys', 'Accessories'],
-    'Baby & Children': ['Clothing', 'Toys', 'Furniture'],
-};
+import api from '../../assets/baseURL/api';
 
 const ProductList = (props) => {
     const { parentIsLoggedIn} = props
     const [anchorEl, setAnchorEl] = useState(null);
+    const [categories, setCategories] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
     const [elevate, setElevate] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const loadCategories = useCallback(async () => {
+        try {
+          const res = await api.get("api/global/category");
+          if (res.status === 200) {
+            setCategories(res.data.data);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }, []);
 
     const trigger = useScrollTrigger({
         disableHysteresis: true,
@@ -133,13 +138,13 @@ const ProductList = (props) => {
                         alignItems: 'left',
                         background: ModTheme.palette.secondary.contrastText
                     }}>
-                        {Object.keys(categories).map((category) => (
+                        {categories.map((category) => (
                             <Button
                                 key={category}
                                 color="inherit"
-                                onClick={(event) => handleMenuOpen(event, category)}
+                                onClick={(event) => handleMenuOpen(event, category.id)}
                             >
-                                {category}
+                                {category.name}
                             </Button>
                         ))}
                         <Menu
@@ -229,11 +234,18 @@ const ProductList = (props) => {
     useEffect(() => {
         if(parentIsLoggedIn){
             setIsLoggedIn(parentIsLoggedIn)
+        }else{
+            setIsLoggedIn(false)
         }
+
         if (isLoggedIn) {
             setElevate(trigger);
+          }else{
+            setElevate(false)
           }
-      }, [trigger]);
+
+        loadCategories();
+      }, [trigger, loadCategories]);
 
     return (
         <ThemeProvider theme={ModTheme}>
@@ -268,13 +280,13 @@ const ProductList = (props) => {
                                 inputProps={{ 'aria-label': 'search' }}
                             />
                         </Search>
-                        {!isSmallScreen && Object.keys(categories).map((category) => (
+                        {!isSmallScreen && categories.map((category) => (
                             <Button
-                                key={category}
+                                key={category.id}
                                 color='secondary'
-                                onClick={(event) => handleMenuOpen(event, category)}
+                                onClick={(event) => handleMenuOpen(event, category.id)}
                             >
-                                {category}
+                                {category.name}
                             </Button>
                         ))}
                         <Menu
