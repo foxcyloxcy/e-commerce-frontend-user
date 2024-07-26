@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider } from '@mui/material';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import ModTheme from '../ThemeComponent/ModTheme';
+import api from '../../assets/baseURL/api'
 
 const libraries = ['places'];
 
@@ -74,6 +75,26 @@ const AddProduct = () => {
     console.log(productData);
   };
 
+  const loadlCategories = useCallback(async()=>{
+    try {
+      const res = await api.get("api/global/category");
+      
+      if (res.status === 200) {
+        const data = res
+
+        console.log(data)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      console.log('final')
+    }
+  })
+
+  useEffect(()=>{
+    loadlCategories()
+  },[])
+
   return (
     <ThemeProvider theme={ModTheme}>
       <Container sx={{ 
@@ -84,7 +105,7 @@ const AddProduct = () => {
         boxSizing: 'border-box' 
       }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Add Product
+        Post your pre-loved item
         </Typography>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
