@@ -13,6 +13,7 @@ import secureLocalStorage from "react-secure-storage";
 import secure from './assets/baseURL/secure';
 import EditProduct from './components/ProductsComponent/EditProduct';
 import MyProfile from './components/UserProfileComponent/MyProfile';
+import UserVerification from './components/UserVerificationComponent/UserVerfication';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -90,6 +91,7 @@ function App() {
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/edit-product" element={<EditProduct />} />
         <Route path="/my-profile" element={<MyProfile />} />
+        <Route path="/verify" element={<UserVerification />} />
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/login" element={<Login refreshParent={handleClick} />} />
         <Route path="/register" element={<Register />} />
