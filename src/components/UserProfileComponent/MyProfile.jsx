@@ -1,99 +1,109 @@
 import React from 'react';
-import { Box, Tabs, Tab, Typography, AppBar, Drawer, List, ListItem, ListItemText, CssBaseline, Toolbar } from '@mui/material';
-import { useTheme, useMediaQuery } from '@mui/material';
+import { Box, Container, Grid, Paper, Avatar, Typography, Switch, List, ListItem, ListItemAvatar, ListItemText, Button, IconButton, ThemeProvider, Divider } from '@mui/material';
+import { styled } from '@mui/system';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ModTheme from '../ThemeComponent/ModTheme';
+// import FacebookIcon from '@mui/icons-material/Facebook';
+// import TwitterIcon from '@mui/icons-material/Twitter';
+// import InstagramIcon from '@mui/icons-material/Instagram';
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+const Root = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.up('sm')]: {
+    display: 'flex',
+  },
+}));
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
+const Sidebar = styled(Box)(({ theme }) => ({
+  width: 200,
+  backgroundColor: ModTheme.palette.secondary.background,
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-around',
+  },
+}));
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
+const Content = styled(Box)(({ theme }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(1),
+  },
+}));
+
+const ProfileInfo = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  marginBottom: theme.spacing(2),
+  backgroundColor: ModTheme.palette.secondary.background,
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(2),
+  },
+}));
+
+const SettingsItem = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  marginBottom: theme.spacing(2),
+}));
 
 const MyProfile = () => {
-  const [value, setValue] = React.useState(0);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const drawer = (
-    <List>
-      <ListItem button onClick={() => setValue(0)}>
-        <ListItemText primary="Profile Details" />
-      </ListItem>
-      <ListItem button onClick={() => setValue(1)}>
-        <ListItemText primary="My Products" />
-      </ListItem>
-      <ListItem button onClick={() => setValue(2)}>
-        <ListItemText primary="My Offers" />
-      </ListItem>
-      <ListItem button onClick={() => setValue(3)}>
-        <ListItemText primary="Offers Available" />
-      </ListItem>
-    </List>
-  );
-
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      {isMobile ? (
-        <Drawer
-          variant="temporary"
-          open={true}
-          onClose={() => {}}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-        >
-          {drawer}
-        </Drawer>
-      ) : (
-        <Drawer variant="permanent" open>
-          {drawer}
-        </Drawer>
-      )}
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
-      >
-        <Toolbar />
-        <TabPanel value={value} index={0}>
-          Profile Details Content
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          My Products Content
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          My Offers Content
-        </TabPanel>
-        <TabPanel value={value} index={3}>
-          Offers Available Content
-        </TabPanel>
-      </Box>
-    </Box>
+    <ThemeProvider theme={ModTheme}>
+            <Container sx={{
+        marginTop: 10,
+        marginBottom: 5
+    }}>
+      <Root>
+        <Sidebar>
+          <List>
+            <ListItem button>
+              <ListItemText primary="Profile settings" />
+            </ListItem>
+            <Divider/>
+            <ListItem button>
+              <ListItemText primary="My products" />
+            </ListItem>
+            <Divider/>
+            <ListItem button>
+              <ListItemText primary="My offers" />
+            </ListItem>
+            <Divider/>
+            <ListItem button>
+              <ListItemText primary="Offers to me" />
+            </ListItem>
+          </List>
+        </Sidebar>
+        <Content>
+          <ProfileInfo>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={4}>
+                <Avatar
+                  alt="Annie Stacey"
+                  src="https://via.placeholder.com/150"
+                  sx={{ width: 100, height: 100 }}
+                />
+                <Typography variant="h6">Annie Stacey</Typography>
+                <Typography variant="body2">CEO / Co-Founder</Typography>
+              </Grid>
+              <Grid item xs={12} sm={8}>
+                <Typography variant="h6">Profile Information</Typography>
+                <Typography variant="body2">
+                  Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).
+                </Typography>
+                <Box mt={2}>
+                  <Typography variant="body2">Full Name: Alec M. Thompson</Typography>
+                  <Typography variant="body2">Mobile: (44) 123 1234 123</Typography>
+                  <Typography variant="body2">Email: alec.thompson@mail.com</Typography>
+                  <Typography variant="body2">Location: USA</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </ProfileInfo>
+        </Content>
+      </Root>
+    </Container>
+    </ThemeProvider>
   );
-}
+};
 
 export default MyProfile;
