@@ -13,7 +13,7 @@ import secureLocalStorage from "react-secure-storage";
 import secure from './assets/baseURL/secure';
 import EditProduct from './components/ProductsComponent/EditProduct';
 import MyProfile from './components/UserProfileComponent/MyProfile';
-import UserVerification from './components/UserVerificationComponent/UserVerfication';
+import UserVerification from './components/UserVerificationComponent/UserVerification';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
