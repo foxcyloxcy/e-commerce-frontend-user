@@ -90,9 +90,15 @@ const NavBar = (props) => {
           }}
         >
           <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Reloved Logo
-            </Typography>
+
+          {isSmallScreen || isMediumScreen ? (
+          <img src={elevate ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+          ) : (
+            <Typography component="div" sx={{ flexGrow: 1 }}>
+            <img src={elevate ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '150px', height: 'auto', objectFit: 'contain' }} />
+            </Typography> 
+          )}
+
             {isSmallScreen || isMediumScreen ? (
               <IconButton
                 edge="start"
