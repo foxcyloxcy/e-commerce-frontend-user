@@ -47,6 +47,7 @@ const UserVerification = () => {
         {code.map((digit, index) => (
           <Grid item key={index}>
             <TextField
+              type='verify-field'
               id={`verification-code-${index}`}
               value={digit}
               onChange={(e) => handleChange(e, index)}
