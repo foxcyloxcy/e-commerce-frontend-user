@@ -4,14 +4,11 @@ import {
     Toolbar,
     Typography,
     IconButton,
-    Menu,
-    MenuItem,
     Container,
     Grid,
     FormControl,
     Input,
     Checkbox,
-    Slider,
     Button,
     FormGroup,
     FormControlLabel,
@@ -24,21 +21,29 @@ import {
     CardContent,
     Drawer,
     useMediaQuery,
-    ThemeProvider
+    ThemeProvider,
+    List,
+    ListItem,
+    ListItemText,
+    ListItemIcon,
+    Menu,
+    MenuItem,
+    Collapse
 } from '@mui/material';
-import { Search as SearchIcon, Menu as MenuIcon, ChevronLeft, ChevronRight, Star, StarBorder, FavoriteBorder } from '@mui/icons-material';
+import { Search as SearchIcon, Menu as MenuIcon, ChevronLeft, ChevronRight, Star, StarBorder, FavoriteBorder, ExpandLess, ExpandMore } from '@mui/icons-material';
 import InputBase from '@mui/material/InputBase';
 import ModTheme from '../ThemeComponent/ModTheme';
-import { styled, alpha } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import api from '../../assets/baseURL/api';
 
 const ProductList = (props) => {
-    const { parentIsLoggedIn } = props
+    const { parentIsLoggedIn } = props;
     const [anchorEl, setAnchorEl] = useState(null);
     const [categories, setCategories] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [openCategory, setOpenCategory] = useState({});
     const [drawerOpen, setDrawerOpen] = useState(false);
     const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
     const [elevate, setElevate] = useState(false);
@@ -57,14 +62,24 @@ const ProductList = (props) => {
 
     const handleCategoryChange = async (categoryId) => {
         setSelectedCategory(categoryId);
+        console.log(categoryId)
         try {
             const response = await api.get(`api/global/sub-category?category_id=${categoryId}`);
+            console.log(response)
             if (response.status === 200) {
                 setSubCategories(response.data.data);
             }
         } catch (error) {
             console.log(error);
         }
+    };
+
+    const handleToggleCategory = (categoryId) => {
+        console.log(categoryId)
+        setOpenCategory((prevOpenCategory) => ({
+            ...prevOpenCategory,
+            [categoryId]: !prevOpenCategory[categoryId],
+        }));
     };
 
     const trigger = useScrollTrigger({
@@ -124,27 +139,27 @@ const ProductList = (props) => {
                     <Typography variant="h6" component="h3" gutterBottom sx={{ padding: 2 }}>
                         Categories
                     </Typography>
-                    <Toolbar sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', background: ModTheme.palette.secondary.contrastText }}>
+                    <List>
                         {categories.map((category) => (
-                            <div key={category.id}>
-                                <Button
-                                    color="inherit"
-                                    onClick={() => handleCategoryChange(category.id)}
-                                >
-                                    {category.name}
-                                </Button>
-                                {selectedCategory === category.id && subCategories.length > 0 && (
-                                    <div style={{ paddingLeft: '20px' }}>
+                            <React.Fragment key={category.id}>
+                                <ListItem button onClick={() => handleToggleCategory(category.id)}>
+                                    <ListItemText primary={category.name} />
+                                    {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
+                                </ListItem>
+                                <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
+                                    <List component="div" disablePadding>
                                         {subCategories.map((subCategory) => (
-                                            <Button key={subCategory.id} color="inherit">
-                                                {subCategory.name}
-                                            </Button>
+                                            subCategory.category_id === category.id && (
+                                                <ListItem button key={subCategory.id} sx={{ pl: 4 }}>
+                                                    <ListItemText primary={subCategory.name} />
+                                                </ListItem>
+                                            )
                                         ))}
-                                    </div>
-                                )}
-                            </div>
+                                    </List>
+                                </Collapse>
+                            </React.Fragment>
                         ))}
-                    </Toolbar>
+                    </List>
                     <Divider sx={{ marginY: '20px' }} />
                 </>
             )}
@@ -216,15 +231,15 @@ const ProductList = (props) => {
 
     useEffect(() => {
         if (parentIsLoggedIn) {
-            setIsLoggedIn(parentIsLoggedIn)
+            setIsLoggedIn(parentIsLoggedIn);
         } else {
-            setIsLoggedIn(false)
+            setIsLoggedIn(false);
         }
 
         if (isLoggedIn) {
             setElevate(trigger);
         } else {
-            setElevate(false)
+            setElevate(false);
         }
 
         loadCategories();
@@ -247,17 +262,24 @@ const ProductList = (props) => {
                         transition: 'background-color 0.30s, box-shadow 0.30s',
                         boxShadow: elevate ? '4px 4px 0px 2px rgba(0, 0, 0, 0.3)' : 'none',
                         borderBottom: elevate ? 'none' : `1px #606060 solid`,
-                        borderTop: elevate ? `1px #606060 solid` : 'none'
-                    }}>
+                        borderTop: elevate ? `1px #606060 solid` : 'none',
+                        paddingLeft: 1,
+                        paddingRight: 1
+                    }}
+                >
                     <Toolbar>
-                        {isSmallScreen && (
-                            <IconButton edge="start" color="secondary.main" aria-label="menu" onClick={toggleDrawer}>
-                                <MenuIcon />
-                            </IconButton>
-                        )}
+                        <IconButton
+                            color='secondary'
+                            aria-label="open drawer"
+                            edge="start"
+                            onClick={toggleDrawer}
+                            sx={{ mr: 2, display: { md: 'none' } }}
+                        >
+                            <MenuIcon />
+                        </IconButton>
                         <Search>
                             <SearchIconWrapper>
-                                <SearchIcon color="secondary.main" />
+                                <SearchIcon />
                             </SearchIconWrapper>
                             <StyledInputBase
                                 placeholder="Search…"
