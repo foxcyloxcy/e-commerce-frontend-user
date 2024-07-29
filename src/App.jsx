@@ -35,12 +35,18 @@ function App() {
 
     if (storedIsLoggedIn) {
       setIsLoggedIn(storedIsLoggedIn);
+    }else{
+      setIsLoggedIn("")
     }
     if (storedUserData) {
       setUserData(storedUserData);
+    }else{
+      setUserData("")
     }
     if (storedUserToken) {
       setUserToken(storedUserToken);
+    }else{
+      setUserToken("")
     }
   }, []);
 
