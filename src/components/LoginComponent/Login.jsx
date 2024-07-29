@@ -124,7 +124,6 @@ export default function Login({ refreshParent }) {
               id="email"
               label="Email or Phone No."
               name="email"
-              autoFocus
               value={formValues.email}
               onChange={handleInputChange}
             />
