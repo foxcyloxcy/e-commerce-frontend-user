@@ -25,7 +25,7 @@ const AddProduct = () => {
   const colorOptions = ["Red", "Blue", "Green"];
 
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'YOUR_GOOGLE_MAPS_API_KEY',
+    googleMapsApiKey: 'AIzaSyAGgTLA3l7r3jFcuzdcsmknwsSRUjTh4cY',
     libraries,
   });
 
