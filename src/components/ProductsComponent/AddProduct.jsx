@@ -122,7 +122,8 @@ const AddProduct = () => {
         marginTop: 10,
         marginBottom: 5,
         maxWidth: { xs: '100%', sm: '80%', md: '60%', lg: '50%', xl: '40%' },
-        boxSizing: 'border-box'
+        boxSizing: 'border-box',
+        minHeight: '60vh'
       }}>
         <Typography variant="h4" component="h1" gutterBottom sx={{
           marginBottom: 3
