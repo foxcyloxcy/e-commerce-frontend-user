@@ -73,9 +73,6 @@ const ProductListGrid = () => {
                                 <Button variant="contained" color="primary" fullWidth sx={{ marginTop: '10px' }}>
                                     Details
                                 </Button>
-                                <Button variant="outlined" fullWidth startIcon={<FavoriteBorder />} sx={{ marginTop: '10px' }}>
-                                    Add to wishlist
-                                </Button>
                             </CardContent>
                         </Grid>
                     </Grid>
