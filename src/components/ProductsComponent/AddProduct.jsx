@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import FileInput from './FileInput'; // Import your custom FileInput component
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 
@@ -33,8 +34,7 @@ const AddProduct = (props) => {
     libraries,
   });
 
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
+  const handleImageUpload = (files) => {
     setImages((prevImages) => [...prevImages, ...files].slice(0, 10));
   };
 
@@ -46,8 +46,8 @@ const AddProduct = (props) => {
   };
 
   const handleBidChange = (event) => {
-    const { value, checked } = event.target;
-    setAcceptOffers(1);
+    const { checked } = event.target;
+    setAcceptOffers(checked ? 1 : 0);
   };
 
   const handleBrandChange = (event) => {
@@ -80,7 +80,6 @@ const AddProduct = (props) => {
     setSelectedCategory(categoryId);
     try {
       const response = await api.get(`api/global/sub-category?category_id=${categoryId}`);
-      console.log(response)
       if (response.status === 200) {
         setSubCategories(response.data.data);
       }
@@ -96,29 +95,27 @@ const AddProduct = (props) => {
       setLoading(false);
       return;
     }
-    const productData = {
-      item_name : productName,
-      item_description: description,
-      images,
-      price: price,
-      // location,
-      // brands,
-      // colors,
-      is_bid: acceptOffers,
-      sub_category_id: selectedSubCategories,
-    };
-  
-    console.log(userToken)
+
+    const formData = new FormData();
+    formData.append('item_name', productName);
+    formData.append('item_description', description);
+    formData.append('price', price);
+    formData.append('is_bid', acceptOffers);
+    formData.append('sub_category_id', selectedSubCategories);
+
+    images.forEach((image, index) => {
+      formData.append(`imgs[${index}]`, image);
+    });
+
     try {
-      const res = await api.post("/api/auth/items", productData, {
+      const res = await api.post("/api/auth/items", formData, {
         headers: {
           Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'multipart/form-data',
         },
       });
+
       if (res.status === 200) {
-        const data = res.data.data;
-        console.log(data);
-  
         history("/");
       }
     } catch (error) {
@@ -127,7 +124,6 @@ const AddProduct = (props) => {
       setLoading(false);
     }
   };
-  
 
   const loadCategories = useCallback(async () => {
     try {
@@ -160,8 +156,6 @@ const AddProduct = (props) => {
           Post your pre-loved item
         </Typography>
         <form onSubmit={handleSubmit}>
-
-
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <FormControl fullWidth size="small">
@@ -182,7 +176,7 @@ const AddProduct = (props) => {
             {subCategories.length > 0 && (
               <Grid item xs={12}>
                 <FormControl fullWidth size="small">
-                  <InputLabel>Select Category</InputLabel>
+                  <InputLabel>Select Subcategory</InputLabel>
                   <Select
                     value={selectedSubCategories}
                     onChange={handleSubCategoryChange}
@@ -237,16 +231,17 @@ const AddProduct = (props) => {
                 <Grid item xs={12}>
                   <FormGroup>
                     <FormControlLabel
-                      control={<Checkbox checked={acceptOffers} onChange={(e) => setAcceptOffers(e.target.checked)} />}
+                      control={<Checkbox checked={acceptOffers} onChange={handleBidChange} />}
                       label="Accept Offers"
                     />
                   </FormGroup>
                 </Grid>
                 <Grid item xs={12}>
-                  <Button variant="contained" component="label">
-                    Upload Images (max 10)
-                    <input type="file" accept="image/*" multiple hidden onChange={handleImageUpload} />
-                  </Button>
+                  <FileInput
+                    onChange={handleImageUpload}
+                    multiple
+                    maxFiles={10}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   {images.map((image, index) => (
@@ -292,8 +287,8 @@ const AddProduct = (props) => {
                   </FormGroup>
                 </Grid>
                 <Grid item xs={12}>
-                  <Button type="submit" variant="contained" color="primary">
-                    Add Product
+                  <Button type="submit" variant="contained" color="primary" disabled={loading}>
+                    {loading ? 'Adding Product...' : 'Add Product'}
                   </Button>
                 </Grid>
               </>
