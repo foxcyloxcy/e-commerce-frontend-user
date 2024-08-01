@@ -1,121 +1,117 @@
 import React from 'react';
 import {
-    Toolbar,
-    Typography,
     Container,
-    Grid,
-    FormControl,
-    Input,
-    Checkbox,
-    Button,
+    Typography,
+    Divider,
+    List,
+    ListItem,
+    ListItemText,
+    Collapse,
     FormGroup,
     FormControlLabel,
+    Checkbox,
+    FormControl,
+    Input,
+    Button,
     RadioGroup,
     Radio,
-    Divider,
+    Grid
 } from '@mui/material';
-import ModTheme from '../ThemeComponent/ModTheme';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-const DrawerContent = (props) => {
-    const {isSmallScreen, categories} = props
-return (
-    <Container sx={{ width: 300, paddingLeft: 0 }}>
-        <Typography variant="h6" sx={{ paddingTop: 2, paddingBottom: 2 }}>Filters</Typography>
-        {isSmallScreen && (
-            <>
+const DrawerContent = ({ categories, openCategory, handleToggleCategory }) => {
+    return (
+        <Container sx={{ width: 300, paddingLeft: 0 }}>
+            <Typography variant="h6" sx={{ paddingTop: 2, paddingBottom: 2 }}>Filters</Typography>
+            <Divider />
+            <Typography variant="h6" component="h3" gutterBottom sx={{ padding: 2 }}>
+                Categories
+            </Typography>
+            <List>
+                {categories.map((category) => (
+                    <React.Fragment key={category.id}>
+                        <ListItem button onClick={() => handleToggleCategory(category.id)}>
+                            <ListItemText primary={category.name} />
+                            {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
+                        </ListItem>
+                        <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                {category.sub_category.map((subCategory) => (
+                                    <ListItem button key={subCategory.id} sx={{ pl: 4 }}>
+                                        <ListItemText primary={subCategory.name} />
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </Collapse>
+                    </React.Fragment>
+                ))}
+            </List>
+            <Divider sx={{ marginY: '20px' }} />
+            <div style={{ padding: 2 }}>
                 <Divider />
-                <Typography variant="h6" component="h3" gutterBottom sx={{ padding: 2 }}>
-                    Categories
+                <Typography variant="h6" component="h3" gutterBottom>
+                    Brands
                 </Typography>
-                <Toolbar sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', background: ModTheme.palette.secondary.contrastText }}>
-                    {categories.map((category) => (
-                        <div key={category.id}>
-                            <Button
-                                color="inherit"
-                                onClick={() => handleCategoryChange(category.id)}
-                            >
-                                {category.name}
-                            </Button>
-                            {selectedCategory === category.id && subCategories.length > 0 && (
-                                <div style={{ paddingLeft: '20px' }}>
-                                    {subCategories.map((subCategory) => (
-                                        <Button key={subCategory.id} color="inherit">
-                                            {subCategory.name}
-                                        </Button>
-                                    ))}
+                <FormGroup>
+                    {['Mercedes', 'Toyota', 'Mitsubishi', 'Nissan', 'Honda'].map((brand) => (
+                        <FormControlLabel
+                            key={brand}
+                            control={<Checkbox />}
+                            label={
+                                <div>
+                                    {brand}
+                                    <Typography component="span" variant="body2" sx={{ float: 'right' }}>
+                                        {Math.floor(Math.random() * 100)}
+                                    </Typography>
                                 </div>
-                            )}
-                        </div>
+                            }
+                        />
                     ))}
-                </Toolbar>
+                </FormGroup>
                 <Divider sx={{ marginY: '20px' }} />
-            </>
-        )}
-        <div style={{ padding: 2 }}>
-            {!isSmallScreen && <Divider />}
-            <Typography variant="h6" component="h3" gutterBottom>
-                Brands
-            </Typography>
-            <FormGroup>
-                {['Mercedes', 'Toyota', 'Mitsubishi', 'Nissan', 'Honda'].map((brand) => (
-                    <FormControlLabel
-                        key={brand}
-                        control={<Checkbox />}
-                        label={
-                            <div>
-                                {brand}
-                                <Typography component="span" variant="body2" sx={{ float: 'right' }}>
-                                    {Math.floor(Math.random() * 100)}
-                                </Typography>
-                            </div>
-                        }
-                    />
-                ))}
-            </FormGroup>
-            <Divider sx={{ marginY: '20px' }} />
-            <Typography variant="h6" component="h3" gutterBottom>
-                Price range
-            </Typography>
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
-                    <FormControl fullWidth>
-                        <Input placeholder="AED 50" type="number" />
-                    </FormControl>
+                <Typography variant="h6" component="h3" gutterBottom>
+                    Price range
+                </Typography>
+                <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                        <FormControl fullWidth>
+                            <Input placeholder="AED 50" type="number" />
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <FormControl fullWidth>
+                            <Input placeholder="AED 50,000" type="number" />
+                        </FormControl>
+                    </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                    <FormControl fullWidth>
-                        <Input placeholder="AED 50,000" type="number" />
-                    </FormControl>
-                </Grid>
-            </Grid>
-            <Button variant="contained" color="primary" fullWidth sx={{ marginTop: '10px' }}>
-                Apply
-            </Button>
-            <Divider sx={{ marginY: '20px' }} />
-            <Typography variant="h6" component="h3" gutterBottom>
-                Sizes
-            </Typography>
-            <FormGroup row>
-                {['XS', 'SM', 'LG', 'XXL'].map((size) => (
-                    <FormControlLabel
-                        key={size}
-                        control={<Checkbox />}
-                        label={<Button variant="outlined">{size}</Button>}
-                    />
-                ))}
-            </FormGroup>
-            <Divider sx={{ marginY: '20px' }} />
-            <Typography variant="h6" component="h3" gutterBottom>
-                More filter
-            </Typography>
-            <RadioGroup defaultValue="any">
-                {['Any condition', 'Brand new', 'Used items', 'Very old'].map((condition) => (
-                    <FormControlLabel key={condition} value={condition.toLowerCase()} control={<Radio />} label={condition} />
-                ))}
-            </RadioGroup>
-        </div>
-    </Container>
-)
-}
+                <Button variant="contained" color="primary" fullWidth sx={{ marginTop: '10px' }}>
+                    Apply
+                </Button>
+                <Divider sx={{ marginY: '20px' }} />
+                <Typography variant="h6" component="h3" gutterBottom>
+                    Sizes
+                </Typography>
+                <FormGroup row>
+                    {['XS', 'SM', 'LG', 'XXL'].map((size) => (
+                        <FormControlLabel
+                            key={size}
+                            control={<Checkbox />}
+                            label={<Button variant="outlined">{size}</Button>}
+                        />
+                    ))}
+                </FormGroup>
+                <Divider sx={{ marginY: '20px' }} />
+                <Typography variant="h6" component="h3" gutterBottom>
+                    More filter
+                </Typography>
+                <RadioGroup defaultValue="any">
+                    {['Any condition', 'Brand new', 'Used items', 'Very old'].map((condition) => (
+                        <FormControlLabel key={condition} value={condition.toLowerCase()} control={<Radio />} label={condition} />
+                    ))}
+                </RadioGroup>
+            </div>
+        </Container>
+    );
+};
 
 export default DrawerContent;
