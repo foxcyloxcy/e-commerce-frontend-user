@@ -25,7 +25,6 @@ import {
     List,
     ListItem,
     ListItemText,
-    ListItemIcon,
     Menu,
     MenuItem,
     Collapse
@@ -41,8 +40,6 @@ const ProductList = (props) => {
     const { parentIsLoggedIn } = props;
     const [anchorEl, setAnchorEl] = useState(null);
     const [categories, setCategories] = useState([]);
-    const [subCategories, setSubCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState(null);
     const [openCategory, setOpenCategory] = useState({});
     const [drawerOpen, setDrawerOpen] = useState(false);
     const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
@@ -60,22 +57,7 @@ const ProductList = (props) => {
         }
     }, []);
 
-    const handleCategoryChange = async (categoryId) => {
-        setSelectedCategory(categoryId);
-        console.log(categoryId)
-        try {
-            const response = await api.get(`api/global/sub-category?category_id=${categoryId}`);
-            console.log(response)
-            if (response.status === 200) {
-                setSubCategories(response.data.data);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
     const handleToggleCategory = (categoryId) => {
-        console.log(categoryId)
         setOpenCategory((prevOpenCategory) => ({
             ...prevOpenCategory,
             [categoryId]: !prevOpenCategory[categoryId],
@@ -133,38 +115,32 @@ const ProductList = (props) => {
     const drawerContent = (
         <Container sx={{ width: 300, paddingLeft: 0 }}>
             <Typography variant="h6" sx={{ paddingTop: 2, paddingBottom: 2 }}>Filters</Typography>
-            {isSmallScreen && (
-                <>
-                    <Divider />
-                    <Typography variant="h6" component="h3" gutterBottom sx={{ padding: 2 }}>
-                        Categories
-                    </Typography>
-                    <List>
-                        {categories.map((category) => (
-                            <React.Fragment key={category.id}>
-                                <ListItem button onClick={() => handleToggleCategory(category.id)}>
-                                    <ListItemText primary={category.name} />
-                                    {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
-                                </ListItem>
-                                <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
-                                    <List component="div" disablePadding>
-                                        {subCategories.map((subCategory) => (
-                                            subCategory.category_id === category.id && (
-                                                <ListItem button key={subCategory.id} sx={{ pl: 4 }}>
-                                                    <ListItemText primary={subCategory.name} />
-                                                </ListItem>
-                                            )
-                                        ))}
-                                    </List>
-                                </Collapse>
-                            </React.Fragment>
-                        ))}
-                    </List>
-                    <Divider sx={{ marginY: '20px' }} />
-                </>
-            )}
+            <Divider />
+            <Typography variant="h6" component="h3" gutterBottom sx={{ padding: 2 }}>
+                Categories
+            </Typography>
+            <List>
+                {categories.map((category) => (
+                    <React.Fragment key={category.id}>
+                        <ListItem button onClick={() => handleToggleCategory(category.id)}>
+                            <ListItemText primary={category.name} />
+                            {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
+                        </ListItem>
+                        <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                {category.sub_category.map((subCategory) => (
+                                    <ListItem button key={subCategory.id} sx={{ pl: 4 }}>
+                                        <ListItemText primary={subCategory.name} />
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </Collapse>
+                    </React.Fragment>
+                ))}
+            </List>
+            <Divider sx={{ marginY: '20px' }} />
             <div style={{ padding: 2 }}>
-                {!isSmallScreen && <Divider />}
+                <Divider />
                 <Typography variant="h6" component="h3" gutterBottom>
                     Brands
                 </Typography>
@@ -290,9 +266,10 @@ const ProductList = (props) => {
                             <Button
                                 key={category.id}
                                 color='secondary'
-                                onClick={() => handleCategoryChange(category.id)}
+                                onClick={() => handleToggleCategory(category.id)}
                             >
                                 {category.name}
+                                {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
                             </Button>
                         ))}
                     </Toolbar>
