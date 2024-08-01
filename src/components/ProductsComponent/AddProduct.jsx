@@ -134,7 +134,7 @@ const AddProduct = () => {
 
 
           <Grid container spacing={2}>
-          <Grid item xs={12}>
+            <Grid item xs={12}>
               <FormControl fullWidth size="small">
                 <InputLabel>Select Category</InputLabel>
                 <Select
@@ -153,120 +153,120 @@ const AddProduct = () => {
             {subCategories.length > 0 && (
               <Grid item xs={12}>
                 <FormControl fullWidth size="small">
-                <InputLabel>Select Category</InputLabel>
-                <Select
-                  value={selectedSubCategories}
-                  onChange={handleSubCategoryChange}
-                  label="Select Subcategory"
-                >
-                  {subCategories.map((subCategory) => (
-                    <MenuItem key={subCategory.id} value={subCategory.id}>
-                      {subCategory.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+                  <InputLabel>Select Category</InputLabel>
+                  <Select
+                    value={selectedSubCategories}
+                    onChange={handleSubCategoryChange}
+                    label="Select Subcategory"
+                  >
+                    {subCategories.map((subCategory) => (
+                      <MenuItem key={subCategory.id} value={subCategory.id}>
+                        {subCategory.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </Grid>
             )}
-            {selectedSubCategories &&(
+            {selectedSubCategories && (
               <>
-                                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            size="small"
-                            fullWidth
-                            label="Product Name"
-                            value={productName}
-                            onChange={(e) => setProductName(e.target.value)}
-                            required
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <TextField
-                            size="small"
-                            fullWidth
-                            label="Price"
-                            type="number"
-                            value={price}
-                            onChange={handlePriceChange}
-                            error={Boolean(priceError)}
-                            helperText={priceError}
-                            required
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <TextField
-                            size="small"
-                            fullWidth
-                            label="Description"
-                            multiline
-                            rows={4}
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            required
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          <FormGroup>
-                            <FormControlLabel
-                              control={<Checkbox checked={acceptOffers} onChange={(e) => setAcceptOffers(e.target.checked)} />}
-                              label="Accept Offers"
-                            />
-                          </FormGroup>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Button variant="contained" component="label">
-                            Upload Images (max 10)
-                            <input type="file" accept="image/*" multiple hidden onChange={handleImageUpload} />
-                          </Button>
-                        </Grid>
-                        <Grid item xs={12}>
-                          {images.map((image, index) => (
-                            <Typography key={index}>{image.name}</Typography>
-                          ))}
-                        </Grid>
-                        <Grid item xs={12}>
-                          {isLoaded ? (
-                            <GoogleMap
-                              mapContainerStyle={{ width: '100%', height: '400px' }}
-                              zoom={8}
-                              center={{ lat: -3.745, lng: -38.523 }}
-                              onClick={handleMapClick}
-                            >
-                              {location && <Marker position={location} />}
-                            </GoogleMap>
-                          ) : (
-                            <Typography>Loading map...</Typography>
-                          )}
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography variant="h6">Brands</Typography>
-                          <FormGroup>
-                            {brandOptions.map((brand) => (
-                              <FormControlLabel
-                                key={brand}
-                                control={<Checkbox value={brand} checked={brands.includes(brand)} onChange={handleBrandChange} />}
-                                label={brand}
-                              />
-                            ))}
-                          </FormGroup>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Typography variant="h6">Colors</Typography>
-                          <FormGroup>
-                            {colorOptions.map((color) => (
-                              <FormControlLabel
-                                key={color}
-                                control={<Checkbox value={color} checked={colors.includes(color)} onChange={handleColorChange} />}
-                                label={color}
-                              />
-                            ))}
-                          </FormGroup>
-                        </Grid>
-                        <Grid item xs={12}>
-                          <Button type="submit" variant="contained" color="primary">
-                            Add Product
-                          </Button>
-                        </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    size="small"
+                    fullWidth
+                    label="Product Name"
+                    value={productName}
+                    onChange={(e) => setProductName(e.target.value)}
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    size="small"
+                    fullWidth
+                    label="Price"
+                    type="number"
+                    value={price}
+                    onChange={handlePriceChange}
+                    error={Boolean(priceError)}
+                    helperText={priceError}
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    size="small"
+                    fullWidth
+                    label="Description"
+                    multiline
+                    rows={4}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    required
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormGroup>
+                    <FormControlLabel
+                      control={<Checkbox checked={acceptOffers} onChange={(e) => setAcceptOffers(e.target.checked)} />}
+                      label="Accept Offers"
+                    />
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={12}>
+                  <Button variant="contained" component="label">
+                    Upload Images (max 10)
+                    <input type="file" accept="image/*" multiple hidden onChange={handleImageUpload} />
+                  </Button>
+                </Grid>
+                <Grid item xs={12}>
+                  {images.map((image, index) => (
+                    <Typography key={index}>{image.name}</Typography>
+                  ))}
+                </Grid>
+                <Grid item xs={12}>
+                  {isLoaded ? (
+                    <GoogleMap
+                      mapContainerStyle={{ width: '100%', height: '400px' }}
+                      zoom={8}
+                      center={{ lat: -3.745, lng: -38.523 }}
+                      onClick={handleMapClick}
+                    >
+                      {location && <Marker position={location} />}
+                    </GoogleMap>
+                  ) : (
+                    <Typography>Loading map...</Typography>
+                  )}
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="h6">Brands</Typography>
+                  <FormGroup>
+                    {brandOptions.map((brand) => (
+                      <FormControlLabel
+                        key={brand}
+                        control={<Checkbox value={brand} checked={brands.includes(brand)} onChange={handleBrandChange} />}
+                        label={brand}
+                      />
+                    ))}
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="h6">Colors</Typography>
+                  <FormGroup>
+                    {colorOptions.map((color) => (
+                      <FormControlLabel
+                        key={color}
+                        control={<Checkbox value={color} checked={colors.includes(color)} onChange={handleColorChange} />}
+                        label={color}
+                      />
+                    ))}
+                  </FormGroup>
+                </Grid>
+                <Grid item xs={12}>
+                  <Button type="submit" variant="contained" color="primary">
+                    Add Product
+                  </Button>
+                </Grid>
               </>
             )}
           </Grid>
