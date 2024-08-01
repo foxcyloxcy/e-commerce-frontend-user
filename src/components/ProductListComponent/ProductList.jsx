@@ -6,35 +6,19 @@ import {
     IconButton,
     Container,
     Grid,
-    FormControl,
-    Input,
-    Checkbox,
     Button,
-    FormGroup,
-    FormControlLabel,
-    RadioGroup,
-    Radio,
-    Select,
-    Tooltip,
-    Divider,
-    Card,
-    CardContent,
     Drawer,
     useMediaQuery,
-    ThemeProvider,
-    List,
-    ListItem,
-    ListItemText,
-    Menu,
-    MenuItem,
-    Collapse
+    ThemeProvider
 } from '@mui/material';
-import { Search as SearchIcon, Menu as MenuIcon, ChevronLeft, ChevronRight, Star, StarBorder, FavoriteBorder, ExpandLess, ExpandMore } from '@mui/icons-material';
+import { Search as SearchIcon, Menu as MenuIcon, ExpandLess, ExpandMore } from '@mui/icons-material';
 import InputBase from '@mui/material/InputBase';
 import ModTheme from '../ThemeComponent/ModTheme';
 import { styled } from '@mui/material/styles';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import api from '../../assets/baseURL/api';
+import DrawerContent from './DrawerContent';
+import ProductListGrid from './ProductListGrid';
 
 const ProductList = (props) => {
     const { parentIsLoggedIn } = props;
@@ -57,20 +41,29 @@ const ProductList = (props) => {
         }
     }, []);
 
+    useEffect(() => {
+        loadCategories();
+        setIsLoggedIn(parentIsLoggedIn);
+    }, [loadCategories, parentIsLoggedIn]);
+
+    const trigger = useScrollTrigger({
+        disableHysteresis: true,
+        threshold: 0,
+    });
+
+    useEffect(() => {
+        setElevate(trigger);
+    }, [trigger]);
+
+    const toggleDrawer = () => {
+        setDrawerOpen(!drawerOpen);
+    };
+
     const handleToggleCategory = (categoryId) => {
         setOpenCategory((prevOpenCategory) => ({
             ...prevOpenCategory,
             [categoryId]: !prevOpenCategory[categoryId],
         }));
-    };
-
-    const trigger = useScrollTrigger({
-        disableHysteresis: true,
-        threshold: 10,
-    });
-
-    const toggleDrawer = () => {
-        setDrawerOpen(!drawerOpen);
     };
 
     const Search = styled('div')(({ theme }) => ({
@@ -96,7 +89,6 @@ const ProductList = (props) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: theme.palette.secondary.main
     }));
 
     const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -111,115 +103,6 @@ const ProductList = (props) => {
             },
         },
     }));
-
-    const drawerContent = (
-        <Container sx={{ width: 300, paddingLeft: 0 }}>
-            <Typography variant="h6" sx={{ paddingTop: 2, paddingBottom: 2 }}>Filters</Typography>
-            <Divider />
-            <Typography variant="h6" component="h3" gutterBottom sx={{ padding: 2 }}>
-                Categories
-            </Typography>
-            <List>
-                {categories.map((category) => (
-                    <React.Fragment key={category.id}>
-                        <ListItem button onClick={() => handleToggleCategory(category.id)}>
-                            <ListItemText primary={category.name} />
-                            {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
-                        </ListItem>
-                        <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding>
-                                {category.sub_category.map((subCategory) => (
-                                    <ListItem button key={subCategory.id} sx={{ pl: 4 }}>
-                                        <ListItemText primary={subCategory.name} />
-                                    </ListItem>
-                                ))}
-                            </List>
-                        </Collapse>
-                    </React.Fragment>
-                ))}
-            </List>
-            <Divider sx={{ marginY: '20px' }} />
-            <div style={{ padding: 2 }}>
-                <Divider />
-                <Typography variant="h6" component="h3" gutterBottom>
-                    Brands
-                </Typography>
-                <FormGroup>
-                    {['Mercedes', 'Toyota', 'Mitsubishi', 'Nissan', 'Honda'].map((brand) => (
-                        <FormControlLabel
-                            key={brand}
-                            control={<Checkbox />}
-                            label={
-                                <div>
-                                    {brand}
-                                    <Typography component="span" variant="body2" sx={{ float: 'right' }}>
-                                        {Math.floor(Math.random() * 100)}
-                                    </Typography>
-                                </div>
-                            }
-                        />
-                    ))}
-                </FormGroup>
-                <Divider sx={{ marginY: '20px' }} />
-                <Typography variant="h6" component="h3" gutterBottom>
-                    Price range
-                </Typography>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <FormControl fullWidth>
-                            <Input placeholder="AED 50" type="number" />
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <FormControl fullWidth>
-                            <Input placeholder="AED 50,000" type="number" />
-                        </FormControl>
-                    </Grid>
-                </Grid>
-                <Button variant="contained" color="primary" fullWidth sx={{ marginTop: '10px' }}>
-                    Apply
-                </Button>
-                <Divider sx={{ marginY: '20px' }} />
-                <Typography variant="h6" component="h3" gutterBottom>
-                    Sizes
-                </Typography>
-                <FormGroup row>
-                    {['XS', 'SM', 'LG', 'XXL'].map((size) => (
-                        <FormControlLabel
-                            key={size}
-                            control={<Checkbox />}
-                            label={<Button variant="outlined">{size}</Button>}
-                        />
-                    ))}
-                </FormGroup>
-                <Divider sx={{ marginY: '20px' }} />
-                <Typography variant="h6" component="h3" gutterBottom>
-                    More filter
-                </Typography>
-                <RadioGroup defaultValue="any">
-                    {['Any condition', 'Brand new', 'Used items', 'Very old'].map((condition) => (
-                        <FormControlLabel key={condition} value={condition.toLowerCase()} control={<Radio />} label={condition} />
-                    ))}
-                </RadioGroup>
-            </div>
-        </Container>
-    );
-
-    useEffect(() => {
-        if (parentIsLoggedIn) {
-            setIsLoggedIn(parentIsLoggedIn);
-        } else {
-            setIsLoggedIn(false);
-        }
-
-        if (isLoggedIn) {
-            setElevate(trigger);
-        } else {
-            setElevate(false);
-        }
-
-        loadCategories();
-    }, [trigger, loadCategories]);
 
     return (
         <ThemeProvider theme={ModTheme}>
@@ -275,81 +158,24 @@ const ProductList = (props) => {
                     </Toolbar>
                 </AppBar>
                 <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
-                    {drawerContent}
+                <DrawerContent
+                        categories={categories}
+                        openCategory={openCategory}
+                        handleToggleCategory={handleToggleCategory}
+                    />
                 </Drawer>
                 <Container sx={{ paddingTop: 2, paddingBottom: 2 }}>
                     <Grid container spacing={2}>
                         {!isSmallScreen && (
                             <Grid item xs={12} md={4} lg={3} className='filter-grid'>
-                                {drawerContent}
+                                <DrawerContent
+                                    categories={categories}
+                                    openCategory={openCategory}
+                                    handleToggleCategory={handleToggleCategory}
+                                />
                             </Grid>
                         )}
-                        <Grid item xs={12} md={8} lg={9}>
-                            <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
-                                <Grid container alignItems="center">
-                                    <Grid item xs={12} md>
-                                        <Typography variant="body1">32 Items found</Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <FormControl variant="outlined" sx={{ minWidth: 150, marginRight: '10px' }}>
-                                            <Select defaultValue="latest">
-                                                <MenuItem value="latest">Latest items</MenuItem>
-                                                <MenuItem value="trending">Trending</MenuItem>
-                                                <MenuItem value="popular">Most Popular</MenuItem>
-                                                <MenuItem value="cheapest">Cheapest</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Grid>
-                                    <Grid item>
-                                        <Tooltip title="List view">
-                                            <IconButton>
-                                                <ChevronLeft />
-                                            </IconButton>
-                                        </Tooltip>
-                                        <Tooltip title="Grid view">
-                                            <IconButton>
-                                                <ChevronRight />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </Grid>
-                                </Grid>
-                            </header>
-                            {[1, 2, 3, 4].map((product) => (
-                                <Card key={product} sx={{ marginBottom: '20px', background: '#fff', }}>
-                                    <Grid container spacing={0}>
-                                        <Grid item xs={12} md={3}>
-                                            <div style={{ position: 'relative' }}>
-                                                {product === 1 && <span className="badge badge-danger">NEW</span>}
-                                                <img src={`assets/images/items/AED {product}.jpg`} alt="Product" style={{ width: '100%' }} />
-                                            </div>
-                                        </Grid>
-                                        <Grid item xs={12} md={6}>
-                                            <CardContent>
-                                                <Typography variant="h6">Great product name goes here</Typography>
-                                                <Typography variant="body2">
-                                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                                                    Ut wisi enim ad minim veniam
-                                                </Typography>
-                                            </CardContent>
-                                        </Grid>
-                                        <Grid item xs={12} md={3}>
-                                            <CardContent>
-                                                <Typography variant="h6">AED 140</Typography>
-                                                <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
-                                                    Accepting Offers
-                                                </Typography>
-                                                <Button variant="contained" color="primary" fullWidth sx={{ marginTop: '10px' }}>
-                                                    Details
-                                                </Button>
-                                                <Button variant="outlined" fullWidth startIcon={<FavoriteBorder />} sx={{ marginTop: '10px' }}>
-                                                    Add to wishlist
-                                                </Button>
-                                            </CardContent>
-                                        </Grid>
-                                    </Grid>
-                                </Card>
-                            ))}
-                        </Grid>
+                        <ProductListGrid />
                     </Grid>
                 </Container>
             </Container>
