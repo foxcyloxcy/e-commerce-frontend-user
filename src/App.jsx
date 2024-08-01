@@ -94,7 +94,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product-details" element={<ProductDetails />} />
-        <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/add-product" element={<AddProduct userToken={userToken}/>} />
         <Route path="/edit-product" element={<EditProduct />} />
         <Route path="/my-profile" element={<MyProfile />} />
         <Route path="/verify" element={<UserVerification />} />
