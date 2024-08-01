@@ -147,6 +147,27 @@ const ProductList = (props) => {
                         </Search>
                         {!isSmallScreen && categories.map((category) => (
                             <Button
+                            sx={{
+                                fontSize: '0.50rem',
+                                '@media (min-width:200px)': {
+                                    fontSize: '0.3rem',
+                                },
+                                '@media (min-width:300px)': {
+                                    fontSize: '0.4rem',
+                                },
+                                '@media (min-width:400px)': {
+                                    fontSize: '0.5rem',
+                                },
+                                '@media (min-width:600px)': {
+                                    fontSize: '0.6rem',
+                                },
+                                '@media (min-width:960px)': {
+                                    fontSize: '0.8rem',
+                                },
+                                '@media (min-width:1280px)': {
+                                    fontSize:  '1rem',
+                                },
+                            }}
                                 key={category.id}
                                 color='secondary'
                                 onClick={() => handleToggleCategory(category.id)}
