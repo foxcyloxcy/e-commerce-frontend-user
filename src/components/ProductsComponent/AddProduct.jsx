@@ -1,21 +1,24 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 
 const libraries = ['places'];
 
-const AddProduct = () => {
+const AddProduct = (props) => {
+  const { userToken } = props;
   const [productName, setProductName] = useState('');
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState('');
   const [priceError, setPriceError] = useState('');
   const [location, setLocation] = useState(null);
   const [brands, setBrands] = useState([]);
   const [colors, setColors] = useState([]);
-  const [acceptOffers, setAcceptOffers] = useState(false);
+  const [acceptOffers, setAcceptOffers] = useState(0);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [subCategories, setSubCategories] = useState([]);
@@ -23,6 +26,7 @@ const AddProduct = () => {
 
   const brandOptions = ["Brand1", "Brand2", "Brand3"];
   const colorOptions = ["Red", "Blue", "Green"];
+  const history = useNavigate();
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: 'AIzaSyAGgTLA3l7r3jFcuzdcsmknwsSRUjTh4cY',
@@ -39,6 +43,11 @@ const AddProduct = () => {
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
     });
+  };
+
+  const handleBidChange = (event) => {
+    const { value, checked } = event.target;
+    setAcceptOffers(1);
   };
 
   const handleBrandChange = (event) => {
@@ -80,25 +89,45 @@ const AddProduct = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     if (priceError) {
+      setLoading(false);
       return;
     }
     const productData = {
-      productName,
-      description,
+      item_name : productName,
+      item_description: description,
       images,
-      price,
-      location,
-      brands,
-      colors,
-      acceptOffers,
-      selectedCategory,
-      selectedSubCategories,
+      price: price,
+      // location,
+      // brands,
+      // colors,
+      is_bid: acceptOffers,
+      sub_category_id: selectedSubCategories,
     };
-    console.log(productData);
+  
+    console.log(userToken)
+    try {
+      const res = await api.post("/api/auth/items", productData, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      if (res.status === 200) {
+        const data = res.data.data;
+        console.log(data);
+  
+        history("/");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
+  
 
   const loadCategories = useCallback(async () => {
     try {
