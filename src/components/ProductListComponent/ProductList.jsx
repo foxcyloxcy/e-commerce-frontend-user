@@ -42,9 +42,9 @@ const ProductList = (props) => {
         }
     }, []);
 
-    const loadProducts = useCallback(async () => {
+    const loadProducts = useCallback(async (subCategoryId) => {
         try {
-            const res = await api.get(`api/global/items?sub_category_id=1`);
+            const res = await api.get(`api/global/items?sub_category_id=${subCategoryId}`);
             if (res.status === 200) {
                 const data = res.data.data
                 console.log(data)
@@ -79,6 +79,11 @@ const ProductList = (props) => {
             ...prevOpenCategory,
             [categoryId]: !prevOpenCategory[categoryId],
         }));
+    };
+
+    const handleSubCategoryClick = (subCategoryId) => {
+        // Fetch and load products based on the selected subCategoryId
+        loadProducts(subCategoryId)
     };
 
     const Search = styled('div')(({ theme }) => ({
@@ -198,6 +203,7 @@ const ProductList = (props) => {
                         openCategory={openCategory}
                         handleToggleCategory={handleToggleCategory}
                         isSmallScreen={isSmallScreen}
+                        handleSubCategoryClick={handleSubCategoryClick}
                     />
                 </Drawer>
                 <Container sx={{ paddingTop: 2, paddingBottom: 2 }}>
@@ -209,6 +215,7 @@ const ProductList = (props) => {
                                     openCategory={openCategory}
                                     handleToggleCategory={handleToggleCategory}
                                     isSmallScreen={isSmallScreen}
+                                    handleSubCategoryClick={handleSubCategoryClick}
                                 />
                             </Grid>
                         )}
