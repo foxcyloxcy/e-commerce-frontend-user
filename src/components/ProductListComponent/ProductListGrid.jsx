@@ -14,13 +14,13 @@ import {
 import { ChevronLeft, ChevronRight, FavoriteBorder } from '@mui/icons-material';
 import ModTheme from '../ThemeComponent/ModTheme';
 
-const ProductListGrid = () => {
+const ProductListGrid = ({ productsData }) => {
     return (
         <Grid item xs={12} md={8} lg={9}>
             <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
                 <Grid container alignItems="center">
                     <Grid item xs={12} md>
-                        <Typography variant="body1">32 Items found</Typography>
+                        <Typography variant="body1">{productsData.length} Items found</Typography>
                     </Grid>
                     <Grid item>
                         <FormControl variant="outlined" sx={{ minWidth: 150, marginRight: '10px' }}>
@@ -46,29 +46,28 @@ const ProductListGrid = () => {
                     </Grid>
                 </Grid>
             </header>
-            {[1, 2, 3, 4].map((product) => (
-                <Card key={product} sx={{ marginBottom: '20px', background: '#fff', }}>
+            {productsData.map((product) => (
+                <Card key={product.id} sx={{ marginBottom: '20px', background: '#fff' }}>
                     <Grid container spacing={0}>
                         <Grid item xs={12} md={3}>
                             <div style={{ position: 'relative' }}>
-                                {product === 1 && <span className="badge badge-danger">NEW</span>}
-                                <img src={`assets/images/items/AED ${product}.jpg`} alt="Product" style={{ width: '100%' }} />
+                                {product.is_new && <span className="badge badge-danger">NEW</span>}
+                                <img src={product.default_image ? product.default_image.image_url : 'default_image_url'} alt="Product" style={{ width: '100%' }} />
                             </div>
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <CardContent>
-                                <Typography variant="h6">Great product name goes here</Typography>
+                                <Typography variant="h6">{product.item_name}</Typography>
                                 <Typography variant="body2">
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                                    Ut wisi enim ad minim veniam
+                                    {product.item_description}
                                 </Typography>
                             </CardContent>
                         </Grid>
                         <Grid item xs={12} md={3}>
                             <CardContent>
-                                <Typography variant="h6">AED 140</Typography>
+                                <Typography variant="h6">AED {product.price}</Typography>
                                 <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
-                                    Accepting Offers
+                                    {product.is_bid ? "Accepting Offers" : ""}
                                 </Typography>
                                 <Button variant="contained" color="primary" fullWidth sx={{ marginTop: '10px' }}>
                                     Details
