@@ -29,6 +29,7 @@ const ProductList = (props) => {
     const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
     const [elevate, setElevate] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [productsData, setProductsData] = useState([]);
 
     const loadCategories = useCallback(async () => {
         try {
@@ -41,8 +42,22 @@ const ProductList = (props) => {
         }
     }, []);
 
+    const loadProducts = useCallback(async () => {
+        try {
+            const res = await api.get(`api/global/items?sub_category_id=1`);
+            if (res.status === 200) {
+                const data = res.data.data
+                console.log(data)
+                setProductsData(data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+
     useEffect(() => {
         loadCategories();
+        loadProducts();
         setIsLoggedIn(parentIsLoggedIn);
     }, [loadCategories, parentIsLoggedIn]);
 
