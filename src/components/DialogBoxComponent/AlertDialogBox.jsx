@@ -1,9 +1,12 @@
 import {
     Button, Dialog, DialogActions,
-    DialogContent, DialogContentText, DialogTitle,
+    DialogContent, DialogContentText, DialogTitle, ThemeProvider
   } from '@mui/material';
+  import ModTheme from '../ThemeComponent/ModTheme';
+  import ButtonComponent from '../ButtonComponent/ButtonComponent';
   import { useState } from 'react';
-  const alertDialogBox = (title, message) => {
+  
+  const AlertDialogBox = (title, message, buttonLabel) => {
     const [promise, setPromise] = useState(null);
   
     const confirm = () => new Promise((resolve, reject) => {
@@ -25,6 +28,7 @@ import {
     };
     // You could replace the Dialog with your library's version
     const ConfirmationDialog = () => (
+      <ThemeProvider theme={ModTheme}>
       <Dialog
         open={promise !== null}
         fullWidth
@@ -34,12 +38,19 @@ import {
           <DialogContentText>{message}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleConfirm}>Yes</Button>
-          <Button onClick={handleCancel}>Cancel</Button>
+          <ButtonComponent
+            onClick={handleConfirm}
+            label={buttonLabel}
+          />
+          <ButtonComponent
+            onClick={handleCancel}
+            label={buttonLabel}
+          />
         </DialogActions>
       </Dialog>
+      </ThemeProvider>
     );
     return [ConfirmationDialog, confirm];
   };
   
-  export default alertDialogBox;
+  export default AlertDialogBox;
