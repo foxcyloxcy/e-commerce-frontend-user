@@ -24,9 +24,25 @@ const AddProduct = (props) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategories, setSelectedSubCategories] = useState('');
+  const [itemCondition, setItemCondition] = useState('');
 
-  const brandOptions = ["Brand1", "Brand2", "Brand3"];
-  const colorOptions = ["Red", "Blue", "Green"];
+  // Example mappings for brands, colors, and conditions
+  const brandOptions = [
+    { id: 1, name: "Brand1" },
+    { id: 2, name: "Brand2" },
+    { id: 3, name: "Brand3" }
+  ];
+  const colorOptions = [
+    { id: 1, name: "Red" },
+    { id: 2, name: "Blue" },
+    { id: 3, name: "Green" }
+  ];
+  const itemConditions = [
+    { id: 1, name: "New" },
+    { id: 2, name: "Used" },
+    { id: 3, name: "Refurbished" }
+  ];
+
   const history = useNavigate();
 
   const { isLoaded } = useLoadScript({
@@ -52,12 +68,18 @@ const AddProduct = (props) => {
 
   const handleBrandChange = (event) => {
     const { value, checked } = event.target;
-    setBrands((prev) => checked ? [...prev, value] : prev.filter((brand) => brand !== value));
+    setBrands((prev) => {
+      const id = parseInt(value, 10);
+      return checked ? [...prev, id] : prev.filter((brandId) => brandId !== id);
+    });
   };
 
   const handleColorChange = (event) => {
     const { value, checked } = event.target;
-    setColors((prev) => checked ? [...prev, value] : prev.filter((color) => color !== value));
+    setColors((prev) => {
+      const id = parseInt(value, 10);
+      return checked ? [...prev, id] : prev.filter((colorId) => colorId !== id);
+    });
   };
 
   const handleSubCategoryChange = (event) => {
@@ -88,6 +110,10 @@ const AddProduct = (props) => {
     }
   };
 
+  const handleConditionChange = (event) => {
+    setItemCondition(event.target.value);
+  };
+
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -102,6 +128,27 @@ const AddProduct = (props) => {
     formData.append('price', price);
     formData.append('is_bid', acceptOffers);
     formData.append('sub_category_id', selectedSubCategories);
+    formData.append('condition', itemCondition); // Add item condition
+
+    // Append colors and brands as properties[x] with integer IDs
+    let index = 0;
+
+    colors.forEach((colorId) => {
+      formData.append(`properties[${index}]`, colorId);
+      index++;
+    });
+
+    brands.forEach((brandId) => {
+      formData.append(`properties[${index}]`, brandId);
+      index++;
+    });
+
+    // Add item condition as the next property if it's an integer ID
+    const conditionId = itemConditions.find(condition => condition.name === itemCondition)?.id;
+    if (conditionId) {
+      formData.append(`properties[${index}]`, conditionId);
+      index++;
+    }
 
     images.forEach((image, index) => {
       formData.append(`imgs[${index}]`, image);
@@ -116,6 +163,7 @@ const AddProduct = (props) => {
       });
 
       if (res.status === 200) {
+        // for tomorrow, if successful ask if they want to add another item or no, if yes reset add product page if no redirect to productlist
         history("/");
       }
     } catch (error) {
@@ -237,6 +285,22 @@ const AddProduct = (props) => {
                   </FormGroup>
                 </Grid>
                 <Grid item xs={12}>
+                  <FormControl fullWidth size="small">
+                    <InputLabel>Item Condition</InputLabel>
+                    <Select
+                      value={itemCondition}
+                      onChange={handleConditionChange}
+                      label="Item Condition"
+                    >
+                      {itemConditions.map((condition) => (
+                        <MenuItem key={condition.id} value={condition.id}>
+                          {condition.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12}>
                   <FileInput
                     onChange={handleImageUpload}
                     multiple
@@ -267,9 +331,9 @@ const AddProduct = (props) => {
                   <FormGroup>
                     {brandOptions.map((brand) => (
                       <FormControlLabel
-                        key={brand}
-                        control={<Checkbox value={brand} checked={brands.includes(brand)} onChange={handleBrandChange} />}
-                        label={brand}
+                        key={brand.id}
+                        control={<Checkbox value={brand.id} checked={brands.includes(brand.id)} onChange={handleBrandChange} />}
+                        label={brand.name}
                       />
                     ))}
                   </FormGroup>
@@ -279,9 +343,9 @@ const AddProduct = (props) => {
                   <FormGroup>
                     {colorOptions.map((color) => (
                       <FormControlLabel
-                        key={color}
-                        control={<Checkbox value={color} checked={colors.includes(color)} onChange={handleColorChange} />}
-                        label={color}
+                        key={color.id}
+                        control={<Checkbox value={color.id} checked={colors.includes(color.id)} onChange={handleColorChange} />}
+                        label={color.name}
                       />
                     ))}
                   </FormGroup>
