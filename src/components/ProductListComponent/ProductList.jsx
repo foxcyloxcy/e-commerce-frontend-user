@@ -48,7 +48,7 @@ const ProductList = (props) => {
             if (res.status === 200) {
                 const data = res.data.data
                 console.log(data)
-                setProductsData(data);
+                setProductsData(data.data);
             }
         } catch (error) {
             console.log(error);
@@ -59,7 +59,7 @@ const ProductList = (props) => {
         loadCategories();
         loadProducts();
         setIsLoggedIn(parentIsLoggedIn);
-    }, [loadCategories, parentIsLoggedIn]);
+    }, [loadCategories, loadProducts, parentIsLoggedIn]);
 
     const trigger = useScrollTrigger({
         disableHysteresis: true,
@@ -184,7 +184,6 @@ const ProductList = (props) => {
                                 },
                             }}
                                 key={category.id}
-                                color='secondary'
                                 onClick={() => handleToggleCategory(category.id)}
                             >
                                 {category.name}
@@ -211,7 +210,7 @@ const ProductList = (props) => {
                                 />
                             </Grid>
                         )}
-                        <ProductListGrid />
+                       <ProductListGrid productsData={productsData} />
                     </Grid>
                 </Container>
             </Container>
