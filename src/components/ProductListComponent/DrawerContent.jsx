@@ -19,36 +19,40 @@ import {
 } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-const DrawerContent = ({ categories, openCategory, handleToggleCategory }) => {
+const DrawerContent = ({ categories, openCategory, handleToggleCategory, isSmallScreen }) => {
     return (
         <Container sx={{ width: 300, paddingLeft: 0 }}>
             <Typography variant="h6" sx={{ paddingTop: 2, paddingBottom: 2 }}>Filters</Typography>
             <Divider />
-            <Typography variant="h6" component="h3" gutterBottom sx={{ padding: 2 }}>
-                Categories
-            </Typography>
-            <List>
-                {categories.map((category) => (
-                    <React.Fragment key={category.id}>
-                        <ListItem button onClick={() => handleToggleCategory(category.id)}>
-                            <ListItemText primary={category.name} />
-                            {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
-                        </ListItem>
-                        <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding>
-                                {category.sub_category.map((subCategory) => (
-                                    <ListItem button key={subCategory.id} sx={{ pl: 4 }}>
-                                        <ListItemText primary={subCategory.name} />
-                                    </ListItem>
-                                ))}
-                            </List>
-                        </Collapse>
-                    </React.Fragment>
-                ))}
-            </List>
-            <Divider sx={{ marginY: '20px' }} />
+            {isSmallScreen && (
+                <>
+                    <Typography variant="h6" component="h3" gutterBottom sx={{ padding: 2 }}>
+                        Categories
+                    </Typography>
+                    <List>
+                        {categories.map((category) => (
+                            <React.Fragment key={category.id}>
+                                <ListItem button onClick={() => handleToggleCategory(category.id)}>
+                                    <ListItemText primary={category.name} />
+                                    {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
+                                </ListItem>
+                                <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
+                                    <List component="div" disablePadding>
+                                        {category.sub_category.map((subCategory) => (
+                                            <ListItem button key={subCategory.id} sx={{ pl: 4 }}>
+                                                <ListItemText primary={subCategory.name} />
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                </Collapse>
+                            </React.Fragment>
+                        ))}
+                    </List>
+                    <Divider sx={{ marginY: '20px' }} />
+                </>
+            )}
+
             <div style={{ padding: 2 }}>
-                <Divider />
                 <Typography variant="h6" component="h3" gutterBottom>
                     Brands
                 </Typography>
