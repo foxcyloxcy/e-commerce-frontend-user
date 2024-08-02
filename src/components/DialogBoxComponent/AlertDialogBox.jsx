@@ -5,8 +5,8 @@ import {
   import ModTheme from '../ThemeComponent/ModTheme';
   import ButtonComponent from '../ButtonComponent/ButtonComponent';
   import { useState } from 'react';
-  
-  const AlertDialogBox = (title, message, buttonLabel) => {
+
+  const AlertDialogBox = (title, message, buttonLabelConfirm, buttonLabelCancel) => {
     const [promise, setPromise] = useState(null);
   
     const confirm = () => new Promise((resolve, reject) => {
@@ -40,11 +40,17 @@ import {
         <DialogActions>
           <ButtonComponent
             onClick={handleConfirm}
-            label={buttonLabel}
+            label={buttonLabelConfirm}
+            buttonVariant="contained"
+            textColor='primary.contrastText'
+            hoverTextColor='primary.main'
           />
           <ButtonComponent
             onClick={handleCancel}
-            label={buttonLabel}
+            label={buttonLabelCancel}
+            buttonVariant="contained"
+            textColor='primary.contrastText'
+            hoverTextColor='primary.main'
           />
         </DialogActions>
       </Dialog>
