@@ -93,7 +93,7 @@ function App() {
       refreshParent={handleClickLogout}/>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/product-details" element={<ProductDetails />} />
+        <Route path="/product-details" element={<ProductDetails userToken={userToken}/>} />
         <Route path="/add-product" element={<AddProduct userToken={userToken}/>} />
         <Route path="/edit-product" element={<EditProduct />} />
         <Route path="/my-profile" element={<MyProfile />} />
