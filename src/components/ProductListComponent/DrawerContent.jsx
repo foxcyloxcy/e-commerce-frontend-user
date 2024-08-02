@@ -19,7 +19,7 @@ import {
 } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-const DrawerContent = ({ categories, openCategory, handleToggleCategory, isSmallScreen }) => {
+const DrawerContent = ({ categories, openCategory, handleToggleCategory, isSmallScreen, handleSubCategoryClick }) => {
     return (
         <Container sx={{ width: 300, paddingLeft: 0 }}>
             <Typography variant="h6" sx={{ paddingTop: 2, paddingBottom: 2 }}>Filters</Typography>
@@ -39,7 +39,7 @@ const DrawerContent = ({ categories, openCategory, handleToggleCategory, isSmall
                                 <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
                                     <List component="div" disablePadding>
                                         {category.sub_category.map((subCategory) => (
-                                            <ListItem button key={subCategory.id} sx={{ pl: 4 }}>
+                                            <ListItem button key={subCategory.id} sx={{ pl: 4 }} onClick={() => handleSubCategoryClick(subCategory.id)}>
                                                 <ListItemText primary={subCategory.name} />
                                             </ListItem>
                                         ))}
