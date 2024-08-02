@@ -197,6 +197,7 @@ const ProductList = (props) => {
                         categories={categories}
                         openCategory={openCategory}
                         handleToggleCategory={handleToggleCategory}
+                        isSmallScreen={isSmallScreen}
                     />
                 </Drawer>
                 <Container sx={{ paddingTop: 2, paddingBottom: 2 }}>
@@ -207,6 +208,7 @@ const ProductList = (props) => {
                                     categories={categories}
                                     openCategory={openCategory}
                                     handleToggleCategory={handleToggleCategory}
+                                    isSmallScreen={isSmallScreen}
                                 />
                             </Grid>
                         )}
