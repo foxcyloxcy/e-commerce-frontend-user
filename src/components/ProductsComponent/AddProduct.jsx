@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import FileInput from './FileInput'; // Import your custom FileInput component
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
+import AlertDialogBox from '../DialogBoxComponent/AlertDialogBox';
 
 const libraries = ['places'];
 
@@ -25,6 +26,15 @@ const AddProduct = (props) => {
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategories, setSelectedSubCategories] = useState('');
   const [itemCondition, setItemCondition] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [Dialog, confirmTransaction] = AlertDialogBox(
+    successMessage,
+    'Do you like to add more pre-loved items?',
+    'Yes',
+    'No'
+  )
+
+  const formRef = useRef(null)
 
   // Example mappings for brands, colors, and conditions
   const brandOptions = [
@@ -114,6 +124,22 @@ const AddProduct = (props) => {
     setItemCondition(event.target.value);
   };
 
+  const resetForm = () => {
+    setProductName('');
+    setDescription('');
+    setImages([]);
+    setPrice('');
+    setPriceError('');
+    setLocation(null);
+    setBrands([]);
+    setColors([]);
+    setAcceptOffers(0);
+    setSelectedCategory('');
+    setSubCategories([]);
+    setSelectedSubCategories('');
+    setItemCondition('');
+  };
+
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -163,8 +189,17 @@ const AddProduct = (props) => {
       });
 
       if (res.status === 200) {
+        const successMessage = res.data.message
+        setSuccessMessage(successMessage)
+
+        const ans = await confirmTransaction()
+        if (ans) {
+          resetForm();
+        }
+        else {
+          history("/shop");
+        }
         // for tomorrow, if successful ask if they want to add another item or no, if yes reset add product page if no redirect to productlist
-        history("/");
       }
     } catch (error) {
       console.log(error);
@@ -359,6 +394,7 @@ const AddProduct = (props) => {
             )}
           </Grid>
         </form>
+        <Dialog />
       </Container>
     </ThemeProvider>
   );

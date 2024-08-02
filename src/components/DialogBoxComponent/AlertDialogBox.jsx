@@ -33,7 +33,11 @@ import {
         open={promise !== null}
         fullWidth
       >
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle
+        sx={{
+          textColor:ModTheme.palette.primary.main
+        }}
+        >{title}</DialogTitle>
         <DialogContent>
           <DialogContentText>{message}</DialogContentText>
         </DialogContent>

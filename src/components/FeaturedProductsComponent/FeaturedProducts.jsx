@@ -15,7 +15,6 @@ import {
 import { styled } from '@mui/system';
 import { ThemeProvider, Divider, } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 
 const products = [
@@ -199,11 +198,10 @@ const FeaturedProducts = () => {
                                         Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat consequat auctor eu in elit.
                                     </Typography>
                                     <ButtonComponent
-                                        label="Add to cart"
+                                        label="Buy item"
                                         buttonVariant="contained"
                                         textColor='primary.contrastText'
-                                        hoverTextColor='secondary.main'
-                                        startIcon={<AddShoppingCartIcon />}
+                                        hoverTextColor='primary.main'
                                     />
                                 </>
                             )}
