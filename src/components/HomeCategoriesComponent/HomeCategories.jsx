@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Grid, Box, Typography, Button, Collapse, Fade, useTheme } from '@mui/material';
 import { styled } from '@mui/system';
 import api from '../../assets/baseURL/api';
+import { useNavigate } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const ImageContainer = styled(Box)(({ theme, image }) => ({
@@ -41,6 +42,7 @@ const HomeCategories = () => {
   const [expandedCategoryId, setExpandedCategoryId] = useState(null);
   const [viewingSubCategories, setViewingSubCategories] = useState(false);
   const theme = useTheme();
+  const history = useNavigate();
 
   const loadCategories = useCallback(async () => {
     try {
@@ -61,6 +63,11 @@ const HomeCategories = () => {
     setExpandedCategoryId(categoryId);
     setTimeout(() => setViewingSubCategories(true), 300); // Match this duration with the Fade timeout
   };
+
+  const routeToProductList = (subCategoryId) => {
+    history("/shop", { state: { subCategoryId: subCategoryId } });
+  };
+
 
   const handleBackClick = () => {
     setViewingSubCategories(false);
@@ -100,6 +107,7 @@ const HomeCategories = () => {
                   <Grid item xs={12} sm={6} md={4} lg={3} key={subCategory.id}>
                 <ImageContainer
                   image={subCategory.image}
+                  onClick={() => routeToProductList(subCategory.id)}
                 >
                   <Typography variant="h6" component="div" sx={{ position: 'relative', zIndex: 1 }}>
                     {subCategory.name}
