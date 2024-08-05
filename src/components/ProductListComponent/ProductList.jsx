@@ -9,7 +9,12 @@ import {
     Button,
     Drawer,
     useMediaQuery,
-    ThemeProvider
+    ThemeProvider,
+    Popper,
+    Paper,
+    List,
+    ListItem,
+    ListItemText,
 } from '@mui/material';
 import { Search as SearchIcon, Menu as MenuIcon, ExpandLess, ExpandMore } from '@mui/icons-material';
 import InputBase from '@mui/material/InputBase';
@@ -26,6 +31,7 @@ const ProductList = (props) => {
     const [categories, setCategories] = useState([]);
     const [openCategory, setOpenCategory] = useState({});
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [hoveredCategory, setHoveredCategory] = useState(null);
     const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
     const [elevate, setElevate] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -46,8 +52,7 @@ const ProductList = (props) => {
         try {
             const res = await api.get(`api/global/items?sub_category_id=${subCategoryId}`);
             if (res.status === 200) {
-                const data = res.data.data
-                console.log(data)
+                const data = res.data.data;
                 setProductsData(data.data);
             }
         } catch (error) {
@@ -82,8 +87,17 @@ const ProductList = (props) => {
     };
 
     const handleSubCategoryClick = (subCategoryId) => {
-        // Fetch and load products based on the selected subCategoryId
-        loadProducts(subCategoryId)
+        loadProducts(subCategoryId);
+    };
+
+    const handleMouseEnter = (categoryId, event) => {
+        setHoveredCategory(categoryId);
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMouseLeave = () => {
+        setHoveredCategory(null);
+        setAnchorEl(null);
     };
 
     const Search = styled('div')(({ theme }) => ({
@@ -124,13 +138,25 @@ const ProductList = (props) => {
         },
     }));
 
+    const overlayStyle = {
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        zIndex: 3,
+    };
+
     return (
         <ThemeProvider theme={ModTheme}>
+            {hoveredCategory && <div style={overlayStyle} onMouseEnter={handleMouseLeave} />}
             <Container sx={{
                 marginTop: 16,
                 maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
                 paddingLeft: 0,
-                paddingRight: 0
+                paddingRight: 0,
+                zIndex: 2, // To make sure the container is above the overlay
             }}>
                 <AppBar
                     position={isLoggedIn ? 'fixed' : 'absolute'}
@@ -143,7 +169,8 @@ const ProductList = (props) => {
                         borderBottom: elevate ? 'none' : `1px #606060 solid`,
                         borderTop: elevate ? `1px #606060 solid` : 'none',
                         paddingLeft: 1,
-                        paddingRight: 1
+                        paddingRight: 1,
+                        zIndex: 3, // To make sure the AppBar is above the overlay
                     }}
                 >
                     <Toolbar>
@@ -167,6 +194,9 @@ const ProductList = (props) => {
                         </Search>
                         {!isSmallScreen && categories.map((category) => (
                             <Button
+                                key={category.id}
+                                onMouseEnter={(event) => handleMouseEnter(category.id, event)}
+                                onMouseLeave={handleMouseLeave}
                             sx={{
                                 fontSize: '0.50rem',
                                 '@media (min-width:200px)': {
@@ -188,8 +218,6 @@ const ProductList = (props) => {
                                     fontSize:  '1rem',
                                 },
                             }}
-                                key={category.id}
-                                onClick={() => handleToggleCategory(category.id)}
                             >
                                 {category.name}
                                 {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
@@ -197,8 +225,28 @@ const ProductList = (props) => {
                         ))}
                     </Toolbar>
                 </AppBar>
+                {hoveredCategory && (
+                    <Popper
+                        open={Boolean(hoveredCategory)}
+                        anchorEl={anchorEl}
+                        placement="bottom-start"
+                        disablePortal={false}
+                        onMouseEnter={handleMouseLeave}
+                        style={{ zIndex: 4 }} // To make sure the Popper is above the overlay
+                    >
+                        <Paper>
+                            <List>
+                                {categories.find(cat => cat.id === hoveredCategory)?.sub_category.map((subCategory) => (
+                                    <ListItem button key={subCategory.id} onClick={() => handleSubCategoryClick(subCategory.id)}>
+                                        <ListItemText primary={subCategory.name} />
+                                    </ListItem>
+                                ))}
+                            </List>
+                        </Paper>
+                    </Popper>
+                )}
                 <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
-                <DrawerContent
+                    <DrawerContent
                         categories={categories}
                         openCategory={openCategory}
                         handleToggleCategory={handleToggleCategory}
@@ -219,7 +267,7 @@ const ProductList = (props) => {
                                 />
                             </Grid>
                         )}
-                       <ProductListGrid productsData={productsData} />
+                        <ProductListGrid productsData={productsData} />
                     </Grid>
                 </Container>
             </Container>
