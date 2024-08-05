@@ -23,6 +23,7 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 import api from '../../assets/baseURL/api';
 import DrawerContent from './DrawerContent';
 import ProductListGrid from './ProductListGrid';
+import { useLocation } from 'react-router-dom';
 
 const ProductList = (props) => {
     const { parentIsLoggedIn } = props;
@@ -35,6 +36,7 @@ const ProductList = (props) => {
     const [elevate, setElevate] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [productsData, setProductsData] = useState([]);
+    const location = useLocation();
 
     const loadCategories = useCallback(async () => {
         try {
@@ -68,6 +70,15 @@ const ProductList = (props) => {
         loadCategories();
         loadProducts();
 
+        const subCategoryIdFromRoute = location.state?.subCategoryId;
+
+        // Load products with the subCategoryId from the route state if it exists
+        if (subCategoryIdFromRoute) {
+            loadProducts(subCategoryIdFromRoute);
+        } else {
+            loadProducts();
+        }
+
         if (parentIsLoggedIn === true) {
             setIsLoggedIn(parentIsLoggedIn);
           }else{
@@ -79,7 +90,7 @@ const ProductList = (props) => {
         }else{
             setElevate(false);
         }
-    }, [loadCategories, loadProducts, parentIsLoggedIn, trigger]);
+    }, [loadCategories, loadProducts, parentIsLoggedIn]);
 
 
     const toggleDrawer = () => {
