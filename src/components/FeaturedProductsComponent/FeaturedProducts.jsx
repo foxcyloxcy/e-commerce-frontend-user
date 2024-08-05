@@ -85,7 +85,7 @@ const FeaturedProducts = () => {
         <ThemeProvider theme={ModTheme}>
             <Box
                 sx={{
-                    padding: ModTheme.spacing(6),
+                    padding: ModTheme.spacing(3),
                     marginTop: 5,
                     marginBottom: 10,
                 }}
@@ -93,52 +93,53 @@ const FeaturedProducts = () => {
                 <Typography variant="h1" align="center" gutterBottom marginBottom={5}>
                     Featured Products
                 </Typography>
-                <Grid container spacing={4}>
-                    {products.map((product, index) => (
-                        <Grid item xs={12} sm={6} md={3} key={index}>
-                            <Card
-                                sx={{
-                                    position: 'relative',
-                                    backgroundColor: ModTheme.palette.secondary.background,
-                                    height: 400, // Fixed height for the card
-                                    ':hover': {
-                                        boxShadow: 10, // theme.shadows[20]
-                                    },
-                                }}
-                            >
-                                <CardMedia
-                                    component="img"
-                                    height="200"
-                                    image={product.default_image.image_url}
-                                    alt={product.name}
-                                    sx={{objectFit: "contain" }}
-                                />
-                                <Divider />
-                                <CardContent>
-                                    <Typography variant="body2" color="textSecondary" gutterBottom>
-                                        {product.sub_category.name}
-                                    </Typography>
-                                    <Typography variant="h6">{product.item_name}</Typography>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', marginTop: 1 }}>
-                                        <Typography variant="body1" color="primary">
-                                            {product.price}
-                                        </Typography>
-                                    </Box>
-                                </CardContent>
-                                <CardActions>
-                                    <QuickViewButton onClick={() => handleOpenModal(product)}>
-                                        Quick View
-                                    </QuickViewButton>
-                                </CardActions>
-                                <CardActions>
-                                    <ViewInDetailsButton onClick={() => handleOpenModal(product)}>
-                                        Detail View
-                                    </ViewInDetailsButton>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
+                <Grid container spacing={4} alignItems="stretch">
+    {products.map((product, index) => (
+        <Grid item xs={12} sm={6} md={3} key={index}>
+            <Card
+                sx={{
+                    position: 'relative',
+                    backgroundColor: ModTheme.palette.secondary.background,
+                    height: '100%', // Ensure the card takes up the full height of the Grid item
+                    display: 'flex',
+                    flexDirection: 'column', // Allow content to stack vertically
+                    ':hover': {
+                        boxShadow: 10, // theme.shadows[20]
+                    },
+                }}
+            >
+                <CardMedia
+                    component="img"
+                    image={product.default_image.image_url}
+                    alt={product.name}
+                    sx={{ objectFit: 'contain', maxHeight: 200, width: '100%' }} // Max height to prevent overflow
+                />
+                <Divider />
+                <CardContent sx={{ flexGrow: 1, marginBottom: 2 }}> {/* Ensure content takes up available space */}
+                    <Typography variant="body2" color="textSecondary" gutterBottom>
+                        {product.sub_category.name}
+                    </Typography>
+                    <Typography variant="h6">{product.item_name}</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', marginTop: 1 }}>
+                        <Typography variant="body1" color="primary">
+                            {product.price}
+                        </Typography>
+                    </Box>
+                </CardContent>
+                <CardActions>
+                    <QuickViewButton onClick={() => handleOpenModal(product)}>
+                        Quick View
+                    </QuickViewButton>
+                </CardActions>
+                <CardActions>
+                    <ViewInDetailsButton onClick={() => handleOpenModal(product)}>
+                        Detail View
+                    </ViewInDetailsButton>
+                </CardActions>
+            </Card>
+        </Grid>
+    ))}
+</Grid>
 
                 <Modal
                     open={openModal}
@@ -169,10 +170,10 @@ const FeaturedProducts = () => {
                                     </Typography>
                                     <CardMedia
                                         component="img"
-                                        height="200"
+                                        height="250"
                                         image={selectedProduct.default_image.image_url}
                                         alt={selectedProduct.item_name}
-                                        sx={{objectFit: "contain" }}
+                                        sx={{ objectFit: "contain" }}
                                     />
                                     <Typography variant="body2" color="textSecondary" gutterBottom>
                                         {selectedProduct.sub_category.name}
