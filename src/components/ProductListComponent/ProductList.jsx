@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {
     AppBar,
     Toolbar,
-    Typography,
     IconButton,
     Container,
     Grid,
@@ -60,20 +59,28 @@ const ProductList = (props) => {
         }
     }, []);
 
-    useEffect(() => {
-        loadCategories();
-        loadProducts();
-        setIsLoggedIn(parentIsLoggedIn);
-    }, [loadCategories, loadProducts, parentIsLoggedIn]);
-
     const trigger = useScrollTrigger({
         disableHysteresis: true,
         threshold: 0,
     });
 
     useEffect(() => {
-        setElevate(trigger);
-    }, [trigger]);
+        loadCategories();
+        loadProducts();
+
+        if (parentIsLoggedIn === true) {
+            setIsLoggedIn(parentIsLoggedIn);
+          }else{
+            setIsLoggedIn(false)
+          }
+
+        if(parentIsLoggedIn){
+            setElevate(trigger);
+        }else{
+            setElevate(false);
+        }
+    }, [loadCategories, loadProducts, parentIsLoggedIn, trigger]);
+
 
     const toggleDrawer = () => {
         setDrawerOpen(!drawerOpen);
