@@ -107,7 +107,8 @@ export default function Login({ refreshParent }) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            marginBottom: 10
+            marginBottom: 10,
+            minHeight: '60vh'
           }}
         >
           <Typography component="h1" variant="h1">
