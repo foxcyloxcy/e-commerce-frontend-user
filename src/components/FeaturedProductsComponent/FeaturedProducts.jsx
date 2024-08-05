@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     Box,
     Typography,
@@ -15,43 +15,8 @@ import {
 import { styled } from '@mui/system';
 import { ThemeProvider, Divider, } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
+import api from '../../assets/baseURL/api';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
-
-const products = [
-    {
-        category: "Men's Shoes",
-        name: 'DNK Brown Shoes',
-        image: 'men shoes.jpg', // replace with actual image paths
-        oldPrice: 'AED 35.00',
-        newPrice: 'AED 32.00',
-        onSale: true,
-    },
-    {
-        category: "Men's Jeans",
-        name: 'Light Blue Jeans',
-        image: 'men jeans.jpg', // replace with actual image paths
-        oldPrice: '',
-        newPrice: 'AED 145.00',
-        onSale: false,
-    },
-    {
-        category: "Men's Shoes",
-        name: 'DNK Red Sport Shoes',
-        image: 'nike men shoes.jpg', // replace with actual image paths
-        oldPrice: 'AED 35.00',
-        newPrice: 'AED 32.00',
-        onSale: true,
-    },
-    {
-        category: "Women's Jeans",
-        name: 'Blue Denim Shorts',
-        image: 'women jeans.jpg', // replace with actual image paths
-        oldPrice: 'AED 45.00',
-        newPrice: 'AED 35.00',
-        onSale: true,
-    },
-];
-
 
 const QuickViewButton = styled(Button)(({ theme }) => ({
     position: 'absolute',
@@ -86,6 +51,7 @@ const ViewInDetailsButton = styled(Button)(({ theme }) => ({
 const FeaturedProducts = () => {
     const [openModal, setOpenModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [products, setProducts] = useState([]);
 
     const handleOpenModal = (product) => {
         setSelectedProduct(product);
@@ -96,6 +62,24 @@ const FeaturedProducts = () => {
         setOpenModal(false);
         setSelectedProduct(null);
     };
+
+    const loadProducts = useCallback(async () => {
+        try {
+            const res = await api.get(`api/global/featured?size=7`);
+            if (res.status === 200) {
+                const data = res.data.data;
+                console.log(data)
+                setProducts(data.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+
+    useEffect(() => {
+        loadProducts();
+
+    }, [loadProducts]);
 
     return (
         <ThemeProvider theme={ModTheme}>
@@ -125,18 +109,19 @@ const FeaturedProducts = () => {
                                 <CardMedia
                                     component="img"
                                     height="200"
-                                    image={product.image}
+                                    image={product.default_image.image_url}
                                     alt={product.name}
+                                    sx={{objectFit: "contain" }}
                                 />
                                 <Divider />
                                 <CardContent>
                                     <Typography variant="body2" color="textSecondary" gutterBottom>
-                                        {product.category}
+                                        {product.sub_category.name}
                                     </Typography>
-                                    <Typography variant="h6">{product.name}</Typography>
+                                    <Typography variant="h6">{product.item_name}</Typography>
                                     <Box sx={{ display: 'flex', alignItems: 'center', marginTop: 1 }}>
                                         <Typography variant="body1" color="primary">
-                                            {product.newPrice}
+                                            {product.price}
                                         </Typography>
                                     </Box>
                                 </CardContent>
@@ -180,22 +165,23 @@ const FeaturedProducts = () => {
                             {selectedProduct && (
                                 <>
                                     <Typography variant="h6" component="h2">
-                                        {selectedProduct.name}
+                                        {selectedProduct.item_name}
                                     </Typography>
                                     <CardMedia
                                         component="img"
                                         height="200"
-                                        image={selectedProduct.image}
-                                        alt={selectedProduct.name}
+                                        image={selectedProduct.default_image.image_url}
+                                        alt={selectedProduct.item_name}
+                                        sx={{objectFit: "contain" }}
                                     />
                                     <Typography variant="body2" color="textSecondary" gutterBottom>
-                                        {selectedProduct.category}
+                                        {selectedProduct.sub_category.name}
                                     </Typography>
                                     <Typography variant="body1" color="primary">
-                                        {selectedProduct.newPrice}
+                                        {selectedProduct.price}
                                     </Typography>
                                     <Typography variant="body2" sx={{ mt: 2 }}>
-                                        Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non mauris vitae erat consequat auctor eu in elit.
+                                        {selectedProduct.item_description}
                                     </Typography>
                                     <ButtonComponent
                                         label="Buy item"
