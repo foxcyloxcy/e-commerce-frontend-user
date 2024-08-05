@@ -95,9 +95,12 @@ const ProductList = (props) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleMouseLeave = () => {
-        setHoveredCategory(null);
-        setAnchorEl(null);
+    const handleMouseLeave = (event) => {
+        // Ensure that mouse leave only triggers when the mouse actually leaves the Popper
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+            setHoveredCategory(null);
+            setAnchorEl(null);
+        }
     };
 
     const Search = styled('div')(({ theme }) => ({
@@ -138,20 +141,10 @@ const ProductList = (props) => {
         },
     }));
 
-    const overlayStyle = {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        zIndex: 3,
-    };
-
     return (
         <ThemeProvider theme={ModTheme}>
-            {hoveredCategory && <div style={overlayStyle} onMouseEnter={handleMouseLeave} />}
             <Container sx={{
+                minHeight: '60vh',
                 marginTop: 16,
                 maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
                 paddingLeft: 0,
@@ -196,28 +189,27 @@ const ProductList = (props) => {
                             <Button
                                 key={category.id}
                                 onMouseEnter={(event) => handleMouseEnter(category.id, event)}
-                                onMouseLeave={handleMouseLeave}
-                            sx={{
-                                fontSize: '0.50rem',
-                                '@media (min-width:200px)': {
-                                    fontSize: '0.3rem',
-                                },
-                                '@media (min-width:300px)': {
-                                    fontSize: '0.4rem',
-                                },
-                                '@media (min-width:400px)': {
-                                    fontSize: '0.5rem',
-                                },
-                                '@media (min-width:600px)': {
-                                    fontSize: '0.6rem',
-                                },
-                                '@media (min-width:960px)': {
-                                    fontSize: '0.8rem',
-                                },
-                                '@media (min-width:1280px)': {
-                                    fontSize:  '1rem',
-                                },
-                            }}
+                                sx={{
+                                    fontSize: '0.50rem',
+                                    '@media (min-width:200px)': {
+                                        fontSize: '0.3rem',
+                                    },
+                                    '@media (min-width:300px)': {
+                                        fontSize: '0.4rem',
+                                    },
+                                    '@media (min-width:400px)': {
+                                        fontSize: '0.5rem',
+                                    },
+                                    '@media (min-width:600px)': {
+                                        fontSize: '0.6rem',
+                                    },
+                                    '@media (min-width:960px)': {
+                                        fontSize: '0.8rem',
+                                    },
+                                    '@media (min-width:1280px)': {
+                                        fontSize: '1rem',
+                                    },
+                                }}
                             >
                                 {category.name}
                                 {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
@@ -231,7 +223,7 @@ const ProductList = (props) => {
                         anchorEl={anchorEl}
                         placement="bottom-start"
                         disablePortal={false}
-                        onMouseEnter={handleMouseLeave}
+                        onMouseLeave={handleMouseLeave}
                         style={{ zIndex: 4 }} // To make sure the Popper is above the overlay
                     >
                         <Paper>
