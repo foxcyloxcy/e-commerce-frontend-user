@@ -109,7 +109,7 @@ const FeaturedProducts = () => {
                             >
                                 <CardMedia
                                     component="img"
-                                    image={product.default_image.image_url}
+                                    image={product.default_image ? product.default_image.image_url : product.default_image }
                                     alt={product.name}
                                     sx={{ objectFit: 'contain', maxHeight: 200, width: '100%' }} // Max height to prevent overflow
                                 />
