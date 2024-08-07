@@ -63,7 +63,7 @@ const ProductList = (props) => {
 
     const trigger = useScrollTrigger({
         disableHysteresis: true,
-        threshold: 0,
+        threshold: 10,
     });
 
     useEffect(() => {
@@ -85,12 +85,17 @@ const ProductList = (props) => {
             setIsLoggedIn(false)
           }
 
-        if(parentIsLoggedIn){
-            setElevate(trigger);
-        }else{
-            setElevate(false);
-        }
+
     }, [loadCategories, loadProducts, parentIsLoggedIn]);
+
+    useEffect(()=>{
+
+        if (isLoggedIn === true) {
+            setElevate(trigger);
+          }else{
+            setElevate(false)
+          }
+    },[parentIsLoggedIn, trigger])
 
 
     const toggleDrawer = () => {
