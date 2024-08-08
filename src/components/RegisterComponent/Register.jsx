@@ -14,14 +14,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
-import secure from '../../assets/baseURL/secure';
+import Swal from 'sweetalert2';
 
 export default function Register() {
     const history = useNavigate();
     const [formValues, setFormValues] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '+971' });
     const [formErrors, setFormErrors] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '' });
     const [loading, setLoading] = useState(false);
-    const [registerError, setRegisterError] = useState('');
 
     const validateEmail = (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -58,7 +57,7 @@ export default function Register() {
         if (!formValues.phoneNo) {
             errors.phoneNo = 'Phone Number field is required.';
         } else if (!validatePhoneNo(formValues.phoneNo)) {
-            errors.phoneNo = 'Sorry, this is not a valid number. Please use a phone number with the UAE country code.';
+            errors.phoneNo = 'Please use a phone number with the UAE country code.';
         }
 
         setFormErrors(errors);
@@ -74,42 +73,62 @@ export default function Register() {
                     first_name: formValues.firstName,
                     last_name: formValues.lastName,
                 });
+
                 if (res.status === 200) {
-                    history("/login");
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Registration Successful',
+                        text: res.data.message,
+                    });
+                    history("/verify", { state: { email: formValues.email } });
                 }
             } catch (error) {
-                console.log(error.response)
-                await handleErrorMessage(error.response)
+                await handleErrorMessage(error.response);
             } finally {
                 setLoading(false);
             }
         }
     };
 
-    const handleErrorMessage = useCallback((props)=>{
+    const handleErrorMessage = useCallback((response) => {
         let errors = {};
 
-        if(props.data.message.email){
-            errors.email = props.data.message.email[0]
-         }
+        if (response.data.message.email) {
+            errors.email = response.data.message.email[0];
+        }
 
-         if(props.data.message.password){
-            errors.confirmPassword = props.data.message.password[0]
-         }
+        if (response.data.message.password) {
+            errors.confirmPassword = response.data.message.password[0];
+        }
 
-         setFormErrors(errors);
-    })
+        if (response.data.message.mobile_number) {
+            errors.phoneNo = response.data.message.mobile_number[0];
+        }
+
+        setFormErrors(errors);
+
+        Swal.fire({
+            icon: 'error',
+            title: 'Registration Failed',
+            text: 'Please check the highlighted fields and try again.',
+        });
+    });
 
     const handleInputChange = useCallback((event) => {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
         setFormErrors({ ...formErrors, [name]: '' });
-        setRegisterError('');
     }, [formValues, formErrors]);
 
     return (
         <ThemeProvider theme={ModTheme}>
-            <Container component="main" maxWidth="xs">
+            <Container 
+            component="main" 
+            maxWidth="xs" 
+            sx={{
+                minHeight:'60vh',
+                marginBottom: 10,
+            }}>
                 <CssBaseline />
                 <Box
                     sx={{
@@ -218,11 +237,6 @@ export default function Register() {
                                 />
                             </Grid>
                         </Grid>
-                        {registerError && (
-                            <Typography color="error" variant="body2">
-                                {registerError}
-                            </Typography>
-                        )}
                         <FormControlLabel
                             sx={{
                                 mt: 1,
