@@ -5,7 +5,7 @@ import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import FileInput from './FileInput'; // Import your custom FileInput component
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
-import AlertDialogBox from '../DialogBoxComponent/AlertDialogBox';
+import Swal from 'sweetalert2';
 
 const libraries = ['places'];
 
@@ -26,15 +26,6 @@ const AddProduct = (props) => {
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategories, setSelectedSubCategories] = useState('');
   const [itemCondition, setItemCondition] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [Dialog, confirmTransaction] = AlertDialogBox(
-    successMessage,
-    'Do you like to add more pre-loved items?',
-    'Yes',
-    'No'
-  )
-
-  const formRef = useRef(null)
 
   // Example mappings for brands, colors, and conditions
   const brandOptions = [
@@ -147,7 +138,7 @@ const AddProduct = (props) => {
       setLoading(false);
       return;
     }
-
+  
     const formData = new FormData();
     formData.append('item_name', productName);
     formData.append('item_description', description);
@@ -155,31 +146,31 @@ const AddProduct = (props) => {
     formData.append('is_bid', acceptOffers);
     formData.append('sub_category_id', selectedSubCategories);
     formData.append('condition', itemCondition); // Add item condition
-
+  
     // Append colors and brands as properties[x] with integer IDs
     let index = 0;
-
+  
     colors.forEach((colorId) => {
       formData.append(`properties[${index}]`, colorId);
       index++;
     });
-
+  
     brands.forEach((brandId) => {
       formData.append(`properties[${index}]`, brandId);
       index++;
     });
-
+  
     // Add item condition as the next property if it's an integer ID
     const conditionId = itemConditions.find(condition => condition.name === itemCondition)?.id;
     if (conditionId) {
       formData.append(`properties[${index}]`, conditionId);
       index++;
     }
-
+  
     images.forEach((image, index) => {
       formData.append(`imgs[${index}]`, image);
     });
-
+  
     try {
       const res = await api.post("/api/auth/items", formData, {
         headers: {
@@ -187,22 +178,32 @@ const AddProduct = (props) => {
           'Content-Type': 'multipart/form-data',
         },
       });
-
+  
       if (res.status === 200) {
-        const successMessage = res.data.message
-        setSuccessMessage(successMessage)
-
-        const ans = await confirmTransaction()
-        if (ans) {
-          resetForm();
-        }
-        else {
-          history("/shop");
-        }
-        // for tomorrow, if successful ask if they want to add another item or no, if yes reset add product page if no redirect to productlist
+        const successMessage = res.data.message;
+  
+        Swal.fire({
+          title: 'Success!',
+          text: successMessage,
+          icon: 'success',
+          showCancelButton: true,
+          confirmButtonText: 'Add Another',
+          cancelButtonText: 'Go to Shop'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            resetForm();
+          } else {
+            history("/shop");
+          }
+        });
       }
     } catch (error) {
       console.log(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong. Please try again later.',
+        icon: 'error',
+      });
     } finally {
       setLoading(false);
     }
@@ -394,7 +395,6 @@ const AddProduct = (props) => {
             )}
           </Grid>
         </form>
-        <Dialog />
       </Container>
     </ThemeProvider>
   );
