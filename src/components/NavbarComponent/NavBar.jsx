@@ -126,8 +126,8 @@ const NavBar = (props) => {
                 />
                 <ButtonComponent
                   component={Link}
-                  to="/about"
-                  label="About"
+                  to="/my-profile"
+                  label="Profile"
                   textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
