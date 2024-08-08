@@ -14,6 +14,7 @@ import secure from './assets/baseURL/secure';
 import EditProduct from './components/ProductsComponent/EditProduct';
 import MyProfile from './components/UserProfileComponent/MyProfile';
 import UserVerification from './components/UserVerificationComponent/UserVerification';
+import { ProtectedRoute, PublicRoute } from './RouteProtection';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -35,18 +36,18 @@ function App() {
 
     if (storedIsLoggedIn) {
       setIsLoggedIn(storedIsLoggedIn);
-    }else{
-      setIsLoggedIn("")
+    } else {
+      setIsLoggedIn("");
     }
     if (storedUserData) {
       setUserData(storedUserData);
-    }else{
-      setUserData("")
+    } else {
+      setUserData("");
     }
     if (storedUserToken) {
       setUserToken(storedUserToken);
-    }else{
-      setUserToken("")
+    } else {
+      setUserToken("");
     }
   }, []);
 
@@ -89,18 +90,67 @@ function App() {
   return (
     <>
       <NavBar
-      parentIsLoggedIn={isLoggedIn}
-      refreshParent={handleClickLogout}/>
+        parentIsLoggedIn={isLoggedIn}
+        refreshParent={handleClickLogout}
+      />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/product-details" element={<ProductDetails userToken={userToken}/>} />
-        <Route path="/add-product" element={<AddProduct userToken={userToken}/>} />
-        <Route path="/edit-product" element={<EditProduct />} />
-        <Route path="/my-profile" element={<MyProfile />} />
-        <Route path="/verify" element={<UserVerification />} />
+        <Route path="/product-details" element={<ProductDetails userToken={userToken} />} />
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn} />} />
-        <Route path="/login" element={<Login refreshParent={handleClick} />} />
-        <Route path="/register" element={<Register />} />
+
+        <Route
+          path="/add-product"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <AddProduct userToken={userToken} />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/edit-product"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <EditProduct />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/my-profile"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <MyProfile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/login"
+          element={
+            <PublicRoute isLoggedIn={isLoggedIn}>
+              <Login refreshParent={handleClick} />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="/register"
+          element={
+            <PublicRoute isLoggedIn={isLoggedIn}>
+              <Register />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="/verify"
+          element={
+            <PublicRoute isLoggedIn={isLoggedIn}>
+              <UserVerification />
+            </PublicRoute>
+          }
+        />
       </Routes>
       <Footer />
     </>
