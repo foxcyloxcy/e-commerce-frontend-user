@@ -182,8 +182,8 @@ const ProductList = (props) => {
                         backgroundColor: elevate ? ModTheme.palette.primary.dark : 'transparent',
                         transition: 'background-color 0.30s, box-shadow 0.30s',
                         boxShadow: elevate ? '4px 4px 0px 2px rgba(0, 0, 0, 0.3)' : 'none',
-                        borderBottom: elevate ? 'none' : `1px #606060 solid`,
-                        borderTop: elevate ? `1px #606060 solid` : 'none',
+                        borderBottom: elevate ? 'none' : `2px #606060 solid`,
+                        borderTop: elevate ? `2px #606060 solid` : 'none',
                         paddingLeft: 1,
                         paddingRight: 1,
                         zIndex: 3, // To make sure the AppBar is above the overlay
