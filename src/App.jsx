@@ -15,6 +15,8 @@ import EditProduct from './components/ProductsComponent/EditProduct';
 import MyProfile from './components/UserProfileComponent/MyProfile';
 import UserVerification from './components/UserVerificationComponent/UserVerification';
 import { ProtectedRoute, PublicRoute } from './RouteProtection';
+import OurStoryPage from './components/OurStoryPageComponent/OurStoryPage';
+import TermsAndConditions from './components/TermsAndConditionsComponent/TermsAndConditions';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -97,6 +99,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/product-details" element={<ProductDetails userToken={userToken} />} />
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/our-story" element={<OurStoryPage parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions parentIsLoggedIn={isLoggedIn} />} />
 
         <Route
           path="/add-product"
