@@ -39,8 +39,8 @@ const Footer = () => {
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
                             <Typography variant="h6">Quick Links</Typography>
-                            <Link href="#" color="inherit" underline="hover" variant="body2">Home</Link><br />
-                            <Link href="#" color="inherit" underline="hover" variant="body2">About us</Link><br />
+                            <Link href="/" color="inherit" underline="hover" variant="body2">Home</Link><br />
+                            <Link href="/our-story" color="inherit" underline="hover" variant="body2">Our Story</Link><br />
                             <Link href="#" color="inherit" underline="hover" variant="body2">Contact</Link><br />
                             <Link href="#" color="inherit" underline="hover" variant="body2">How it works</Link><br />
                             <Link href="#" color="inherit" underline="hover" variant="body2">Frequently asked questions</Link><br />
@@ -52,7 +52,7 @@ const Footer = () => {
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
                             <Typography variant="h6">Policies</Typography>
-                            <Link href="#" color="inherit" underline="hover" variant="body2">Terms and conditions</Link><br />
+                            <Link href="/terms-and-conditions" color="inherit" underline="hover" variant="body2">Terms and conditions</Link><br />
                             <Link href="#" color="inherit" underline="hover" variant="body2">Return/Refund</Link><br />
                             <Link href="#" color="inherit" underline="hover" variant="body2">Privacy</Link><br />
                         </Grid>
