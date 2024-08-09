@@ -183,8 +183,8 @@ const AddProduct = (props) => {
         const successMessage = res.data.message;
   
         Swal.fire({
-          title: 'Success!',
-          text: successMessage,
+          title: successMessage,
+          text: 'You will receive an email after your item gets approved. This can take up to 72hrs max.',
           icon: 'success',
           showCancelButton: true,
           confirmButtonText: 'Add Another',
