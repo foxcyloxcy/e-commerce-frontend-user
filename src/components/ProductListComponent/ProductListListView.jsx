@@ -2,50 +2,15 @@ import React from 'react';
 import {
     Grid,
     Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    Tooltip,
-    IconButton,
     Card,
     CardContent,
     Button
 } from '@mui/material';
-import { ChevronLeft, ChevronRight, FavoriteBorder } from '@mui/icons-material';
 import ModTheme from '../ThemeComponent/ModTheme';
 
 const ProductListListView = ({ productsData }) => {
     return (
         <Grid item xs={12} md={8} lg={9}>
-            <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
-                <Grid container alignItems="center">
-                    <Grid item xs={12} md>
-                        <Typography variant="body1">{productsData.length} Items found</Typography>
-                    </Grid>
-                    <Grid item>
-                        <FormControl variant="outlined" sx={{ minWidth: 150, marginRight: '10px' }}>
-                            <Select defaultValue="latest">
-                                <MenuItem value="latest">Latest items</MenuItem>
-                                <MenuItem value="trending">Trending</MenuItem>
-                                <MenuItem value="popular">Most Popular</MenuItem>
-                                <MenuItem value="cheapest">Cheapest</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item>
-                        <Tooltip title="List view">
-                            <IconButton>
-                                <ChevronLeft />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Grid view">
-                            <IconButton>
-                                <ChevronRight />
-                            </IconButton>
-                        </Tooltip>
-                    </Grid>
-                </Grid>
-            </header>
             {productsData.map((product) => (
                 <Card key={product.id} sx={{ marginBottom: '20px', background: '#fff' }}>
                     <Grid container spacing={0}>
