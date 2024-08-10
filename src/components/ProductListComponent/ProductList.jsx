@@ -27,8 +27,8 @@ import { styled } from '@mui/material/styles';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import api from '../../assets/baseURL/api';
 import DrawerContent from './DrawerContent';
-import ProductListListView from './ProductListListView';
-import ProductListGridView from './ProductListGridView';
+import ProductListListView from './ProductViewComponent/ProductListListView';
+import ProductListGridView from './ProductViewComponent/ProductListGridView';
 import { useLocation } from 'react-router-dom';
 
 const ProductList = (props) => {
