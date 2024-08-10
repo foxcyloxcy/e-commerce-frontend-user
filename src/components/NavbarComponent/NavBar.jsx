@@ -124,14 +124,22 @@ const NavBar = (props) => {
                   textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
-                <ButtonComponent
-                  component={Link}
-                  to="/my-profile"
-                  label="Profile"
-                  textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
-                  hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
-                />
                 {isLoggedIn === true ? (
+                  <>
+                  <ButtonComponent
+                    component={Link}
+                    to="/my-profile"
+                    label="Profile"
+                    textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
+                    hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
+                  />
+                  <ButtonComponent
+                    component={Link}
+                    to="/add-product"
+                    label="Add"
+                    textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
+                    hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
+                  />
                   <ButtonComponent
                     label="Logout"
                     onClick={handleLogout}
@@ -139,6 +147,7 @@ const NavBar = (props) => {
                     textColor='primary.contrastText'
                     hoverTextColor='secondary.main'
                   />
+                  </>
                 ) : (
                   <>
                     <ButtonComponent
