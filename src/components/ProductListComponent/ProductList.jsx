@@ -14,15 +14,21 @@ import {
     List,
     ListItem,
     ListItemText,
+    Typography,
+    FormControl,
+    Select,
+    MenuItem,
+    Tooltip,
 } from '@mui/material';
-import { Search as SearchIcon, Menu as MenuIcon, ExpandLess, ExpandMore } from '@mui/icons-material';
+import { Search as SearchIcon, Menu as MenuIcon, ExpandLess, ExpandMore, ChevronLeft, ChevronRight } from '@mui/icons-material';
 import InputBase from '@mui/material/InputBase';
 import ModTheme from '../ThemeComponent/ModTheme';
 import { styled } from '@mui/material/styles';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import api from '../../assets/baseURL/api';
 import DrawerContent from './DrawerContent';
-import ProductListGrid from './ProductListGrid';
+import ProductListListView from './ProductListListView';
+import ProductListGridView from './ProductListGridView';
 import { useLocation } from 'react-router-dom';
 
 const ProductList = (props) => {
@@ -81,21 +87,21 @@ const ProductList = (props) => {
 
         if (parentIsLoggedIn === true) {
             setIsLoggedIn(parentIsLoggedIn);
-          }else{
+        } else {
             setIsLoggedIn(false)
-          }
+        }
 
 
     }, [loadCategories, loadProducts, parentIsLoggedIn]);
 
-    useEffect(()=>{
+    useEffect(() => {
 
         if (isLoggedIn === true) {
             setElevate(trigger);
-          }else{
+        } else {
             setElevate(false)
-          }
-    },[parentIsLoggedIn, trigger])
+        }
+    }, [parentIsLoggedIn, trigger])
 
 
     const toggleDrawer = () => {
@@ -167,11 +173,9 @@ const ProductList = (props) => {
     return (
         <ThemeProvider theme={ModTheme}>
             <Container sx={{
-                minHeight: '60vh',
+                minHeight: '75vh',
                 marginTop: 16,
                 maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
-                paddingLeft: 0,
-                paddingRight: 0,
                 zIndex: 2, // To make sure the container is above the overlay
             }}>
                 <AppBar
@@ -269,9 +273,9 @@ const ProductList = (props) => {
                         handleSubCategoryClick={handleSubCategoryClick}
                     />
                 </Drawer>
-                <Container sx={{ paddingTop: 2, paddingBottom: 2 }}>
-                    <Grid container spacing={2}>
-                        {!isSmallScreen && (
+                <Grid container spacing={1} paddingTop={2}>
+                    {!isSmallScreen && (
+                        <>
                             <Grid item xs={12} md={4} lg={3} className='filter-grid'>
                                 <DrawerContent
                                     categories={categories}
@@ -281,10 +285,77 @@ const ProductList = (props) => {
                                     handleSubCategoryClick={handleSubCategoryClick}
                                 />
                             </Grid>
-                        )}
-                        <ProductListGrid productsData={productsData} />
-                    </Grid>
-                </Container>
+                            <Grid item lg={9} className='filter-grid'>
+                                <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
+                                    <Grid container alignItems="center">
+                                        <Grid item md>
+                                            <Typography variant="body1">{productsData.length} Items found</Typography>
+                                        </Grid>
+                                        <Grid item>
+                                            <FormControl variant="outlined" sx={{ minWidth: 150, marginRight: '10px' }}>
+                                                <Select defaultValue="latest">
+                                                    <MenuItem value="latest">Latest items</MenuItem>
+                                                    <MenuItem value="trending">Trending</MenuItem>
+                                                    <MenuItem value="popular">Most Popular</MenuItem>
+                                                    <MenuItem value="cheapest">Cheapest</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item>
+                                            <Tooltip title="List view">
+                                                <IconButton>
+                                                    <ChevronLeft />
+                                                </IconButton>
+                                            </Tooltip>
+                                            <Tooltip title="Grid view">
+                                                <IconButton>
+                                                    <ChevronRight />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </Grid>
+                                    </Grid>
+                                </header>
+                            </Grid>
+                        </>
+                    )}
+                    {isSmallScreen && (
+                        <>
+                            <Grid item xs={12} sm={12} md={12} className='filter-grid'>
+                                <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
+                                    <Grid container alignItems="center">
+                                        <Grid item xs={3} sm={3} md={4}>
+                                            <Typography variant="body1">{productsData.length} Items found</Typography>
+                                        </Grid>
+                                        <Grid item xs={6} sm={6} md={5} width='100%'>
+                                            <FormControl variant="outlined" sx={{paddingRight: 1, paddingLeft: 1, width: '100%'}}>
+                                                <Select defaultValue="latest">
+                                                    <MenuItem value="latest">Latest items</MenuItem>
+                                                    <MenuItem value="trending">Trending</MenuItem>
+                                                    <MenuItem value="popular">Most Popular</MenuItem>
+                                                    <MenuItem value="cheapest">Cheapest</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={3} sm={3} md={3} display='flex' justifyContent='center'>
+                                            <Tooltip title="List view">
+                                                <IconButton>
+                                                    <ChevronLeft />
+                                                </IconButton>
+                                            </Tooltip>
+                                            <Tooltip title="Grid view">
+                                                <IconButton>
+                                                    <ChevronRight />
+                                                </IconButton>
+                                            </Tooltip>
+                                        </Grid>
+                                    </Grid>
+                                </header>
+                            </Grid>
+                        </>
+                    )}
+                    <ProductListListView productsData={productsData} />
+                    <ProductListGridView productsData={productsData} />
+                </Grid>
             </Container>
         </ThemeProvider>
     );
