@@ -44,6 +44,11 @@ const ProductList = (props) => {
     const [productsData, setProductsData] = useState([]);
     const [listView, setListView] = useState('list');
     const location = useLocation();
+    const [priceRange, setPriceRange] = useState([50, 50000]);
+
+    const handleApplyPriceRange = (minPrice, maxPrice) => {
+        setPriceRange([minPrice, maxPrice]);
+    };
 
     const loadCategories = useCallback(async () => {
         try {
@@ -56,9 +61,10 @@ const ProductList = (props) => {
         }
     }, []);
 
-    const loadProducts = useCallback(async (subCategoryId) => {
+    const loadProducts = useCallback(async (subCategoryId, minPrice, maxPrice) => {
+        console.log(priceRange[0])
         try {
-            const res = await api.get(`api/global/items?sub_category_id=${subCategoryId}`);
+            const res = await api.get(`api/global/items?sub_category_id=${subCategoryId}&filter[min_price]=${minPrice}&&filter[max_price]=${maxPrice}`);
             if (res.status === 200) {
                 const data = res.data.data;
                 setProductsData(data.data);
@@ -81,7 +87,7 @@ const ProductList = (props) => {
 
         // Load products with the subCategoryId from the route state if it exists
         if (subCategoryIdFromRoute) {
-            loadProducts(subCategoryIdFromRoute);
+            loadProducts(subCategoryIdFromRoute, priceRange[0], priceRange[1]);
         } else {
             loadProducts();
         }
@@ -93,7 +99,7 @@ const ProductList = (props) => {
           }
 
 
-    }, [loadCategories, loadProducts, parentIsLoggedIn]);
+    }, [loadCategories, loadProducts, parentIsLoggedIn, priceRange]);
 
     useEffect(()=>{
 
@@ -271,25 +277,27 @@ const ProductList = (props) => {
                     </Popper>
                 )}
                 <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
-                    <DrawerContent
-                        categories={categories}
-                        openCategory={openCategory}
-                        handleToggleCategory={handleToggleCategory}
-                        isSmallScreen={isSmallScreen}
-                        handleSubCategoryClick={handleSubCategoryClick}
-                    />
+                <DrawerContent
+                categories={categories}
+                openCategory={openCategory}
+                handleToggleCategory={handleToggleCategory}
+                isSmallScreen={isSmallScreen}
+                handleSubCategoryClick={handleSubCategoryClick}
+                onApplyPriceRange={handleApplyPriceRange}
+            />
                 </Drawer>
 
                     <Grid container spacing={1}>
                         {!isSmallScreen && (
                             <Grid item xs={12} md={4} lg={3} className='filter-grid'>
-                                <DrawerContent
-                                    categories={categories}
-                                    openCategory={openCategory}
-                                    handleToggleCategory={handleToggleCategory}
-                                    isSmallScreen={isSmallScreen}
-                                    handleSubCategoryClick={handleSubCategoryClick}
-                                />
+            <DrawerContent
+                categories={categories}
+                openCategory={openCategory}
+                handleToggleCategory={handleToggleCategory}
+                isSmallScreen={isSmallScreen}
+                handleSubCategoryClick={handleSubCategoryClick}
+                onApplyPriceRange={handleApplyPriceRange}
+            />
                             </Grid>
                         )}
                         {
