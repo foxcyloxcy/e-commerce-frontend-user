@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     Container,
     Typography,
@@ -19,7 +19,13 @@ import {
 } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-const DrawerContent = ({ categories, openCategory, handleToggleCategory, isSmallScreen, handleSubCategoryClick }) => {
+const DrawerContent = ({ categories, openCategory, handleToggleCategory, isSmallScreen, handleSubCategoryClick, onApplyPriceRange }) => {
+    const [minPrice, setMinPrice] = useState(50);
+    const [maxPrice, setMaxPrice] = useState(50000);
+
+    const handleApplyPriceRange = () => {
+        onApplyPriceRange(minPrice, maxPrice); // Pass price range to parent
+    };
     return (
         <Container sx={{ width: 300, paddingLeft: 0 }}>
             <Typography variant="h6" sx={{ paddingTop: 2, paddingBottom: 2 }}>Filters</Typography>
@@ -74,23 +80,39 @@ const DrawerContent = ({ categories, openCategory, handleToggleCategory, isSmall
                 </FormGroup>
                 <Divider sx={{ marginY: '20px' }} />
                 <Typography variant="h6" component="h3" gutterBottom>
-                    Price range
-                </Typography>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <FormControl fullWidth>
-                            <Input placeholder="AED 50" type="number" />
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <FormControl fullWidth>
-                            <Input placeholder="AED 50,000" type="number" />
-                        </FormControl>
-                    </Grid>
+                Price range
+            </Typography>
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    <FormControl fullWidth>
+                        <Input 
+                            placeholder="AED 50" 
+                            type="number" 
+                            value={minPrice} 
+                            onChange={(e) => setMinPrice(e.target.value)} 
+                        />
+                    </FormControl>
                 </Grid>
-                <Button variant="contained" color="primary" fullWidth sx={{ marginTop: '10px' }}>
-                    Apply
-                </Button>
+                <Grid item xs={6}>
+                    <FormControl fullWidth>
+                        <Input 
+                            placeholder="AED 50,000" 
+                            type="number" 
+                            value={maxPrice} 
+                            onChange={(e) => setMaxPrice(e.target.value)} 
+                        />
+                    </FormControl>
+                </Grid>
+            </Grid>
+            <Button 
+                variant="contained" 
+                color="primary" 
+                fullWidth 
+                sx={{ marginTop: '10px' }} 
+                onClick={handleApplyPriceRange} // Apply price range
+            >
+                Apply
+            </Button>
                 <Divider sx={{ marginY: '20px' }} />
                 <Typography variant="h6" component="h3" gutterBottom>
                     Sizes
