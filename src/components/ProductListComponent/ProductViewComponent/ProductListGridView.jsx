@@ -12,9 +12,18 @@ import {
     Button
 } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import ModTheme from '../../ThemeComponent/ModTheme';
 
+
 const ProductListGridView = ({ productsData, handleProductView }) => {
+
+    const navigate = useNavigate();
+
+    const handleDetailsClick = (product) => {
+        navigate('/product-details', { state: { product } });
+    };
+
     return (
         <Grid item xs={12} md={8} lg={9}>
             <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
@@ -71,7 +80,13 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                                 </Typography>
                             </CardContent>
                             <CardContent sx={{ paddingTop: 0 }}>
-                                <Button variant="contained" color="primary" fullWidth sx={{ marginTop: '10px' }}>
+                            <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    sx={{ marginTop: '10px' }}
+                                    onClick={() => handleDetailsClick(product)}
+                                >
                                     Details
                                 </Button>
                             </CardContent>
