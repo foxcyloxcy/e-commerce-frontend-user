@@ -18,7 +18,7 @@ import Swal from 'sweetalert2';
 
 export default function Register() {
     const history = useNavigate();
-    const [formValues, setFormValues] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '+971' });
+    const [formValues, setFormValues] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '+971', remember: true });
     const [formErrors, setFormErrors] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '' });
     const [loading, setLoading] = useState(false);
 
@@ -59,6 +59,8 @@ export default function Register() {
         } else if (!validatePhoneNo(formValues.phoneNo)) {
             errors.phoneNo = 'Please use a phone number with the UAE country code.';
         }
+
+        console.log(formValues.remember)
 
         setFormErrors(errors);
 
@@ -242,8 +244,9 @@ export default function Register() {
                                 mt: 1,
                                 mb: 0
                             }}
-                            control={<Checkbox value="remember" color="primary" />}
-                            label={<Typography sx={{ fontSize: { xs: '0.4rem', sm: '0.5rem', md: '0.7rem', lg: '0.8rem', xl: '1rem' } }}>I accept the Terms & Conditions and have read the Privacy Policy.</Typography>}
+                            control={<Checkbox 
+                                value={formValues.remember} color="primary" />}
+                            label={<Typography sx={{ fontSize: { xs: '0.4rem', sm: '0.5rem', md: '0.7rem', lg: '0.8rem', xl: '1rem' } }}>I accept the Terms of use and have read the Privacy Policy.</Typography>}
                         />
                         <Box sx={{ position: 'relative' }}>
                             <Button
@@ -258,7 +261,7 @@ export default function Register() {
                         </Box>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="/login" variant="body2">
                                     Already have an account? Login here
                                 </Link>
                             </Grid>
