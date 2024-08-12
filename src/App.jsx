@@ -16,7 +16,8 @@ import MyProfile from './components/UserProfileComponent/MyProfile';
 import UserVerification from './components/UserVerificationComponent/UserVerification';
 import { ProtectedRoute, PublicRoute } from './RouteProtection';
 import OurStoryPage from './components/OurStoryPageComponent/OurStoryPage';
-import TermsAndConditions from './components/TermsAndConditionsComponent/TermsAndConditions';
+import BuyerAndSellerTerms from './components/BuyerAndSellerTermsComponent/BuyerAndSellerTerms';
+import TermsOfUse from './components/TermsOfUseComponent/TermsOfUse';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -100,7 +101,8 @@ function App() {
         <Route path="/product-details" element={<ProductDetails userToken={userToken} />} />
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/our-story" element={<OurStoryPage parentIsLoggedIn={isLoggedIn} />} />
-        <Route path="/terms-and-conditions" element={<TermsAndConditions parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/terms-of-use" element={<TermsOfUse parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/buyer-and-seller-terms" element={<BuyerAndSellerTerms parentIsLoggedIn={isLoggedIn} />} />
 
         <Route
           path="/add-product"
