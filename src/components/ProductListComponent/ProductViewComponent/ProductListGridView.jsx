@@ -65,7 +65,7 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                         <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background:'#fff' }}>
                             <div style={{ position: 'relative', flexShrink: 0 }}>
                                 {product.is_new && <span className="badge badge-danger">NEW</span>}
-                                <img src={product.default_image ? product.default_image.image_url : 'default_image_url'} alt="Product" style={{ width: '100%' }} />
+                                <img src={product.default_image ? product.default_image.image_url : 'no image available.'} alt={product.item_name} style={{ width: '100%' }} />
                             </div>
                             <CardContent sx={{ flexGrow: 1 }}>
                                 <Typography variant="h6">{product.item_name}</Typography>
