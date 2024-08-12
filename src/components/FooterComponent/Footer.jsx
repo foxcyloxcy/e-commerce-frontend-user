@@ -52,7 +52,8 @@ const Footer = () => {
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
                             <Typography variant="h6">Policies</Typography>
-                            <Link href="/terms-and-conditions" color="inherit" underline="hover" variant="body2">Terms and conditions</Link><br />
+                            <Link href="/terms-of-use" color="inherit" underline="hover" variant="body2">Terms of use</Link><br />
+                            <Link href="/buyer-and-seller-terms" color="inherit" underline="hover" variant="body2">Seller and Buyer Terms</Link><br />
                             <Link href="#" color="inherit" underline="hover" variant="body2">Return/Refund</Link><br />
                             <Link href="#" color="inherit" underline="hover" variant="body2">Privacy</Link><br />
                         </Grid>
