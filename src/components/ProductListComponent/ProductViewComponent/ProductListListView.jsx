@@ -64,7 +64,7 @@ const ProductListGrid = ({ productsData, handleProductView  }) => {
                         <Grid item xs={12} md={3}>
                             <div style={{ position: 'relative' }}>
                                 {product.is_new && <span className="badge badge-danger">NEW</span>}
-                                <img src={product.default_image ? product.default_image.image_url : 'default_image_url'} alt="Product" style={{ width: '100%' }} />
+                                <img src={product.default_image ? product.default_image.image_url : 'no image available.'} alt={product.item_name} style={{ width: '100%' }} />
                             </div>
                         </Grid>
                         <Grid item xs={12} md={6}>
