@@ -44,7 +44,7 @@ const ProductList = (props) => {
     const [productsData, setProductsData] = useState([]);
     const [listView, setListView] = useState('list');
     const location = useLocation();
-    const [priceRange, setPriceRange] = useState([50, 50000]);
+    const [priceRange, setPriceRange] = useState(['', '']);
 
     const handleApplyPriceRange = (minPrice, maxPrice) => {
         setPriceRange([minPrice, maxPrice]);
@@ -61,18 +61,27 @@ const ProductList = (props) => {
         }
     }, []);
 
-    const loadProducts = useCallback(async (subCategoryId, minPrice, maxPrice) => {
-        console.log(priceRange[0])
+    const loadProducts = useCallback(async (subCategoryId) => {
         try {
-            const res = await api.get(`api/global/items?sub_category_id=${subCategoryId}&filter[min_price]=${minPrice}&&filter[max_price]=${maxPrice}`);
+            let query = `api/global/items?`;
+            
+            if (subCategoryId) {
+                query += `sub_category_id=${subCategoryId}&`;
+            }
+    
+            if (priceRange[0] !== '' && priceRange[1] !== '') {
+                query += `filter[min_price]=${priceRange[0]}&filter[max_price]=${priceRange[1]}`;
+            }
+    
+            const res = await api.get(query);
             if (res.status === 200) {
-                const data = res.data.data;
-                setProductsData(data.data);
+                setProductsData(res.data.data.data);
             }
         } catch (error) {
             console.log(error);
         }
-    }, []);
+    }, [priceRange]);
+    
 
     const trigger = useScrollTrigger({
         disableHysteresis: true,
@@ -81,16 +90,9 @@ const ProductList = (props) => {
 
     useEffect(() => {
         loadCategories();
-        loadProducts();
-
+    
         const subCategoryIdFromRoute = location.state?.subCategoryId;
-
-        // Load products with the subCategoryId from the route state if it exists
-        if (subCategoryIdFromRoute) {
-            loadProducts(subCategoryIdFromRoute, priceRange[0], priceRange[1]);
-        } else {
-            loadProducts();
-        }
+        loadProducts(subCategoryIdFromRoute);
 
         if (parentIsLoggedIn === true) {
             setIsLoggedIn(parentIsLoggedIn);
@@ -99,7 +101,7 @@ const ProductList = (props) => {
           }
 
 
-    }, [loadCategories, loadProducts, parentIsLoggedIn, priceRange]);
+        }, [loadCategories, loadProducts, parentIsLoggedIn]);
 
     useEffect(()=>{
 
