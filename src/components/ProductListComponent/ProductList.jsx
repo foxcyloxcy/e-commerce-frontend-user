@@ -14,13 +14,8 @@ import {
     List,
     ListItem,
     ListItemText,
-    Typography,
-    FormControl,
-    Select,
-    MenuItem,
-    Tooltip,
 } from '@mui/material';
-import { Search as SearchIcon, Menu as MenuIcon, ExpandLess, ExpandMore,  ChevronLeft, ChevronRight } from '@mui/icons-material';
+import { Search as SearchIcon, Menu as MenuIcon, ExpandLess, ExpandMore} from '@mui/icons-material';
 import InputBase from '@mui/material/InputBase';
 import ModTheme from '../ThemeComponent/ModTheme';
 import { styled } from '@mui/material/styles';
@@ -64,15 +59,15 @@ const ProductList = (props) => {
     const loadProducts = useCallback(async (subCategoryId) => {
         try {
             let query = `api/global/items?`;
-            
+
             if (subCategoryId) {
                 query += `sub_category_id=${subCategoryId}&`;
             }
-    
+
             if (priceRange[0] !== '' && priceRange[1] !== '') {
                 query += `filter[min_price]=${priceRange[0]}&filter[max_price]=${priceRange[1]}`;
             }
-    
+
             const res = await api.get(query);
             if (res.status === 200) {
                 setProductsData(res.data.data.data);
@@ -81,7 +76,7 @@ const ProductList = (props) => {
             console.log(error);
         }
     }, [priceRange]);
-    
+
 
     const trigger = useScrollTrigger({
         disableHysteresis: true,
@@ -90,27 +85,27 @@ const ProductList = (props) => {
 
     useEffect(() => {
         loadCategories();
-    
+
         const subCategoryIdFromRoute = location.state?.subCategoryId;
         loadProducts(subCategoryIdFromRoute);
 
         if (parentIsLoggedIn === true) {
             setIsLoggedIn(parentIsLoggedIn);
-          }else{
+        } else {
             setIsLoggedIn(false)
-          }
+        }
 
 
-        }, [loadCategories, loadProducts, parentIsLoggedIn]);
+    }, [loadCategories, loadProducts, parentIsLoggedIn]);
 
-    useEffect(()=>{
+    useEffect(() => {
 
         if (isLoggedIn === true) {
             setElevate(trigger);
-          }else{
+        } else {
             setElevate(false)
-          }
-    },[parentIsLoggedIn, trigger])
+        }
+    }, [parentIsLoggedIn, trigger])
 
 
     const toggleDrawer = () => {
@@ -279,37 +274,37 @@ const ProductList = (props) => {
                     </Popper>
                 )}
                 <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
-                <DrawerContent
-                categories={categories}
-                openCategory={openCategory}
-                handleToggleCategory={handleToggleCategory}
-                isSmallScreen={isSmallScreen}
-                handleSubCategoryClick={handleSubCategoryClick}
-                onApplyPriceRange={handleApplyPriceRange}
-            />
+                    <DrawerContent
+                        categories={categories}
+                        openCategory={openCategory}
+                        handleToggleCategory={handleToggleCategory}
+                        isSmallScreen={isSmallScreen}
+                        handleSubCategoryClick={handleSubCategoryClick}
+                        onApplyPriceRange={handleApplyPriceRange}
+                    />
                 </Drawer>
 
-                    <Grid container spacing={1}>
-                        {!isSmallScreen && (
-                            <Grid item xs={12} md={4} lg={3} className='filter-grid'>
-            <DrawerContent
-                categories={categories}
-                openCategory={openCategory}
-                handleToggleCategory={handleToggleCategory}
-                isSmallScreen={isSmallScreen}
-                handleSubCategoryClick={handleSubCategoryClick}
-                onApplyPriceRange={handleApplyPriceRange}
-            />
-                            </Grid>
-                        )}
-                        {
-                            listView === 'list'?
-                            <ProductListListView productsData={productsData} handleProductView={handleProductView}/>
+                <Grid container spacing={1}>
+                    {!isSmallScreen && (
+                        <Grid item xs={12} md={4} lg={3} className='filter-grid'>
+                            <DrawerContent
+                                categories={categories}
+                                openCategory={openCategory}
+                                handleToggleCategory={handleToggleCategory}
+                                isSmallScreen={isSmallScreen}
+                                handleSubCategoryClick={handleSubCategoryClick}
+                                onApplyPriceRange={handleApplyPriceRange}
+                            />
+                        </Grid>
+                    )}
+                    {
+                        listView === 'list' ?
+                            <ProductListListView productsData={productsData} handleProductView={handleProductView} />
                             :
-                            <ProductListGridView productsData={productsData} handleProductView={handleProductView}/>
-                        }
-                    
-                    </Grid>
+                            <ProductListGridView productsData={productsData} handleProductView={handleProductView} />
+                    }
+
+                </Grid>
             </Container>
         </ThemeProvider>
     );
