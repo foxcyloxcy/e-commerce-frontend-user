@@ -12,10 +12,17 @@ import {
     Button
 } from '@mui/material';
 import { ChevronLeft, ChevronRight, FavoriteBorder } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import ModTheme from '../../ThemeComponent/ModTheme';
 
 const ProductListGrid = ({ productsData, handleProductView  }) => {
-    console.log(handleProductView)
+
+    const navigate = useNavigate();
+
+    const handleDetailsClick = (product) => {
+        navigate('/product-details', { state: { product } });
+    };
+
     return (
         <Grid item xs={12} md={8} lg={9}>
             <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
@@ -74,7 +81,13 @@ const ProductListGrid = ({ productsData, handleProductView  }) => {
                                 <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
                                     {product.is_bid ? "Accepting Offers" : ""}
                                 </Typography>
-                                <Button variant="contained" color="primary" fullWidth sx={{ marginTop: '10px' }}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    sx={{ marginTop: '10px' }}
+                                    onClick={() => handleDetailsClick(product)}
+                                >
                                     Details
                                 </Button>
                             </CardContent>
