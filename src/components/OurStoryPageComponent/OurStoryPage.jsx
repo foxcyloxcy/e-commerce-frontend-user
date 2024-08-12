@@ -5,7 +5,9 @@ import ModTheme from '../ThemeComponent/ModTheme';
 const OurStoryPage = () => {
     return (
         <ThemeProvider theme={ModTheme}>
-            <Container maxWidth="md" sx={{ marginTop: 15 }}>
+            <Container sx={{ marginTop: 15,
+                maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
+             }}>
                 <Typography variant="h2" align="center" gutterBottom>
                     Our Story
                 </Typography>
