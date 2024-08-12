@@ -13,21 +13,16 @@ const ProductDetails = () => {
     const { product } = state;
 
     console.log(product)
-    const images = [
-        { src: 'black shoulder bag.jpg', alt: 'Black Over-the-shoulder Handbag - 1' },
-        { src: 'women jeans.jpg', alt: 'Black Over-the-shoulder Handbag - 2' },
-        // Add product-specific images if available
-    ];
 
     return (
         <ThemeProvider theme={ModTheme}>
-            <Container sx={{ 
-                backgroundColor: 'secondary.background', 
-                padding: 2, 
-                mt: 10,
+            <Container sx={{
+                backgroundColor: 'secondary.background',
+                padding: 2,
+                mt: 15,
                 mb: 10,
                 boxShadow: 10,
-                maxWidth: {xs:'xs', sm:'sm', md:'md', lg:'lg', xl:'xl'}
+                maxWidth: { xs: 'xs', sm: 'sm', md: 'md', lg: 'lg', xl: 'xl' },
             }}>
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={6}>
@@ -43,12 +38,12 @@ const ProductDetails = () => {
                                     }}
                                 >
                                     <img
-                                        src={image.src}
-                                        alt={image.alt}
+                                        src={image.image_url}
+                                        alt={product.item_name}
                                         style={{
                                             maxHeight: '100%',
                                             maxWidth: '100%',
-                                            objectFit: 'cover',
+                                            objectFit: 'contain',
                                         }}
                                     />
                                 </Box>
@@ -62,26 +57,30 @@ const ProductDetails = () => {
                             {product.item_description}
                         </Typography>
                         <Grid container alignItems="center" spacing={2} width="100%">
-                            <Grid item width="60%">
-                                <TextField
-                                    size='small'
-                                    label="ENTER OFFER"
-                                    variant="outlined"
-                                    sx={{ marginRight: 2 }}
-                                />
-                            </Grid>
-                            <Grid item width="40%">
-                                <ButtonComponent
-                                    label="Offer"
-                                    size="small"
-                                    buttonVariant="contained"
-                                    textColor='primary.contrastText'
-                                    hoverTextColor='secondary.main'
-                                />
-                            </Grid>
+                            {product.is_bid === 1 && (
+                                <>
+                                    <Grid item width="60%">
+                                        <TextField
+                                            size='small'
+                                            label="ENTER OFFER"
+                                            variant="outlined"
+                                            sx={{ marginRight: 2 }}
+                                        />
+                                    </Grid>
+                                    <Grid item width="40%">
+                                        <ButtonComponent
+                                            label="Offer"
+                                            size="small"
+                                            buttonVariant="contained"
+                                            textColor='primary.contrastText'
+                                            hoverTextColor='secondary.main'
+                                        />
+                                    </Grid>
+                                </>
+                            )}
                             <Grid item width="100%">
                                 <ButtonComponent
-                                    label="Add to cart"
+                                    label="Buy Item"
                                     size="small"
                                     buttonVariant="contained"
                                     textColor='primary.contrastText'
