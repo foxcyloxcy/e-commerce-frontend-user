@@ -82,11 +82,18 @@ const HomeCategories = () => {
             {categories.map((category) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={category.id}>
                 <ImageContainer
-                  image={category.image}
+                  image={
+                    category.name === 'Women' ? 
+                    'women.png': category.name === 'Men' ?
+                    'men.png' : category.name === 'Baby and Children' ?
+                    'baby.png': category.name === 'Furniture and Home' ?
+                    'Home.png': category.name === 'Pets' ?
+                    'pets.png' : ''
+                  }
                   onClick={() => handleCategoryClick(category.id)}
                 >
                   <Typography variant="h6" component="div" sx={{ position: 'relative', zIndex: 1 }}>
-                    {category.name}
+                    {/* {category.name} */}
                   </Typography>
                 </ImageContainer>
               </Grid>
