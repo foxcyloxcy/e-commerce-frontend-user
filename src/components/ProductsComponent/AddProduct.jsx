@@ -29,14 +29,18 @@ const AddProduct = (props) => {
 
   // Example mappings for brands, colors, and conditions
   const brandOptions = [
-    { id: 1, name: "Brand1" },
-    { id: 2, name: "Brand2" },
-    { id: 3, name: "Brand3" }
+    { id: 1, name: "Zara" },
+    { id: 2, name: "Adiddas" },
+    { id: 3, name: "Nike" },
+    { id: 4, name: "Probiz" },
+    { id: 5, name: "Fila" },
   ];
   const colorOptions = [
     { id: 1, name: "Red" },
     { id: 2, name: "Blue" },
-    { id: 3, name: "Green" }
+    { id: 3, name: "Green" },
+    { id: 4, name: "Black" },
+    { id: 5, name: "White" }
   ];
   const itemConditions = [
     { id: 1, name: "New" },
