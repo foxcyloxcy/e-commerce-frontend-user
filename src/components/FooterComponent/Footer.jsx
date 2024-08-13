@@ -32,8 +32,16 @@ const Footer = () => {
             >
                 <Container>
                     <Grid container spacing={2} textAlign="left">
-                        <Grid item xs={12} sm={6} md={3}>
-                            <Box component="img" src="reloved_footer_banner.png" alt="Reloved Icon" sx={{ width: '100%', maxWidth: 150,}} />
+                        <Grid item xs={12} sm={6} md={3} sx={{
+                            display: 'flex',
+                            flexDirection: 'column'
+                        }}>
+                            <Box component="img" src="reloved_footer_banner.png" alt="Reloved Icon" 
+                            sx={{ 
+                                width: '80%', 
+                                maxWidth: { xs: 'xs', sm: 'md', md: 'lg', lg: 'lg', xl: 'xl' },
+                                alignSelf: { xs: 'center', sm:'center', md:'start'}
+                                }} />
                             <br />
                             The UAE's easiest marketplace for pre-loved items.
                         </Grid>
