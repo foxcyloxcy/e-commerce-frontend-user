@@ -35,8 +35,6 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                     <FormControl variant="outlined" sx={{minWidth:'100%'}}>
                             <Select defaultValue="latest">
                                 <MenuItem value="latest">Latest items</MenuItem>
-                                <MenuItem value="trending">Trending</MenuItem>
-                                <MenuItem value="popular">Most Popular</MenuItem>
                                 <MenuItem value="cheapest">Cheapest</MenuItem>
                             </Select>
                         </FormControl>
