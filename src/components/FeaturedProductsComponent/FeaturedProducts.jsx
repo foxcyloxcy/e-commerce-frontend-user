@@ -17,6 +17,7 @@ import { ThemeProvider, Divider, } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
+import { useNavigate } from 'react-router-dom';
 
 const QuickViewButton = styled(Button)(({ theme }) => ({
     position: 'absolute',
@@ -52,6 +53,7 @@ const FeaturedProducts = () => {
     const [openModal, setOpenModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     const handleOpenModal = (product) => {
         setSelectedProduct(product);
@@ -79,6 +81,11 @@ const FeaturedProducts = () => {
         loadProducts();
 
     }, [loadProducts]);
+
+
+    const handleDetailsClick = (product) => {
+        navigate('/product-details', { state: { product } });
+    };
 
     return (
         <ThemeProvider theme={ModTheme}>
@@ -131,7 +138,7 @@ const FeaturedProducts = () => {
                                     </QuickViewButton>
                                 </CardActions>
                                 <CardActions>
-                                    <ViewInDetailsButton onClick={() => handleOpenModal(product)}>
+                                    <ViewInDetailsButton onClick={() => handleDetailsClick(product)}>
                                         Detail View
                                     </ViewInDetailsButton>
                                 </CardActions>
