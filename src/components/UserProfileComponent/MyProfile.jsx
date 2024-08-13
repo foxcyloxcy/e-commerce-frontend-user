@@ -79,8 +79,8 @@ const MyProfile = () => {
               <Grid item xs={12} sm={4}>
                 <Avatar
                   alt="Annie Stacey"
-                  src="https://via.placeholder.com/150"
-                  sx={{ width: 100, height: 100 }}
+                  src="reloved_founder.jpg"
+                  sx={{ width: 150, height: 150 }}
                 />
                 <Typography variant="h6">Annie Stacey</Typography>
                 <Typography variant="body2">CEO / Co-Founder</Typography>
@@ -88,13 +88,13 @@ const MyProfile = () => {
               <Grid item xs={12} sm={8}>
                 <Typography variant="h6">Profile Information</Typography>
                 <Typography variant="body2">
-                  Hi, I’m Alec Thompson, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).
+                  Hi, I’m Annie Stacey, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).
                 </Typography>
                 <Box mt={2}>
-                  <Typography variant="body2">Full Name: Alec M. Thompson</Typography>
+                  <Typography variant="body2">Full Name: Annie Stacey</Typography>
                   <Typography variant="body2">Mobile: (44) 123 1234 123</Typography>
-                  <Typography variant="body2">Email: alec.thompson@mail.com</Typography>
-                  <Typography variant="body2">Location: USA</Typography>
+                  <Typography variant="body2">Email: annie@mail.com</Typography>
+                  <Typography variant="body2">Location: UAE</Typography>
                 </Box>
               </Grid>
             </Grid>
