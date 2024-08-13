@@ -64,7 +64,7 @@ const DrawerContent = ({ categories, openCategory, handleToggleCategory, isSmall
                     Brands
                 </Typography>
                 <FormGroup>
-                    {['Mercedes', 'Toyota', 'Mitsubishi', 'Nissan', 'Honda'].map((brand) => (
+                    {['Zara', 'Adiddas', 'Nike', 'Probiz', 'Fila'].map((brand) => (
                         <FormControlLabel
                             key={brand}
                             control={<Checkbox />}
