@@ -6,13 +6,19 @@ import api from '../../../assets/baseURL/api';
 
 
 
-const MyProducts = () => {
+const MyProducts = (props) => {
+    const { userToken } = props
     const [productsData, setProductsData] = useState([]);
     const loadProducts = useCallback(async () => {
         try {
-            let query = `api/global/items?`;
 
-            const res = await api.get(query);
+            const res = await api.get(`/api/auth/me/items?status=0,1,2&page=1size=10`, {
+                headers: {
+                  Authorization: `Bearer ${userToken}`,
+                  'Content-Type': 'multipart/form-data',
+                },
+              });
+
             if (res.status === 200) {
                 setProductsData(res.data.data.data);
             }
