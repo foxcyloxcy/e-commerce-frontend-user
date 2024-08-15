@@ -147,7 +147,7 @@ export default function Login({ refreshParent }) {
                 {loginError}
               </Typography>
             )}
-            <Box sx={{ position: 'relative' }}>
+            <Box sx={{ position: 'relative', mt: 1 }}>
               <Button
                 type="submit"
                 fullWidth
@@ -158,7 +158,7 @@ export default function Login({ refreshParent }) {
                 {loading ? <CircularProgress size={24} /> : 'Submit'}
               </Button>
             </Box>
-            <Grid container>
+            <Grid container display='flex' flexDirection='column'>
               <Grid item xs>
                 <Link href="#" variant="body2">
                   Forgot password?
