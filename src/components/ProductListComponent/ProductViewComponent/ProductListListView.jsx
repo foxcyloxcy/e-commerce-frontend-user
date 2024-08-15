@@ -11,9 +11,10 @@ import {
     CardContent,
     Button
 } from '@mui/material';
-import { ChevronLeft, ChevronRight, FavoriteBorder } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import ModTheme from '../../ThemeComponent/ModTheme';
+import GridViewIcon from '@mui/icons-material/GridView';
+import ViewListIcon from '@mui/icons-material/ViewList';
 
 const ProductListGrid = ({ productsData, handleProductView  }) => {
 
@@ -43,14 +44,14 @@ const ProductListGrid = ({ productsData, handleProductView  }) => {
                             <IconButton onClick={()=>{
                                 handleProductView('list')
                             }}>
-                                <ChevronLeft />
+                                <ViewListIcon />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Grid view">
                             <IconButton onClick={()=>{
                                 handleProductView('grid')
                             }}>
-                                <ChevronRight />
+                                <GridViewIcon />
                             </IconButton>
                         </Tooltip>
                     </Grid>
