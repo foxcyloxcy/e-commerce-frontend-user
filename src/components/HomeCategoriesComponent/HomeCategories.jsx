@@ -17,7 +17,7 @@ const ImageContainer = styled(Box)(({ theme, image }) => ({
   justifyContent: 'center',
   color: theme.palette.common,
   [theme.breakpoints.down('sm')]: {
-    minHeight: 150,
+    minHeight: 100,
   },
   '::after': {
     content: '""',
@@ -80,7 +80,7 @@ const HomeCategories = () => {
         <Fade in={!viewingSubCategories} timeout={300}>
           <Grid container spacing={2} display='flex' justifyContent='center'>
             {categories.map((category) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={category.id}>
+              <Grid item xs={4} sm={4} md={4} lg={3} key={category.id}>
                 <ImageContainer
                   image={
                     category.name === 'Women' ? 
