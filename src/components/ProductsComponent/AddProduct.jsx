@@ -192,6 +192,7 @@ const AddProduct = (props) => {
           icon: 'success',
           showCancelButton: true,
           confirmButtonText: 'Add Another',
+          confirmButtonColor: ModTheme.palette.primary.main,
           cancelButtonText: 'Go to Shop'
         }).then((result) => {
           if (result.isConfirmed) {
@@ -241,7 +242,7 @@ const AddProduct = (props) => {
         <Typography variant="h4" component="h1" gutterBottom sx={{
           marginBottom: 3
         }}>
-          Post your pre-loved item
+          Post your reloved item
         </Typography>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
