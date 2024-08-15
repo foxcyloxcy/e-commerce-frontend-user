@@ -124,13 +124,13 @@ export default function Register() {
 
     return (
         <ThemeProvider theme={ModTheme}>
-            <Container 
-            component="main" 
-            maxWidth="xs" 
-            sx={{
-                minHeight:'60vh',
-                marginBottom: 10,
-            }}>
+            <Container
+                component="main"
+                maxWidth="xs"
+                sx={{
+                    minHeight: '60vh',
+                    marginBottom: 10,
+                }}>
                 <CssBaseline />
                 <Box
                     sx={{
@@ -244,9 +244,13 @@ export default function Register() {
                                 mt: 1,
                                 mb: 0
                             }}
-                            control={<Checkbox 
+                            control={<Checkbox
                                 value={formValues.remember} color="primary" />}
-                            label={<Typography sx={{ fontSize: { xs: '0.4rem', sm: '0.5rem', md: '0.7rem', lg: '0.8rem', xl: '1rem' } }}>I accept the Terms of use and have read the Privacy Policy.</Typography>}
+
+                            label={<Typography sx={{ fontSize: { xs: '0.4rem', sm: '0.5rem', md: '0.7rem', lg: '0.8rem', xl: '1rem' } }}>I accept the <span></span>
+                                <Link href="/terms-of-use">
+                                     Terms of use.
+                                </Link></Typography>}
                         />
                         <Box sx={{ position: 'relative' }}>
                             <Button
