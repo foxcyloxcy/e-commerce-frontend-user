@@ -19,12 +19,17 @@ const ModTheme = createTheme({
             contrastText: '#F5F5F2', // light gray
             background: '#FFFFFF', //white
         },
+        text: {
+                primary: '#606060',
+                secondary: '#255773',
+                disabled: "rgba(0, 0, 0, 0.38)"
+            }
     },
     typography: {
         fontFamily: 'Poppins, sans-serif',
         h1: {
             fontFamily: 'Playfair Display, serif',
-            fontSize: '1.25rem',
+            fontSize: '1.75rem',
             '@media (min-width:400px)': {
                 fontSize: '1.75rem',
             },
@@ -40,7 +45,7 @@ const ModTheme = createTheme({
         },
         h2: {
             fontFamily: 'Playfair Display, serif',
-            fontSize: '1rem',
+            fontSize: '1.5rem',
             '@media (min-width:400px)': {
                 fontSize: '1.5rem',
             },
@@ -56,7 +61,7 @@ const ModTheme = createTheme({
         },
         h3: {
             fontFamily: 'Playfair Display, serif',
-            fontSize: '0.875rem',
+            fontSize: '1.25rem',
             '@media (min-width:400px)': {
                 fontSize: '1.25rem',
             },
@@ -72,9 +77,9 @@ const ModTheme = createTheme({
         },
         h4: {
             fontFamily: 'Playfair Display, serif',
-            fontSize: '0.75rem',
+            fontSize: '1.10rem',
             '@media (min-width:400px)': {
-                fontSize: '1rem',
+                fontSize: '1.10rem',
             },
             '@media (min-width:600px)': {
                 fontSize: '1.5rem',
@@ -88,9 +93,9 @@ const ModTheme = createTheme({
         },
         h5: {
             fontFamily: 'Playfair Display, serif',
-            fontSize: '0.625rem',
+            fontSize: '1rem',
             '@media (min-width:400px)': {
-                fontSize: '0.875rem',
+                fontSize: '1rem',
             },
             '@media (min-width:600px)': {
                 fontSize: '1.25rem',
@@ -104,9 +109,9 @@ const ModTheme = createTheme({
         },
         h6: {
             fontFamily: 'Playfair Display, serif',
-            fontSize: '0.7rem',
+            fontSize: '0.9rem',
             '@media (min-width:400px)': {
-                fontSize: '0.75rem',
+                fontSize: '0.95rem',
             },
             '@media (min-width:600px)': {
                 fontSize: '1rem',
@@ -119,7 +124,7 @@ const ModTheme = createTheme({
             },
         },
         body1: {
-            fontSize: '0.625rem',
+            fontSize: '0.8rem',
             '@media (min-width:400px)': {
                 fontSize: '0.875rem',
             },
@@ -134,18 +139,18 @@ const ModTheme = createTheme({
             },
         },
         body2: {
-            fontSize: '0.6rem',
+            fontSize: '0.75rem',
             '@media (min-width:400px)': {
-                fontSize: '0.625rem',
+                fontSize: '0.80rem',
             },
             '@media (min-width:600px)': {
-                fontSize: '0.75rem',
+                fontSize: '0.90rem',
             },
             '@media (min-width:960px)': {
-                fontSize: '0.875rem',
+                fontSize: '1rem',
             },
             '@media (min-width:1280px)': {
-                fontSize: '1rem',
+                fontSize: '1.10rem',
             },
         },
     },
