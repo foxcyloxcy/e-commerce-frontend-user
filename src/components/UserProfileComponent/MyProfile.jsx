@@ -1,11 +1,19 @@
-import React from 'react';
-import { Box, Container, Grid, Paper, Avatar, Typography, Switch, List, ListItem, ListItemAvatar, ListItemText, Button, IconButton, ThemeProvider, Divider } from '@mui/material';
-import { styled } from '@mui/system';
-import SettingsIcon from '@mui/icons-material/Settings';
+import React, { useState } from 'react';
+import { Box, Container, List, ListItem, ListItemText, ThemeProvider, Divider } from '@mui/material';
+import { styled, keyframes } from '@mui/system';
 import ModTheme from '../ThemeComponent/ModTheme';
-// import FacebookIcon from '@mui/icons-material/Facebook';
-// import TwitterIcon from '@mui/icons-material/Twitter';
-// import InstagramIcon from '@mui/icons-material/Instagram';
+import UserProfileDetails from './UserProfileDetailsComponent/UserProfileDetails';
+import MyProducts from './MyProductsComponent/MyProducts';
+
+// Define the fade-in animation
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 const Root = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
@@ -15,6 +23,7 @@ const Root = styled(Box)(({ theme }) => ({
 
 const Sidebar = styled(Box)(({ theme }) => ({
   width: 200,
+  height: '100%',
   backgroundColor: ModTheme.palette.secondary.background,
   [theme.breakpoints.down('sm')]: {
     width: '100%',
@@ -23,85 +32,63 @@ const Sidebar = styled(Box)(({ theme }) => ({
   },
 }));
 
+// Apply the fade-in animation to the Content component
 const Content = styled(Box)(({ theme }) => ({
   flexGrow: 1,
   padding: theme.spacing(3),
+  animation: `${fadeIn} 0.8s ease-in-out`, // Set the fade-in animation
   [theme.breakpoints.down('sm')]: {
     padding: theme.spacing(1),
   },
 }));
 
-const ProfileInfo = styled(Paper)(({ theme }) => ({
-  padding: theme.spacing(3),
-  marginBottom: theme.spacing(2),
-  backgroundColor: ModTheme.palette.secondary.background,
-  [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(2),
-  },
-}));
+const MyProfile = (props) => {
+  const { userToken } = props
+  const [activeTab, setActiveTab] = useState('Profile settings');
 
-const SettingsItem = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  justifyContent: 'space-between',
-  marginBottom: theme.spacing(2),
-}));
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'Profile settings':
+        return <UserProfileDetails />;
+      case 'My products':
+        return <MyProducts userToken={userToken} />;
+      case 'My offers':
+        return <div>My Offers Component</div>; // Replace with your MyOffers component
+      case 'Offers to me':
+        return <div>Offers to Me Component</div>; // Replace with your OffersToMe component
+      default:
+        return null;
+    }
+  };
 
-const MyProfile = () => {
   return (
     <ThemeProvider theme={ModTheme}>
-            <Container sx={{
-        marginTop: 10,
-        marginBottom: 5
-    }}>
-      <Root>
-        <Sidebar>
-          <List>
-            <ListItem button>
-              <ListItemText primary="Profile settings" />
-            </ListItem>
-            <Divider/>
-            <ListItem button>
-              <ListItemText primary="My products" />
-            </ListItem>
-            <Divider/>
-            <ListItem button>
-              <ListItemText primary="My offers" />
-            </ListItem>
-            <Divider/>
-            <ListItem button>
-              <ListItemText primary="Offers to me" />
-            </ListItem>
-          </List>
-        </Sidebar>
-        <Content>
-          <ProfileInfo>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={4}>
-                <Avatar
-                  alt="Annie Stacey"
-                  src="reloved_founder.jpg"
-                  sx={{ width: 150, height: 150 }}
-                />
-                <Typography variant="h6">Annie Stacey</Typography>
-                <Typography variant="body2">CEO / Co-Founder</Typography>
-              </Grid>
-              <Grid item xs={12} sm={8}>
-                <Typography variant="h6">Profile Information</Typography>
-                <Typography variant="body2">
-                  Hi, I’m Annie Stacey, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).
-                </Typography>
-                <Box mt={2}>
-                  <Typography variant="body2">Full Name: Annie Stacey</Typography>
-                  <Typography variant="body2">Mobile: (44) 123 1234 123</Typography>
-                  <Typography variant="body2">Email: annie@mail.com</Typography>
-                  <Typography variant="body2">Location: UAE</Typography>
-                </Box>
-              </Grid>
-            </Grid>
-          </ProfileInfo>
-        </Content>
-      </Root>
-    </Container>
+      <Container sx={{ marginTop: 10, marginBottom: 5 }}>
+        <Root>
+          <Sidebar>
+            <List>
+              <ListItem button onClick={() => setActiveTab('Profile settings')}>
+                <ListItemText primary="Profile settings" />
+              </ListItem>
+              <Divider />
+              <ListItem button onClick={() => setActiveTab('My products')}>
+                <ListItemText primary="My products" />
+              </ListItem>
+              <Divider />
+              <ListItem button onClick={() => setActiveTab('My offers')}>
+                <ListItemText primary="My offers" />
+              </ListItem>
+              <Divider />
+              <ListItem button onClick={() => setActiveTab('Offers to me')}>
+                <ListItemText primary="Offers to me" />
+              </ListItem>
+            </List>
+          </Sidebar>
+          <Content key={activeTab}> {/* Adding key triggers re-animation when content changes */}
+            {renderContent()}
+          </Content>
+        </Root>
+      </Container>
     </ThemeProvider>
   );
 };
