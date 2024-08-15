@@ -105,6 +105,10 @@ const NavBar = (props) => {
                 color="inherit"
                 aria-label="menu"
                 onClick={handleMenu}
+                sx={{
+                  position: 'absolute',
+                  left: { xs:'90%', sm: '95%', md:'95%'}
+                }}
               >
                 <MenuIcon />
               </IconButton>
