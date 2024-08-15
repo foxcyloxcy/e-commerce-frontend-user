@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import api from '../../assets/baseURL/api';
 import './UserVerification.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import ModTheme from '../ThemeComponent/ModTheme';
 
 const UserVerification = () => {
   const [code, setCode] = useState(Array(6).fill(''));
@@ -61,10 +62,13 @@ const UserVerification = () => {
         title: response.data.data? response.data.data.message : 'Something went wrong.',
         text: 'Redirecting you to the login page.',
         timer: 2000,
-        showConfirmButton: false,
-      }).then(() => {
+        confirmButtonText: 'Ok',
+        confirmButtonColor: ModTheme.palette.primary.main,
+      }).then((result) => {
         // Redirect to the login page after the alert
-        navigate('/login'); // Replace with your login page route
+        if (result.isConfirmed) {
+          navigate('/login'); // Replace with your login page route
+        }
       });
     } catch (error) {
       setError('Verification failed. Please try again.');
