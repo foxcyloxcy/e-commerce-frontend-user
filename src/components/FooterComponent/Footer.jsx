@@ -43,7 +43,7 @@ const Footer = () => {
                                 alignSelf: { xs: 'center', sm:'center', md:'start'}
                                 }} />
                             <br />
-                            The UAE's easiest marketplace for pre-loved items.
+                            The UAE's easiest marketplace for reloved items.
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
                             <Typography variant="h6">Quick Links</Typography>
