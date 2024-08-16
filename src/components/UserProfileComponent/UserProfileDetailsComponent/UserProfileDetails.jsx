@@ -7,6 +7,8 @@ import ModTheme from '../../ThemeComponent/ModTheme';
 const ProfileInfo = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(3),
     marginBottom: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
     backgroundColor: ModTheme.palette.secondary.background,
     [theme.breakpoints.down('sm')]: {
         padding: theme.spacing(2),
@@ -18,7 +20,7 @@ const UserProfileDetails = () => {
     return (
         <ProfileInfo>
             <Grid container spacing={2}>
-                <Grid item xs={12} sm={4}
+                <Grid item xs={12} sm={12}
                     sx={{
                         display: 'flex',
                         justifyContent: 'center',
@@ -33,7 +35,7 @@ const UserProfileDetails = () => {
                     <Typography variant="h6">Annie Stacey</Typography>
                     <Typography variant="body2">CEO / Co-Founder</Typography>
                 </Grid>
-                <Grid item xs={12} sm={8}>
+                <Grid item xs={12} sm={12}>
                     <Typography variant="h6">Profile Information</Typography>
                     <Typography variant="body2">
                         Hi, I’m Annie Stacey, Decisions: If you can’t decide, the answer is no. If two equally difficult paths, choose the one more painful in the short term (pain avoidance is creating an illusion of equality).
