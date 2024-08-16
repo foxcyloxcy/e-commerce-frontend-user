@@ -126,7 +126,7 @@ function App() {
           path="/my-profile"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <MyProfile />
+              <MyProfile userToken={userToken}/>
             </ProtectedRoute>
           }
         />
