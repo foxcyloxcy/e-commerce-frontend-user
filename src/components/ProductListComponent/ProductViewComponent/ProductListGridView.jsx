@@ -9,12 +9,14 @@ import {
     IconButton,
     Card,
     CardContent,
-    Button
+    Button,
+    CardMedia
 } from '@mui/material';
 import GridViewIcon from '@mui/icons-material/GridView';
 import { useNavigate } from 'react-router-dom';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import ViewListIcon from '@mui/icons-material/ViewList';
+import { styled } from '@mui/system';
 
 
 const ProductListGridView = ({ productsData, handleProductView }) => {
@@ -24,6 +26,12 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
     const handleDetailsClick = (product) => {
         navigate('/product-details', { state: { product } });
     };
+
+    const TruncatedText = styled(Typography)({
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+    });
 
     return (
         <Grid item xs={12} md={8} lg={9}>
@@ -60,37 +68,44 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
             </header>
             <Grid container spacing={2}>
                 {productsData.map((product) => (
-                    <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
-                        <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background:'#fff' }}>
-                            <div style={{ position: 'relative', flexShrink: 0 }}>
-                                {product.is_new && <span className="badge badge-danger">NEW</span>}
-                                <img src={product.default_image ? product.default_image.image_url : 'no image available.'} alt={product.item_name} style={{ width: '100%' }} />
-                            </div>
-                            <CardContent sx={{ flexGrow: 1 }}>
-                                <Typography variant="h6">{product.item_name}</Typography>
-                                <Typography variant="body2">
-                                    {product.item_description}
-                                </Typography>
-                                <Typography variant="h6" sx={{ marginTop: '10px' }}>
-                                    AED {product.price}
-                                </Typography>
-                                <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
-                                    {product.is_bid ? "Accepting Offers" : ""}
-                                </Typography>
-                            </CardContent>
-                            <CardContent sx={{ paddingTop: 0 }}>
-                            <Button
-                                    variant="contained"
-                                    color="primary"
-                                    fullWidth
-                                    sx={{ marginTop: '10px' }}
-                                    onClick={() => handleDetailsClick(product)}
-                                >
-                                    Details
-                                </Button>
-                            </CardContent>
-                        </Card>
-                    </Grid>
+                <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
+                <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '430px' }}>
+
+                    {/* Product Image */}
+                    <CardMedia
+                        component="img"
+                        height="200"
+                        image={product.default_image ? product.default_image.image_url : 'no image available.'}
+                        alt={product.item_name}
+                        sx={{ objectFit: 'cover' }}
+                    />
+
+                    {/* Card Content */}
+                    <CardContent sx={{ flexGrow: 1 }}>
+                        <TruncatedText variant="h6">{product.item_name}</TruncatedText>
+                        <TruncatedText variant="body2">{product.item_description}</TruncatedText>
+                        <Typography variant="h6" sx={{ marginTop: '10px' }}>
+                            AED {product.price}
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
+                            {product.is_bid ? 'Accepting offers' : ''}
+                        </Typography>
+                    </CardContent>
+
+                    {/* Details Button */}
+                    <CardContent sx={{ position: 'absolute', width: '100%', top: '83%' }}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            sx={{ marginTop: '10px' }}
+                            onClick={() => handleDetailsClick(product)}
+                        >
+                            Details
+                        </Button>
+                    </CardContent>
+                </Card>
+            </Grid>
                 ))}
             </Grid>
         </Grid>
