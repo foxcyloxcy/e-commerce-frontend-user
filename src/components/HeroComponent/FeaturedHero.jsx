@@ -1,8 +1,21 @@
 import React from 'react';
 import { Box, Typography, ThemeProvider } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
+import { useNavigate } from 'react-router-dom';
 
-const FeaturedHero = () => {
+const FeaturedHero = (props) => {
+  const { parentIsLoggedIn } = props
+  const navigate = useNavigate();
+
+  const handleRoute = () => {
+    if(parentIsLoggedIn){
+      navigate('/add-product');
+    }else{
+      navigate('/login');
+    }
+    
+  };
+
   const item = {
     image: 'featuredHero.jpg', // Replace with your image URL
     title: 'Relove and repurpose your belongings, buy and sell your second hand items.',
@@ -58,6 +71,7 @@ const FeaturedHero = () => {
               cursor: 'pointer',
               border: 'none',
             }}
+            onClick={handleRoute}
           >
             Post an item
           </Box>
