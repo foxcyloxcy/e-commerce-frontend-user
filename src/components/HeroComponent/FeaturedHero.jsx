@@ -1,19 +1,21 @@
 import React from 'react';
-import { Box, Typography, ThemeProvider } from '@mui/material';
+import { Box, Typography, Button, ThemeProvider } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
 import { useNavigate } from 'react-router-dom';
 
-const FeaturedHero = (props) => {
-  const { parentIsLoggedIn } = props
+const FeaturedHero = ({ parentIsLoggedIn }) => {
   const navigate = useNavigate();
 
-  const handleRoute = () => {
-    if(parentIsLoggedIn){
+  const handlePostItemRoute = () => {
+    if (parentIsLoggedIn) {
       navigate('/add-product');
-    }else{
+    } else {
       navigate('/login');
     }
-    
+  };
+
+  const handleSearchRoute = () => {
+    navigate('/shop');
   };
 
   const item = {
@@ -38,19 +40,19 @@ const FeaturedHero = (props) => {
           alt={item.title}
           sx={{
             width: '100%',
-            height: { xs: '300px', md: '500px' },  // Adjust height for banner size
+            height: { xs: '300px', md: '500px' }, // Adjust height for banner size
             objectFit: 'cover',
           }}
         />
 
-        {/* Conditional Overlay Box Positioning */}
+        {/* Overlay Box */}
         <Box
           sx={{
             position: { xs: 'static', md: 'absolute' },
             top: { md: '50%' },
             left: { md: '25%' },
             transform: { md: 'translate(-50%, -50%)' },
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',  // Semi-transparent background
+            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Semi-transparent background
             padding: { xs: 2, md: 4 },
             borderRadius: '8px',
             textAlign: 'center',
@@ -60,23 +62,29 @@ const FeaturedHero = (props) => {
           <Typography variant="h6" gutterBottom color="text.primary">
             {item.title}
           </Typography>
-          <Box
-            component="button"
-            sx={{
-              backgroundColor: 'primary.main',
-              color: 'white',
-              padding: '10px 20px',
-              fontSize: '16px',
-              marginBottom: 2,
-              cursor: 'pointer',
-              border: 'none',
-            }}
-            onClick={handleRoute}
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handlePostItemRoute}
           >
-            Post an item
-          </Box>
+            POST AN ITEM
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            sx={{ marginLeft: 1 }}
+            onClick={handleSearchRoute}
+          >
+            SEARCH FOR ITEMS
+          </Button>
+
           <Typography>
-            <Box component="a" href="#" sx={{ textDecoration: 'underline', color: 'primary.main' }}>
+            <Box
+              component="a"
+              href="#"
+              sx={{ textDecoration: 'underline', color: 'primary.main' }}
+            >
               Learn how it works
             </Box>
           </Typography>
