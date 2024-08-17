@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Container,
     Typography,
@@ -10,32 +10,126 @@ import {
     FormGroup,
     FormControlLabel,
     Checkbox,
-    FormControl,
-    Input,
+    TextField,
     Button,
-    RadioGroup,
-    Radio,
     Grid
 } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-const DrawerContent = ({ categories, openCategory, handleToggleCategory, isSmallScreen, handleSubCategoryClick, onApplyPriceRange }) => {
-    const [minPrice, setMinPrice] = useState('');
-    const [maxPrice, setMaxPrice] = useState('');
+const DrawerContent = ({
+    categories,
+    openCategory,
+    handleToggleCategory,
+    isSmallScreen,
+    handleSubCategoryClick,
+    onApplyPriceRange,
+    subCategoryFromParent
+}) => {
+    const [priceRange, setPriceRange] = useState({ minPrice: '', maxPrice: '' });
+    const [selectedFilters, setSelectedFilters] = useState({});
+    const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+    const [errors, setErrors] = useState({});
+
+    const handlePriceChange = (e) => {
+        const { name, value } = e.target;
+        setPriceRange((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const validatePriceRange = () => {
+        const { minPrice, maxPrice } = priceRange;
+        let validationErrors = {};
+
+        if (minPrice && maxPrice && Number(minPrice) > Number(maxPrice)) {
+            validationErrors.minPrice = 'Minimum price cannot exceed maximum price';
+        }
+        if (minPrice && minPrice < 50) {
+            validationErrors.minPrice = 'Minimum price must be at least AED 50';
+        }
+        if (maxPrice && maxPrice > 50000) {
+            validationErrors.maxPrice = 'Maximum price cannot exceed AED 50,000';
+        }
+
+        setErrors(validationErrors);
+        return Object.keys(validationErrors).length === 0;
+    };
 
     const handleApplyPriceRange = () => {
-        console.log(minPrice, maxPrice)
-        onApplyPriceRange(minPrice, maxPrice); // Pass price range to parent
+        if (validatePriceRange()) {
+            onApplyPriceRange(priceRange.minPrice, priceRange.maxPrice);
+        }
     };
+
+    const handleFilterChange = (propertyId, value) => {
+        setSelectedFilters((prevFilters) => ({
+            ...prevFilters,
+            [propertyId]: prevFilters[propertyId]?.includes(value)
+                ? prevFilters[propertyId].filter((item) => item !== value)
+                : [...(prevFilters[propertyId] || []), value],
+        }));
+    };
+
+    const handleSubCategorySelect = (subCategory) => {
+        setSelectedSubCategory(subCategory);
+        handleSubCategoryClick(subCategory)
+    };
+
+    const handleSubCategorySelectFromParent = (subCategory) => {
+        setSelectedSubCategory(subCategory);
+    };
+
+    useEffect(() => {
+        if (subCategoryFromParent) {
+            handleSubCategorySelectFromParent(subCategoryFromParent);
+        }
+    }, [subCategoryFromParent]);
+
     return (
-        <Container sx={{ width: 300, paddingLeft: 0 }}>
+        <Container sx={{ width: 300, padding: 2 }}>
             <Typography variant="h6" sx={{ paddingTop: 2, paddingBottom: 2 }}>Filters</Typography>
             <Divider />
+
+            <Typography variant="h6" gutterBottom>Price range</Typography>
+            <Grid container spacing={2}>
+                <Grid item xs={6}>
+                    <TextField
+                        label="AED 50"
+                        placeholder="AED 50"
+                        name="minPrice"
+                        type="number"
+                        value={priceRange.minPrice}
+                        onChange={handlePriceChange}
+                        error={!!errors.minPrice}
+                        helperText={errors.minPrice || ''}
+                        fullWidth
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <TextField
+                        label="AED 50,000"
+                        placeholder="AED 50,000"
+                        name="maxPrice"
+                        type="number"
+                        value={priceRange.maxPrice}
+                        onChange={handlePriceChange}
+                        error={!!errors.maxPrice}
+                        helperText={errors.maxPrice || ''}
+                        fullWidth
+                    />
+                </Grid>
+            </Grid>
+            <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                sx={{ marginTop: '10px' }}
+                onClick={handleApplyPriceRange}
+            >
+                Apply
+            </Button>
+            <Divider sx={{ marginTop: '10px' }} />
             {isSmallScreen && (
                 <>
-                    <Typography variant="h6" component="h3" gutterBottom sx={{ padding: 2 }}>
-                        Categories
-                    </Typography>
+                    <Typography variant="h6" gutterBottom sx={{ padding: 2 }}>Categories</Typography>
                     <List>
                         {categories.map((category) => (
                             <React.Fragment key={category.id}>
@@ -46,7 +140,12 @@ const DrawerContent = ({ categories, openCategory, handleToggleCategory, isSmall
                                 <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
                                     <List component="div" disablePadding>
                                         {category.sub_category.map((subCategory) => (
-                                            <ListItem button key={subCategory.id} sx={{ pl: 4 }} onClick={() => handleSubCategoryClick(subCategory.id)}>
+                                            <ListItem
+                                                button
+                                                key={subCategory.id}
+                                                sx={{ pl: 4 }}
+                                                onClick={() => handleSubCategorySelect(subCategory)}
+                                            >
                                                 <ListItemText primary={subCategory.name} />
                                             </ListItem>
                                         ))}
@@ -59,84 +158,30 @@ const DrawerContent = ({ categories, openCategory, handleToggleCategory, isSmall
                 </>
             )}
 
-            <div style={{ padding: 2 }}>
-                <Typography variant="h6" component="h3" gutterBottom>
-                    Brands
-                </Typography>
-                <FormGroup>
-                    {['Zara', 'Adiddas', 'Nike', 'Probiz', 'Fila'].map((brand) => (
-                        <FormControlLabel
-                            key={brand}
-                            control={<Checkbox />}
-                            label={
-                                <div>
-                                    {brand}
-                                    <Typography component="span" variant="body2" sx={{ float: 'right' }}>
-                                        {Math.floor(Math.random() * 100)}
-                                    </Typography>
-                                </div>
-                            }
-                        />
+            {selectedSubCategory && (
+                <div>
+                    {selectedSubCategory.sub_category_property.map((property) => (
+                        <React.Fragment key={property.id}>
+                            <Typography variant="h6" gutterBottom>{property.name}</Typography>
+                            <FormGroup>
+                                {property.sub_category_property_value.map((value) => (
+                                    <FormControlLabel
+                                        key={value.id}
+                                        control={
+                                            <Checkbox
+                                                onChange={() => handleFilterChange(property.id, value.id)}
+                                                checked={selectedFilters[property.id]?.includes(value.id) || false}
+                                            />
+                                        }
+                                        label={value.name}
+                                    />
+                                ))}
+                            </FormGroup>
+                            <Divider sx={{ marginY: '20px' }} />
+                        </React.Fragment>
                     ))}
-                </FormGroup>
-                <Divider sx={{ marginY: '20px' }} />
-                <Typography variant="h6" component="h3" gutterBottom>
-                    Price range
-                </Typography>
-                <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                        <FormControl fullWidth>
-                            <Input
-                                placeholder="AED 50"
-                                type="number"
-                                value={minPrice}
-                                onChange={(e) => setMinPrice(e.target.value)}
-                            />
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <FormControl fullWidth>
-                            <Input
-                                placeholder="AED 50,000"
-                                type="number"
-                                value={maxPrice}
-                                onChange={(e) => setMaxPrice(e.target.value)}
-                            />
-                        </FormControl>
-                    </Grid>
-                </Grid>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    sx={{ marginTop: '10px' }}
-                    onClick={handleApplyPriceRange} // Apply price range
-                >
-                    Apply
-                </Button>
-                <Divider sx={{ marginY: '20px' }} />
-                <Typography variant="h6" component="h3" gutterBottom>
-                    Sizes
-                </Typography>
-                <FormGroup row>
-                    {['XS', 'SM', 'LG', 'XXL'].map((size) => (
-                        <FormControlLabel
-                            key={size}
-                            control={<Checkbox />}
-                            label={<Button variant="outlined">{size}</Button>}
-                        />
-                    ))}
-                </FormGroup>
-                <Divider sx={{ marginY: '20px' }} />
-                <Typography variant="h6" component="h3" gutterBottom>
-                    More filter
-                </Typography>
-                <RadioGroup defaultValue="any">
-                    {['Any condition', 'Brand new', 'Used items', 'Very old'].map((condition) => (
-                        <FormControlLabel key={condition} value={condition.toLowerCase()} control={<Radio />} label={condition} />
-                    ))}
-                </RadioGroup>
-            </div>
+                </div>
+            )}
         </Container>
     );
 };
