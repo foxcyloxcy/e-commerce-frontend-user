@@ -67,13 +67,15 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
             variant="contained"
             color="primary"
             onClick={handlePostItemRoute}
+            sx={{marginBottom: 1, marginRight: 1}}
           >
             POST AN ITEM
           </Button>
+          or
           <Button
             variant="contained"
             color="primary"
-            sx={{ marginLeft: 1 }}
+            sx={{ marginLeft: 1, marginBottom: 1 }}
             onClick={handleSearchRoute}
           >
             SEARCH FOR ITEMS
@@ -83,7 +85,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
             <Box
               component="a"
               href="#"
-              sx={{ textDecoration: 'underline', color: 'primary.main' }}
+              sx={{ textDecoration: 'underline', color: 'primary.main'}}
             >
               Learn how it works
             </Box>
