@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import {
     Box,
     Typography,
-    Grid,
     Card,
     CardMedia,
     CardContent,
@@ -11,13 +10,16 @@ import {
     Modal,
     Backdrop,
     Fade,
+    Divider,
 } from '@mui/material';
 import { styled } from '@mui/system';
-import { ThemeProvider, Divider, } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
+import Slider from 'react-slick';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
-import { useNavigate } from 'react-router-dom';
 
 const QuickViewButton = styled(Button)(({ theme }) => ({
     position: 'absolute',
@@ -30,7 +32,7 @@ const QuickViewButton = styled(Button)(({ theme }) => ({
     fontSize: '0.75rem',
     '&:hover': {
         background: ModTheme.palette.primary.dark,
-        color: ModTheme.palette.secondary.main
+        color: ModTheme.palette.secondary.main,
     },
 }));
 
@@ -45,7 +47,7 @@ const ViewInDetailsButton = styled(Button)(({ theme }) => ({
     fontSize: '0.75rem',
     '&:hover': {
         background: ModTheme.palette.primary.dark,
-        color: ModTheme.palette.secondary.main
+        color: ModTheme.palette.secondary.main,
     },
 }));
 
@@ -53,7 +55,6 @@ const FeaturedProducts = () => {
     const [openModal, setOpenModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [products, setProducts] = useState([]);
-    const navigate = useNavigate();
 
     const handleOpenModal = (product) => {
         setSelectedProduct(product);
@@ -79,12 +80,41 @@ const FeaturedProducts = () => {
 
     useEffect(() => {
         loadProducts();
-
     }, [loadProducts]);
 
-
-    const handleDetailsClick = (product) => {
-        navigate('/product-details', { state: { product } });
+    // Slider settings
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: true,
+                },
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    initialSlide: 2,
+                },
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                },
+            },
+        ],
     };
 
     return (
@@ -99,34 +129,40 @@ const FeaturedProducts = () => {
                 <Typography variant="h1" align="center" gutterBottom marginBottom={5}>
                     Featured Products
                 </Typography>
-                <Grid container spacing={4} alignItems="stretch">
+                <Slider {...settings}>
                     {products.map((product, index) => (
-                        <Grid item xs={12} sm={6} md={3} key={index}>
+                        <Box key={index} padding={2}>
                             <Card
                                 sx={{
                                     position: 'relative',
                                     backgroundColor: ModTheme.palette.secondary.background,
-                                    height: '100%', // Ensure the card takes up the full height of the Grid item
+                                    height: '100%',
                                     display: 'flex',
-                                    flexDirection: 'column', // Allow content to stack vertically
+                                    flexDirection: 'column',
                                     ':hover': {
-                                        boxShadow: 10, // theme.shadows[20]
+                                        boxShadow: 10,
                                     },
                                 }}
                             >
                                 <CardMedia
                                     component="img"
-                                    image={product.default_image ? product.default_image.image_url : product.default_image }
+                                    image={
+                                        product.default_image
+                                            ? product.default_image.image_url
+                                            : product.default_image
+                                    }
                                     alt={product.name}
-                                    sx={{ objectFit: 'contain', maxHeight: 200, width: '100%' }} // Max height to prevent overflow
+                                    sx={{ objectFit: 'contain', maxHeight: 200, width: '100%' }}
                                 />
                                 <Divider />
-                                <CardContent sx={{ flexGrow: 1, marginBottom: 2 }}> {/* Ensure content takes up available space */}
+                                <CardContent sx={{ flexGrow: 1, marginBottom: 2 }}>
                                     <Typography variant="body2" color="textSecondary" gutterBottom>
                                         {product.sub_category.name}
                                     </Typography>
                                     <Typography variant="h6">{product.item_name}</Typography>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', marginTop: 1 }}>
+                                    <Box
+                                        sx={{ display: 'flex', alignItems: 'center', marginTop: 1 }}
+                                    >
                                         <Typography variant="body1" color="primary">
                                             {product.price}
                                         </Typography>
@@ -138,14 +174,14 @@ const FeaturedProducts = () => {
                                     </QuickViewButton>
                                 </CardActions>
                                 <CardActions>
-                                    <ViewInDetailsButton onClick={() => handleDetailsClick(product)}>
+                                    <ViewInDetailsButton onClick={() => handleOpenModal(product)}>
                                         Detail View
                                     </ViewInDetailsButton>
                                 </CardActions>
                             </Card>
-                        </Grid>
+                        </Box>
                     ))}
-                </Grid>
+                </Slider>
 
                 <Modal
                     open={openModal}
@@ -179,7 +215,7 @@ const FeaturedProducts = () => {
                                         height="250"
                                         image={selectedProduct.default_image.image_url}
                                         alt={selectedProduct.item_name}
-                                        sx={{ objectFit: "contain" }}
+                                        sx={{ objectFit: 'contain' }}
                                     />
                                     <Typography variant="body2" color="textSecondary" gutterBottom>
                                         {selectedProduct.sub_category.name}
@@ -193,8 +229,8 @@ const FeaturedProducts = () => {
                                     <ButtonComponent
                                         label="Buy item"
                                         buttonVariant="contained"
-                                        textColor='primary.contrastText'
-                                        hoverTextColor='primary.main'
+                                        textColor="primary.contrastText"
+                                        hoverTextColor="primary.main"
                                     />
                                 </>
                             )}
