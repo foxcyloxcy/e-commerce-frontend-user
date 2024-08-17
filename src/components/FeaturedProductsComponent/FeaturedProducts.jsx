@@ -17,9 +17,18 @@ import { ThemeProvider } from '@mui/material';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import '../FeaturedProductsComponent/FeaturedProducts.css'
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
+import { useNavigate } from 'react-router-dom';
+
+// Custom styled components
+const TruncatedText = styled(Typography)({
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+});
 
 const QuickViewButton = styled(Button)(({ theme }) => ({
     position: 'absolute',
@@ -55,6 +64,7 @@ const FeaturedProducts = () => {
     const [openModal, setOpenModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     const handleOpenModal = (product) => {
         setSelectedProduct(product);
@@ -82,11 +92,22 @@ const FeaturedProducts = () => {
         loadProducts();
     }, [loadProducts]);
 
+    // Function to format price with commas
+    const formatPrice = (price) => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
+    const handleDetailsClick = (product) => {
+        navigate('/product-details', { state: { product } });
+    };
+
     // Slider settings
     const settings = {
         dots: true,
         infinite: true,
         speed: 500,
+        autoplay: true,
+        autoplaySpeed: 5000,
         slidesToShow: 4,
         slidesToScroll: 1,
         responsive: [
@@ -136,7 +157,7 @@ const FeaturedProducts = () => {
                                 sx={{
                                     position: 'relative',
                                     backgroundColor: ModTheme.palette.secondary.background,
-                                    height: '100%',
+                                    height: 400, // Set consistent height for all cards
                                     display: 'flex',
                                     flexDirection: 'column',
                                     ':hover': {
@@ -152,19 +173,21 @@ const FeaturedProducts = () => {
                                             : product.default_image
                                     }
                                     alt={product.name}
-                                    sx={{ objectFit: 'contain', maxHeight: 200, width: '100%' }}
+                                    sx={{ objectFit: 'cover', maxHeight: 200, width: '100%' }}
                                 />
                                 <Divider />
                                 <CardContent sx={{ flexGrow: 1, marginBottom: 2 }}>
                                     <Typography variant="body2" color="textSecondary" gutterBottom>
                                         {product.sub_category.name}
                                     </Typography>
-                                    <Typography variant="h6">{product.item_name}</Typography>
+                                    <TruncatedText variant="h6">
+                                        {product.item_name}
+                                    </TruncatedText>
                                     <Box
                                         sx={{ display: 'flex', alignItems: 'center', marginTop: 1 }}
                                     >
                                         <Typography variant="body1" color="primary">
-                                            {product.price}
+                                            AED {formatPrice(product.price)}
                                         </Typography>
                                     </Box>
                                 </CardContent>
@@ -174,7 +197,7 @@ const FeaturedProducts = () => {
                                     </QuickViewButton>
                                 </CardActions>
                                 <CardActions>
-                                    <ViewInDetailsButton onClick={() => handleOpenModal(product)}>
+                                    <ViewInDetailsButton onClick={() => handleDetailsClick(product)}>
                                         Detail View
                                     </ViewInDetailsButton>
                                 </CardActions>
@@ -221,7 +244,7 @@ const FeaturedProducts = () => {
                                         {selectedProduct.sub_category.name}
                                     </Typography>
                                     <Typography variant="body1" color="primary">
-                                        {selectedProduct.price}
+                                        AED {formatPrice(selectedProduct.price)}
                                     </Typography>
                                     <Typography variant="body2" sx={{ mt: 2 }}>
                                         {selectedProduct.item_description}
