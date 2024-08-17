@@ -5,7 +5,7 @@ import ModTheme from '../ThemeComponent/ModTheme';
 const FeaturedHero = () => {
   const item = {
     image: 'featuredHero.jpg', // Replace with your image URL
-    title: 'Ready to declutter your wardrobe?',
+    title: 'Relove and repurpose your belongings, buy and sell your second hand items.',
     description: 'Sell now and make space for something new!',
   };
 
@@ -44,7 +44,7 @@ const FeaturedHero = () => {
             width: { xs: '100%', md: '40%' },
           }}
         >
-          <Typography variant="h4" gutterBottom color="text.primary">
+          <Typography variant="h6" gutterBottom color="text.primary">
             {item.title}
           </Typography>
           <Box
@@ -59,7 +59,7 @@ const FeaturedHero = () => {
               border: 'none',
             }}
           >
-            Sell now
+            Post an item
           </Box>
           <Typography>
             <Box component="a" href="#" sx={{ textDecoration: 'underline', color: 'primary.main' }}>
