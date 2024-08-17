@@ -97,7 +97,7 @@ function App() {
         refreshParent={handleClickLogout}
       />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home parentIsLoggedIn={isLoggedIn}/>} />
         <Route path="/product-details" element={<ProductDetails userToken={userToken} />} />
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/our-story" element={<OurStoryPage parentIsLoggedIn={isLoggedIn} />} />
