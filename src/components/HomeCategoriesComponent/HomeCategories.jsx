@@ -75,7 +75,7 @@ const HomeCategories = () => {
   };
 
   return (
-    <Box p={4} mt={10}>
+    <Box p={4} mt={3}>
       {!viewingSubCategories ? (
         <Fade in={!viewingSubCategories} timeout={300}>
           <Grid container spacing={2} display='flex' justifyContent='center'>
