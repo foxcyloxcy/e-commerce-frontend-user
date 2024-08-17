@@ -7,7 +7,7 @@ function Copyright(props) {
     return (
         <Typography variant="body2" color="secondary.dark" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
+            <Link color="inherit" href="https://therelovedmarketplace.com/">
                 Reloved
             </Link>{' '}
             {new Date().getFullYear()}
@@ -63,7 +63,7 @@ const Footer = () => {
                             <Link href="/terms-of-use" color="inherit" underline="hover" variant="body2">Terms of use</Link><br />
                             <Link href="/buyer-and-seller-terms" color="inherit" underline="hover" variant="body2">Seller and Buyer Terms</Link><br />
                             <Link href="#" color="inherit" underline="hover" variant="body2">Return/Refund</Link><br />
-                            <Link href="#" color="inherit" underline="hover" variant="body2">Privacy</Link><br />
+                            <Link href="/privacy-policy" color="inherit" underline="hover" variant="body2">Privacy Policy</Link><br />
                         </Grid>
                     </Grid>
                 </Container>
