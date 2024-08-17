@@ -1,95 +1,73 @@
 import React from 'react';
-import Slider from 'react-slick';
 import { Box, Typography, ThemeProvider } from '@mui/material';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import './FeaturedHero.css';  // Import the custom CSS
-import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import ModTheme from '../ThemeComponent/ModTheme';
 
-const carouselItems = [
-  {
-    title: 'Reloved',
-    description: 'Your marketplace to buy and sell your second-hand items. View and browse products on the categories below.',
-    image: 'reloved_banner.jpeg'
-  },
-  {
-    title: 'Reloved',
-    description: 'Your marketplace to buy and sell your second-hand items. View and browse products on the categories below.',
-    image: 'reloved_banner.jpeg'
-  },
-  {
-    title: 'Reloved',
-    description: 'Your marketplace to buy and sell your second-hand items. View and browse products on the categories below.',
-    image: 'reloved_banner.jpeg'
-  }
-];
-
 const FeaturedHero = () => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: false,
-    autoplaySpeed: 3000
+  const item = {
+    image: 'featuredHero.jpg', // Replace with your image URL
+    title: 'Ready to declutter your wardrobe?',
+    description: 'Sell now and make space for something new!',
   };
 
   return (
     <ThemeProvider theme={ModTheme}>
-          <Box sx={{ position: 'relative', width: '100%', height: '100%' }}>
-      <Slider {...settings}>
-        {carouselItems.map((item, index) => (
-          <Box key={index} sx={{ position: 'relative' }}>
-            <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            <Box sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.4)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: {
-                xs:'left', 
-                sm:'left', 
-                md:'left',
-                lg: 'center',
-                xl: 'center'
-              },
-              justifyContent: 'center',
+      <Box
+        sx={{
+          position: 'relative',
+          width: '100%',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Background Image as Banner */}
+        <Box
+          component="img"
+          src={item.image}
+          alt={item.title}
+          sx={{
+            width: '100%',
+            height: { xs: '300px', md: '500px' },  // Adjust height for banner size
+            objectFit: 'cover',
+          }}
+        />
+
+        {/* Conditional Overlay Box Positioning */}
+        <Box
+          sx={{
+            position: { xs: 'static', md: 'absolute' },
+            top: { md: '50%' },
+            left: { md: '25%' },
+            transform: { md: 'translate(-50%, -50%)' },
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',  // Semi-transparent background
+            padding: { xs: 2, md: 4 },
+            borderRadius: '8px',
+            textAlign: 'center',
+            width: { xs: '100%', md: '40%' },
+          }}
+        >
+          <Typography variant="h4" gutterBottom color="text.primary">
+            {item.title}
+          </Typography>
+          <Box
+            component="button"
+            sx={{
+              backgroundColor: 'primary.main',
               color: 'white',
-              padding: 10
-            }}>
-              <Typography variant="h1" component="h1" sx={{
-                paddingBottom: 2
-              }}>{item.title}</Typography>
-              <Typography sx={{
-                variant:{
-                  xs:'body2',
-                  sm:'body2',
-                  md:'body2',
-                  lg:'body1',
-                  xl:'body1',
-                }
-              }}  component="p">{item.description}</Typography>
-              {/* <ButtonComponent
-                height='50px'
-                width="30%"
-                label="Shop now"
-                buttonVariant="contained"
-                textColor='primary.contrastText'
-                hoverTextColor='secondary.main'
-              /> */}
-            </Box>
+              padding: '10px 20px',
+              fontSize: '16px',
+              marginBottom: 2,
+              cursor: 'pointer',
+              border: 'none',
+            }}
+          >
+            Sell now
           </Box>
-        ))}
-      </Slider>
-      {/* <Box sx={{ position: 'absolute', bottom: 200, left: '50%', transform: 'translateX(-50%)' }}>
-      </Box> */}
-    </Box>
+          <Typography>
+            <Box component="a" href="#" sx={{ textDecoration: 'underline', color: 'primary.main' }}>
+              Learn how it works
+            </Box>
+          </Typography>
+        </Box>
+      </Box>
     </ThemeProvider>
   );
 };
