@@ -4,11 +4,11 @@ import FeaturedHero from '../HeroComponent/FeaturedHero';
 import HomeCategories from '../HomeCategoriesComponent/HomeCategories';
 
 
-export default function Home() {
-
+export default function Home(props) {
+    const { parentIsLoggedIn } = props
     return(
         <>
-        <FeaturedHero/>
+        <FeaturedHero parentIsLoggedIn={parentIsLoggedIn}/>
         <HomeCategories/>
         <FeaturedProducts/>
         </>
