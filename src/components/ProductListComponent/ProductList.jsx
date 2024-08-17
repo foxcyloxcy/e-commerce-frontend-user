@@ -33,6 +33,7 @@ const ProductList = (props) => {
     const [openCategory, setOpenCategory] = useState({});
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [hoveredCategory, setHoveredCategory] = useState(null);
+    const [selectedSubCategory, setSelectedSubCategory] = useState(null);
     const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
     const [elevate, setElevate] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -123,8 +124,9 @@ const ProductList = (props) => {
         setListView(view)
     };
 
-    const handleSubCategoryClick = (subCategoryId) => {
-        loadProducts(subCategoryId);
+    const handleSubCategoryClick = (subCategory) => {
+        loadProducts(subCategory.id);
+        setSelectedSubCategory(subCategory)
     };
 
     const handleMouseEnter = (categoryId, event) => {
@@ -265,7 +267,7 @@ const ProductList = (props) => {
                         <Paper>
                             <List>
                                 {categories.find(cat => cat.id === hoveredCategory)?.sub_category.map((subCategory) => (
-                                    <ListItem button key={subCategory.id} onClick={() => handleSubCategoryClick(subCategory.id)}>
+                                    <ListItem button key={subCategory.id} onClick={() => handleSubCategoryClick(subCategory)}>
                                         <ListItemText primary={subCategory.name} />
                                     </ListItem>
                                 ))}
@@ -281,6 +283,7 @@ const ProductList = (props) => {
                         isSmallScreen={isSmallScreen}
                         handleSubCategoryClick={handleSubCategoryClick}
                         onApplyPriceRange={handleApplyPriceRange}
+                        subCategoryFromParent={selectedSubCategory}
                     />
                 </Drawer>
 
@@ -294,6 +297,7 @@ const ProductList = (props) => {
                                 isSmallScreen={isSmallScreen}
                                 handleSubCategoryClick={handleSubCategoryClick}
                                 onApplyPriceRange={handleApplyPriceRange}
+                                subCategoryFromParent={selectedSubCategory}
                             />
                         </Grid>
                     )}
