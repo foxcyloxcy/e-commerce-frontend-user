@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl, Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
 import FileInput from './FileInput'; // Import your custom FileInput component
@@ -88,8 +88,8 @@ const AddProduct = (props) => {
   };
 
   const handleSubCategoryChange = (event) => {
-    const subCategoryId = event.target.value;
-    setSelectedSubCategories(subCategoryId);
+    const subCategory = event.target.value;
+    setSelectedSubCategories(subCategory);
   };
 
   const handlePriceChange = (e) => {
@@ -272,7 +272,7 @@ const AddProduct = (props) => {
                     label="Select Subcategory"
                   >
                     {subCategories.map((subCategory) => (
-                      <MenuItem key={subCategory.id} value={subCategory.id}>
+                      <MenuItem key={subCategory.id} value={subCategory}>
                         {subCategory.name}
                       </MenuItem>
                     ))}
@@ -326,22 +326,6 @@ const AddProduct = (props) => {
                   </FormGroup>
                 </Grid>
                 <Grid item xs={12}>
-                  <FormControl fullWidth size="small">
-                    <InputLabel>Item Condition</InputLabel>
-                    <Select
-                      value={itemCondition}
-                      onChange={handleConditionChange}
-                      label="Item Condition"
-                    >
-                      {itemConditions.map((condition) => (
-                        <MenuItem key={condition.id} value={condition.id}>
-                          {condition.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12}>
                   <FileInput
                     onChange={handleImageUpload}
                     multiple
@@ -368,28 +352,26 @@ const AddProduct = (props) => {
                   )}
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography variant="h6">Brands</Typography>
-                  <FormGroup>
-                    {brandOptions.map((brand) => (
-                      <FormControlLabel
-                        key={brand.id}
-                        control={<Checkbox value={brand.id} checked={brands.includes(brand.id)} onChange={handleBrandChange} />}
-                        label={brand.name}
-                      />
+                    {selectedSubCategories.sub_category_property.map((property) => (
+                        <React.Fragment key={property.id}>
+                            <Typography variant="h6" gutterBottom>{property.name}</Typography>
+                            <FormGroup>
+                                {property.sub_category_property_value.map((value) => (
+                                    <FormControlLabel
+                                        key={value.id}
+                                        control={
+                                            <Checkbox
+                                                // onChange={() => handleFilterChange(property.id, value.id)}
+                                                // checked={selectedFilters[property.id]?.includes(value.id) || false}
+                                            />
+                                        }
+                                        label={value.name}
+                                    />
+                                ))}
+                            </FormGroup>
+                            <Divider sx={{ marginY: '20px' }} />
+                        </React.Fragment>
                     ))}
-                  </FormGroup>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="h6">Colors</Typography>
-                  <FormGroup>
-                    {colorOptions.map((color) => (
-                      <FormControlLabel
-                        key={color.id}
-                        control={<Checkbox value={color.id} checked={colors.includes(color.id)} onChange={handleColorChange} />}
-                        label={color.name}
-                      />
-                    ))}
-                  </FormGroup>
                 </Grid>
                 <Grid item xs={12}>
                   <Button type="submit" variant="contained" color="primary" disabled={loading}>
