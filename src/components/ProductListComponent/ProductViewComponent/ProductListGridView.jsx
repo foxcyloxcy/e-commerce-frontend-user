@@ -33,6 +33,10 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
         textOverflow: 'ellipsis',
     });
 
+    const formatPrice = (price) => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
     return (
         <Grid item xs={12} md={8} lg={9}>
             <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
@@ -85,7 +89,7 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                         <TruncatedText variant="h6">{product.item_name}</TruncatedText>
                         <TruncatedText variant="body2">{product.item_description}</TruncatedText>
                         <Typography variant="h6" sx={{ marginTop: '10px' }}>
-                            AED {product.price}
+                            AED {formatPrice(product.price)}
                         </Typography>
                         <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
                             {product.is_bid ? 'Accepting offers' : ''}
