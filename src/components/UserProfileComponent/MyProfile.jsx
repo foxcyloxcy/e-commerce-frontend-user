@@ -4,6 +4,7 @@ import { styled, keyframes } from '@mui/system';
 import ModTheme from '../ThemeComponent/ModTheme';
 import UserProfileDetails from './UserProfileDetailsComponent/UserProfileDetails';
 import MyProducts from './MyProductsComponent/MyProducts';
+import MyOffers from './MyOffersComponent/MyOffers';
 
 // Define the fade-in animation
 const fadeIn = keyframes`
@@ -49,11 +50,11 @@ const MyProfile = (props) => {
   const renderContent = () => {
     switch (activeTab) {
       case 'Profile settings':
-        return <UserProfileDetails />;
+        return <UserProfileDetails userToken={userToken}/>;
       case 'My products':
         return <MyProducts userToken={userToken} />;
       case 'My offers':
-        return <div>My Offers Component</div>; // Replace with your MyOffers component
+        return <MyOffers userToken={userToken} />; // Replace with your MyOffers component
       case 'Offers to me':
         return <div>Offers to Me Component</div>; // Replace with your OffersToMe component
       default:
