@@ -10,7 +10,9 @@ import {
     Card,
     CardContent,
     Button,
-    CardMedia
+    CardMedia,
+    Avatar,
+    Box
 } from '@mui/material';
 import GridViewIcon from '@mui/icons-material/GridView';
 import { useNavigate } from 'react-router-dom';
@@ -40,11 +42,11 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
     return (
         <Grid item xs={12} md={8} lg={9}>
             <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
-                <Grid container alignItems="center">
-                <Grid item xs={3} sm={3} md={4}>
+                <Grid container display='flex' justifyContent='space-between' alignItems='center'>
+                <Grid item xs={4} sm={4} md={4}>
                         <Typography variant="body1">{productsData.length} Items found</Typography>
                     </Grid>
-                    <Grid item xs={6} sm={6} md={4}>
+                    <Grid item xs={4} sm={4} md={4}>
                     <FormControl variant="outlined" sx={{minWidth:'100%'}}>
                             <Select defaultValue="latest">
                                 <MenuItem value="latest">Latest items</MenuItem>
@@ -52,27 +54,17 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={3} sm={3} md={4} display='flex' justifyContent='center'>
-                    <Tooltip title="List view">
-                            <IconButton onClick={()=>{
-                                handleProductView('list')
-                            }}>
-                                <ViewListIcon />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Grid view">
-                            <IconButton onClick={()=>{
-                                handleProductView('grid')
-                            }}>
-                                <GridViewIcon />
-                            </IconButton>
-                        </Tooltip>
-                    </Grid>
                 </Grid>
             </header>
             <Grid container spacing={2}>
                 {productsData.map((product) => (
-                <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
+                <Grid item xs={6} sm={6} md={4} lg={3} key={product.id}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', padding: 1 }}>
+                                <Avatar src={product.user_avatar} alt={product.user_name} />
+                                <Typography variant="body2" sx={{ marginLeft: 1 }}>
+                                    {product.user_name}
+                                </Typography>
+                            </Box>
                 <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '430px' }}>
 
                     {/* Product Image */}
