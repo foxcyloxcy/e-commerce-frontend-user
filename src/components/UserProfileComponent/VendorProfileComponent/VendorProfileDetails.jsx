@@ -56,9 +56,9 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
-                console.log("Image uploaded successfully");
                 // Assuming the uploaded image URL is returned in the response
-                setAvatar(res.data.photoUrl);
+                loadProfile()
+                setSelectedFile(null)
             }
         } catch (error) {
             console.log("Error uploading image:", error);
