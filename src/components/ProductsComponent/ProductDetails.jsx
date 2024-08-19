@@ -12,7 +12,9 @@ const ProductDetails = () => {
     const { state } = useLocation();
     const { product } = state;
 
-    console.log(product)
+    const formatPrice = (price) => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
 
     return (
         <ThemeProvider theme={ModTheme}>
@@ -52,7 +54,7 @@ const ProductDetails = () => {
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Typography variant="h6" gutterBottom>{product.item_name}</Typography>
-                        <Typography component="div" color="primary">AED {product.price}</Typography>
+                        <Typography component="div" color="primary">AED {formatPrice(product.price)}</Typography>
                         <Typography variant="body1" color="textSecondary" paragraph>
                             {product.item_description}
                         </Typography>
