@@ -24,6 +24,10 @@ const ProductListGrid = ({ productsData, handleProductView  }) => {
         navigate('/product-details', { state: { product } });
     };
 
+    const formatPrice = (price) => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
     return (
         <Grid item xs={12} md={8} lg={9}>
             <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
@@ -76,7 +80,7 @@ const ProductListGrid = ({ productsData, handleProductView  }) => {
                         </Grid>
                         <Grid item xs={12} md={3}>
                             <CardContent>
-                                <Typography variant="h6">AED {product.price}</Typography>
+                                <Typography variant="h6">AED {formatPrice(product.price)}</Typography>
                                 <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
                                     {product.is_bid ? "Accepting Offers" : ""}
                                 </Typography>
