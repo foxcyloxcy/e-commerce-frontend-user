@@ -3,8 +3,10 @@ import { Box, Container, List, ListItem, ListItemText, ThemeProvider, Divider } 
 import { styled, keyframes } from '@mui/system';
 import ModTheme from '../ThemeComponent/ModTheme';
 import UserProfileDetails from './UserProfileDetailsComponent/UserProfileDetails';
+import VendorProfileDetails from './VendorProfileComponent/VendorProfileDetails';
 import MyProducts from './MyProductsComponent/MyProducts';
 import MyOffers from './MyOffersComponent/MyOffers';
+import OffersToMe from './OffersToMeComponent/OffersToMe';
 
 // Define the fade-in animation
 const fadeIn = keyframes`
@@ -56,7 +58,9 @@ const MyProfile = (props) => {
       case 'My offers':
         return <MyOffers userToken={userToken} />; // Replace with your MyOffers component
       case 'Offers to me':
-        return <div>Offers to Me Component</div>; // Replace with your OffersToMe component
+        return <OffersToMe userToken={userToken} />; // Replace with your OffersToMe component
+      case 'Vendor settings':
+        return <VendorProfileDetails userToken={userToken} />; // Replace with your OffersToMe component
       default:
         return null;
     }
@@ -69,7 +73,10 @@ const MyProfile = (props) => {
           <Sidebar>
             <List>
               <ListItem button onClick={() => setActiveTab('Profile settings')}>
-                <ListItemText primary="Profile settings" />
+                <ListItemText primary="Personal Profile" />
+              </ListItem>
+              <ListItem button onClick={() => setActiveTab('Vendor settings')}>
+                <ListItemText primary="Vendor Profile" />
               </ListItem>
               <Divider />
               <ListItem button onClick={() => setActiveTab('My products')}>
