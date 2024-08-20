@@ -49,7 +49,7 @@ const VendorProfileDetails = (props) => {
         formData.append('photo', selectedFile);
 
         try {
-            const res = await api.post("/api/auth/me/upload-photo", formData, {
+            const res = await api.post("/api/auth/me/upload-vendor", formData, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'multipart/form-data',
