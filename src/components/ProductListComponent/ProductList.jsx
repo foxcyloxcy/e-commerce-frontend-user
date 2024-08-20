@@ -71,6 +71,7 @@ const ProductList = (props) => {
 
             const res = await api.get(query);
             if (res.status === 200) {
+                console.log(res.data)
                 setProductsData(res.data.data.data);
             }
         } catch (error) {
@@ -301,12 +302,14 @@ const ProductList = (props) => {
                             />
                         </Grid>
                     )}
-                    {
+                    {/* {
                         listView === 'list' ?
                             <ProductListListView productsData={productsData} handleProductView={handleProductView} />
                             :
                             <ProductListGridView productsData={productsData} handleProductView={handleProductView} />
-                    }
+                    } */}
+
+                    <ProductListGridView productsData={productsData} handleProductView={handleProductView} />
 
                 </Grid>
             </Container>
