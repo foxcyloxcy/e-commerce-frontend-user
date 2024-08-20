@@ -11,6 +11,7 @@ import {
     Backdrop,
     Fade,
     Divider,
+    Avatar
 } from '@mui/material';
 import { styled } from '@mui/system';
 import { ThemeProvider } from '@mui/material';
@@ -153,6 +154,12 @@ const FeaturedProducts = () => {
                 <Slider {...settings}>
                     {products.map((product, index) => (
                         <Box key={index} padding={2}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', padding: 1 }}>
+                                <Avatar src={product.user_avatar} alt={product.user_name} />
+                                <Typography variant="body2" sx={{ marginLeft: 1 }}>
+                                    {product.user_name}
+                                </Typography>
+                            </Box>
                             <Card
                                 sx={{
                                     position: 'relative',
