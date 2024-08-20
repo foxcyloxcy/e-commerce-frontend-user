@@ -59,8 +59,12 @@ const MyProducts = (props) => {
                 <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
                     <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
                         {/* Status Badge */}
-                        <StatusBadge status={product.item_status}>
-                            {product.item_status === 0 ? 'Pending' : product.item_status === 1 ? 'Approved' : 'Rejected'}
+                        <StatusBadge status={product.status}>
+                            {product.status === 0 ? 'Pending' : 
+                            product.status === 1 ? 'Approved' : 
+                            product.status === 2 ? 'Rejected': 
+                            product.status === 3 ? 'Sold':
+                            product.status === 4 ? 'Bid accepted': 'Archived'}
                         </StatusBadge>
 
                         {/* Product Image */}
