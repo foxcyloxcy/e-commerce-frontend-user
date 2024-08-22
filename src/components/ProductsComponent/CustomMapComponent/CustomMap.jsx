@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { TextField } from "@mui/material";
+import './CustomMap.css'
 
 const MapComponent = () => {
   const mapRef = useRef(null);
@@ -11,6 +12,7 @@ const MapComponent = () => {
       const map = new window.google.maps.Map(mapRef.current, {
         center: { lat: -33.8688, lng: 151.2195 },
         zoom: 13,
+        disableDefaultUI: true,
       });
 
       const input = inputRef.current;
@@ -19,7 +21,7 @@ const MapComponent = () => {
       });
 
       autocomplete.bindTo("bounds", map);
-      map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
+      map.controls[window.google.maps.ControlPosition.LEFT].push(input);
 
       const infowindow = new window.google.maps.InfoWindow();
       const infowindowContent = infowindowContentRef.current;
@@ -70,21 +72,16 @@ const MapComponent = () => {
 
   return (
     <>
-      <TextField
-        size="small"
-        fullWidth
-        label="Product Name"
-        required
-        ref={inputRef}
-        id="pac-input"
-      />
-      <input id="pac-input" ref={inputRef} type="text" placeholder="Search Box" />
-      <div id="map" ref={mapRef} style={{ height: "400px", width: "100%" }}></div>
-      <div id="infowindow-content" ref={infowindowContentRef}>
-        <span id="place-name" className="title"></span><br />
-        <span id="place-id"></span><br />
-        <span id="place-address"></span>
-      </div>
+        <div className="map-container">
+        <input type="text" ref={inputRef} required/>
+        <div id="map" ref={mapRef} style={{ height: "490px", width: "100%", zIndex: 1 }}>
+        </div>
+        <div id="infowindow-content" ref={infowindowContentRef}>
+          <span id="place-name" className="title"></span><br />
+          <span id="place-id"></span><br />
+          <span id="place-address"></span>
+        </div>
+        </div>
     </>
   );
 };
