@@ -19,13 +19,12 @@ const AddProduct = (props) => {
   const [price, setPrice] = useState('');
   const [priceError, setPriceError] = useState('');
   const [location, setLocation] = useState(null);
-  const [brands, setBrands] = useState([]);
-  const [colors, setColors] = useState([]);
   const [acceptOffers, setAcceptOffers] = useState(0);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategories, setSelectedSubCategories] = useState('');
+  const [selectedSubCategoryId, setSelectedSubCategoryId] = useState('');
   const [itemCondition, setItemCondition] = useState('');
   const [selectedPropertyValues, setSelectedPropertyValues] = useState({});
 
@@ -47,6 +46,7 @@ const AddProduct = (props) => {
   const handleSubCategoryChange = (event) => {
     const subCategory = event.target.value;
     setSelectedSubCategories(subCategory);
+    setSelectedSubCategoryId(subCategory.id)
   };
 
   const handlePriceChange = (e) => {
@@ -60,6 +60,7 @@ const AddProduct = (props) => {
   };
 
   const handleCategoryChange = async (event) => {
+    resetForm();
     const categoryId = event.target.value;
     setSelectedCategory(categoryId);
     try {
@@ -101,13 +102,12 @@ const AddProduct = (props) => {
     setPrice('');
     setPriceError('');
     setLocation(null);
-    setBrands([]);
-    setColors([]);
     setAcceptOffers(0);
     setSelectedCategory('');
     setSubCategories([]);
     setSelectedSubCategories('');
     setItemCondition('');
+    setSelectedPropertyValues({})
   };
 
   const handleSubmit = async (e) => {
@@ -123,7 +123,7 @@ const AddProduct = (props) => {
     formData.append('item_description', description);
     formData.append('price', price);
     formData.append('is_bid', acceptOffers);
-    formData.append('sub_category_id', selectedSubCategories);
+    formData.append('sub_category_id', selectedSubCategoryId);
     formData.append('condition', itemCondition);
 
     let index = 0;
