@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl, Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api';
+import CustomMap from './CustomMapComponent/CustomMap';
+import { APIProvider } from '@vis.gl/react-google-maps';
 import FileInput from './FileInput'; // Import your custom FileInput component
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 import Swal from 'sweetalert2';
 
-const libraries = ['places'];
 
 const AddProduct = (props) => {
+  const apiKey = import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY;
   const { userToken } = props;
   const [productName, setProductName] = useState('');
   const [description, setDescription] = useState('');
@@ -26,65 +27,21 @@ const AddProduct = (props) => {
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategories, setSelectedSubCategories] = useState('');
   const [itemCondition, setItemCondition] = useState('');
+  const [selectedPropertyValues, setSelectedPropertyValues] = useState({});
 
-  // Example mappings for brands, colors, and conditions
-  const brandOptions = [
-    { id: 1, name: "Zara" },
-    { id: 2, name: "Adiddas" },
-    { id: 3, name: "Nike" },
-    { id: 4, name: "Probiz" },
-    { id: 5, name: "Fila" },
-  ];
-  const colorOptions = [
-    { id: 1, name: "Red" },
-    { id: 2, name: "Blue" },
-    { id: 3, name: "Green" },
-    { id: 4, name: "Black" },
-    { id: 5, name: "White" }
-  ];
-  const itemConditions = [
-    { id: 1, name: "New" },
-    { id: 2, name: "Used" },
-    { id: 3, name: "Refurbished" }
-  ];
 
   const history = useNavigate();
 
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyAGgTLA3l7r3jFcuzdcsmknwsSRUjTh4cY',
-    libraries,
-  });
+  const isLoaded = true
 
   const handleImageUpload = (files) => {
     setImages((prevImages) => [...prevImages, ...files].slice(0, 10));
   };
 
-  const handleMapClick = (event) => {
-    setLocation({
-      lat: event.latLng.lat(),
-      lng: event.latLng.lng(),
-    });
-  };
 
   const handleBidChange = (event) => {
     const { checked } = event.target;
     setAcceptOffers(checked ? 1 : 0);
-  };
-
-  const handleBrandChange = (event) => {
-    const { value, checked } = event.target;
-    setBrands((prev) => {
-      const id = parseInt(value, 10);
-      return checked ? [...prev, id] : prev.filter((brandId) => brandId !== id);
-    });
-  };
-
-  const handleColorChange = (event) => {
-    const { value, checked } = event.target;
-    setColors((prev) => {
-      const id = parseInt(value, 10);
-      return checked ? [...prev, id] : prev.filter((colorId) => colorId !== id);
-    });
   };
 
   const handleSubCategoryChange = (event) => {
@@ -115,9 +72,27 @@ const AddProduct = (props) => {
     }
   };
 
-  const handleConditionChange = (event) => {
-    setItemCondition(event.target.value);
+  const handleCheckboxChange = (propertyId, valueId) => (event) => {
+    const { checked } = event.target;
+    
+    console.log(selectedPropertyValues)
+    setSelectedPropertyValues((prevValues) => {
+      const updatedValues = { ...prevValues };
+      if (checked) {
+        if (!updatedValues[propertyId]) {
+          updatedValues[propertyId] = [];
+        }
+        updatedValues[propertyId].push(valueId);
+      } else {
+        updatedValues[propertyId] = updatedValues[propertyId].filter((id) => id !== valueId);
+        if (updatedValues[propertyId].length === 0) {
+          delete updatedValues[propertyId];
+        }
+      }
+      return updatedValues;
+    });
   };
+
 
   const resetForm = () => {
     setProductName('');
@@ -142,39 +117,29 @@ const AddProduct = (props) => {
       setLoading(false);
       return;
     }
-  
+
     const formData = new FormData();
     formData.append('item_name', productName);
     formData.append('item_description', description);
     formData.append('price', price);
     formData.append('is_bid', acceptOffers);
     formData.append('sub_category_id', selectedSubCategories);
-    formData.append('condition', itemCondition); // Add item condition
-  
-    // Append colors and brands as properties[x] with integer IDs
+    formData.append('condition', itemCondition);
+
     let index = 0;
-  
-    colors.forEach((colorId) => {
-      formData.append(`properties[${index}]`, colorId);
-      index++;
+
+    // Append selected property values
+    Object.keys(selectedPropertyValues).forEach((propertyId) => {
+      selectedPropertyValues[propertyId].forEach((valueId) => {
+        formData.append(`properties[${index}]`, valueId);
+        index++;
+      });
     });
-  
-    brands.forEach((brandId) => {
-      formData.append(`properties[${index}]`, brandId);
-      index++;
-    });
-  
-    // Add item condition as the next property if it's an integer ID
-    const conditionId = itemConditions.find(condition => condition.name === itemCondition)?.id;
-    if (conditionId) {
-      formData.append(`properties[${index}]`, conditionId);
-      index++;
-    }
-  
+
     images.forEach((image, index) => {
       formData.append(`imgs[${index}]`, image);
     });
-  
+
     try {
       const res = await api.post("/api/auth/items", formData, {
         headers: {
@@ -182,10 +147,10 @@ const AddProduct = (props) => {
           'Content-Type': 'multipart/form-data',
         },
       });
-  
+
       if (res.status === 200) {
         const successMessage = res.data.message;
-  
+
         Swal.fire({
           title: successMessage,
           text: 'You will receive an email after your item gets approved. This can take up to 72hrs max.',
@@ -339,39 +304,36 @@ const AddProduct = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                   {isLoaded ? (
-                    <GoogleMap
-                      mapContainerStyle={{ width: '100%', height: '400px' }}
-                      zoom={8}
-                      center={{ lat: -3.745, lng: -38.523 }}
-                      onClick={handleMapClick}
-                    >
-                      {location && <Marker position={location} />}
-                    </GoogleMap>
+                    <APIProvider apiKey={apiKey}>
+                      <CustomMap />
+                    </APIProvider>
                   ) : (
                     <Typography>Loading map...</Typography>
                   )}
                 </Grid>
                 <Grid item xs={12}>
-                    {selectedSubCategories.sub_category_property.map((property) => (
-                        <React.Fragment key={property.id}>
-                            <Typography variant="h6" gutterBottom>{property.name}</Typography>
-                            <FormGroup>
-                                {property.sub_category_property_value.map((value) => (
-                                    <FormControlLabel
-                                        key={value.id}
-                                        control={
-                                            <Checkbox
-                                                // onChange={() => handleFilterChange(property.id, value.id)}
-                                                // checked={selectedFilters[property.id]?.includes(value.id) || false}
-                                            />
-                                        }
-                                        label={value.name}
-                                    />
-                                ))}
-                            </FormGroup>
-                            <Divider sx={{ marginY: '20px' }} />
-                        </React.Fragment>
-                    ))}
+                  {selectedSubCategories.sub_category_property.map((property) => (
+                    <React.Fragment key={property.id}>
+                      <Typography variant="h6" gutterBottom>{property.name}</Typography>
+                      <FormGroup row>
+                        {property.sub_category_property_value.map((value) => (
+                          <FormControlLabel
+                            key={value.id}
+                            control={
+                              <Checkbox
+                              checked={
+                                selectedPropertyValues[property.id]?.includes(value.id) || false
+                              }
+                              onChange={handleCheckboxChange(property.id, value.id)}
+                            />
+                            }
+                            label={value.name}
+                          />
+                        ))}
+                      </FormGroup>
+                      <Divider sx={{ marginY: '20px' }} />
+                    </React.Fragment>
+                  ))}
                 </Grid>
                 <Grid item xs={12}>
                   <Button type="submit" variant="contained" color="primary" disabled={loading}>
