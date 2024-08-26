@@ -18,7 +18,7 @@ const AddProduct = (props) => {
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState('');
   const [priceError, setPriceError] = useState('');
-  const [location, setLocation] = useState(null);
+  const [address, setAddress] = useState(null);
   const [acceptOffers, setAcceptOffers] = useState(0);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -93,7 +93,12 @@ const AddProduct = (props) => {
       return updatedValues;
     });
   };
+  
 
+  const handleAddressData = async (address_data) => {
+    console.log(address_data)
+    setAddress()
+  };
 
   const resetForm = () => {
     setProductName('');
@@ -101,7 +106,7 @@ const AddProduct = (props) => {
     setImages([]);
     setPrice('');
     setPriceError('');
-    setLocation(null);
+    setAddress(null);
     setAcceptOffers(0);
     setSelectedCategory('');
     setSubCategories([]);
@@ -305,7 +310,8 @@ const AddProduct = (props) => {
                 <Grid item xs={12}>
                   {isLoaded ? (
                     <APIProvider apiKey={apiKey}>
-                      <CustomMap />
+                      <CustomMap 
+                      addressData={handleAddressData}/>
                     </APIProvider>
                   ) : (
                     <Typography>Loading map...</Typography>
