@@ -1,10 +1,13 @@
 import React from 'react';
-import { Box, Typography, Button, ThemeProvider } from '@mui/material';
+import { Box, Typography, Button, ThemeProvider, useMediaQuery, } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
 import { useNavigate } from 'react-router-dom';
 
+
 const FeaturedHero = ({ parentIsLoggedIn }) => {
   const navigate = useNavigate();
+  const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
+  const imageRoute = isSmallScreen ? 'featuredHeroMobile.jpg': 'featuredHero.jpg'
 
   const handlePostItemRoute = () => {
     if (parentIsLoggedIn) {
@@ -19,7 +22,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
   };
 
   const item = {
-    image: 'featuredHero.jpg', // Replace with your image URL
+    image: imageRoute, // Replace with your image URL
     title: 'Relove and repurpose your belongings, buy and sell your second hand items.',
     description: 'Sell now and make space for something new!',
   };
@@ -40,8 +43,8 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
           alt={item.title}
           sx={{
             width: '100%',
-            height: { xs: '300px', md: '500px' }, // Adjust height for banner size
-            objectFit: 'cover',
+            height: { md: '500px' }, // Adjust height for banner size
+            objectFit: {xs: 'contain', md: 'cover'},
           }}
         />
 
