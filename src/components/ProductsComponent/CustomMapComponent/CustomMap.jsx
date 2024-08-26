@@ -2,7 +2,9 @@ import React, { useEffect, useRef } from "react";
 import { TextField } from "@mui/material";
 import './CustomMap.css'
 
-const MapComponent = () => {
+const CustomMap = (props) => {
+  console.log(props)
+  const { addressData } = props
   const mapRef = useRef(null);
   const inputRef = useRef(null);
   const infowindowContentRef = useRef(null);
@@ -13,6 +15,7 @@ const MapComponent = () => {
         center: { lat: -33.8688, lng: 151.2195 },
         zoom: 13,
         disableDefaultUI: true,
+        mapId: '1947e6c6df289e5e'
       });
 
       const input = inputRef.current;
@@ -58,6 +61,7 @@ const MapComponent = () => {
             infowindowContent.children["place-address"].textContent = results[0].formatted_address;
 
             infowindow.open(map, marker);
+            addressData(results)
           })
           .catch((e) => window.alert("Geocoder failed due to: " + e));
       });
@@ -86,4 +90,4 @@ const MapComponent = () => {
   );
 };
 
-export default MapComponent;
+export default CustomMap;
