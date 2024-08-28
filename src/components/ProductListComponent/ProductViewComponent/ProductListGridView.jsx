@@ -31,8 +31,8 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
         setCurrentPage(value);
     };
 
-    const handleDetailsClick = (product) => {
-        navigate('/product-details', { state: { product } });
+    const handleDetailsClick = (productUuid) => {
+        navigate('/product-details', { state: { productUuid } });
     };
 
     const TruncatedText = styled(Typography)({
@@ -114,7 +114,7 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                                     color="primary"
                                     fullWidth
                                     sx={{ marginTop: '10px' }}
-                                    onClick={() => handleDetailsClick(product)}
+                                    onClick={() => handleDetailsClick(product.uuid)}
                                 >
                                     Details
                                 </Button>
