@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Box, Grid, Typography, Card, CardContent, Button, CardMedia } from '@mui/material';
+import { Box, Grid, Typography, Card, CardContent, Button, CardMedia, Pagination } from '@mui/material';
 import { styled } from '@mui/system';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +15,7 @@ const StatusBadge = styled(Box)(({ theme, status }) => ({
     position: 'absolute',
     top: theme.spacing(1),
     left: theme.spacing(1),
-    backgroundColor: status === 0 ? '#ff9800' : status === 1 ? '#4caf50' : '#f44336', // Orange for pending, green for approved, red for rejected
+    backgroundColor: status === 0 ? '#ff9800' : status === 1 ? '#4caf50' : '#f44336', 
     color: '#fff',
     borderRadius: '4px',
     padding: '2px 8px',
@@ -26,11 +26,14 @@ const StatusBadge = styled(Box)(({ theme, status }) => ({
 const MyProducts = (props) => {
     const { userToken } = props;
     const [productsData, setProductsData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [itemsPerPage] = useState(5); // Change the items per page as required
     const navigate = useNavigate();
 
-    const loadProducts = useCallback(async () => {
+    const loadProducts = useCallback(async (page) => {
         try {
-            const res = await api.get(`/api/auth/me/items?status=0,1,2&page=1size=10`, {
+            const res = await api.get(`/api/auth/me/items?status=0,1,2,3,4&page=${page}&size=${itemsPerPage}`, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -39,71 +42,84 @@ const MyProducts = (props) => {
 
             if (res.status === 200) {
                 setProductsData(res.data.data.data);
+                setTotalPages(res.data.data.last_page);  // Assuming the API provides `total_pages`
             }
         } catch (error) {
             console.log(error);
         }
-    }, [userToken]);
+    }, [userToken, itemsPerPage]);
 
     useEffect(() => {
-        loadProducts();
-    }, [loadProducts]);
+        loadProducts(currentPage);
+    }, [loadProducts, currentPage]);
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
 
     const handleDetailsClick = (productUuid) => {
         navigate('/product-details', { state: { productUuid } });
     };
 
     return (
-        <Grid container spacing={2}>
-            {productsData.map((product) => (
-                <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
-                    <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
-                        {/* Status Badge */}
-                        <StatusBadge status={product.status}>
-                            {product.status === 0 ? 'Pending' : 
-                            product.status === 1 ? 'Approved' : 
-                            product.status === 2 ? 'Rejected': 
-                            product.status === 3 ? 'Sold':
-                            product.status === 4 ? 'Bid accepted': 'Archived'}
-                        </StatusBadge>
+        <Box>
+            <Grid container spacing={2}>
+                {productsData.map((product) => (
+                    <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
+                        <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
+                            <StatusBadge status={product.status}>
+                                {product.status === 0 ? 'Pending' : 
+                                product.status === 1 ? 'Approved' : 
+                                product.status === 2 ? 'Rejected' : 
+                                product.status === 3 ? 'Sold' : 
+                                product.status === 4 ? 'Bid accepted' : 'Archived'}
+                            </StatusBadge>
 
-                        {/* Product Image */}
-                        <CardMedia
-                            component="img"
-                            height="200"
-                            image={product.default_image ? product.default_image.image_url : 'no image available.'}
-                            alt={product.item_name}
-                            sx={{ objectFit: 'cover' }}
-                        />
+                            <CardMedia
+                                component="img"
+                                height="200"
+                                image={product.default_image ? product.default_image.image_url : 'no image available.'}
+                                alt={product.item_name}
+                                sx={{ objectFit: 'cover' }}
+                            />
 
-                        {/* Card Content */}
-                        <CardContent sx={{ flexGrow: 1 }}>
-                            <TruncatedText variant="h6">{product.item_name}</TruncatedText>
-                            <TruncatedText variant="body2">{product.item_description}</TruncatedText>
-                            <Typography variant="h6" sx={{ marginTop: '10px' }}>
-                                AED {product.price}
-                            </Typography>
-                            <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
-                                {product.is_bid ? 'You are accepting offers' : ''}
-                            </Typography>
-                        </CardContent>
+                            <CardContent sx={{ flexGrow: 1 }}>
+                                <TruncatedText variant="h6">{product.item_name}</TruncatedText>
+                                <TruncatedText variant="body2">{product.item_description}</TruncatedText>
+                                <Typography variant="h6" sx={{ marginTop: '10px' }}>
+                                    AED {product.price}
+                                </Typography>
+                                <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
+                                    {product.is_bid ? 'You are accepting offers' : ''}
+                                </Typography>
+                            </CardContent>
 
-                        {/* Details Button */}
-                        <CardContent sx={{ position: 'absolute', width: '100%', top: '83%' }}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                                sx={{ marginTop: '10px' }}
-                                onClick={() => handleDetailsClick(product.uuid)}
-                            >
-                                Details
-                            </Button>
-                        </CardContent>
-                    </Card>
-                </Grid>
-            ))}
-        </Grid>
+                            <CardContent sx={{ position: 'absolute', width: '100%', top: '83%' }}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    sx={{ marginTop: '10px' }}
+                                    onClick={() => handleDetailsClick(product.uuid)}
+                                >
+                                    Details
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+
+            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
+                <Pagination
+                    count={totalPages}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    color="primary"
+                    shape="rounded"
+                />
+            </Box>
+        </Box>
     );
 };
 
