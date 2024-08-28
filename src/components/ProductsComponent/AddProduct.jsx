@@ -95,7 +95,8 @@ const AddProduct = (props) => {
   
 
   const handleAddressData = async (addressData) => {
-    setAddress(addressData)
+    const addressDetails = JSON.stringify(addressData)
+    setAddress(addressDetails)
   };
 
   const resetForm = () => {
