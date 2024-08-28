@@ -12,83 +12,77 @@ import api from '../../assets/baseURL/api';
 const ProductDetails = () => {
     const { state } = useLocation();
     const { productUuid } = state;
-    const [productsData, setProductsData] = useState([]);
-
+    const [productsData, setProductsData] = useState(null);
 
     const loadProducts = useCallback(async () => {
         try {
-            let query = `api/global/items/${productUuid}`
-
+            let query = `api/global/items/${productUuid}`;
             const res = await api.get(query);
-            console.log(res.data)
             if (res.status === 200) {
                 setProductsData(res.data);
             }
         } catch (error) {
             console.log(error);
         }
-    }, []);
-
+    }, [productUuid]);
 
     useEffect(() => {
-
         loadProducts();
-        // if (parentIsLoggedIn === true) {
-        //     setIsLoggedIn(parentIsLoggedIn);
-        // } else {
-        //     setIsLoggedIn(false)
-        // }
-
-
     }, [loadProducts]);
 
     const formatPrice = (price) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
+    // Handle rendering after data is loaded
+    if (!productsData || !productsData.item_details) {
+        return <Typography>Loading...</Typography>;
+    }
+
     return (
         <ThemeProvider theme={ModTheme}>
-            <Container sx={{
-                backgroundColor: 'secondary.background',
-                padding: 2,
-                mt: 15,
-                mb: 10,
-                boxShadow: 10,
-                maxWidth: { xs: 'xs', sm: 'sm', md: 'md', lg: 'lg', xl: 'xl' },
-            }}>
+            <Container
+                sx={{
+                    backgroundColor: 'secondary.background',
+                    padding: 2,
+                    mt: 15,
+                    mb: 10,
+                    boxShadow: 10,
+                    maxWidth: { xs: 'xs', sm: 'sm', md: 'md', lg: 'lg', xl: 'xl' },
+                }}
+            >
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={6}>
                         <Carousel showArrows={false} infiniteLoop={true} autoPlay>
-                            {productsData.length > 0 && (
-
-                                productsData.item_details.images.map((image, index) => (
-                                    <Box
-                                        key={index}
-                                        sx={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            height: '400px',
+                            {productsData.item_details.images.map((image, index) => (
+                                <Box
+                                    key={index}
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        height: '400px',
+                                    }}
+                                >
+                                    <img
+                                        src={image.image_url}
+                                        style={{
+                                            maxHeight: '100%',
+                                            maxWidth: '100%',
+                                            objectFit: 'contain',
                                         }}
-                                    >
-                                        <img
-                                            src={image.image_url}
-                                            // alt={productsData.item_details.item_name}
-                                            style={{
-                                                maxHeight: '100%',
-                                                maxWidth: '100%',
-                                                objectFit: 'contain',
-                                            }}
-                                        />
-                                    </Box>
-                                ))
-
-                            )}
+                                    />
+                                </Box>
+                            ))}
                         </Carousel>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Typography variant="h6" gutterBottom>{productsData.item_details.item_name}</Typography>
-                        <Typography component="div" color="primary">AED {formatPrice(productsData.item_details.price)}</Typography>
+                        <Typography variant="h6" gutterBottom>
+                            {productsData.item_details.item_name}
+                        </Typography>
+                        <Typography component="div" color="primary">
+                            AED {formatPrice(productsData.item_details.price)}
+                        </Typography>
                         <Typography variant="body1" color="textSecondary" paragraph>
                             {productsData.item_details.item_description}
                         </Typography>
@@ -97,7 +91,7 @@ const ProductDetails = () => {
                                 <>
                                     <Grid item width="60%">
                                         <TextField
-                                            size='small'
+                                            size="small"
                                             label="ENTER OFFER"
                                             variant="outlined"
                                             sx={{ marginRight: 2 }}
@@ -108,8 +102,8 @@ const ProductDetails = () => {
                                             label="Offer"
                                             size="small"
                                             buttonVariant="contained"
-                                            textColor='primary.contrastText'
-                                            hoverTextColor='secondary.main'
+                                            textColor="primary.contrastText"
+                                            hoverTextColor="secondary.main"
                                         />
                                     </Grid>
                                 </>
@@ -119,8 +113,8 @@ const ProductDetails = () => {
                                     label="Buy Item"
                                     size="small"
                                     buttonVariant="contained"
-                                    textColor='primary.contrastText'
-                                    hoverTextColor='secondary.main'
+                                    textColor="primary.contrastText"
+                                    hoverTextColor="secondary.main"
                                     startIcon={<AddShoppingCartIcon />}
                                 />
                             </Grid>
@@ -128,7 +122,9 @@ const ProductDetails = () => {
                     </Grid>
                 </Grid>
                 <Paper sx={{ mt: 2, p: 2 }}>
-                    <Typography variant="h6" gutterBottom>Additional Information</Typography>
+                    <Typography variant="h6" gutterBottom>
+                        Additional Information
+                    </Typography>
                     <Divider />
                     <Typography variant="body1" paragraph>
                         {/* Add additional product information here if available */}
