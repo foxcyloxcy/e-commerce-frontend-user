@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Container, Grid, Typography, Paper, Divider, Box, TextField } from '@mui/material';
+import { Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRowColumn } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useLocation } from 'react-router-dom';
@@ -18,6 +18,7 @@ const ProductDetails = () => {
         try {
             let query = `api/global/items/${productUuid}`;
             const res = await api.get(query);
+            console.log(res.data)
             if (res.status === 200) {
                 setProductsData(res.data);
             }
@@ -126,9 +127,34 @@ const ProductDetails = () => {
                         Additional Information
                     </Typography>
                     <Divider />
-                    <Typography variant="body1" paragraph>
-                        {/* Add additional product information here if available */}
-                    </Typography>
+                    <TableContainer component={Paper} sx={{ mt: 2 }}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    {productsData.item_property_details.map((info, index) => (
+                                        <TableCell key={index}>
+                                            <Typography variant="body1" fontWeight="bold">
+                                                {info.properties}
+                                            </Typography>
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    {productsData.item_property_details.map((info, index) => (
+                                        <TableCell key={index}>
+                                            {info.values.length > 0
+                                                ? info.values.map((value) => (
+                                                    <Typography key={value.id}>{value.name}</Typography>
+                                                  ))
+                                                : 'Not Available'}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </Paper>
             </Container>
         </ThemeProvider>
