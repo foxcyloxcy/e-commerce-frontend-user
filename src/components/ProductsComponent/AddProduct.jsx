@@ -94,9 +94,8 @@ const AddProduct = (props) => {
   };
   
 
-  const handleAddressData = async (address_data) => {
-    console.log(address_data)
-    setAddress()
+  const handleAddressData = async (addressData) => {
+    setAddress(addressData)
   };
 
   const resetForm = () => {
@@ -124,6 +123,7 @@ const AddProduct = (props) => {
     const formData = new FormData();
     formData.append('item_name', productName);
     formData.append('item_description', description);
+    formData.append('address', address);
     formData.append('price', price);
     formData.append('is_bid', acceptOffers);
     formData.append('sub_category_id', selectedSubCategoryId);
