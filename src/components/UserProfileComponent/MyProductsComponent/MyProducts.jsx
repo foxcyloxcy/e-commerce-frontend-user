@@ -49,8 +49,8 @@ const MyProducts = (props) => {
         loadProducts();
     }, [loadProducts]);
 
-    const handleDetailsClick = (product) => {
-        navigate('/product-details', { state: { product } });
+    const handleDetailsClick = (productUuid) => {
+        navigate('/product-details', { state: { productUuid } });
     };
 
     return (
@@ -95,7 +95,7 @@ const MyProducts = (props) => {
                                 color="primary"
                                 fullWidth
                                 sx={{ marginTop: '10px' }}
-                                onClick={() => handleDetailsClick(product)}
+                                onClick={() => handleDetailsClick(product.uuid)}
                             >
                                 Details
                             </Button>
