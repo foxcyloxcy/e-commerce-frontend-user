@@ -25,7 +25,6 @@ const AddProduct = (props) => {
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategories, setSelectedSubCategories] = useState('');
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState('');
-  const [itemCondition, setItemCondition] = useState('');
   const [selectedPropertyValues, setSelectedPropertyValues] = useState({});
 
 
@@ -111,7 +110,6 @@ const AddProduct = (props) => {
     setSelectedCategory('');
     setSubCategories([]);
     setSelectedSubCategories('');
-    setItemCondition('');
     setSelectedPropertyValues({})
   };
 
@@ -129,7 +127,6 @@ const AddProduct = (props) => {
     formData.append('price', price);
     formData.append('is_bid', acceptOffers);
     formData.append('sub_category_id', selectedSubCategoryId);
-    formData.append('condition', itemCondition);
 
     let index = 0;
 
@@ -270,7 +267,7 @@ const AddProduct = (props) => {
                     type="number"
                     value={price}
                     onChange={handlePriceChange}
-                    error={Boolean(priceError)}
+                    error={priceError.length > 0}
                     helperText={priceError}
                     required
                   />
