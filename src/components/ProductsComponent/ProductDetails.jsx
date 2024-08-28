@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import { Container, Grid, Typography, Paper, Divider, Box, TextField } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
@@ -7,10 +7,40 @@ import { useLocation } from 'react-router-dom';
 import ModTheme from '../ThemeComponent/ModTheme';
 import ButtonComponent from '../ButtonComponent/ButtonComponent';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import api from '../../assets/baseURL/api';
 
 const ProductDetails = () => {
     const { state } = useLocation();
-    const { product } = state;
+    const { productUuid } = state;
+    const [productsData, setProductsData] = useState([]);
+
+
+    const loadProducts = useCallback(async () => {
+        try {
+            let query = `api/global/items/${productUuid}`
+
+            const res = await api.get(query);
+            console.log(res.data)
+            if (res.status === 200) {
+                setProductsData(res.data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+
+
+    useEffect(() => {
+
+        loadProducts();
+        // if (parentIsLoggedIn === true) {
+        //     setIsLoggedIn(parentIsLoggedIn);
+        // } else {
+        //     setIsLoggedIn(false)
+        // }
+
+
+    }, [loadProducts]);
 
     const formatPrice = (price) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -29,37 +59,41 @@ const ProductDetails = () => {
                 <Grid container spacing={4}>
                     <Grid item xs={12} md={6}>
                         <Carousel showArrows={false} infiniteLoop={true} autoPlay>
-                            {product.item_image.map((image, index) => (
-                                <Box
-                                    key={index}
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        height: '400px',
-                                    }}
-                                >
-                                    <img
-                                        src={image.image_url}
-                                        alt={product.item_name}
-                                        style={{
-                                            maxHeight: '100%',
-                                            maxWidth: '100%',
-                                            objectFit: 'contain',
+                            {productsData.length > 0 && (
+
+                                productsData.item_details.images.map((image, index) => (
+                                    <Box
+                                        key={index}
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            height: '400px',
                                         }}
-                                    />
-                                </Box>
-                            ))}
+                                    >
+                                        <img
+                                            src={image.image_url}
+                                            // alt={productsData.item_details.item_name}
+                                            style={{
+                                                maxHeight: '100%',
+                                                maxWidth: '100%',
+                                                objectFit: 'contain',
+                                            }}
+                                        />
+                                    </Box>
+                                ))
+
+                            )}
                         </Carousel>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Typography variant="h6" gutterBottom>{product.item_name}</Typography>
-                        <Typography component="div" color="primary">AED {formatPrice(product.price)}</Typography>
+                        <Typography variant="h6" gutterBottom>{productsData.item_details.item_name}</Typography>
+                        <Typography component="div" color="primary">AED {formatPrice(productsData.item_details.price)}</Typography>
                         <Typography variant="body1" color="textSecondary" paragraph>
-                            {product.item_description}
+                            {productsData.item_details.item_description}
                         </Typography>
                         <Grid container alignItems="center" spacing={2} width="100%">
-                            {product.is_bid === 1 && (
+                            {productsData.item_details.is_bid === 1 && (
                                 <>
                                     <Grid item width="60%">
                                         <TextField
