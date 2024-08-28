@@ -144,7 +144,7 @@ const FeaturedProducts = () => {
             <Box
                 sx={{
                     padding: ModTheme.spacing(3),
-                    marginTop: 3,
+                    marginTop: 2,
                     marginBottom: 10,
                 }}
             >
