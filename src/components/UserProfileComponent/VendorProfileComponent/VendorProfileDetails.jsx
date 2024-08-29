@@ -121,102 +121,102 @@ const VendorProfileDetails = (props) => {
 
     return (
         <ThemeProvider theme={ModTheme}>
-                    <ProfileInfo>
-            <Grid container spacing={2}>
-                {userData.is_vendor === 'No' ? (
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        sx={{ mt: 2 }}
-                        onClick={handleAddVendorProfile}
-                    >
-                        Add Vendor Profile Details
-                    </Button>
-                ) : (
-                    <>
-                        <Grid item xs={12} sm={12}
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'left',
-                                alignItems: 'flex-start',
-                                flexDirection: 'column',
-                                background: ModTheme.palette.primary.dark,
-                                color: ModTheme.palette.secondary.main,
-                                paddingBottom: 2,
-                                paddingLeft: 2,
-                                marginLeft: 2,
-                            }}>
-                            <Avatar
-                                alt={userData.name || "User Avatar"}
-                                src={userData.logo || "default_avatar.jpg"}
-                                sx={{ width: 150, height: 150 }}
-                            />
-                            <Typography variant="h6">{userData.name}</Typography>
+            <ProfileInfo>
+                <Grid container spacing={2}>
+                    {userData.is_vendor === 'No' ? (
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            sx={{ mt: 2 }}
+                            onClick={handleAddVendorProfile}
+                        >
+                            Add Vendor Profile Details
+                        </Button>
+                    ) : (
+                        <>
+                            <Grid item xs={12} sm={12}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'left',
+                                    alignItems: 'flex-start',
+                                    flexDirection: 'column',
+                                    background: ModTheme.palette.primary.dark,
+                                    color: ModTheme.palette.secondary.main,
+                                    paddingBottom: 2,
+                                    paddingLeft: 2,
+                                    marginLeft: 2,
+                                }}>
+                                <Avatar
+                                    alt={userData.name || "User Avatar"}
+                                    src={userData.logo || "default_avatar.jpg"}
+                                    sx={{ width: 150, height: 150 }}
+                                />
+                                <Typography variant="h6">{userData.name}</Typography>
 
-                            <Input
-                                size='small'
-                                type="file"
-                                onChange={handleFileChange}
-                                sx={{ mt: 2 }}
-                            />
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={handleUpload}
-                                sx={{ mt: 1 }}
-                            >
-                                Upload New Photo
-                            </Button>
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <Box                             sx={{
-                                marginLeft: 2,
-                            }}>
-                                {['name', 'address', 'bank_id', 'account_fullname', 'account_number'].map((field) => (
-                                    <Box
-                                        key={field}
-                                        sx={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        {editField === field ? (
-                                            <>
-                                                <TextField
-                                                    label={field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}
-                                                    name={field}
-                                                    value={formData[field]}
-                                                    onChange={handleChange}
-                                                    fullWidth
-                                                    margin="normal"
-                                                />
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    sx={{ ml: 2 }}
-                                                    onClick={() => handleSave(field)}
-                                                >
-                                                    Save
-                                                </Button>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Typography variant="body2" sx={{ flexGrow: 1 }}>
-                                                    {`${field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}: ${userData[field]}`}
-                                                </Typography>
-                                                <IconButton onClick={() => handleEditClick(field)}>
-                                                    <Edit />
-                                                </IconButton>
-                                            </>
-                                        )}
-                                    </Box>
-                                ))}
-                            </Box>
-                        </Grid>
-                    </>
-                )}
-            </Grid>
-        </ProfileInfo>
+                                <Input
+                                    size='small'
+                                    type="file"
+                                    onChange={handleFileChange}
+                                    sx={{ mt: 2 }}
+                                />
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleUpload}
+                                    sx={{ mt: 1 }}
+                                >
+                                    Upload New Photo
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <Box sx={{
+                                    marginLeft: 2,
+                                }}>
+                                    {['name', 'address', 'bank_id', 'account_fullname', 'account_number'].map((field) => (
+                                        <Box
+                                            key={field}
+                                            sx={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                            }}
+                                        >
+                                            {editField === field ? (
+                                                <>
+                                                    <TextField
+                                                        label={field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}
+                                                        name={field}
+                                                        value={formData[field]}
+                                                        onChange={handleChange}
+                                                        fullWidth
+                                                        margin="normal"
+                                                    />
+                                                    <Button
+                                                        variant="contained"
+                                                        color="primary"
+                                                        sx={{ ml: 2 }}
+                                                        onClick={() => handleSave(field)}
+                                                    >
+                                                        Save
+                                                    </Button>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Typography variant="body2" sx={{ flexGrow: 1 }}>
+                                                        {`${field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}: ${userData[field]}`}
+                                                    </Typography>
+                                                    <IconButton onClick={() => handleEditClick(field)}>
+                                                        <Edit />
+                                                    </IconButton>
+                                                </>
+                                            )}
+                                        </Box>
+                                    ))}
+                                </Box>
+                            </Grid>
+                        </>
+                    )}
+                </Grid>
+            </ProfileInfo>
         </ThemeProvider>
     );
 };
