@@ -1,6 +1,8 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { Box, Grid, Paper, Avatar, Typography, Button, Input } from '@mui/material';
+import { Box, Grid, Paper, Avatar, Typography, Button, Input, IconButton, TextField } from '@mui/material';
 import { styled } from '@mui/system';
+import EditIcon from '@mui/icons-material/Edit';
+import CheckIcon from '@mui/icons-material/Check';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import api from '../../../assets/baseURL/api';
 
@@ -17,8 +19,22 @@ const ProfileInfo = styled(Paper)(({ theme }) => ({
 
 const UserProfileDetails = (props) => {
     const { userToken } = props;
-    const [userData, setUserData] = useState('reloved_founder.jpg'); // Initial avatar
+    const [userData, setUserData] = useState({});
     const [selectedFile, setSelectedFile] = useState(null);
+
+    const [isEditing, setIsEditing] = useState({
+        first_name: false,
+        last_name: false,
+        mobile_number: false,
+        email: false,
+    });
+
+    const [updatedData, setUpdatedData] = useState({
+        first_name: '',
+        last_name: '',
+        mobile_number: '',
+        email: '',
+    });
 
     const loadProfile = useCallback(async () => {
         try {
@@ -29,8 +45,6 @@ const UserProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
-                console.log(res.data);
-                // Assuming the avatar is returned in the profile data
                 setUserData(res.data.data);
             }
         } catch (error) {
@@ -56,13 +70,57 @@ const UserProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
-                // Assuming the uploaded image URL is returned in the response
-                loadProfile()
-                setSelectedFile(null)
+                loadProfile();
+                setSelectedFile(null);
             }
         } catch (error) {
             console.log("Error uploading image:", error);
         }
+    };
+
+    const handleEdit = (field) => {
+        setIsEditing((prevState) => ({
+            ...prevState,
+            [field]: true,
+        }));
+        setUpdatedData((prevState) => ({
+            ...prevState,
+            [field]: userData[field],
+        }));
+    };
+
+    const handleSave = async (field) => {
+        try {
+            const res = await api.put(`/api/auth/me/profile?first_name=${first_name}&last_name=${last_name}&email=${email}&mobile_number=${mobile_number}`, {
+                [field]: updatedData[field],
+            }, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (res.status === 200) {
+                setUserData((prevState) => ({
+                    ...prevState,
+                    [field]: updatedData[field],
+                }));
+                setIsEditing((prevState) => ({
+                    ...prevState,
+                    [field]: false,
+                }));
+            }
+        } catch (error) {
+            console.log("Error saving profile data:", error);
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUpdatedData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
     };
 
     useEffect(() => {
@@ -81,7 +139,7 @@ const UserProfileDetails = (props) => {
                     }}>
                     <Avatar
                         alt="Annie Stacey"
-                        src={userData.photo} // Dynamically load avatar
+                        src={userData.photo}
                         sx={{ width: 150, height: 150 }}
                     />
                     <Typography variant="h6">Annie Stacey</Typography>
@@ -104,15 +162,39 @@ const UserProfileDetails = (props) => {
                 <Grid item xs={12} sm={12}>
                     <Typography variant="h6">Profile Information</Typography>
                     <Box mt={2}>
-                        <Typography variant="body2">First Name: {userData.first_name}</Typography>
-                        <Typography variant="body2">Last Name: {userData.last_name}</Typography>
-                        <Typography variant="body2">Mobile: {userData.mobile_number}</Typography>
-                        <Typography variant="body2">Email: {userData.email}</Typography>
+                        {['first_name', 'last_name', 'mobile_number', 'email'].map((field) => (
+                            <Box key={field} display="flex" alignItems="center" mb={2}>
+                                {isEditing[field] ? (
+                                    <>
+                                        <TextField
+                                            name={field}
+                                            value={updatedData[field]}
+                                            onChange={handleChange}
+                                            placeholder={userData[field]}
+                                            size="small"
+                                            fullWidth
+                                        />
+                                        <IconButton onClick={() => handleSave(field)}>
+                                            <CheckIcon />
+                                        </IconButton>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Typography variant="body2" sx={{ flexGrow: 1 }}>
+                                            {`${field.replace('_', ' ')}: ${userData[field]}`}
+                                        </Typography>
+                                        <IconButton onClick={() => handleEdit(field)}>
+                                            <EditIcon />
+                                        </IconButton>
+                                    </>
+                                )}
+                            </Box>
+                        ))}
                     </Box>
                 </Grid>
             </Grid>
         </ProfileInfo>
     );
-}
+};
 
 export default UserProfileDetails;
