@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { Box, Grid, Paper, Avatar, Typography, Button, Input, IconButton, TextField } from '@mui/material';
+import { Box, Grid, Paper, Avatar, Typography, Button, Input, IconButton, TextField, ThemeProvider } from '@mui/material';
 import { styled } from '@mui/system';
 import { Edit } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
@@ -63,7 +63,7 @@ const VendorProfileDetails = (props) => {
         if (!selectedFile) return;
 
         const formData = new FormData();
-        formData.append('photo', selectedFile);
+        formData.append('logo', selectedFile);
 
         try {
             const res = await api.post("/api/auth/me/upload-vendor", formData, {
@@ -120,7 +120,8 @@ const VendorProfileDetails = (props) => {
     }, [loadProfile]);
 
     return (
-        <ProfileInfo>
+        <ThemeProvider theme={ModTheme}>
+                    <ProfileInfo>
             <Grid container spacing={2}>
                 {userData.is_vendor === 'No' ? (
                     <Button
@@ -139,10 +140,12 @@ const VendorProfileDetails = (props) => {
                                 justifyContent: 'left',
                                 alignItems: 'flex-start',
                                 flexDirection: 'column',
+                                background: ModTheme.palette.primary.dark,
+                                color: ModTheme.palette.secondary.main
                             }}>
                             <Avatar
                                 alt={userData.name || "User Avatar"}
-                                src={userData.photo || "default_avatar.jpg"}
+                                src={userData.logo || "default_avatar.jpg"}
                                 sx={{ width: 150, height: 150 }}
                             />
                             <Typography variant="h6">{userData.name}</Typography>
@@ -210,6 +213,7 @@ const VendorProfileDetails = (props) => {
                 )}
             </Grid>
         </ProfileInfo>
+        </ThemeProvider>
     );
 };
 
