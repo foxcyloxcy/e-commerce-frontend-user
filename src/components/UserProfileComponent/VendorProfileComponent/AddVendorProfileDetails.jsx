@@ -37,14 +37,14 @@ const AddVendorProfileDetails = (props) => {
 
     const handleSubmit = async () => {
         try {
-            const res = await api.post("/api/auth/me/vendor-profile", formData, {
+            const res = await api.post("/api/auth/me/profile/vendor", formData, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'application/json',
                 },
             });
             if (res.status === 200) {
-                navigate('/vendor-profile'); // Redirect to the VendorProfileDetails component
+                navigate('/my-profile'); // Redirect to the VendorProfileDetails component
             }
         } catch (error) {
             console.log("Error adding vendor profile:", error);
