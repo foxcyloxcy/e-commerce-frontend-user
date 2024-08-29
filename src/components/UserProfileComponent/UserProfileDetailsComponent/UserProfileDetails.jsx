@@ -129,7 +129,7 @@ const UserProfileDetails = (props) => {
     return (
         <ProfileInfo>
             <Grid container spacing={2}>
-                <Grid item xs={4} sm={4}
+                <Grid item xs={12} sm={12}
                     sx={{
                         display: 'flex',
                         justifyContent: 'left',
