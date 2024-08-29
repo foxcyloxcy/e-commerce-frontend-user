@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { Box, Grid, Paper, Avatar, Typography, Button, Input, TextField } from '@mui/material';
+import { Box, Grid, Paper, Avatar, Typography, Button, Input, IconButton, TextField } from '@mui/material';
 import { styled } from '@mui/system';
+import { Edit } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import api from '../../../assets/baseURL/api';
@@ -19,7 +20,7 @@ const ProfileInfo = styled(Paper)(({ theme }) => ({
 const VendorProfileDetails = (props) => {
     const { userToken } = props;
     const [userData, setUserData] = useState({});
-    const [editable, setEditable] = useState(false); // Track editing state
+    const [editField, setEditField] = useState(null); // Track which field is being edited
     const [formData, setFormData] = useState({
         name: '',
         address: '',
@@ -39,13 +40,14 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
-                setUserData(res.data.data);
+
+                setUserData(res.data.data.vendor);
                 setFormData({
-                    name: res.data.data.name || '',
-                    address: res.data.data.address || '',
-                    bank_id: res.data.data.bank_id || '',
-                    account_fullname: res.data.data.account_fullname || '',
-                    account_number: res.data.data.account_number || '',
+                    name: res.data.data.vendor.name || '',
+                    address: res.data.data.vendor.address || '',
+                    bank_id: res.data.data.vendor.bank_id || '',
+                    account_fullname: res.data.data.vendor.account_fullname || '',
+                    account_number: res.data.data.vendor.account_number || '',
                 });
             }
         } catch (error) {
@@ -83,8 +85,8 @@ const VendorProfileDetails = (props) => {
         navigate('/add-vendor-profile');
     };
 
-    const handleEditToggle = () => {
-        setEditable(!editable);
+    const handleEditClick = (field) => {
+        setEditField(field);
     };
 
     const handleChange = (e) => {
@@ -95,9 +97,10 @@ const VendorProfileDetails = (props) => {
         }));
     };
 
-    const handleSave = async () => {
+    const handleSave = async (field) => {
         try {
-            const res = await api.put("/api/auth/me/update-vendor-profile", formData, {
+            const updatedField = { [field]: formData[field] };
+            const res = await api.put("/api/auth/me/update-vendor-profile", updatedField, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'application/json',
@@ -105,7 +108,7 @@ const VendorProfileDetails = (props) => {
             });
             if (res.status === 200) {
                 loadProfile();
-                setEditable(false);
+                setEditField(null);
             }
         } catch (error) {
             console.log("Error updating profile:", error);
@@ -142,7 +145,7 @@ const VendorProfileDetails = (props) => {
                                 src={userData.photo || "default_avatar.jpg"}
                                 sx={{ width: 150, height: 150 }}
                             />
-                            <Typography variant="h6">{userData.name || "Annie Stacey"}</Typography>
+                            <Typography variant="h6">{userData.name}</Typography>
 
                             <Input
                                 size='small'
@@ -162,74 +165,46 @@ const VendorProfileDetails = (props) => {
                         <Grid item xs={12} sm={12}>
                             <Typography variant="h6">Profile Information</Typography>
                             <Box mt={2}>
-                                {editable ? (
-                                    <>
-                                        <TextField
-                                            label="Name"
-                                            name="name"
-                                            value={formData.name}
-                                            onChange={handleChange}
-                                            fullWidth
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            label="Address"
-                                            name="address"
-                                            value={formData.address}
-                                            onChange={handleChange}
-                                            fullWidth
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            label="Bank ID"
-                                            name="bank_id"
-                                            value={formData.bank_id}
-                                            onChange={handleChange}
-                                            fullWidth
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            label="Bank Account Name"
-                                            name="account_fullname"
-                                            value={formData.account_fullname}
-                                            onChange={handleChange}
-                                            fullWidth
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            label="Bank Account Number"
-                                            name="account_number"
-                                            value={formData.account_number}
-                                            onChange={handleChange}
-                                            fullWidth
-                                            margin="normal"
-                                        />
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            sx={{ mt: 2 }}
-                                            onClick={handleSave}
-                                        >
-                                            Save
-                                        </Button>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Typography variant="body2">Name: {userData.name}</Typography>
-                                        <Typography variant="body2">Address: {userData.address}</Typography>
-                                        <Typography variant="body2">Bank ID: {userData.bank_id}</Typography>
-                                        <Typography variant="body2">Bank Account Name: {userData.account_fullname}</Typography>
-                                        <Typography variant="body2">Bank Account Number: {userData.account_number}</Typography>
-                                        <Button
-                                            variant="outlined"
-                                            color="secondary"
-                                            sx={{ mt: 2 }}
-                                            onClick={handleEditToggle}
-                                        >
-                                            Edit Profile
-                                        </Button>
-                                    </>
-                                )}
+                                {['name', 'address', 'bank_id', 'account_fullname', 'account_number'].map((field) => (
+                                    <Box
+                                        key={field}
+                                        sx={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            marginBottom: '16px'
+                                        }}
+                                    >
+                                        {editField === field ? (
+                                            <>
+                                                <TextField
+                                                    label={field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}
+                                                    name={field}
+                                                    value={formData[field]}
+                                                    onChange={handleChange}
+                                                    fullWidth
+                                                    margin="normal"
+                                                />
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    sx={{ ml: 2 }}
+                                                    onClick={() => handleSave(field)}
+                                                >
+                                                    Save
+                                                </Button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Typography variant="body2" sx={{ flexGrow: 1 }}>
+                                                    {`${field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}: ${userData[field]}`}
+                                                </Typography>
+                                                <IconButton onClick={() => handleEditClick(field)}>
+                                                    <Edit />
+                                                </IconButton>
+                                            </>
+                                        )}
+                                    </Box>
+                                ))}
                             </Box>
                         </Grid>
                     </>
