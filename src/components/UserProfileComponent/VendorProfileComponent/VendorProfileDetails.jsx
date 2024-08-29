@@ -104,10 +104,11 @@ const VendorProfileDetails = (props) => {
                 <Grid item xs={12} sm={12}>
                     <Typography variant="h6">Profile Information</Typography>
                     <Box mt={2}>
-                        <Typography variant="body2">First Name: {userData.first_name}</Typography>
-                        <Typography variant="body2">Last Name: {userData.last_name}</Typography>
-                        <Typography variant="body2">Mobile: {userData.mobile_number}</Typography>
-                        <Typography variant="body2">Email: {userData.email}</Typography>
+                        <Typography variant="body2">Name: {userData.name}</Typography>
+                        <Typography variant="body2">Address: {userData.address}</Typography>
+                        <Typography variant="body2">Bank ID: {userData.bank_id}</Typography>
+                        <Typography variant="body2">Bank Account Name: {userData.account_fullname}</Typography>
+                        <Typography variant="body2">Bank Account Number: {userData.account_number}</Typography>
                     </Box>
                 </Grid>
             </Grid>
