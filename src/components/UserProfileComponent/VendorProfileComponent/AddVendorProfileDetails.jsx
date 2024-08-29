@@ -64,6 +64,7 @@ const AddVendorProfileDetails = (props) => {
                             onChange={handleChange}
                             fullWidth
                             margin="normal"
+                            size='small'
                         />
                         <TextField
                             label="Address"
@@ -72,6 +73,7 @@ const AddVendorProfileDetails = (props) => {
                             onChange={handleChange}
                             fullWidth
                             margin="normal"
+                            size='small'
                         />
                         <TextField
                             label="Bank ID"
@@ -80,6 +82,7 @@ const AddVendorProfileDetails = (props) => {
                             onChange={handleChange}
                             fullWidth
                             margin="normal"
+                            size='small'
                         />
                         <TextField
                             label="Bank Account Name"
@@ -88,6 +91,7 @@ const AddVendorProfileDetails = (props) => {
                             onChange={handleChange}
                             fullWidth
                             margin="normal"
+                            size='small'
                         />
                         <TextField
                             label="Bank Account Number"
@@ -96,6 +100,7 @@ const AddVendorProfileDetails = (props) => {
                             onChange={handleChange}
                             fullWidth
                             margin="normal"
+                            size='small'
                         />
                         <Button
                             variant="contained"
