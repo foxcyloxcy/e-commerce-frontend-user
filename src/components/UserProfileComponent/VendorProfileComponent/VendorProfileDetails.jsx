@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { Box, Grid, Paper, Avatar, Typography, Button, Input } from '@mui/material';
 import { styled } from '@mui/system';
+import { useNavigate } from 'react-router-dom';  // Import useNavigate from React Router
 import ModTheme from '../../ThemeComponent/ModTheme';
 import api from '../../../assets/baseURL/api';
 
@@ -17,8 +18,9 @@ const ProfileInfo = styled(Paper)(({ theme }) => ({
 
 const VendorProfileDetails = (props) => {
     const { userToken } = props;
-    const [userData, setUserData] = useState('reloved_founder.jpg'); // Initial avatar
+    const [userData, setUserData] = useState({});
     const [selectedFile, setSelectedFile] = useState(null);
+    const navigate = useNavigate();  // Initialize the navigate function
 
     const loadProfile = useCallback(async () => {
         try {
@@ -29,8 +31,7 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
-                console.log(res.data);
-                // Assuming the avatar is returned in the profile data
+                console.log(res.data.data)
                 setUserData(res.data.data);
             }
         } catch (error) {
@@ -56,13 +57,16 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
-                // Assuming the uploaded image URL is returned in the response
-                loadProfile()
-                setSelectedFile(null)
+                loadProfile();
+                setSelectedFile(null);
             }
         } catch (error) {
             console.log("Error uploading image:", error);
         }
+    };
+
+    const handleAddVendorProfile = () => {
+        navigate('/add-vendor-profile');  // Redirect to AddVendorProfileDetails component
     };
 
     useEffect(() => {
@@ -72,45 +76,61 @@ const VendorProfileDetails = (props) => {
     return (
         <ProfileInfo>
             <Grid container spacing={2}>
-                <Grid item xs={4} sm={4}
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'left',
-                        alignItems: 'flex-start',
-                        flexDirection: 'column',
-                    }}>
-                    <Avatar
-                        alt="Annie Stacey"
-                        src={userData.photo} // Dynamically load avatar
-                        sx={{ width: 150, height: 150 }}
-                    />
-                    <Typography variant="h6">Annie Stacey</Typography>
-
-                    <Input
-                        size='small'
-                        type="file"
-                        onChange={handleFileChange}
-                        sx={{ mt: 2 }}
-                    />
+                {userData.is_vendor === 'No' ? (  // Conditionally render button
                     <Button
                         variant="contained"
-                        color="primary"
-                        onClick={handleUpload}
-                        sx={{ mt: 1 }}
+                        color="secondary"
+                        sx={{ mt: 2 }}
+                        onClick={handleAddVendorProfile}
                     >
-                        Upload New Photo
+                        Add Vendor Profile Details
                     </Button>
-                </Grid>
-                <Grid item xs={12} sm={12}>
-                    <Typography variant="h6">Profile Information</Typography>
-                    <Box mt={2}>
-                        <Typography variant="body2">Name: {userData.name}</Typography>
-                        <Typography variant="body2">Address: {userData.address}</Typography>
-                        <Typography variant="body2">Bank ID: {userData.bank_id}</Typography>
-                        <Typography variant="body2">Bank Account Name: {userData.account_fullname}</Typography>
-                        <Typography variant="body2">Bank Account Number: {userData.account_number}</Typography>
-                    </Box>
-                </Grid>
+                )
+                    :
+                    (
+                        <>
+                            <Grid item xs={12} sm={12}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'left',
+                                    alignItems: 'flex-start',
+                                    flexDirection: 'column',
+                                }}>
+                                <Avatar
+                                    alt={userData.name || "User Avatar"}
+                                    src={userData.photo || "default_avatar.jpg"} // Dynamically load avatar
+                                    sx={{ width: 150, height: 150 }}
+                                />
+                                <Typography variant="h6">{userData.name || "Annie Stacey"}</Typography>
+
+                                <Input
+                                    size='small'
+                                    type="file"
+                                    onChange={handleFileChange}
+                                    sx={{ mt: 2 }}
+                                />
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleUpload}
+                                    sx={{ mt: 1 }}
+                                >
+                                    Upload New Photo
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <Typography variant="h6">Profile Information</Typography>
+                                <Box mt={2}>
+                                    <Typography variant="body2">Name: {userData.name}</Typography>
+                                    <Typography variant="body2">Address: {userData.address}</Typography>
+                                    <Typography variant="body2">Bank ID: {userData.bank_id}</Typography>
+                                    <Typography variant="body2">Bank Account Name: {userData.account_fullname}</Typography>
+                                    <Typography variant="body2">Bank Account Number: {userData.account_number}</Typography>
+                                </Box>
+                            </Grid>
+                        </>
+                    )}
+
             </Grid>
         </ProfileInfo>
     );
