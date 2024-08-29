@@ -19,6 +19,7 @@ import OurStoryPage from './staticPages/OurStoryPageComponent/OurStoryPage';
 import BuyerAndSellerTerms from './staticPages/BuyerAndSellerTermsComponent/BuyerAndSellerTerms';
 import TermsOfUse from './staticPages/TermsOfUseComponent/TermsOfUse';
 import PrivacyPolicy from './staticPages/PrivacyPolicyComponent/PrivacyPolicy';
+import AddVendorProfileDetails from './components/UserProfileComponent/VendorProfileComponent/AddVendorProfileDetails';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -31,7 +32,7 @@ function App() {
     const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
       hash: storageKey,
     });
-    const storedUserData =  secureLocalStorage.getItem(`${storagePrefix}_userData`, {
+    const storedUserData = secureLocalStorage.getItem(`${storagePrefix}_userData`, {
       hash: storageKey,
     });
     const storedUserToken = secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
@@ -59,7 +60,7 @@ function App() {
     const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
       hash: storageKey,
     });
-    const storedUserData =  secureLocalStorage.getItem(`${storagePrefix}_userData`, {
+    const storedUserData = secureLocalStorage.getItem(`${storagePrefix}_userData`, {
       hash: storageKey,
     });
     const storedUserToken = secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
@@ -84,7 +85,7 @@ function App() {
     secureLocalStorage.removeItem(`${storagePrefix}_userToken`, {
       hash: storageKey,
     });
-    secureLocalStorage.removeItem(`${storagePrefix}_isLoggedIn`,{
+    secureLocalStorage.removeItem(`${storagePrefix}_isLoggedIn`, {
       hash: storageKey,
     });
 
@@ -98,7 +99,7 @@ function App() {
         refreshParent={handleClickLogout}
       />
       <Routes>
-        <Route path="/" element={<Home parentIsLoggedIn={isLoggedIn}/>} />
+        <Route path="/" element={<Home parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/product-details" element={<ProductDetails userToken={userToken} />} />
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/our-story" element={<OurStoryPage parentIsLoggedIn={isLoggedIn} />} />
@@ -116,6 +117,15 @@ function App() {
         />
 
         <Route
+          path="/add-vendor-profile"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <AddVendorProfileDetails userToken={userToken} />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/edit-product"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
@@ -128,7 +138,7 @@ function App() {
           path="/my-profile"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <MyProfile userToken={userToken}/>
+              <MyProfile userToken={userToken} />
             </ProtectedRoute>
           }
         />
