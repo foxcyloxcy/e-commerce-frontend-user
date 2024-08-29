@@ -91,9 +91,8 @@ const UserProfileDetails = (props) => {
 
     const handleSave = async (field) => {
         try {
-            const res = await api.put(`/api/auth/me/profile?first_name=${first_name}&last_name=${last_name}&email=${email}&mobile_number=${mobile_number}`, {
-                [field]: updatedData[field],
-            }, {
+            const url = `/api/auth/me/profile?${field}=${encodeURIComponent(updatedData[field])}`;
+            const res = await api.put(url, {}, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'application/json',
@@ -142,7 +141,7 @@ const UserProfileDetails = (props) => {
                         src={userData.photo}
                         sx={{ width: 150, height: 150 }}
                     />
-                    <Typography variant="h6">Annie Stacey</Typography>
+                    <Typography variant="h6">{userData.first_name} {userData.last_name}</Typography>
 
                     <Input
                         size='small'
@@ -160,36 +159,38 @@ const UserProfileDetails = (props) => {
                     </Button>
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                    <Typography variant="h6">Profile Information</Typography>
-                    <Box mt={2}>
-                        {['first_name', 'last_name', 'mobile_number', 'email'].map((field) => (
-                            <Box key={field} display="flex" alignItems="center" mb={2}>
-                                {isEditing[field] ? (
-                                    <>
-                                        <TextField
-                                            name={field}
-                                            value={updatedData[field]}
-                                            onChange={handleChange}
-                                            placeholder={userData[field]}
-                                            size="small"
-                                            fullWidth
-                                        />
-                                        <IconButton onClick={() => handleSave(field)}>
-                                            <CheckIcon />
-                                        </IconButton>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Typography variant="body2" sx={{ flexGrow: 1 }}>
-                                            {`${field.replace('_', ' ')}: ${userData[field]}`}
-                                        </Typography>
-                                        <IconButton onClick={() => handleEdit(field)}>
-                                            <EditIcon />
-                                        </IconButton>
-                                    </>
-                                )}
-                            </Box>
-                        ))}
+                    <Box>
+                        {['First Name', 'Last Name', 'Mobile Number', 'Email'].map((label, index) => {
+                            const field = label.toLowerCase().replace(' ', '_');
+                            return (
+                                <Box key={field} display="flex" alignItems="center" mb={2}>
+                                    {isEditing[field] ? (
+                                        <>
+                                            <TextField
+                                                name={field}
+                                                value={updatedData[field]}
+                                                onChange={handleChange}
+                                                placeholder={userData[field]}
+                                                size="small"
+                                                fullWidth
+                                            />
+                                            <IconButton onClick={() => handleSave(field)}>
+                                                <CheckIcon />
+                                            </IconButton>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Typography variant="body2" sx={{ flexGrow: 1 }}>
+                                                {`${label}: ${userData[field]}`}
+                                            </Typography>
+                                            <IconButton onClick={() => handleEdit(field)}>
+                                                <EditIcon />
+                                            </IconButton>
+                                        </>
+                                    )}
+                                </Box>
+                            );
+                        })}
                     </Box>
                 </Grid>
             </Grid>
