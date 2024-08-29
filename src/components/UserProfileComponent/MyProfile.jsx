@@ -75,6 +75,7 @@ const MyProfile = (props) => {
               <ListItem button onClick={() => setActiveTab('Profile settings')}>
                 <ListItemText primary="Personal Profile" />
               </ListItem>
+              <Divider />
               <ListItem button onClick={() => setActiveTab('Vendor settings')}>
                 <ListItemText primary="Vendor Profile" />
               </ListItem>
