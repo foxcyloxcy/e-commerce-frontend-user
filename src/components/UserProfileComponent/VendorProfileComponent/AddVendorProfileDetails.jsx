@@ -53,8 +53,8 @@ const AddVendorProfileDetails = (props) => {
 
     return (
         <ProfileForm>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
+            <Grid container spacing={2} marginTop={10}>
+                <Grid item xs={12} sm={12}>
                     <Typography variant="h6">Add Vendor Profile Details</Typography>
                     <Box mt={2}>
                         <TextField
@@ -65,6 +65,7 @@ const AddVendorProfileDetails = (props) => {
                             fullWidth
                             margin="normal"
                             size='small'
+                            required
                         />
                         <TextField
                             label="Address"
@@ -74,6 +75,7 @@ const AddVendorProfileDetails = (props) => {
                             fullWidth
                             margin="normal"
                             size='small'
+                            required
                         />
                         <TextField
                             label="Bank ID"
@@ -83,6 +85,7 @@ const AddVendorProfileDetails = (props) => {
                             fullWidth
                             margin="normal"
                             size='small'
+                            required
                         />
                         <TextField
                             label="Bank Account Name"
@@ -92,6 +95,7 @@ const AddVendorProfileDetails = (props) => {
                             fullWidth
                             margin="normal"
                             size='small'
+                            required
                         />
                         <TextField
                             label="Bank Account Number"
@@ -101,6 +105,7 @@ const AddVendorProfileDetails = (props) => {
                             fullWidth
                             margin="normal"
                             size='small'
+                            required
                         />
                         <Button
                             variant="contained"
