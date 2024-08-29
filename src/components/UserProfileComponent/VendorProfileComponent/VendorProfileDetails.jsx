@@ -163,8 +163,7 @@ const VendorProfileDetails = (props) => {
                             </Button>
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <Typography variant="h6">Profile Information</Typography>
-                            <Box mt={2}>
+                            <Box>
                                 {['name', 'address', 'bank_id', 'account_fullname', 'account_number'].map((field) => (
                                     <Box
                                         key={field}
