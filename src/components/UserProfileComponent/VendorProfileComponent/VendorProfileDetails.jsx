@@ -141,7 +141,10 @@ const VendorProfileDetails = (props) => {
                                 alignItems: 'flex-start',
                                 flexDirection: 'column',
                                 background: ModTheme.palette.primary.dark,
-                                color: ModTheme.palette.secondary.main
+                                color: ModTheme.palette.secondary.main,
+                                paddingBottom: 2,
+                                paddingLeft: 2,
+                                marginLeft: 2,
                             }}>
                             <Avatar
                                 alt={userData.name || "User Avatar"}
@@ -166,14 +169,15 @@ const VendorProfileDetails = (props) => {
                             </Button>
                         </Grid>
                         <Grid item xs={12} sm={12}>
-                            <Box>
+                            <Box                             sx={{
+                                marginLeft: 2,
+                            }}>
                                 {['name', 'address', 'bank_id', 'account_fullname', 'account_number'].map((field) => (
                                     <Box
                                         key={field}
                                         sx={{
                                             display: 'flex',
                                             alignItems: 'center',
-                                            marginBottom: '16px'
                                         }}
                                     >
                                         {editField === field ? (
