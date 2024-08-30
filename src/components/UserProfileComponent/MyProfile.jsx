@@ -25,7 +25,6 @@ const Root = styled(Box)(({ theme }) => ({
 }));
 
 const Sidebar = styled(Box)(({ theme }) => ({
-  width: 220,
   height: '100%',
   backgroundColor: ModTheme.palette.secondary.background,
   [theme.breakpoints.down('sm')]: {
