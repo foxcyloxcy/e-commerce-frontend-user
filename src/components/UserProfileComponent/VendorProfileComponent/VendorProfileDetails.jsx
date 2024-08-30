@@ -143,8 +143,8 @@ const VendorProfileDetails = (props) => {
                             <Grid item xs={12} sm={12}
                                 sx={{
                                     display: 'flex',
-                                    justifyContent: 'left',
-                                    alignItems: 'flex-start',
+                                    justifyContent: {xs: 'center', sm:'center', md:'left'},
+                                    alignItems: {xs:'center', sm:'center', md:'flex-start'},
                                     flexDirection: 'column',
                                     background: ModTheme.palette.primary.dark,
                                     color: ModTheme.palette.secondary.main,
@@ -152,12 +152,19 @@ const VendorProfileDetails = (props) => {
                                     paddingLeft: 2,
                                     marginLeft: 2,
                                 }}>
-                                <Avatar
-                                    alt={userData.name || "User Avatar"}
-                                    src={userData.logo || "default_avatar.jpg"}
-                                    sx={{ width: 150, height: 150 }}
-                                />
-                                <Typography variant="h6">{userData.name}</Typography>
+                                <Grid item sx={{
+                                    display: 'flex',
+                                    justifyContent:'center',
+                                    flexDirection: 'column',
+                                    alignItems: 'center'
+                                }}>
+                                    <Avatar
+                                        alt={userData.name || "User Avatar"}
+                                        src={userData.logo || "default_avatar.jpg"}
+                                        sx={{ width: 150, height: 150 }}
+                                    />
+                                    <Typography variant="h6">{userData.name}</Typography>
+                                </Grid>
 
                                 <Input
                                     size='small'
@@ -197,12 +204,12 @@ const VendorProfileDetails = (props) => {
                                                         margin="normal"
                                                         size="small"
                                                     />
-                                            <IconButton onClick={() => handleSave(field)}>
-                                                <CheckIcon />
-                                            </IconButton>
-                                            <IconButton onClick={() => handleCancel(field)}>
-                                                <CancelIcon />
-                                            </IconButton>
+                                                    <IconButton onClick={() => handleSave(field)}>
+                                                        <CheckIcon />
+                                                    </IconButton>
+                                                    <IconButton onClick={() => handleCancel(field)}>
+                                                        <CancelIcon />
+                                                    </IconButton>
                                                 </>
                                             ) : (
                                                 <>
