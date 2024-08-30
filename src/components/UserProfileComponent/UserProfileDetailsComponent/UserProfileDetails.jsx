@@ -149,12 +149,19 @@ const UserProfileDetails = (props) => {
                         paddingLeft: 2,
                         marginLeft: 2,
                     }}>
-                    <Avatar
-                        alt="Annie Stacey"
-                        src={userData.photo}
-                        sx={{ width: 150, height: 150 }}
-                    />
-                    <Typography variant="h6">{userData.first_name} {userData.last_name}</Typography>
+                    <Grid item sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        flexDirection: 'column',
+                        alignItems: 'center'
+                    }}>
+                        <Avatar
+                            alt="Annie Stacey"
+                            src={userData.photo}
+                            sx={{ width: 150, height: 150 }}
+                        />
+                        <Typography variant="h6">{userData.first_name} {userData.last_name}</Typography>
+                    </Grid>
 
                     <Input
                         size='small'
