@@ -141,8 +141,8 @@ const UserProfileDetails = (props) => {
                     sx={{
                         display: 'flex',
                         justifyContent: 'left',
-                        alignItems: 'flex-start',
-                        flexDirection: 'column',
+                        justifyContent: {xs: 'center', sm:'center', md:'left'},
+                        alignItems: {xs:'center', sm:'center', md:'flex-start'},
                         background: ModTheme.palette.primary.dark,
                         color: ModTheme.palette.secondary.main,
                         paddingBottom: 2,
