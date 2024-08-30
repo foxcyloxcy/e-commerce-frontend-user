@@ -135,6 +135,11 @@ const UserProfileDetails = (props) => {
                         justifyContent: 'left',
                         alignItems: 'flex-start',
                         flexDirection: 'column',
+                        background: ModTheme.palette.primary.dark,
+                        color: ModTheme.palette.secondary.main,
+                        paddingBottom: 2,
+                        paddingLeft: 2,
+                        marginLeft: 2,
                     }}>
                     <Avatar
                         alt="Annie Stacey"
@@ -163,7 +168,12 @@ const UserProfileDetails = (props) => {
                         {['First Name', 'Last Name', 'Mobile Number', 'Email'].map((label, index) => {
                             const field = label.toLowerCase().replace(' ', '_');
                             return (
-                                <Box key={field} display="flex" alignItems="center" mb={2}>
+                                <Box key={field}
+                                    sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        marginLeft: 2
+                                    }}>
                                     {isEditing[field] ? (
                                         <>
                                             <TextField
@@ -171,6 +181,7 @@ const UserProfileDetails = (props) => {
                                                 value={updatedData[field]}
                                                 onChange={handleChange}
                                                 placeholder={userData[field]}
+                                                label={label}
                                                 size="small"
                                                 fullWidth
                                             />
@@ -194,7 +205,7 @@ const UserProfileDetails = (props) => {
                     </Box>
                 </Grid>
             </Grid>
-        </ProfileInfo>
+        </ProfileInfo >
     );
 };
 
