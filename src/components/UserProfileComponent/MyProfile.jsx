@@ -38,11 +38,9 @@ const Sidebar = styled(Box)(({ theme }) => ({
 // Apply the fade-in animation to the Content component
 const Content = styled(Box)(({ theme }) => ({
   flexGrow: 1,
-  padding: theme.spacing(3),
+  paddingLeft: 10,
+  paddingRight: 10,
   animation: `${fadeIn} 0.8s ease-in-out`, // Set the fade-in animation
-  [theme.breakpoints.down('sm')]: {
-    padding: theme.spacing(1),
-  },
 }));
 
 const MyProfile = (props) => {
