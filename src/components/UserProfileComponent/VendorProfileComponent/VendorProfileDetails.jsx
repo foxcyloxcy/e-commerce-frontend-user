@@ -2,6 +2,7 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { Box, Grid, Paper, Avatar, Typography, Button, Input, IconButton, TextField, ThemeProvider } from '@mui/material';
 import { styled } from '@mui/system';
 import { Edit } from '@mui/icons-material';
+import CheckIcon from '@mui/icons-material/Check';
 import { useNavigate } from 'react-router-dom';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import api from '../../../assets/baseURL/api';
@@ -189,15 +190,11 @@ const VendorProfileDetails = (props) => {
                                                         onChange={handleChange}
                                                         fullWidth
                                                         margin="normal"
+                                                        size="small"
                                                     />
-                                                    <Button
-                                                        variant="contained"
-                                                        color="primary"
-                                                        sx={{ ml: 2 }}
-                                                        onClick={() => handleSave(field)}
-                                                    >
-                                                        Save
-                                                    </Button>
+                                            <IconButton onClick={() => handleSave(field)}>
+                                                <CheckIcon />
+                                            </IconButton>
                                                 </>
                                             ) : (
                                                 <>
