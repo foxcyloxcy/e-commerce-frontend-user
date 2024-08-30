@@ -4,6 +4,7 @@ import { styled } from '@mui/system';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../assets/baseURL/api';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const TruncatedText = styled(Typography)({
     whiteSpace: 'nowrap',
@@ -15,12 +16,24 @@ const StatusBadge = styled(Box)(({ theme, status }) => ({
     position: 'absolute',
     top: theme.spacing(1),
     left: theme.spacing(1),
-    backgroundColor: status === 0 ? '#ff9800' : status === 1 ? '#4caf50' : '#f44336', 
+    backgroundColor: status === 0 ? '#ff9800' : status === 1 ? '#4caf50' : '#f44336',
     color: '#fff',
     borderRadius: '4px',
     padding: '2px 8px',
     fontSize: '12px',
     fontWeight: 'bold',
+}));
+
+const DashedCard = styled(Card)(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    height: '450px',
+    background: '#fff',
+    border: `2px dashed ${theme.palette.primary.main}`,
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
 }));
 
 const MyProducts = (props) => {
@@ -61,6 +74,10 @@ const MyProducts = (props) => {
         navigate('/product-details', { state: { productUuid } });
     };
 
+    const handleAddProductClick = () => {
+        navigate('/add-product');
+    };
+
     return (
         <Box>
             <Grid container spacing={2}>
@@ -68,11 +85,11 @@ const MyProducts = (props) => {
                     <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
                         <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
                             <StatusBadge status={product.status}>
-                                {product.status === 0 ? 'Pending' : 
-                                product.status === 1 ? 'Approved' : 
-                                product.status === 2 ? 'Rejected' : 
-                                product.status === 3 ? 'Sold' : 
-                                product.status === 4 ? 'Bid accepted' : 'Archived'}
+                                {product.status === 0 ? 'Pending' :
+                                    product.status === 1 ? 'Approved' :
+                                        product.status === 2 ? 'Rejected' :
+                                            product.status === 3 ? 'Sold' :
+                                                product.status === 4 ? 'Bid accepted' : 'Archived'}
                             </StatusBadge>
 
                             <CardMedia
@@ -108,6 +125,16 @@ const MyProducts = (props) => {
                         </Card>
                     </Grid>
                 ))}
+
+                {/* Add Product Card */}
+                <Grid item xs={6} sm={6} md={4} lg={3} style={{ display: 'flex' }}>
+                    <DashedCard onClick={handleAddProductClick}>
+                        <AddCircleOutlineIcon sx={{ fontSize: 60, color: ModTheme.palette.primary.main }} />
+                        <Typography variant="h6" sx={{ marginTop: 2 }}>
+                            Add Item
+                        </Typography>
+                    </DashedCard>
+                </Grid>
             </Grid>
 
             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
