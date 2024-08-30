@@ -5,6 +5,7 @@ import { Edit } from '@mui/icons-material';
 import CheckIcon from '@mui/icons-material/Check';
 import { useNavigate } from 'react-router-dom';
 import ModTheme from '../../ThemeComponent/ModTheme';
+import CancelIcon from '@mui/icons-material/Cancel';
 import api from '../../../assets/baseURL/api';
 
 const ProfileInfo = styled(Paper)(({ theme }) => ({
@@ -88,6 +89,10 @@ const VendorProfileDetails = (props) => {
 
     const handleEditClick = (field) => {
         setEditField(field);
+    };
+
+    const handleCancel = (field) => {
+        setEditField(false);
     };
 
     const handleChange = (e) => {
@@ -194,6 +199,9 @@ const VendorProfileDetails = (props) => {
                                                     />
                                             <IconButton onClick={() => handleSave(field)}>
                                                 <CheckIcon />
+                                            </IconButton>
+                                            <IconButton onClick={() => handleCancel(field)}>
+                                                <CancelIcon />
                                             </IconButton>
                                                 </>
                                             ) : (
