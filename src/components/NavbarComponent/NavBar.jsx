@@ -32,7 +32,7 @@ const NavBar = (props) => {
 
   const handleMenu = useCallback(() => {
     setDrawerOpen(true);
-  }, []); 
+  }, []);
 
   const handleLogout = useCallback(() => {
     refreshParent()
@@ -50,19 +50,19 @@ const NavBar = (props) => {
 
     if (storedIsLoggedIn) {
       setIsLoggedIn(storedIsLoggedIn);
-    }else{
+    } else {
       setIsLoggedIn(false)
     }
 
     if (parentIsLoggedIn === true) {
       setIsLoggedIn(parentIsLoggedIn);
-    }else{
+    } else {
       setIsLoggedIn(false)
     }
 
     if (isLoggedIn === true) {
       setElevate(trigger);
-    }else{
+    } else {
       setElevate(false)
     }
 
@@ -91,13 +91,13 @@ const NavBar = (props) => {
         >
           <Toolbar>
 
-          {isSmallScreen || isMediumScreen ? (
-          <img src={elevate || linkPathName.pathname !== '/' ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-          ) : (
-            <Typography component="div" sx={{ flexGrow: 1 }}>
-            <img src={elevate || linkPathName.pathname !== '/' ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '150px', height: 'auto', objectFit: 'contain' }} />
-            </Typography> 
-          )}
+            {isSmallScreen || isMediumScreen ? (
+              <img src={elevate || linkPathName.pathname !== '/' ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+            ) : (
+              <Typography component="div" sx={{ flexGrow: 1 }}>
+                <img src={elevate || linkPathName.pathname !== '/' ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '150px', height: 'auto', objectFit: 'contain' }} />
+              </Typography>
+            )}
 
             {isSmallScreen || isMediumScreen ? (
               <IconButton
@@ -107,7 +107,7 @@ const NavBar = (props) => {
                 onClick={handleMenu}
                 sx={{
                   position: 'absolute',
-                  left: { xs:'90%', sm: '95%', md:'95%'}
+                  left: { xs: '90%', sm: '95%', md: '95%' }
                 }}
               >
                 <MenuIcon />
@@ -128,29 +128,29 @@ const NavBar = (props) => {
                   textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
+                <ButtonComponent
+                  component={Link}
+                  to="/about"
+                  label="about"
+                  textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
+                  hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
+                />
                 {isLoggedIn === true ? (
                   <>
-                  <ButtonComponent
-                    component={Link}
-                    to="/my-profile"
-                    label="Profile"
-                    textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
-                    hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
-                  />
-                  <ButtonComponent
-                    component={Link}
-                    to="/add-product"
-                    label="Add"
-                    textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
-                    hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
-                  />
-                  <ButtonComponent
-                    label="Logout"
-                    onClick={handleLogout}
-                    buttonVariant="contained"
-                    textColor='primary.contrastText'
-                    hoverTextColor='secondary.main'
-                  />
+                    <ButtonComponent
+                      component={Link}
+                      to="/my-profile"
+                      label="Profile"
+                      textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
+                      hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
+                    />
+                    <ButtonComponent
+                      label="Logout"
+                      onClick={handleLogout}
+                      buttonVariant="contained"
+                      textColor='primary.contrastText'
+                      hoverTextColor='secondary.main'
+                    />
                   </>
                 ) : (
                   <>
@@ -254,6 +254,9 @@ const NavBar = (props) => {
                   <Divider />
                   <ListItem button component={Link} to="/about" onClick={handleClose}>
                     <ListItemText primary="About" />
+                  </ListItem>
+                  <ListItem button component={Link} to="/my-profile" onClick={handleClose}>
+                    <ListItemText primary="Profile" />
                   </ListItem>
                 </List>
               </Box>
