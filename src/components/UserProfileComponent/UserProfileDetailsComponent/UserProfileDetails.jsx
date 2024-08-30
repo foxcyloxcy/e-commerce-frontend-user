@@ -3,6 +3,7 @@ import { Box, Grid, Paper, Avatar, Typography, Button, Input, IconButton, TextFi
 import { styled } from '@mui/system';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
+import CancelIcon from '@mui/icons-material/Cancel';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import api from '../../../assets/baseURL/api';
 
@@ -114,6 +115,13 @@ const UserProfileDetails = (props) => {
         }
     };
 
+    const handleCancel = (field) => {
+        setIsEditing((prevState) => ({
+            ...prevState,
+            [field]: false,
+        }));
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setUpdatedData((prevState) => ({
@@ -187,6 +195,9 @@ const UserProfileDetails = (props) => {
                                             />
                                             <IconButton onClick={() => handleSave(field)}>
                                                 <CheckIcon />
+                                            </IconButton>
+                                            <IconButton onClick={() => handleCancel(field)}>
+                                                <CancelIcon />
                                             </IconButton>
                                         </>
                                     ) : (
