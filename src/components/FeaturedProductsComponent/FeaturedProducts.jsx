@@ -61,8 +61,64 @@ const ViewInDetailsButton = styled(Button)(({ theme }) => ({
     },
 }));
 
+// Price breakdown modal component
+// Price breakdown modal component
+const PriceBreakdownModal = ({ open, onClose, product }) => {
+    // Check if product exists before rendering the modal content
+    if (!product) {
+        return null;
+    }
+
+    return (
+        <Modal
+            open={open}
+            onClose={onClose}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{ timeout: 500 }}
+        >
+            <Fade in={open}>
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: 400,
+                        bgcolor: 'background.paper',
+                        boxShadow: 24,
+                        p: 4,
+                    }}
+                >
+                    <Typography variant="h6" gutterBottom>
+                        Price breakdown
+                    </Typography>
+                    <Divider sx={{ mb: 2 }} />
+                    <Typography variant="body1">
+                        Item: AED {product.price}
+                    </Typography>
+                    <Typography variant="body1" sx={{ mt: 1 }}>
+                        Buyer Protection fee: AED {(product.total_fee - product.price).toFixed(2)}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" sx={{ mt: 2 }}>
+                        Postage fees will be added at checkout.
+                    </Typography>
+                    <Typography variant="caption" color="textSecondary" sx={{ mt: 2 }}>
+                        Our Buyer Protection fee is mandatory when you purchase an item on the platform. It is added to every purchase made with the 'Buy Now' button. The item price is set by the seller and may be subject to negotiation.
+                    </Typography>
+                    <Button onClick={onClose} variant="contained" fullWidth sx={{ mt: 3 }}>
+                        Ok, close
+                    </Button>
+                </Box>
+            </Fade>
+        </Modal>
+    );
+};
+
+
 const FeaturedProducts = () => {
     const [openModal, setOpenModal] = useState(false);
+    const [openPriceBreakdown, setOpenPriceBreakdown] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
@@ -72,9 +128,18 @@ const FeaturedProducts = () => {
         setOpenModal(true);
     };
 
+    const handleOpenPriceBreakdown = (product) => {
+        setSelectedProduct(product);
+        setOpenPriceBreakdown(true);
+    };
+
     const handleCloseModal = () => {
         setOpenModal(false);
         setSelectedProduct(null);
+    };
+
+    const handleClosePriceBreakdown = () => {
+        setOpenPriceBreakdown(false);
     };
 
     const loadProducts = useCallback(async () => {
@@ -201,7 +266,12 @@ const FeaturedProducts = () => {
                                         <Typography variant="body1" color="primary">
                                             AED {formatPrice(product.price)}
                                         </Typography>
-                                        <Typography variant="body1" color="primary">
+                                        <Typography
+                                            variant="body1"
+                                            color="primary"
+                                            onClick={() => handleOpenPriceBreakdown(product)}
+                                            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                        >
                                             AED {formatPrice(product.total_fee)}
                                         </Typography>
                                     </Box>
@@ -237,44 +307,46 @@ const FeaturedProducts = () => {
                                 top: '50%',
                                 left: '50%',
                                 transform: 'translate(-50%, -50%)',
-                                width: 400,
+                                width: 600,
                                 bgcolor: 'background.paper',
                                 boxShadow: 24,
                                 p: 4,
+                                borderRadius: 2,
                             }}
                         >
                             {selectedProduct && (
-                                <>
-                                    <Typography variant="h6" component="h2">
+                                <Box>
+                                    <Typography variant="h6" gutterBottom>
                                         {selectedProduct.item_name}
                                     </Typography>
-                                    <CardMedia
-                                        component="img"
-                                        height="250"
-                                        image={selectedProduct.default_image.image_url}
+                                    <Divider sx={{ mb: 2 }} />
+                                    <img
+                                        src={selectedProduct.default_image.image_url}
                                         alt={selectedProduct.item_name}
-                                        sx={{ objectFit: 'contain' }}
+                                        style={{ width: '100%', height: 'auto' }}
                                     />
-                                    <Typography variant="body2" color="textSecondary" gutterBottom>
-                                        {selectedProduct.sub_category.name}
+                                    <Typography variant="body1" sx={{ mt: 2 }}>
+                                        AED {selectedProduct.price}
                                     </Typography>
-                                    <Typography variant="body1" color="primary">
-                                        AED {formatPrice(selectedProduct.price)}
-                                    </Typography>
-                                    <Typography variant="body2" sx={{ mt: 2 }}>
-                                        {selectedProduct.item_description}
-                                    </Typography>
-                                    <ButtonComponent
-                                        label="Buy item"
-                                        buttonVariant="contained"
-                                        textColor="primary.contrastText"
-                                        hoverTextColor="primary.main"
-                                    />
-                                </>
+                                    <Button
+                                        onClick={() => handleDetailsClick(selectedProduct)}
+                                        variant="contained"
+                                        fullWidth
+                                        sx={{ mt: 3 }}
+                                    >
+                                        View Details
+                                    </Button>
+                                </Box>
                             )}
                         </Box>
                     </Fade>
                 </Modal>
+
+                <PriceBreakdownModal
+                    open={openPriceBreakdown}
+                    onClose={handleClosePriceBreakdown}
+                    product={selectedProduct}
+                />
             </Box>
         </ThemeProvider>
     );
