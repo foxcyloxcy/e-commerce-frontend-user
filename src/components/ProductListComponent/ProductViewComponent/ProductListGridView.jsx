@@ -111,11 +111,11 @@ const ProductListGridView = ({ productsData }) => {
                             <CardContent sx={{ flexGrow: 1 }}>
                                 <TruncatedText variant="h6">{product.item_name}</TruncatedText>
                                 <TruncatedText variant="body2">{product.item_description}</TruncatedText>
-                                <Typography variant="h6" sx={{ marginTop: '10px' }}>
+                                <Typography variant="body1" sx={{ marginTop: '10px' }}>
                                     AED {formatPrice(product.price)}
                                 </Typography>
                                 <Typography
-                                    variant="h6"
+                                    variant="body1"
                                     color="primary"
                                     onClick={() => handleOpenPriceBreakdown(product)}
                                     sx={{ cursor: 'pointer', textDecoration: 'underline' }}
