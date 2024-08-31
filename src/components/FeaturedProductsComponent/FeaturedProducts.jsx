@@ -87,7 +87,6 @@ const PriceBreakdownModal = ({ open, onClose, product }) => {
                         width: 400,
                         bgcolor: 'background.paper',
                         boxShadow: 24,
-                        p: 4,
                     }}
                 >
                     <Typography variant="h6" gutterBottom>
@@ -229,7 +228,7 @@ const FeaturedProducts = () => {
                                 sx={{
                                     position: 'relative',
                                     backgroundColor: ModTheme.palette.secondary.background,
-                                    height: 400, // Set consistent height for all cards
+                                    height: 450, // Set consistent height for all cards
                                     display: 'flex',
                                     flexDirection: 'column',
                                     ':hover': {
