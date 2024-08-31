@@ -13,7 +13,8 @@ import {
     Box,
     Pagination,
     Modal,
-    IconButton
+    IconButton,
+    Paper
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ModTheme from '../../ThemeComponent/ModTheme';
@@ -118,12 +119,12 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                                     AED {formatPrice(product.price)}
                                 </Typography>
                                 <Typography
-                                    variant="body1"
+                                    variant="h6"
                                     color="primary"
                                     onClick={() => handleOpenPriceBreakdown(product)}
                                     sx={{ cursor: 'pointer', textDecoration: 'underline' }}
                                 >
-                                    View Price Breakdown
+                                    AED {formatPrice(product.total_fee)}
                                 </Typography>
                                 <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
                                     {product.is_bid ? 'Accepting offers' : ''}
@@ -165,28 +166,33 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                 aria-describedby="modal showing price breakdown"
             >
                 <Box sx={{ ...modalStyle, width: 400 }}>
-                    <IconButton
-                        sx={{ position: 'absolute', top: 8, right: 8 }}
-                        onClick={handleCloseModal}
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                    {selectedProduct && (
-                        <Box>
-                            <Typography variant="h6" component="h2">
-                                Price Breakdown
-                            </Typography>
-                            <Typography variant="body2" sx={{ mt: 2 }}>
-                                Item Price: AED {formatPrice(selectedProduct.price)}
-                            </Typography>
-                            <Typography variant="body2">
-                                Delivery Fee: AED {formatPrice(selectedProduct.delivery_fee || 0)}
-                            </Typography>
-                            <Typography variant="body2">
-                                Total Fee: AED {formatPrice(selectedProduct.total_fee || selectedProduct.price)}
-                            </Typography>
-                        </Box>
-                    )}
+                    <Paper elevation={3} sx={{ padding: 2 }}>
+                        <IconButton
+                            sx={{ position: 'absolute', top: 8, right: 8 }}
+                            onClick={handleCloseModal}
+                        >
+                            <CloseIcon />
+                        </IconButton>
+                        {selectedProduct && (
+                            <Box>
+                                <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
+                                    Price Breakdown
+                                </Typography>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                                    <Typography variant="body1">Item Price:</Typography>
+                                    <Typography variant="body1">AED {formatPrice(selectedProduct.price)}</Typography>
+                                </Box>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                                    <Typography variant="body1">Delivery Fee:</Typography>
+                                    <Typography variant="body1">AED {formatPrice(selectedProduct.delivery_fee || 0)}</Typography>
+                                </Box>
+                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                                    <Typography variant="body1" fontWeight="bold">Total Fee:</Typography>
+                                    <Typography variant="body1" fontWeight="bold">AED {formatPrice(selectedProduct.total_fee || selectedProduct.price)}</Typography>
+                                </Box>
+                            </Box>
+                        )}
+                    </Paper>
                 </Box>
             </Modal>
         </Grid>
