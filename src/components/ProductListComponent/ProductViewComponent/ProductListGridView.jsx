@@ -12,35 +12,21 @@ import {
     Avatar,
     Box,
     Pagination,
-    Modal,
-    IconButton,
-    Paper
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import ModTheme from '../../ThemeComponent/ModTheme';
 import { styled } from '@mui/system';
-import CloseIcon from '@mui/icons-material/Close';
+import PriceBreakdownModal from '../../ModalComponent/PriceBreakDownModal';
 
-const ProductListGridView = ({ productsData, handleProductView }) => {
+const ProductListGridView = ({ productsData }) => {
     const navigate = useNavigate();
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 8; // Number of products per page
 
-    // Modal state for price breakdown
-    const [openModal, setOpenModal] = useState(false);
+    // State for managing the modal
+    const [openPriceBreakdownModal, setOpenPriceBreakdownModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
-
-    const handleOpenPriceBreakdown = (product) => {
-        setSelectedProduct(product);
-        setOpenModal(true);
-    };
-
-    const handleCloseModal = () => {
-        setOpenModal(false);
-        setSelectedProduct(null);
-    };
 
     // Handle pagination change
     const handlePageChange = (event, value) => {
@@ -49,6 +35,16 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
 
     const handleDetailsClick = (productUuid) => {
         navigate('/product-details', { state: { productUuid } });
+    };
+
+    const handleOpenPriceBreakdown = (product) => {
+        setSelectedProduct(product);
+        setOpenPriceBreakdownModal(true);
+    };
+
+    const handleClosePriceBreakdown = () => {
+        setOpenPriceBreakdownModal(false);
+        setSelectedProduct(null);
     };
 
     const TruncatedText = styled(Typography)({
@@ -119,14 +115,14 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                                     AED {formatPrice(product.price)}
                                 </Typography>
                                 <Typography
-                                    variant="h6"
+                                    variant="body1"
                                     color="primary"
                                     onClick={() => handleOpenPriceBreakdown(product)}
                                     sx={{ cursor: 'pointer', textDecoration: 'underline' }}
                                 >
-                                    AED {formatPrice(product.total_fee)}
+                                    View Price Breakdown
                                 </Typography>
-                                <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
+                                <Typography variant="body2" sx={{ color: 'primary.light' }}>
                                     {product.is_bid ? 'Accepting offers' : ''}
                                 </Typography>
                             </CardContent>
@@ -158,57 +154,16 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                 />
             </Box>
 
-            {/* Price Breakdown Modal */}
-            <Modal
-                open={openModal}
-                onClose={handleCloseModal}
-                aria-labelledby="price-breakdown-modal"
-                aria-describedby="modal showing price breakdown"
-            >
-                <Box sx={{ ...modalStyle, width: 400 }}>
-                    <Paper elevation={3} sx={{ padding: 2 }}>
-                        <IconButton
-                            sx={{ position: 'absolute', top: 8, right: 8 }}
-                            onClick={handleCloseModal}
-                        >
-                            <CloseIcon />
-                        </IconButton>
-                        {selectedProduct && (
-                            <Box>
-                                <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
-                                    Price Breakdown
-                                </Typography>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                                    <Typography variant="body1">Item Price:</Typography>
-                                    <Typography variant="body1">AED {formatPrice(selectedProduct.price)}</Typography>
-                                </Box>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                                    <Typography variant="body1">Delivery Fee:</Typography>
-                                    <Typography variant="body1">AED {formatPrice(selectedProduct.delivery_fee || 0)}</Typography>
-                                </Box>
-                                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                                    <Typography variant="body1" fontWeight="bold">Total Fee:</Typography>
-                                    <Typography variant="body1" fontWeight="bold">AED {formatPrice(selectedProduct.total_fee || selectedProduct.price)}</Typography>
-                                </Box>
-                            </Box>
-                        )}
-                    </Paper>
-                </Box>
-            </Modal>
+            {/* Reuse PriceBreakdownModal */}
+            {selectedProduct && (
+                <PriceBreakdownModal
+                    open={openPriceBreakdownModal}
+                    onClose={handleClosePriceBreakdown}
+                    product={selectedProduct}
+                />
+            )}
         </Grid>
     );
-};
-
-// Modal styling
-const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    borderRadius: '10px',
-    boxShadow: 24,
-    p: 4,
 };
 
 export default ProductListGridView;
