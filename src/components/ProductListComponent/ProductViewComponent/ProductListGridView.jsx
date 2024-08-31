@@ -115,12 +115,12 @@ const ProductListGridView = ({ productsData }) => {
                                     AED {formatPrice(product.price)}
                                 </Typography>
                                 <Typography
-variant="h6"
+                                    variant="h6"
                                     color="primary"
                                     onClick={() => handleOpenPriceBreakdown(product)}
                                     sx={{ cursor: 'pointer', textDecoration: 'underline' }}
                                 >
-                                                                        AED {formatPrice(product.total_fee)}
+                                    AED {formatPrice(product.total_fee)}
                                 </Typography>
                                 <Typography variant="body2" sx={{ color: 'primary.light' }}>
                                     {product.is_bid ? 'Accepting offers' : ''}
