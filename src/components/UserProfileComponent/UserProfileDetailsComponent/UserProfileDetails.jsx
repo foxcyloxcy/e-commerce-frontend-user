@@ -140,9 +140,9 @@ const UserProfileDetails = (props) => {
                 <Grid item xs={12} sm={12}
                     sx={{
                         display: 'flex',
-                        justifyContent: 'left',
                         justifyContent: {xs: 'center', sm:'center', md:'left'},
                         alignItems: {xs:'center', sm:'center', md:'flex-start'},
+                        flexDirection: 'column',
                         background: ModTheme.palette.primary.dark,
                         color: ModTheme.palette.secondary.main,
                         paddingBottom: 2,
