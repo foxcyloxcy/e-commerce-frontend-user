@@ -5,19 +5,20 @@ import {
     FormControl,
     Select,
     MenuItem,
-    Tooltip,
-    IconButton,
     Card,
     CardContent,
     Button,
     CardMedia,
     Avatar,
     Box,
-    Pagination
+    Pagination,
+    Modal,
+    IconButton
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import { styled } from '@mui/system';
+import CloseIcon from '@mui/icons-material/Close';
 
 const ProductListGridView = ({ productsData, handleProductView }) => {
     const navigate = useNavigate();
@@ -25,6 +26,20 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
     const productsPerPage = 8; // Number of products per page
+
+    // Modal state for price breakdown
+    const [openModal, setOpenModal] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+
+    const handleOpenPriceBreakdown = (product) => {
+        setSelectedProduct(product);
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+        setSelectedProduct(null);
+    };
 
     // Handle pagination change
     const handlePageChange = (event, value) => {
@@ -102,6 +117,14 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                                 <Typography variant="h6" sx={{ marginTop: '10px' }}>
                                     AED {formatPrice(product.price)}
                                 </Typography>
+                                <Typography
+                                    variant="body1"
+                                    color="primary"
+                                    onClick={() => handleOpenPriceBreakdown(product)}
+                                    sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                >
+                                    View Price Breakdown
+                                </Typography>
                                 <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
                                     {product.is_bid ? 'Accepting offers' : ''}
                                 </Typography>
@@ -123,6 +146,7 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                     </Grid>
                 ))}
             </Grid>
+
             {/* Pagination Controls */}
             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
                 <Pagination
@@ -132,8 +156,53 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                     color="primary"
                 />
             </Box>
+
+            {/* Price Breakdown Modal */}
+            <Modal
+                open={openModal}
+                onClose={handleCloseModal}
+                aria-labelledby="price-breakdown-modal"
+                aria-describedby="modal showing price breakdown"
+            >
+                <Box sx={{ ...modalStyle, width: 400 }}>
+                    <IconButton
+                        sx={{ position: 'absolute', top: 8, right: 8 }}
+                        onClick={handleCloseModal}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                    {selectedProduct && (
+                        <Box>
+                            <Typography variant="h6" component="h2">
+                                Price Breakdown
+                            </Typography>
+                            <Typography variant="body2" sx={{ mt: 2 }}>
+                                Item Price: AED {formatPrice(selectedProduct.price)}
+                            </Typography>
+                            <Typography variant="body2">
+                                Delivery Fee: AED {formatPrice(selectedProduct.delivery_fee || 0)}
+                            </Typography>
+                            <Typography variant="body2">
+                                Total Fee: AED {formatPrice(selectedProduct.total_fee || selectedProduct.price)}
+                            </Typography>
+                        </Box>
+                    )}
+                </Box>
+            </Modal>
         </Grid>
     );
+};
+
+// Modal styling
+const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
+    borderRadius: '10px',
+    boxShadow: 24,
+    p: 4,
 };
 
 export default ProductListGridView;
