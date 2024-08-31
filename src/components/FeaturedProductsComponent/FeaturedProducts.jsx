@@ -191,10 +191,18 @@ const FeaturedProducts = () => {
                                         {product.item_name}
                                     </TruncatedText>
                                     <Box
-                                        sx={{ display: 'flex', alignItems: 'center', marginTop: 1 }}
+                                        sx={{ 
+                                            display: 'flex', 
+                                            alignItems: 'flex-start', 
+                                            flexDirection:'column', 
+                                            marginTop: 1 
+                                        }}
                                     >
                                         <Typography variant="body1" color="primary">
                                             AED {formatPrice(product.price)}
+                                        </Typography>
+                                        <Typography variant="body1" color="primary">
+                                            AED {formatPrice(product.total_fee)}
                                         </Typography>
                                     </Box>
                                 </CardContent>
