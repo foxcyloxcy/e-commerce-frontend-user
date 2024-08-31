@@ -71,9 +71,9 @@ const ProductListGridView = ({ productsData, handleProductView }) => {
                 {currentProducts.map((product) => (
                     <Grid item xs={6} sm={6} md={4} lg={3} key={product.id}>
                         <Box sx={{ display: 'flex', alignItems: 'center', padding: 1 }}>
-                            <Avatar src={product.user_avatar} alt={product.user_name} />
+                            <Avatar src={product.user.vendor.logo} alt={product.user.vendor.name} />
                             <Typography variant="body2" sx={{ marginLeft: 1 }}>
-                                {product.user_name}
+                                {product.user.vendor.name}
                             </Typography>
                         </Box>
                         <Card
