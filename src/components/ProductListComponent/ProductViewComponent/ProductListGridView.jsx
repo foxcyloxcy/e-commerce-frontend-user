@@ -95,7 +95,7 @@ const ProductListGridView = ({ productsData }) => {
                                 width: '100%',
                                 background: '#fff',
                                 position: 'relative',
-                                height: '430px',
+                                height: '480px',
                             }}
                         >
                             {/* Product Image */}
@@ -115,12 +115,12 @@ const ProductListGridView = ({ productsData }) => {
                                     AED {formatPrice(product.price)}
                                 </Typography>
                                 <Typography
-                                    variant="body1"
+variant="h6"
                                     color="primary"
                                     onClick={() => handleOpenPriceBreakdown(product)}
                                     sx={{ cursor: 'pointer', textDecoration: 'underline' }}
                                 >
-                                    View Price Breakdown
+                                                                        AED {formatPrice(product.total_fee)}
                                 </Typography>
                                 <Typography variant="body2" sx={{ color: 'primary.light' }}>
                                     {product.is_bid ? 'Accepting offers' : ''}
