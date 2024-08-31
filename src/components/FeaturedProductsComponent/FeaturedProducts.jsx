@@ -87,6 +87,7 @@ const PriceBreakdownModal = ({ open, onClose, product }) => {
                         width: 400,
                         bgcolor: 'background.paper',
                         boxShadow: 24,
+                        p: 4,
                     }}
                 >
                     <Typography variant="h6" gutterBottom>
