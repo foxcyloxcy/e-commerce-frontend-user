@@ -112,8 +112,8 @@ const FeaturedProducts = () => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
-    const handleDetailsClick = (product) => {
-        navigate('/product-details', { state: { product } });
+    const handleDetailsClick = (productUuid) => {
+        navigate('/product-details', { state: { productUuid } });
     };
 
     // Slider settings
@@ -231,7 +231,7 @@ const FeaturedProducts = () => {
                                     </QuickViewButton>
                                 </CardActions>
                                 <CardActions>
-                                    <ViewInDetailsButton onClick={() => handleDetailsClick(product)}>
+                                    <ViewInDetailsButton onClick={() => handleDetailsClick(product.uuid)}>
                                         Detail View
                                     </ViewInDetailsButton>
                                 </CardActions>
@@ -255,7 +255,7 @@ const FeaturedProducts = () => {
                                 position: 'absolute',
                                 top: '50%',
                                 left: '50%',
-                                transform: 'translate(-50%, -50%)',
+                                // transform: 'translate(-50%, -50%)',
                                 width: 600,
                                 bgcolor: 'background.paper',
                                 boxShadow: 24,
