@@ -95,6 +95,7 @@ const FeaturedProducts = () => {
         try {
             const res = await api.get(`api/global/featured?size=7`);
             if (res.status === 200) {
+                console.log(res.data.data)
                 const data = res.data.data;
                 setProducts(data.data);
             }
@@ -169,9 +170,9 @@ const FeaturedProducts = () => {
                     {products.map((product, index) => (
                         <Box key={index} padding={2}>
                             <Box sx={{ display: 'flex', alignItems: 'center', padding: 1 }}>
-                                <Avatar src={product.user_avatar} alt={product.user_name} />
+                                <Avatar src={product.user.vendor.logo} alt={product.user.vendor.name} />
                                 <Typography variant="body2" sx={{ marginLeft: 1 }}>
-                                    {product.user_name}
+                                    {product.user.vendor.name}
                                 </Typography>
                             </Box>
                             <Card
