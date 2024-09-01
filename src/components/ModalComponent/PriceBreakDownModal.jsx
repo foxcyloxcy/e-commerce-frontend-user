@@ -13,6 +13,7 @@ import {
 // Price breakdown modal component
 const PriceBreakdownModal = ({ open, onClose, product }) => {
     // Check if product exists before rendering the modal content
+    console.log(product)
     if (!product) {
         return null;
     }
@@ -46,13 +47,16 @@ const PriceBreakdownModal = ({ open, onClose, product }) => {
                         Item: AED {product.price}
                     </Typography>
                     <Typography variant="body1" sx={{ mt: 1 }}>
-                        Platform fee: AED {(product.total_fee - product.price).toFixed(2)}
+                        Platform fee: AED {(product.total_fee_breakdown.platform_fee)} ({(product.total_fee_breakdown.platform_fee_percentage)} of item price)
+                    </Typography>
+                    <Typography variant="body1" sx={{ mt: 1 }}>
+                        Total: AED {(product.total_fee_breakdown.total)}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" sx={{ mt: 2 }}>
                         Postage fees will be added at checkout.
                     </Typography>
                     <Typography variant="caption" color="textSecondary" sx={{ mt: 2 }}>
-                        Our Platform fee is mandatory when you purchase an item on the platform. It is added to every purchase made with the 'Buy' button. The item price is set by the seller and may be subject to negotiation.
+                        Our Platform fee is mandatory when you purchase an item on the platform. It is added to every purchase made with the 'Buy' button. The item price is set by the seller and may be subject to negotiation if the seller is accepting offers.
                     </Typography>
                     <Button onClick={onClose} variant="contained" fullWidth sx={{ mt: 3 }}>
                         Ok, close
