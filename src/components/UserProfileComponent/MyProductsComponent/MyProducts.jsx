@@ -41,7 +41,7 @@ const MyProducts = (props) => {
     const [productsData, setProductsData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [itemsPerPage] = useState(5); // Change the items per page as required
+    const [itemsPerPage] = useState(8); // Change the items per page as required
     const navigate = useNavigate();
 
     const loadProducts = useCallback(async (page) => {
@@ -81,6 +81,19 @@ const MyProducts = (props) => {
     return (
         <Box>
             <Grid container spacing={2}>
+                {/* Conditionally render the Add Product Card only on the first page */}
+                {currentPage === 1 && (
+                    <Grid item xs={6} sm={6} md={4} lg={3} style={{ display: 'flex' }}>
+                        <DashedCard onClick={handleAddProductClick} sx={{
+                            background: ModTheme.palette.secondary.dark
+                        }}>
+                            <AddCircleOutlineIcon sx={{ fontSize: 60, color: ModTheme.palette.primary.main }} />
+                            <Typography variant="h6" sx={{ marginTop: 2 }}>
+                                Add Item
+                            </Typography>
+                        </DashedCard>
+                    </Grid>
+                )}
                 {productsData.map((product) => (
                     <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
                         <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
@@ -126,15 +139,6 @@ const MyProducts = (props) => {
                     </Grid>
                 ))}
 
-                {/* Add Product Card */}
-                <Grid item xs={6} sm={6} md={4} lg={3} style={{ display: 'flex' }}>
-                    <DashedCard onClick={handleAddProductClick}>
-                        <AddCircleOutlineIcon sx={{ fontSize: 60, color: ModTheme.palette.primary.main }} />
-                        <Typography variant="h6" sx={{ marginTop: 2 }}>
-                            Add Item
-                        </Typography>
-                    </DashedCard>
-                </Grid>
             </Grid>
 
             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
