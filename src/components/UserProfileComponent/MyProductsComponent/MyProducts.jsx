@@ -46,7 +46,7 @@ const MyProducts = (props) => {
 
     const loadProducts = useCallback(async (page) => {
         try {
-            const res = await api.get(`/api/auth/me/items?status=0,1,2,3,4&page=${page}&size=${itemsPerPage}`, {
+            const res = await api.get(`/api/auth/me/items?status=0,1,2,3,4&page=${page}&size=${itemsPerPage - (page === 1 ? 1 : 0)}`, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -54,8 +54,15 @@ const MyProducts = (props) => {
             });
 
             if (res.status === 200) {
-                setProductsData(res.data.data.data);
-                setTotalPages(res.data.data.last_page);  // Assuming the API provides `total_pages`
+                let fetchedProducts = res.data.data.data;
+
+                if (page === 1) {
+                    // Insert a placeholder for "Add Item" in the first position
+                    fetchedProducts = [{ isAddItemCard: true }, ...fetchedProducts];
+                }
+
+                setProductsData(fetchedProducts);
+                setTotalPages(res.data.data.last_page);
             }
         } catch (error) {
             console.log(error);
@@ -81,64 +88,61 @@ const MyProducts = (props) => {
     return (
         <Box>
             <Grid container spacing={2}>
-                {/* Conditionally render the Add Product Card only on the first page */}
-                {currentPage === 1 && (
-                    <Grid item xs={6} sm={6} md={4} lg={3} style={{ display: 'flex' }}>
-                        <DashedCard onClick={handleAddProductClick} sx={{
-                            background: ModTheme.palette.secondary.dark
-                        }}>
-                            <AddCircleOutlineIcon sx={{ fontSize: 60, color: ModTheme.palette.primary.main }} />
-                            <Typography variant="h6" sx={{ marginTop: 2 }}>
-                                Add Item
-                            </Typography>
-                        </DashedCard>
-                    </Grid>
-                )}
-                {productsData.map((product) => (
-                    <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
-                        <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
-                            <StatusBadge status={product.status}>
-                                {product.status === 0 ? 'Pending' :
-                                    product.status === 1 ? 'Approved' :
-                                        product.status === 2 ? 'Rejected' :
-                                            product.status === 3 ? 'Sold' :
-                                                product.status === 4 ? 'Bid accepted' : 'Archived'}
-                            </StatusBadge>
-
-                            <CardMedia
-                                component="img"
-                                height="200"
-                                image={product.default_image ? product.default_image.image_url : 'no image available.'}
-                                alt={product.item_name}
-                                sx={{ objectFit: 'cover' }}
-                            />
-
-                            <CardContent sx={{ flexGrow: 1 }}>
-                                <TruncatedText variant="h6">{product.item_name}</TruncatedText>
-                                <TruncatedText variant="body2">{product.item_description}</TruncatedText>
-                                <Typography variant="h6" sx={{ marginTop: '10px' }}>
-                                    AED {product.price}
+                {productsData.map((product, index) => (
+                    product.isAddItemCard ? (
+                        <Grid item xs={6} sm={6} md={4} lg={3} key={`add-item`} style={{ display: 'flex' }}>
+                            <DashedCard onClick={handleAddProductClick} sx={{ background: ModTheme.palette.secondary.dark }}>
+                                <AddCircleOutlineIcon sx={{ fontSize: 50, color: ModTheme.palette.primary.main }} />
+                                <Typography variant="body1">
+                                    Add item
                                 </Typography>
-                                <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
-                                    {product.is_bid ? 'You are accepting offers' : ''}
-                                </Typography>
-                            </CardContent>
+                            </DashedCard>
+                        </Grid>
+                    ) : (
+                        <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
+                            <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
+                                <StatusBadge status={product.status}>
+                                    {product.status === 0 ? 'Pending' :
+                                        product.status === 1 ? 'Approved' :
+                                            product.status === 2 ? 'Rejected' :
+                                                product.status === 3 ? 'Sold' :
+                                                    product.status === 4 ? 'Bid accepted' : 'Archived'}
+                                </StatusBadge>
 
-                            <CardContent sx={{ position: 'absolute', width: '100%', top: '83%' }}>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    fullWidth
-                                    sx={{ marginTop: '10px' }}
-                                    onClick={() => handleDetailsClick(product.uuid)}
-                                >
-                                    Details
-                                </Button>
-                            </CardContent>
-                        </Card>
-                    </Grid>
+                                <CardMedia
+                                    component="img"
+                                    height="200"
+                                    image={product.default_image ? product.default_image.image_url : 'no image available.'}
+                                    alt={product.item_name}
+                                    sx={{ objectFit: 'cover' }}
+                                />
+
+                                <CardContent sx={{ flexGrow: 1 }}>
+                                    <TruncatedText variant="h6">{product.item_name}</TruncatedText>
+                                    <TruncatedText variant="body2">{product.item_description}</TruncatedText>
+                                    <Typography variant="h6" sx={{ marginTop: '10px' }}>
+                                        AED {product.price}
+                                    </Typography>
+                                    <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
+                                        {product.is_bid ? 'You are accepting offers' : ''}
+                                    </Typography>
+                                </CardContent>
+
+                                <CardContent sx={{ position: 'absolute', width: '100%', top: '83%' }}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        fullWidth
+                                        sx={{ marginTop: '10px' }}
+                                        onClick={() => handleDetailsClick(product.uuid)}
+                                    >
+                                        Details
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    )
                 ))}
-
             </Grid>
 
             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
