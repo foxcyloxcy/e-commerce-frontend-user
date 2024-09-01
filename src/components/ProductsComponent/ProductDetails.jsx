@@ -5,7 +5,7 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useLocation } from 'react-router-dom';
 import ModTheme from '../ThemeComponent/ModTheme';
-import ButtonComponent from '../ButtonComponent/ButtonComponent';
+import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import api from '../../assets/baseURL/api';
 
