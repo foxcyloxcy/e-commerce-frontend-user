@@ -255,37 +255,49 @@ const FeaturedProducts = () => {
                                 position: 'absolute',
                                 top: '50%',
                                 left: '50%',
-                                // transform: 'translate(-50%, -50%)',
-                                width: 600,
+                                transform: 'translate(-50%, -50%)',
+                                width: 400,
                                 bgcolor: 'background.paper',
                                 boxShadow: 24,
                                 p: 4,
-                                borderRadius: 2,
                             }}
                         >
                             {selectedProduct && (
-                                <Box>
-                                    <Typography variant="h6" gutterBottom>
+                                <>
+                                    <Typography variant="h6" component="h2">
                                         {selectedProduct.item_name}
                                     </Typography>
-                                    <Divider sx={{ mb: 2 }} />
-                                    <img
-                                        src={selectedProduct.default_image.image_url}
+                                    <CardMedia
+                                        component="img"
+                                        height="250"
+                                        image={selectedProduct.default_image.image_url}
                                         alt={selectedProduct.item_name}
-                                        style={{ width: '100%', height: 'auto' }}
+                                        sx={{ objectFit: 'contain' }}
                                     />
-                                    <Typography variant="body1" sx={{ mt: 2 }}>
-                                        AED {selectedProduct.price}
+                                    <Typography variant="body2" color="textSecondary" gutterBottom>
+                                        {selectedProduct.sub_category.name}
                                     </Typography>
-                                    <Button
-                                        onClick={() => handleDetailsClick(selectedProduct)}
-                                        variant="contained"
-                                        fullWidth
-                                        sx={{ mt: 3 }}
-                                    >
-                                        View Details
-                                    </Button>
-                                </Box>
+                                    <Typography variant="body1" color="primary">
+                                        AED {formatPrice(selectedProduct.price)}
+                                    </Typography>
+                                    <Typography
+                                            variant="body1"
+                                            color="primary"
+                                            onClick={() => handleOpenPriceBreakdown(selectedProduct)}
+                                            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                        >
+                                            AED {formatPrice(selectedProduct.total_fee)}
+                                        </Typography>
+                                    <Typography variant="body2" sx={{ mt: 2 }}>
+                                        {selectedProduct.item_description}
+                                    </Typography>
+                                    <ButtonComponent
+                                        label="Buy item"
+                                        buttonVariant="contained"
+                                        textColor="primary.contrastText"
+                                        hoverTextColor="primary.main"
+                                    />
+                                </>
                             )}
                         </Box>
                     </Fade>
