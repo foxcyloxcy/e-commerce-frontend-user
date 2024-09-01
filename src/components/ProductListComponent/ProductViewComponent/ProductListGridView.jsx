@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/system';
-import PriceBreakdownModal from '../../ModalComponent/PriceBreakDownModal';
+import PriceBreakdownModal from '../../ReusableComponents/ModalComponent/PriceBreakDownModal';
 
 const ProductListGridView = ({ productsData }) => {
     const navigate = useNavigate();
