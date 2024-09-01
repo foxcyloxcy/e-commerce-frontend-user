@@ -10,7 +10,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, Box, useMediaQuery, Drawer, List, ListItem, ListItemText, Divider, Backdrop } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import ButtonComponent from '../ButtonComponent/ButtonComponent';
+import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
 import secureLocalStorage from "react-secure-storage";
 import secure from '../../assets/baseURL/secure';
 
