@@ -46,13 +46,13 @@ const PriceBreakdownModal = ({ open, onClose, product }) => {
                         Item: AED {product.price}
                     </Typography>
                     <Typography variant="body1" sx={{ mt: 1 }}>
-                        Buyer Protection fee: AED {(product.total_fee - product.price).toFixed(2)}
+                        Platform fee: AED {(product.total_fee - product.price).toFixed(2)}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" sx={{ mt: 2 }}>
                         Postage fees will be added at checkout.
                     </Typography>
                     <Typography variant="caption" color="textSecondary" sx={{ mt: 2 }}>
-                        Our Buyer Protection fee is mandatory when you purchase an item on the platform. It is added to every purchase made with the 'Buy Now' button. The item price is set by the seller and may be subject to negotiation.
+                        Our Platform fee is mandatory when you purchase an item on the platform. It is added to every purchase made with the 'Buy' button. The item price is set by the seller and may be subject to negotiation.
                     </Typography>
                     <Button onClick={onClose} variant="contained" fullWidth sx={{ mt: 3 }}>
                         Ok, close
