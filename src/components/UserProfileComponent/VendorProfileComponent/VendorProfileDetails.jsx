@@ -80,6 +80,23 @@ const VendorProfileDetails = (props) => {
         }
     }, [userToken]);
 
+
+    const loadBankDetails = useCallback(async () => {
+        try {
+            const res = await api.get("/api/auth/me/bank-payment", {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (res.status === 200) {
+                console.log(res.data)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [userToken]);
+
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     };
@@ -167,7 +184,7 @@ const VendorProfileDetails = (props) => {
                 const successMessage = res.data.message
                 Swal.fire({
                     title: successMessage,
-                    text: 'You will receive an email after your item gets approved. This can take up to 72hrs max.',
+                    text: 'Bank details successfully added.',
                     icon: 'success',
                     confirmButtonText: 'Ok',
                     confirmButtonColor: ModTheme.palette.primary.main,
@@ -191,7 +208,8 @@ const VendorProfileDetails = (props) => {
 
     useEffect(() => {
         loadProfile();
-    }, [loadProfile]);
+        loadBankDetails();
+    }, [loadProfile, loadBankDetails]);
 
     return (
         <ThemeProvider theme={ModTheme}>
