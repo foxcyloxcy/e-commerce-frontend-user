@@ -21,9 +21,9 @@ import "slick-carousel/slick/slick-theme.css";
 import '../FeaturedProductsComponent/FeaturedProducts.css'
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
-import ButtonComponent from '../ButtonComponent/ButtonComponent';
+import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
 import { useNavigate } from 'react-router-dom';
-import PriceBreakdownModal from '../ModalComponent/PriceBreakDownModal';
+import PriceBreakdownModal from '../ReusableComponents/ModalComponent/PriceBreakDownModal';
 
 // Custom styled components
 const TruncatedText = styled(Typography)({
