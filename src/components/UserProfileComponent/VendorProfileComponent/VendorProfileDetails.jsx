@@ -91,7 +91,6 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
-                console.log(res.data.data)
                 setBankDetails(res.data.data)
             }
         } catch (error) {
