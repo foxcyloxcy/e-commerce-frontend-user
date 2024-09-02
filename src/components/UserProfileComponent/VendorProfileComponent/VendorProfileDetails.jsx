@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import CancelIcon from '@mui/icons-material/Cancel';
 import api from '../../../assets/baseURL/api';
+import Swal from 'sweetalert2';
 
 const ProfileInfo = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(3),
@@ -40,8 +41,9 @@ const BankDetailsLabel = styled(Typography)(({ theme }) => ({
 }));
 
 const VendorProfileDetails = (props) => {
-    const { userToken, fromParentUserData } = props;
+    const { userToken } = props;
     const [userData, setUserData] = useState({});
+    const [userId, setUserId] = useState("");
     const [editBankDetails, setEditBankDetails] = useState(false); 
     const [editField, setEditField] = useState(null); // Track which field is being edited
     const [formData, setFormData] = useState({
@@ -63,6 +65,7 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
+                setUserId(res.data.data.id)
                 setUserData(res.data.data.vendor);
                 setFormData({
                     name: res.data.data.vendor.name || '',
@@ -149,6 +152,7 @@ const VendorProfileDetails = (props) => {
         try {
             const { bank_name, account_fullname, account_number } = formData;
             const res = await api.post("/api/auth/me/bank-payment", {
+                user_id: userId,
                 bank_id: 1,
                 bank_name,
                 account_fullname,
@@ -160,6 +164,14 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
+                const successMessage = res.data.message
+                Swal.fire({
+                    title: successMessage,
+                    text: 'You will receive an email after your item gets approved. This can take up to 72hrs max.',
+                    icon: 'success',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: ModTheme.palette.primary.main,
+                  })
                 loadProfile();
                 setEditBankDetails(false);
             }
