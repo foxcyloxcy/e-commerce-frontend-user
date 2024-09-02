@@ -291,6 +291,7 @@ const VendorProfileDetails = (props) => {
                                             fullWidth
                                             margin="normal"
                                             size="small"
+                                            disabled={editBankDetails ? false : true}
                                             required
                                         />
                                     ))}
