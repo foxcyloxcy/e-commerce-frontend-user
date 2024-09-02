@@ -185,7 +185,7 @@ const VendorProfileDetails = (props) => {
                                 <Box sx={{
                                     marginLeft: 2,
                                 }}>
-                                    {['name', 'address', 'bank_id', 'account_fullname', 'account_number'].map((field) => (
+                                    {['name', 'address', 'bank_name', 'account_fullname', 'account_number'].map((field) => (
                                         <Box
                                             key={field}
                                             sx={{
