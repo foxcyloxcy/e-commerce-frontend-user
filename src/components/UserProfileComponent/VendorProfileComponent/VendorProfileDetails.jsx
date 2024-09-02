@@ -42,6 +42,7 @@ const BankDetailsLabel = styled(Typography)(({ theme }) => ({
 const VendorProfileDetails = (props) => {
     const { userToken } = props;
     const [userData, setUserData] = useState({});
+    const [editBankDetails, setEditBankDetails] = useState(false); 
     const [editField, setEditField] = useState(null); // Track which field is being edited
     const [formData, setFormData] = useState({
         name: '',
@@ -138,6 +139,41 @@ const VendorProfileDetails = (props) => {
         } catch (error) {
             console.log("Error updating profile:", error);
         }
+    };
+
+    const handleBankEdit = () => {
+        setEditBankDetails(true);
+    };
+
+    const handleBankSave = async () => {
+        try {
+            const { bank_id, account_fullname, account_number } = formData;
+            const res = await api.put("/api/auth/me/update-vendor-profile", {
+                bank_id,
+                account_fullname,
+                account_number,
+            }, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (res.status === 200) {
+                loadProfile();
+                setEditBankDetails(false);
+            }
+        } catch (error) {
+            console.log("Error updating bank details:", error);
+        }
+    };
+
+    const handleBankCancel = () => {
+        setEditBankDetails(false);
+        setFormData({
+            bank_id: userData.bank_id || '',
+            account_fullname: userData.account_fullname || '',
+            account_number: userData.account_number || '',
+        });
     };
 
     useEffect(() => {
@@ -258,11 +294,37 @@ const VendorProfileDetails = (props) => {
                                             required
                                         />
                                     ))}
-                                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                        <Button variant="contained" color="primary" onClick={() => handleSave('bank_details')}>
-                                            Save Bank Details
-                                        </Button>
-                                    </Box>
+                                    {
+                                        editBankDetails ? (
+                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={handleBankSave}
+                                                    sx={{ mr: 1 }}
+                                                >
+                                                    Save
+                                                </Button>
+                                                <Button
+                                                    variant="outlined"
+                                                    color="secondary"
+                                                    onClick={handleBankCancel}
+                                                >
+                                                    Cancel
+                                                </Button>
+                                            </Box>
+                                        ) : (
+                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+                                                <Button
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={handleBankEdit}
+                                                >
+                                                    Edit
+                                                </Button>
+                                            </Box>
+                                        )
+                                    }
                                 </BankDetailsContainer>
                             </Grid>
                         </>
