@@ -43,21 +43,21 @@ const Content = styled(Box)(({ theme }) => ({
 }));
 
 const MyProfile = (props) => {
-  const { userToken } = props
+  const { userToken, userData } = props
   const [activeTab, setActiveTab] = useState('Profile settings');
 
   const renderContent = () => {
     switch (activeTab) {
       case 'Profile settings':
-        return <UserProfileDetails userToken={userToken}/>;
+        return <UserProfileDetails userToken={userToken} fromParentUserData={userData}/>;
       case 'My products':
-        return <MyProducts userToken={userToken} />;
+        return <MyProducts userToken={userToken} fromParentUserData={userData}/>;
       case 'My offers':
-        return <MyOffers userToken={userToken} />; // Replace with your MyOffers component
+        return <MyOffers userToken={userToken} fromParentUserData={userData}/>; // Replace with your MyOffers component
       case 'Offers to me':
-        return <OffersToMe userToken={userToken} />; // Replace with your OffersToMe component
+        return <OffersToMe userToken={userToken} fromParentUserData={userData}/>; // Replace with your OffersToMe component
       case 'Vendor settings':
-        return <VendorProfileDetails userToken={userToken} />; // Replace with your OffersToMe component
+        return <VendorProfileDetails userToken={userToken}/>; // Replace with your OffersToMe component
       default:
         return null;
     }
