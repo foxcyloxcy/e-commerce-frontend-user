@@ -126,7 +126,7 @@ const VendorProfileDetails = (props) => {
     const handleSave = async (field) => {
         try {
             const updatedField = { [field]: formData[field] };
-            const res = await api.put("/api/auth/me/update-vendor-profile", updatedField, {
+            const res = await api.post("/api/auth/me/profile/vendor", updatedField, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'application/json',
@@ -147,9 +147,9 @@ const VendorProfileDetails = (props) => {
 
     const handleBankSave = async () => {
         try {
-            const { bank_id, account_fullname, account_number } = formData;
+            const { bank_name, account_fullname, account_number } = formData;
             const res = await api.put("/api/auth/me/update-vendor-profile", {
-                bank_id,
+                bank_name,
                 account_fullname,
                 account_number,
             }, {
@@ -170,7 +170,7 @@ const VendorProfileDetails = (props) => {
     const handleBankCancel = () => {
         setEditBankDetails(false);
         setFormData({
-            bank_id: userData.bank_id || '',
+            bank_name: userData.bank_name || '',
             account_fullname: userData.account_fullname || '',
             account_number: userData.account_number || '',
         });
