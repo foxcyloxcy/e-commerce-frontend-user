@@ -40,7 +40,7 @@ const BankDetailsLabel = styled(Typography)(({ theme }) => ({
 }));
 
 const VendorProfileDetails = (props) => {
-    const { userToken } = props;
+    const { userToken, fromParentUserData } = props;
     const [userData, setUserData] = useState({});
     const [editBankDetails, setEditBankDetails] = useState(false); 
     const [editField, setEditField] = useState(null); // Track which field is being edited
@@ -148,7 +148,8 @@ const VendorProfileDetails = (props) => {
     const handleBankSave = async () => {
         try {
             const { bank_name, account_fullname, account_number } = formData;
-            const res = await api.put("/api/auth/me/update-vendor-profile", {
+            const res = await api.post("/api/auth/me/bank-payment", {
+                bank_id: 1,
                 bank_name,
                 account_fullname,
                 account_number,
