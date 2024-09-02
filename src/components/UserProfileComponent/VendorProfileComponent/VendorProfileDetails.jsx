@@ -19,6 +19,26 @@ const ProfileInfo = styled(Paper)(({ theme }) => ({
     },
 }));
 
+const BankDetailsContainer = styled(Box)(({ theme }) => ({
+    border: `2px dashed ${theme.palette.primary.main}`,
+    borderRadius: theme.shape.borderRadius,
+    position: 'relative',
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(2),
+}));
+
+const BankDetailsLabel = styled(Typography)(({ theme }) => ({
+    position: 'absolute',
+    top: '-12px',
+    left: '16px',
+    backgroundColor: theme.palette.secondary.background,
+    paddingLeft: theme.spacing(0.5),
+    paddingRight: theme.spacing(0.5),
+    color: theme.palette.primary.main,
+    fontWeight: 'bold',
+}));
+
 const VendorProfileDetails = (props) => {
     const { userToken } = props;
     const [userData, setUserData] = useState({});
@@ -26,7 +46,7 @@ const VendorProfileDetails = (props) => {
     const [formData, setFormData] = useState({
         name: '',
         address: '',
-        bank_id: '',
+        bank_name: '',
         account_fullname: '',
         account_number: '',
     });
@@ -42,12 +62,11 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
-
                 setUserData(res.data.data.vendor);
                 setFormData({
                     name: res.data.data.vendor.name || '',
                     address: res.data.data.vendor.address || '',
-                    bank_id: res.data.data.vendor.bank_id || '',
+                    bank_name: res.data.data.vendor.bank_name || '',
                     account_fullname: res.data.data.vendor.account_fullname || '',
                     account_number: res.data.data.vendor.account_number || '',
                 });
@@ -143,8 +162,8 @@ const VendorProfileDetails = (props) => {
                             <Grid item xs={12} sm={12}
                                 sx={{
                                     display: 'flex',
-                                    justifyContent: {xs: 'center', sm:'center', md:'left'},
-                                    alignItems: {xs:'center', sm:'center', md:'flex-start'},
+                                    justifyContent: { xs: 'center', sm: 'center', md: 'left' },
+                                    alignItems: { xs: 'center', sm: 'center', md: 'flex-start' },
                                     flexDirection: 'column',
                                     background: ModTheme.palette.primary.dark,
                                     color: ModTheme.palette.secondary.main,
@@ -154,7 +173,7 @@ const VendorProfileDetails = (props) => {
                                 }}>
                                 <Grid item sx={{
                                     display: 'flex',
-                                    justifyContent:'center',
+                                    justifyContent: 'center',
                                     flexDirection: 'column',
                                     alignItems: 'center'
                                 }}>
@@ -181,11 +200,10 @@ const VendorProfileDetails = (props) => {
                                     Upload New Photo
                                 </Button>
                             </Grid>
+
                             <Grid item xs={12} sm={12}>
-                                <Box sx={{
-                                    marginLeft: 2,
-                                }}>
-                                    {['name', 'address', 'bank_name', 'account_fullname', 'account_number'].map((field) => (
+                                <Box sx={{ marginLeft: 2 }}>
+                                    {['name', 'address'].map((field) => (
                                         <Box
                                             key={field}
                                             sx={{
@@ -224,6 +242,28 @@ const VendorProfileDetails = (props) => {
                                         </Box>
                                     ))}
                                 </Box>
+
+                                <BankDetailsContainer>
+                                    <BankDetailsLabel variant="caption">Bank details</BankDetailsLabel>
+                                    {['bank_name', 'account_fullname', 'account_number'].map((field) => (
+                                        <TextField
+                                            key={field}
+                                            label={field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}
+                                            name={field}
+                                            value={formData[field]}
+                                            onChange={handleChange}
+                                            fullWidth
+                                            margin="normal"
+                                            size="small"
+                                            required
+                                        />
+                                    ))}
+                                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                                        <Button variant="contained" color="primary" onClick={() => handleSave('bank_details')}>
+                                            Save Bank Details
+                                        </Button>
+                                    </Box>
+                                </BankDetailsContainer>
                             </Grid>
                         </>
                     )}
