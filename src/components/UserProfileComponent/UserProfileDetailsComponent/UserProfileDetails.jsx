@@ -6,6 +6,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import api from '../../../assets/baseURL/api';
+import Swal from 'sweetalert2';
 
 const ProfileInfo = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(3),
@@ -109,6 +110,14 @@ const UserProfileDetails = (props) => {
                     ...prevState,
                     [field]: false,
                 }));
+                const dynamicFieldName = field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())
+                Swal.fire({
+                    title: successMessage,
+                    text: `${dynamicFieldName} successfully updated.`,
+                    icon: 'success',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: ModTheme.palette.primary.main,
+                })
             }
         } catch (error) {
             console.log("Error saving profile data:", error);
