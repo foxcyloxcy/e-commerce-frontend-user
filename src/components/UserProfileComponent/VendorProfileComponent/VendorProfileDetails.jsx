@@ -154,6 +154,15 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
+                const successMessage = res.data.message
+                const dynamicFieldName = field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())
+                Swal.fire({
+                    title: successMessage,
+                    text: `${dynamicFieldName} successfully updated.`,
+                    icon: 'success',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: ModTheme.palette.primary.main,
+                })
                 loadProfile();
                 setEditField(null);
             }
