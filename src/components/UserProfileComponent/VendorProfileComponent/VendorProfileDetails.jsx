@@ -44,7 +44,8 @@ const VendorProfileDetails = (props) => {
     const { userToken } = props;
     const [userData, setUserData] = useState({});
     const [userId, setUserId] = useState("");
-    const [editBankDetails, setEditBankDetails] = useState(false); 
+    const [bankDetails, setBankDetails] = useState({});
+    const [editBankDetails, setEditBankDetails] = useState(false);
     const [editField, setEditField] = useState(null); // Track which field is being edited
     const [formData, setFormData] = useState({
         name: '',
@@ -90,7 +91,8 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
-                console.log(res.data)
+                console.log(res.data.data)
+                setBankDetails(res.data.data)
             }
         } catch (error) {
             console.log(error);
@@ -188,7 +190,7 @@ const VendorProfileDetails = (props) => {
                     icon: 'success',
                     confirmButtonText: 'Ok',
                     confirmButtonColor: ModTheme.palette.primary.main,
-                  })
+                })
                 loadProfile();
                 setEditBankDetails(false);
             }
@@ -347,13 +349,27 @@ const VendorProfileDetails = (props) => {
                                             </Box>
                                         ) : (
                                             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-                                                <Button
-                                                    variant="contained"
-                                                    color="secondary"
-                                                    onClick={handleBankEdit}
-                                                >
-                                                    Edit
-                                                </Button>
+                                                {
+                                                    bankDetails.length > 0 ? (
+                                                        <Button
+                                                            variant="contained"
+                                                            color="secondary"
+                                                            onClick={handleBankEdit}
+                                                        >
+                                                            Edit
+                                                        </Button>
+                                                    )
+                                                        :
+                                                        (
+                                                            <Button
+                                                                variant="contained"
+                                                                color="primary"
+                                                                onClick={handleBankSave}
+                                                            >
+                                                                Save bank details
+                                                            </Button>
+                                                        )
+                                                }
                                             </Box>
                                         )
                                     }
