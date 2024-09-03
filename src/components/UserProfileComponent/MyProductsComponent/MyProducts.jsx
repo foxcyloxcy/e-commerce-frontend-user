@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Box, Grid, Typography, Card, CardContent, Button, CardMedia, Pagination } from '@mui/material';
+import { Box, Grid, Typography, Card, CardContent, Button, CardMedia, IconButton, CardActions, Pagination } from '@mui/material';
 import { styled } from '@mui/system';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../assets/baseURL/api';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import Swal from 'sweetalert2';
 
 const TruncatedText = styled(Typography)({
@@ -42,9 +44,9 @@ const MyProducts = (props) => {
     const [productsData, setProductsData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [itemsPerPage] = useState(8); // Change the items per page as required
+    const [itemsPerPage] = useState(8);
     const navigate = useNavigate();
-    const userData = JSON.parse(fromParentUserData)
+    const userData = JSON.parse(fromParentUserData);
 
     const loadProducts = useCallback(async (page) => {
         try {
@@ -59,7 +61,6 @@ const MyProducts = (props) => {
                 let fetchedProducts = res.data.data.data;
 
                 if (page === 1) {
-                    // Insert a placeholder for "Add Item" in the first position
                     fetchedProducts = [{ isAddItemCard: true }, ...fetchedProducts];
                 }
 
@@ -83,6 +84,27 @@ const MyProducts = (props) => {
         navigate('/product-details', { state: { productUuid } });
     };
 
+    const handleEditClick = (productUuid) => {
+        navigate('/edit-product', { state: { productUuid } });
+    };
+
+    const handleDeleteClick = (productId) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Implement delete functionality here
+                Swal.fire('Deleted!', 'Your product has been deleted.', 'success');
+            }
+        });
+    };
+
     const handleAddProductClick = () => {
         if(userData.is_vendor === "Yes"){
             navigate('/add-product');
@@ -98,8 +120,6 @@ const MyProducts = (props) => {
               }).then((result) => {
                 if (result.isConfirmed) {
                     navigate('/add-vendor-profile');
-                } else {
-                  history("/shop");
                 }
               });
         }
@@ -120,7 +140,7 @@ const MyProducts = (props) => {
                         </Grid>
                     ) : (
                         <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
-                            <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
+                            <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: {sm:'400px', md:'500px'} }}>
                                 <StatusBadge status={product.status}>
                                     {product.status === 0 ? 'Pending' :
                                         product.status === 1 ? 'Approved' :
@@ -148,12 +168,19 @@ const MyProducts = (props) => {
                                     </Typography>
                                 </CardContent>
 
-                                <CardContent sx={{ position: 'absolute', width: '100%', top: '83%' }}>
+                                <CardContent sx={{ justifyContent: 'center', flexDirection: 'column', width: '100%' }}>
+                                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                                        <IconButton color="primary" onClick={() => handleEditClick(product.uuid)}>
+                                            <EditIcon />
+                                        </IconButton>
+                                        <IconButton color="error" onClick={() => handleDeleteClick(product.id)}>
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </Box>
                                     <Button
                                         variant="contained"
                                         color="primary"
                                         fullWidth
-                                        sx={{ marginTop: '10px' }}
                                         onClick={() => handleDetailsClick(product.uuid)}
                                     >
                                         Details
