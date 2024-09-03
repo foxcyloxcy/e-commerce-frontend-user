@@ -168,7 +168,7 @@ const MyProducts = (props) => {
                                     </Typography>
                                 </CardContent>
 
-                                <CardContent sx={{ justifyContent: 'center', flexDirection: 'column', width: '100%' }}>
+                                <CardContent sx={{ justifyContent: 'center', flexDirection: 'column', width: '100%', padding: '8px', }}>
                                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                                         <IconButton color="primary" onClick={() => handleEditClick(product.uuid)}>
                                             <EditIcon />
