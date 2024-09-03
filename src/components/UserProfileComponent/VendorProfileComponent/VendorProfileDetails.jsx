@@ -91,6 +91,7 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
+                console.log(res.data.data)
                 setBankDetails(res.data.data)
             }
         } catch (error) {
@@ -338,7 +339,7 @@ const VendorProfileDetails = (props) => {
                                     ))}
                                     {
                                         editBankDetails ? (
-                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
                                                 <Button
                                                     variant="contained"
                                                     color="primary"
@@ -356,28 +357,14 @@ const VendorProfileDetails = (props) => {
                                                 </Button>
                                             </Box>
                                         ) : (
-                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-                                                {
-                                                    bankDetails.length > 0 ? (
-                                                        <Button
-                                                            variant="contained"
-                                                            color="secondary"
-                                                            onClick={handleBankEdit}
-                                                        >
-                                                            Edit
-                                                        </Button>
-                                                    )
-                                                        :
-                                                        (
-                                                            <Button
-                                                                variant="contained"
-                                                                color="primary"
-                                                                onClick={handleBankSave}
-                                                            >
-                                                                Save bank details
-                                                            </Button>
-                                                        )
-                                                }
+                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
+                                                <Button
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={handleBankEdit}
+                                                >
+                                                    Edit
+                                                </Button>
                                             </Box>
                                         )
                                     }
