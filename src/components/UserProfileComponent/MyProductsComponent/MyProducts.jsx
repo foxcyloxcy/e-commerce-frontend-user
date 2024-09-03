@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Box, Grid, Typography, Card, CardContent, Button, CardMedia, Pagination, IconButton } from '@mui/material';
+import { Box, Grid, Typography, Card, CardContent, Button, CardMedia, Pagination } from '@mui/material';
 import { styled } from '@mui/system';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import Swal from 'sweetalert2';
+import ModTheme from '../../ThemeComponent/ModTheme';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../assets/baseURL/api';
-import ModTheme from '../../ThemeComponent/ModTheme';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import Swal from 'sweetalert2';
 
 const TruncatedText = styled(Typography)({
     whiteSpace: 'nowrap',
@@ -46,7 +44,7 @@ const MyProducts = (props) => {
     const [totalPages, setTotalPages] = useState(1);
     const [itemsPerPage] = useState(8); // Change the items per page as required
     const navigate = useNavigate();
-    const userData = JSON.parse(fromParentUserData);
+    const userData = JSON.parse(fromParentUserData)
 
     const loadProducts = useCallback(async (page) => {
         try {
@@ -61,6 +59,7 @@ const MyProducts = (props) => {
                 let fetchedProducts = res.data.data.data;
 
                 if (page === 1) {
+                    // Insert a placeholder for "Add Item" in the first position
                     fetchedProducts = [{ isAddItemCard: true }, ...fetchedProducts];
                 }
 
@@ -85,46 +84,25 @@ const MyProducts = (props) => {
     };
 
     const handleAddProductClick = () => {
-        if (userData.is_vendor === "Yes") {
+        if(userData.is_vendor === "Yes"){
             navigate('/add-product');
-        } else {
+        }else{
             Swal.fire({
                 title: 'Oops!',
-                text: 'You need to set your vendor details first before you can add an item.',
+                text: `You need to set your vendor details first before you can add an item.`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Ok',
                 confirmButtonColor: ModTheme.palette.primary.main,
                 cancelButtonText: 'Cancel'
-            }).then((result) => {
+              }).then((result) => {
                 if (result.isConfirmed) {
                     navigate('/add-vendor-profile');
+                } else {
+                  history("/shop");
                 }
-            });
+              });
         }
-    };
-
-    const handleEdit = (productUuid) => {
-        // Navigate to the edit product page or handle edit logic
-        navigate(`/edit-product/${productUuid}`);
-    };
-
-    const handleDelete = (productId) => {
-        // Handle delete logic, e.g., confirm deletion and call an API to delete the product
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'Cancel',
-            confirmButtonColor: '#d33',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Call API to delete product
-                console.log('Deleting product with ID:', productId);
-            }
-        });
     };
 
     return (
@@ -158,16 +136,6 @@ const MyProducts = (props) => {
                                     alt={product.item_name}
                                     sx={{ objectFit: 'cover' }}
                                 />
-
-                                {/* Edit and Delete Icons */}
-                                <Box sx={{ position: 'absolute', top: 0, right: 0 }}>
-                                    <IconButton color="primary" onClick={() => handleEdit(product.uuid)}>
-                                        <EditIcon />
-                                    </IconButton>
-                                    <IconButton color="error" onClick={() => handleDelete(product.id)}>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </Box>
 
                                 <CardContent sx={{ flexGrow: 1 }}>
                                     <TruncatedText variant="h6">{product.item_name}</TruncatedText>
