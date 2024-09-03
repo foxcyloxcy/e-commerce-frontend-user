@@ -5,6 +5,7 @@ import ModTheme from '../../ThemeComponent/ModTheme';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../assets/baseURL/api';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import Swal from 'sweetalert2';
 
 const TruncatedText = styled(Typography)({
     whiteSpace: 'nowrap',
@@ -86,7 +87,19 @@ const MyProducts = (props) => {
         if(userData.is_vendor === "Yes"){
             navigate('/add-product');
         }else{
-
+            Swal.fire({
+                title: 'Oops!',
+                text: `You need to set your vendor details first before you can add an item.`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ok',
+                confirmButtonColor: ModTheme.palette.primary.main,
+                cancelButtonText: 'Cancel'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/add-vendor-profile');
+                }
+              });
         }
     };
 
