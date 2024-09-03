@@ -31,7 +31,7 @@ const DashedCard = styled(Card)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    height: '450px',
+    height: {sm:'400px', md:'500px'},
     background: '#fff',
     border: `2px dashed ${theme.palette.primary.main}`,
     alignItems: 'center',
