@@ -44,7 +44,17 @@ const AddVendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
-                navigate('/my-profile'); // Redirect to the VendorProfileDetails component
+                Swal.fire({
+                    title: 'Success!',
+                    text: `You successfully saved your vendor details, you can now post an item.`,
+                    icon: 'success',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: ModTheme.palette.primary.main,
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                        navigate('/my-profile'); // Redirect to the VendorProfileDetails component
+                    }
+                  });
             }
         } catch (error) {
             console.log("Error adding vendor profile:", error);
