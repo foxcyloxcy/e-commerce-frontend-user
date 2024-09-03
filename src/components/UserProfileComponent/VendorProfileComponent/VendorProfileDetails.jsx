@@ -71,9 +71,6 @@ const VendorProfileDetails = (props) => {
                 setFormData({
                     name: res.data.data.vendor.name || '',
                     address: res.data.data.vendor.address || '',
-                    bank_name: res.data.data.vendor.bank_name || '',
-                    account_fullname: res.data.data.vendor.account_fullname || '',
-                    account_number: res.data.data.vendor.account_number || '',
                 });
             }
         } catch (error) {
@@ -91,8 +88,11 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
-                console.log(res.data.data)
-                setBankDetails(res.data.data)
+                setFormData({
+                    bank_name: res.data.data[0].bank || '',
+                    account_fullname: res.data.data[0].account_fullname || '',
+                    account_number: res.data.data[0].account_number || '',
+                })
             }
         } catch (error) {
             console.log(error);
