@@ -44,7 +44,6 @@ const VendorProfileDetails = (props) => {
     const { userToken } = props;
     const [userData, setUserData] = useState({});
     const [userId, setUserId] = useState("");
-    const [bankDetails, setBankDetails] = useState({});
     const [editBankDetails, setEditBankDetails] = useState(false);
     const [editField, setEditField] = useState(null); // Track which field is being edited
     const [formData, setFormData] = useState({
