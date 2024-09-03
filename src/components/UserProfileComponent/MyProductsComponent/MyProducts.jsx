@@ -37,12 +37,13 @@ const DashedCard = styled(Card)(({ theme }) => ({
 }));
 
 const MyProducts = (props) => {
-    const { userToken } = props;
+    const { userToken, fromParentUserData } = props;
     const [productsData, setProductsData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [itemsPerPage] = useState(8); // Change the items per page as required
     const navigate = useNavigate();
+    const userData = JSON.parse(fromParentUserData)
 
     const loadProducts = useCallback(async (page) => {
         try {
@@ -82,7 +83,11 @@ const MyProducts = (props) => {
     };
 
     const handleAddProductClick = () => {
-        navigate('/add-product');
+        if(userData.is_vendor === "Yes"){
+            navigate('/add-product');
+        }else{
+
+        }
     };
 
     return (
