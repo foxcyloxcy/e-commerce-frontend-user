@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl, Divider } from '@mui/material';
+import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl, Divider, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CustomMap from './CustomMapComponent/CustomMap';
+import CloseIcon from '@mui/icons-material/Close';
 import FileInput from './FileInput'; // Import your custom FileInput component
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
@@ -43,6 +44,10 @@ const EditProduct = ({ userToken }) => {
 
   const handleImageUpload = (files) => {
     setImages((prevImages) => [...prevImages, ...files].slice(0, 10));
+  };
+
+  const handleRemoveImage = (index) => {
+    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
   const handleBidChange = (event) => {
@@ -313,11 +318,20 @@ const EditProduct = ({ userToken }) => {
                     multiple
                     maxFiles={10}
                   />
-                  <Grid item xs={12}>
-                    {images.map((image, index) => (
-                      <Typography key={index}>{image.name}</Typography>
-                    ))}
-                  </Grid>
+                <Grid item xs={12}>
+                  {images.map((image, index) => (
+                    <Grid container alignItems="center" spacing={1} key={index}>
+                      <Grid item>
+                        <Typography>{image.image_url}</Typography>
+                      </Grid>
+                      <Grid item>
+                        <IconButton onClick={() => handleRemoveImage(index)} size="small" color="error">
+                          <CloseIcon />
+                        </IconButton>
+                      </Grid>
+                    </Grid>
+                  ))}
+                </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <Divider sx={{ my: 2 }} />
