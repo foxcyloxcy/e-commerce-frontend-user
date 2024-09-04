@@ -311,7 +311,7 @@ const AddProduct = (props) => {
                         <Typography>{image.name}</Typography>
                       </Grid>
                       <Grid item>
-                        <IconButton onClick={() => handleRemoveImage(index)} size="small" color="error">
+                        <IconButton onClick={() => handleRemoveImage(index)} size="small" color="primary">
                           <CloseIcon />
                         </IconButton>
                       </Grid>
