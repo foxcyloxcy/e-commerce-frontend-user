@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl, Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CustomMap from './CustomMapComponent/CustomMap';
+import CloseIcon from '@mui/icons-material/Close';
 import { APIProvider } from '@vis.gl/react-google-maps';
 import FileInput from './FileInput'; // Import your custom FileInput component
 import ModTheme from '../ThemeComponent/ModTheme';
@@ -74,7 +75,7 @@ const AddProduct = (props) => {
 
   const handleCheckboxChange = (propertyId, valueId) => (event) => {
     const { checked } = event.target;
-    
+
     console.log(selectedPropertyValues)
     setSelectedPropertyValues((prevValues) => {
       const updatedValues = { ...prevValues };
@@ -92,7 +93,7 @@ const AddProduct = (props) => {
       return updatedValues;
     });
   };
-  
+
 
   const handleAddressData = async (addressData) => {
     const addressDetails = JSON.stringify(addressData)
@@ -302,14 +303,23 @@ const AddProduct = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                   {images.map((image, index) => (
-                    <Typography key={index}>{image.name}</Typography>
+                    <Grid container alignItems="center" spacing={1} key={index}>
+                      <Grid item>
+                        <Typography>{image.name}</Typography>
+                      </Grid>
+                      <Grid item>
+                        <IconButton onClick={() => handleRemoveImage(index)} size="small" color="error">
+                          <CloseIcon />
+                        </IconButton>
+                      </Grid>
+                    </Grid>
                   ))}
                 </Grid>
                 <Grid item xs={12}>
                   {isLoaded ? (
                     <APIProvider apiKey={apiKey}>
-                      <CustomMap 
-                      addressData={handleAddressData}/>
+                      <CustomMap
+                        addressData={handleAddressData} />
                     </APIProvider>
                   ) : (
                     <Typography>Loading map...</Typography>
@@ -325,11 +335,11 @@ const AddProduct = (props) => {
                             key={value.id}
                             control={
                               <Checkbox
-                              checked={
-                                selectedPropertyValues[property.id]?.includes(value.id) || false
-                              }
-                              onChange={handleCheckboxChange(property.id, value.id)}
-                            />
+                                checked={
+                                  selectedPropertyValues[property.id]?.includes(value.id) || false
+                                }
+                                onChange={handleCheckboxChange(property.id, value.id)}
+                              />
                             }
                             label={value.name}
                           />
