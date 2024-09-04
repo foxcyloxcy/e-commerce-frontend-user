@@ -50,6 +50,12 @@ const EditProduct = ({ userToken }) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
+  const getFilenameFromUrl = (url) => {
+    // Use split to get the last part of the URL after the last '/'
+    const parts = url.split('/');
+    return parts.pop(); // pop removes and returns the last element
+  }
+
   const handleBidChange = (event) => {
     const { checked } = event.target;
     setAcceptOffers(checked ? 1 : 0);
@@ -209,13 +215,12 @@ const EditProduct = ({ userToken }) => {
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <FormControl fullWidth size="small">
+              <FormControl fullWidth size="small" disabled>
                 <InputLabel>Select Category</InputLabel>
                 <Select
                   value={selectedCategory}
                   onChange={handleCategoryChange}
                   label="Select Category"
-                  disabled
                 >
                   {categories.map((category) => (
                     <MenuItem key={category.id} value={category.id}>
@@ -227,13 +232,12 @@ const EditProduct = ({ userToken }) => {
             </Grid>
             {subCategories.length > 0 && (
               <Grid item xs={12}>
-                <FormControl fullWidth size="small">
+                <FormControl fullWidth size="small"                     disabled>
                   <InputLabel>Select Subcategory</InputLabel>
                   <Select
                     value={selectedSubCategories}
                     onChange={handleSubCategoryChange}
                     label="Select Subcategory"
-                    disabled
                   >
                     {subCategories.map((subCategory) => (
                       <MenuItem key={subCategory.id} value={subCategory}>
@@ -314,24 +318,25 @@ const EditProduct = ({ userToken }) => {
                     </Grid>
                   ))}
                 <Grid item xs={12}>
-                  <FileInput onFileSelect={handleImageUpload}
+                  <FileInput 
+                    onChange={handleImageUpload}
                     multiple
                     maxFiles={10}
                   />
+                </Grid>
                 <Grid item xs={12}>
                   {images.map((image, index) => (
                     <Grid container alignItems="center" spacing={1} key={index}>
                       <Grid item>
-                        <Typography>{image.image_url}</Typography>
+                        <Typography>{getFilenameFromUrl(image.image_url)}</Typography>
                       </Grid>
                       <Grid item>
-                        <IconButton onClick={() => handleRemoveImage(index)} size="small" color="error">
+                        <IconButton onClick={() => handleRemoveImage(index)} size="small" color="primary">
                           <CloseIcon />
                         </IconButton>
                       </Grid>
                     </Grid>
                   ))}
-                </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <Divider sx={{ my: 2 }} />
