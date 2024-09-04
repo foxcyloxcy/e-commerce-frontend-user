@@ -84,8 +84,8 @@ const MyProducts = (props) => {
         navigate('/product-details', { state: { productUuid } });
     };
 
-    const handleEditClick = (productUuid) => {
-        navigate('/edit-product', { state: { productUuid } });
+    const handleEditClick = (product) => {
+        navigate('/edit-product', { state: { product } });
     };
 
     const handleDeleteClick = (productId) => {
@@ -170,7 +170,7 @@ const MyProducts = (props) => {
 
                                 <CardContent sx={{ justifyContent: 'center', flexDirection: 'column', width: '100%', padding: '8px', }}>
                                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                                        <IconButton color="primary" onClick={() => handleEditClick(product.uuid)}>
+                                        <IconButton color="primary" onClick={() => handleEditClick(product)}>
                                             <EditIcon />
                                         </IconButton>
                                         <IconButton color="error" onClick={() => handleDeleteClick(product.id)}>
