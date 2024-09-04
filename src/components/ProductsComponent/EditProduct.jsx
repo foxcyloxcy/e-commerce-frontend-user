@@ -6,8 +6,9 @@ import FileInput from './FileInput'; // Import your custom FileInput component
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 import Swal from 'sweetalert2';
+import { useLocation } from 'react-router-dom';
 
-const EditProduct = ({ productData, userToken }) => {
+const EditProduct = ({ userToken }) => {
   const [productName, setProductName] = useState('');
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
@@ -21,23 +22,24 @@ const EditProduct = ({ productData, userToken }) => {
   const [selectedSubCategories, setSelectedSubCategories] = useState('');
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState('');
   const [selectedPropertyValues, setSelectedPropertyValues] = useState({});
-
+  const { state } = useLocation();
+  console.log( state)
   const history = useNavigate();
 
   useEffect(() => {
-    if (productData) {
-      setProductName(productData.productName);
-      setDescription(productData.description);
-      setImages(productData.images);
-      setPrice(productData.price);
-      setAddress(productData.location);
-      setAcceptOffers(productData.acceptOffers ? 1 : 0);
-      setSelectedCategory(productData.categoryId);
-      setSelectedSubCategories(productData.subCategoryId);
-      setSelectedSubCategoryId(productData.subCategoryId);
-      setSelectedPropertyValues(productData.propertyValues || {});
+    if (state.product) {
+      setProductName(state.product.item_name);
+      setDescription(state.product.item_description);
+      setImages(state.product.item_image);
+      setPrice(state.product.price);
+      setAddress(state.product.address);
+      setAcceptOffers(state.product.is_bid);
+      setSelectedCategory(state.product.categoryId);
+      setSelectedSubCategories(state.product.sub_category_id);
+      setSelectedSubCategoryId(state.product.sub_category_id);
+      setSelectedPropertyValues(state.product.propertyValues || {});
     }
-  }, [productData]);
+  }, [state.product]);
 
   const handleImageUpload = (files) => {
     setImages((prevImages) => [...prevImages, ...files].slice(0, 10));
@@ -208,6 +210,7 @@ const EditProduct = ({ productData, userToken }) => {
                   value={selectedCategory}
                   onChange={handleCategoryChange}
                   label="Select Category"
+                  disabled
                 >
                   {categories.map((category) => (
                     <MenuItem key={category.id} value={category.id}>
@@ -225,6 +228,7 @@ const EditProduct = ({ productData, userToken }) => {
                     value={selectedSubCategories}
                     onChange={handleSubCategoryChange}
                     label="Select Subcategory"
+                    disabled
                   >
                     {subCategories.map((subCategory) => (
                       <MenuItem key={subCategory.id} value={subCategory}>
