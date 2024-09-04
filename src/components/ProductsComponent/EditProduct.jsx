@@ -259,7 +259,7 @@ const EditProduct = ({ userToken }) => {
                     type="number"
                     value={price}
                     onChange={handlePriceChange}
-                    error={Boolean(priceError)}
+                    error={priceError.length > 0}
                     helperText={priceError}
                     required
                   />
@@ -313,6 +313,11 @@ const EditProduct = ({ userToken }) => {
                     multiple
                     maxFiles={10}
                   />
+                  <Grid item xs={12}>
+                    {images.map((image, index) => (
+                      <Typography key={index}>{image.name}</Typography>
+                    ))}
+                  </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <Divider sx={{ my: 2 }} />
