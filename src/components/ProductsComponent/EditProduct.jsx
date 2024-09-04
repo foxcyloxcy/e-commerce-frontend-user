@@ -280,7 +280,7 @@ const EditProduct = ({ userToken }) => {
                   <FormGroup>
                     <FormControlLabel
                       control={<Checkbox checked={acceptOffers === 1} onChange={handleBidChange} />}
-                      label="I am open to offers"
+                      label="Accept offers"
                     />
                   </FormGroup>
                 </Grid>
@@ -312,9 +312,6 @@ const EditProduct = ({ userToken }) => {
                   <FileInput onFileSelect={handleImageUpload} />
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography variant="body1" gutterBottom>
-                    Update Location:
-                  </Typography>
                   <Divider sx={{ my: 2 }} />
                   <CustomMap onAddressChange={handleAddressData} />
                 </Grid>
