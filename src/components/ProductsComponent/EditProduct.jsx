@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl, Divider, IconButton, Dialog, DialogContent, DialogActions } from '@mui/material';
+import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl, Divider, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CustomMap from './CustomMapComponent/CustomMap';
 import CloseIcon from '@mui/icons-material/Close';
@@ -8,6 +8,7 @@ import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 import Swal from 'sweetalert2';
 import { useLocation } from 'react-router-dom';
+import ImageViewModal from '../ReusableComponents/ModalComponent/ImageViewModal';
 
 const EditProduct = ({ userToken }) => {
   const [productName, setProductName] = useState('');
@@ -339,15 +340,15 @@ const EditProduct = ({ userToken }) => {
                 <Grid item xs={12}>
                   {images.map((image, index) => (
                     <Grid container alignItems="center" spacing={1} key={index}>
-                      <Grid item>
+                      <Grid item xs={10}>
                         <Typography
-                          variant="body2"
+                          variant="body1"
                           sx={{ cursor: 'pointer', textDecoration: 'underline' }}
                           onClick={() => handleImageClick(image.image_url)}
                         >
                           {getFilenameFromUrl(image.image_url)}</Typography>
                       </Grid>
-                      <Grid item>
+                      <Grid item xs={2}>
                         <IconButton onClick={() => handleRemoveImage(index)} size="small" color="primary">
                           <CloseIcon fontSize="small" />
                         </IconButton>
@@ -370,15 +371,11 @@ const EditProduct = ({ userToken }) => {
         </form>
       </Container>
 
-      {/* Modal for displaying image */}
-      <Dialog open={openModal} onClose={handleCloseModal}>
-        <DialogContent>
-          <img src={modalImageUrl} alt="Product" style={{ maxWidth: '100%' }} />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal}>Close</Button>
-        </DialogActions>
-      </Dialog>
+    <ImageViewModal
+      openModal={openModal}
+      handleCloseModal={handleCloseModal}
+      modalImageUrl={modalImageUrl}
+    />
     </ThemeProvider>
   );
 };
