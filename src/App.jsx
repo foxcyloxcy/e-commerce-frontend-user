@@ -129,7 +129,7 @@ function App() {
           path="/edit-product"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <EditProduct />
+              <EditProduct userToken={userToken}/>
             </ProtectedRoute>
           }
         />
