@@ -342,6 +342,7 @@ const EditProduct = ({ userToken }) => {
                     <Grid container alignItems="center" spacing={1} key={index}>
                       <Grid item xs={10}>
                         <Typography
+                          noWrap
                           variant="body1"
                           sx={{ cursor: 'pointer', textDecoration: 'underline' }}
                           onClick={() => handleImageClick(image.image_url)}
