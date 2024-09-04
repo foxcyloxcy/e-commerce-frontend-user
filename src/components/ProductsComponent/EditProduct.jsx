@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl, Divider, IconButton } from '@mui/material';
+import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl, Divider, IconButton, Dialog, DialogContent, DialogActions } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CustomMap from './CustomMapComponent/CustomMap';
 import CloseIcon from '@mui/icons-material/Close';
@@ -23,6 +23,9 @@ const EditProduct = ({ userToken }) => {
   const [selectedSubCategories, setSelectedSubCategories] = useState('');
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState('');
   const [selectedPropertyValues, setSelectedPropertyValues] = useState({});
+  const [openModal, setOpenModal] = useState(false); // State to manage modal visibility
+  const [modalImageUrl, setModalImageUrl] = useState('');
+
   const { state } = useLocation();
   console.log(state)
   const history = useNavigate();
@@ -48,6 +51,15 @@ const EditProduct = ({ userToken }) => {
 
   const handleRemoveImage = (index) => {
     setImages((prevImages) => prevImages.filter((_, i) => i !== index));
+  };
+
+  const handleImageClick = (imageUrl) => {
+    setModalImageUrl(imageUrl);
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
   };
 
   const getFilenameFromUrl = (url) => {
@@ -232,7 +244,7 @@ const EditProduct = ({ userToken }) => {
             </Grid>
             {subCategories.length > 0 && (
               <Grid item xs={12}>
-                <FormControl fullWidth size="small"                     disabled>
+                <FormControl fullWidth size="small" disabled>
                   <InputLabel>Select Subcategory</InputLabel>
                   <Select
                     value={selectedSubCategories}
@@ -318,7 +330,7 @@ const EditProduct = ({ userToken }) => {
                     </Grid>
                   ))}
                 <Grid item xs={12}>
-                  <FileInput 
+                  <FileInput
                     onChange={handleImageUpload}
                     multiple
                     maxFiles={10}
@@ -328,11 +340,16 @@ const EditProduct = ({ userToken }) => {
                   {images.map((image, index) => (
                     <Grid container alignItems="center" spacing={1} key={index}>
                       <Grid item>
-                        <Typography>{getFilenameFromUrl(image.image_url)}</Typography>
+                        <Typography
+                          variant="body2"
+                          sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                          onClick={() => handleImageClick(image.image_url)}
+                        >
+                          {getFilenameFromUrl(image.image_url)}</Typography>
                       </Grid>
                       <Grid item>
                         <IconButton onClick={() => handleRemoveImage(index)} size="small" color="primary">
-                          <CloseIcon />
+                          <CloseIcon fontSize="small" />
                         </IconButton>
                       </Grid>
                     </Grid>
@@ -352,6 +369,16 @@ const EditProduct = ({ userToken }) => {
           </Grid>
         </form>
       </Container>
+
+      {/* Modal for displaying image */}
+      <Dialog open={openModal} onClose={handleCloseModal}>
+        <DialogContent>
+          <img src={modalImageUrl} alt="Product" style={{ maxWidth: '100%' }} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </ThemeProvider>
   );
 };
