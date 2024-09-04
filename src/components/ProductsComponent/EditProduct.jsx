@@ -23,7 +23,7 @@ const EditProduct = ({ userToken }) => {
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState('');
   const [selectedPropertyValues, setSelectedPropertyValues] = useState({});
   const { state } = useLocation();
-  console.log( state)
+  console.log(state)
   const history = useNavigate();
 
   useEffect(() => {
@@ -309,7 +309,10 @@ const EditProduct = ({ userToken }) => {
                     </Grid>
                   ))}
                 <Grid item xs={12}>
-                  <FileInput onFileSelect={handleImageUpload} />
+                  <FileInput onFileSelect={handleImageUpload}
+                    multiple
+                    maxFiles={10}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <Divider sx={{ my: 2 }} />
