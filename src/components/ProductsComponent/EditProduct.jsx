@@ -39,7 +39,7 @@ const EditProduct = ({ userToken }) => {
       setPrice(state.product.price);
       setAddress(state.product.address);
       setAcceptOffers(state.product.is_bid);
-      setSelectedCategory(state.product.categoryId);
+      setSelectedCategory(state.product.sub_category.category_id);
       setSelectedSubCategories(state.product.sub_category_id);
       setSelectedSubCategoryId(state.product.sub_category_id);
       setSelectedPropertyValues(state.product.propertyValues || {});
@@ -74,13 +74,12 @@ const EditProduct = ({ userToken }) => {
     setAcceptOffers(checked ? 1 : 0);
   };
 
-  const handleCategoryChange = async (event) => {
-    resetForm();
-    const categoryId = event.target.value;
-    setSelectedCategory(categoryId);
+  const handleCategoryChange = async () => {
+    console.log(selectedCategory)
     try {
-      const response = await api.get(`api/global/sub-category?category_id=${categoryId}`);
+      const response = await api.get(`api/global/sub-category?category_id=${selectedCategory}`);
       if (response.status === 200) {
+        console.log(response.data)
         setSubCategories(response.data.data);
       }
     } catch (error) {
@@ -208,6 +207,7 @@ const EditProduct = ({ userToken }) => {
 
   useEffect(() => {
     loadCategories();
+    handleCategoryChange()
   }, [loadCategories]);
 
   return (
@@ -231,19 +231,18 @@ const EditProduct = ({ userToken }) => {
               <FormControl fullWidth size="small" disabled>
                 <InputLabel>Select Category</InputLabel>
                 <Select
-                  value={selectedCategory}
+                  value={selectedCategory || ""}
                   onChange={handleCategoryChange}
                   label="Select Category"
                 >
                   {categories.map((category) => (
-                    <MenuItem key={category.id} value={category.id}>
+                    <MenuItem key={category.id} value={category.id || ""}>
                       {category.name}
                     </MenuItem>
                   ))}
                 </Select>
               </FormControl>
             </Grid>
-            {subCategories.length > 0 && (
               <Grid item xs={12}>
                 <FormControl fullWidth size="small" disabled>
                   <InputLabel>Select Subcategory</InputLabel>
@@ -253,14 +252,13 @@ const EditProduct = ({ userToken }) => {
                     label="Select Subcategory"
                   >
                     {subCategories.map((subCategory) => (
-                      <MenuItem key={subCategory.id} value={subCategory}>
+                      <MenuItem key={subCategory.id} value={subCategory || ""}>
                         {subCategory.name}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
               </Grid>
-            )}
             {selectedSubCategories && (
               <>
                 <Grid item xs={12} sm={6}>
