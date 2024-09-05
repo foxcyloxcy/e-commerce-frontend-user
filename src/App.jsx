@@ -20,6 +20,7 @@ import BuyerAndSellerTerms from './staticPages/BuyerAndSellerTermsComponent/Buye
 import TermsOfUse from './staticPages/TermsOfUseComponent/TermsOfUse';
 import PrivacyPolicy from './staticPages/PrivacyPolicyComponent/PrivacyPolicy';
 import AddVendorProfileDetails from './components/UserProfileComponent/VendorProfileComponent/AddVendorProfileDetails';
+import PaymentSuccess from './components/PaymentSuccessComponent/PaymentSuccess';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -139,6 +140,15 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <MyProfile userToken={userToken} userData={userData} />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/payment-success"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <PaymentSuccess userToken={userToken} userData={userData} />
             </ProtectedRoute>
           }
         />
