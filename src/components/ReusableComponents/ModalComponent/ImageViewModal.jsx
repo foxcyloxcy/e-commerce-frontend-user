@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Dialog, DialogContent, DialogActions } from '@mui/material';
 
 const ImageViewModal = ({props, openModal, handleCloseModal, modalImageUrl}) => {
-    console.log(props)
 
     return (
       <Dialog open={openModal} onClose={handleCloseModal}>
