@@ -136,9 +136,8 @@ const EditProduct = ({ userToken }) => {
     });
   };
 
-  const handleAddressData = async (addressData) => {
-    setAddress(addressData)
-    console.log(addressData)
+  const handleAddressData = async (addressDataFromProduct) => {
+    setAddress(addressDataFromProduct)
   };
 
   const resetForm = () => {
@@ -369,6 +368,7 @@ const EditProduct = ({ userToken }) => {
                   <Divider sx={{ my: 2 }} />
                   <CustomMap
                     addressData={handleAddressData}
+                    mapDataValue={address}
                   />
                 </Grid>
                 <Grid item xs={12}>
