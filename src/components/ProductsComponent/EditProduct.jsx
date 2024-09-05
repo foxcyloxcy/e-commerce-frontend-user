@@ -79,8 +79,8 @@ const EditProduct = ({ userToken }) => {
     try {
       const response = await api.get(`api/global/sub-category?category_id=${selectedCategory}`);
       if (response.status === 200) {
-        console.log(response.data)
         setSubCategories(response.data.data);
+
       }
     } catch (error) {
       console.log(error);
@@ -252,7 +252,7 @@ const EditProduct = ({ userToken }) => {
                     label="Select Subcategory"
                   >
                     {subCategories.map((subCategory) => (
-                      <MenuItem key={subCategory.id} value={subCategory || ""}>
+                      <MenuItem key={subCategory.id} value={subCategory.id || ""}>
                         {subCategory.name}
                       </MenuItem>
                     ))}
