@@ -11,7 +11,7 @@ const CustomMap = (props) => {
   useEffect(() => {
     const initMap = () => {
       const map = new window.google.maps.Map(mapRef.current, {
-        center: { lat: -33.8688, lng: 151.2195 },
+        center: { lat: 25.2048, lng: 55.2708 },
         zoom: 13,
         disableDefaultUI: true,
         mapId: '1947e6c6df289e5e'
