@@ -44,12 +44,12 @@ const EditProduct = ({ userToken }) => {
         sub_category_id,
         propertyValues = {}
       } = state.product;
-  
+
       setProductName(item_name || '');
       setDescription(item_description || '');
       setImages(item_image || []);
       setPrice(price || '');
-      setAddress(address || null);
+      setAddress(JSON.parse(address) || null);
       setAcceptOffers(is_bid || 0);
       setSelectedCategory(sub_category?.category_id || '');
       setSelectedSubCategories(sub_category_id || '');
@@ -58,7 +58,7 @@ const EditProduct = ({ userToken }) => {
 
       loadCategories();
       handleCategoryChange(sub_category?.category_id);
-      console.log(selectedSubCategories)
+      handleAddressData(JSON.parse(address))
     }
   }, [state]);
 
@@ -95,7 +95,6 @@ const EditProduct = ({ userToken }) => {
       const response = await api.get(`api/global/sub-category?category_id=${categoryId}`);
       if (response.status === 200) {
         setSubCategories(response.data.data);
-
       }
     } catch (error) {
       console.log(error);
@@ -137,8 +136,9 @@ const EditProduct = ({ userToken }) => {
     });
   };
 
-  const handleAddressData = (addressData) => {
-    setAddress(JSON.stringify(addressData));
+  const handleAddressData = async (addressData) => {
+    setAddress(addressData)
+    console.log(addressData)
   };
 
   const resetForm = () => {
@@ -253,22 +253,22 @@ const EditProduct = ({ userToken }) => {
                 </Select>
               </FormControl>
             </Grid>
-              <Grid item xs={12}>
-                <FormControl fullWidth size="small" disabled>
-                  <InputLabel>Select Subcategory</InputLabel>
-                  <Select
-                    value={selectedSubCategories || ""}
-                    onChange={handleSubCategoryChange}
-                    label="Select Subcategory"
-                  >
-                    {subCategories.map((subCategory) => (
-                      <MenuItem key={subCategory.id} value={subCategory.id || ""}>
-                        {subCategory.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
+            <Grid item xs={12}>
+              <FormControl fullWidth size="small" disabled>
+                <InputLabel>Select Subcategory</InputLabel>
+                <Select
+                  value={selectedSubCategories || ""}
+                  onChange={handleSubCategoryChange}
+                  label="Select Subcategory"
+                >
+                  {subCategories.map((subCategory) => (
+                    <MenuItem key={subCategory.id} value={subCategory.id || ""}>
+                      {subCategory.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
             {selectedSubCategories && (
               <>
                 <Grid item xs={12} sm={6}>
@@ -367,7 +367,9 @@ const EditProduct = ({ userToken }) => {
                 </Grid>
                 <Grid item xs={12}>
                   <Divider sx={{ my: 2 }} />
-                  <CustomMap onAddressChange={handleAddressData} />
+                  <CustomMap
+                    addressData={handleAddressData}
+                  />
                 </Grid>
                 <Grid item xs={12}>
                   <Button type="submit" variant="contained" color="primary" fullWidth>
@@ -380,11 +382,11 @@ const EditProduct = ({ userToken }) => {
         </form>
       </Container>
 
-    <ImageViewModal
-      openModal={openModal}
-      handleCloseModal={handleCloseModal}
-      modalImageUrl={modalImageUrl}
-    />
+      <ImageViewModal
+        openModal={openModal}
+        handleCloseModal={handleCloseModal}
+        modalImageUrl={modalImageUrl}
+      />
     </ThemeProvider>
   );
 };
