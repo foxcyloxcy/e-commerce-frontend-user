@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { TextField } from "@mui/material";
 import './CustomMap.css'
 
 const CustomMap = (props) => {
-  console.log(props)
-  const { addressData } = props
+  const { addressData, mapDataValue } = props
+  console.log(mapDataValue)
   const mapRef = useRef(null);
   const inputRef = useRef(null);
   const infowindowContentRef = useRef(null);
@@ -43,7 +43,19 @@ const CustomMap = (props) => {
         const place = autocomplete.getPlace();
         if (!place.place_id) return;
 
-        geocoder
+        if(mapDataValue){
+          map.setCenter(mapDataValue.geometry.location);
+
+          marker.setPlace({
+            placeId: mapDataValue.place_id,
+            location: mapDataValue.geometry.location,
+          });
+
+          infowindowContent.children["place-name"].textContent = mapDataValue.name;
+          infowindowContent.children["place-id"].textContent = mapDataValue.place_id;
+          infowindowContent.children["place-address"].textContent = mapDataValue.formatted_address;
+        }else{
+          geocoder
           .geocode({ placeId: place.place_id })
           .then(({ results }) => {
             console.log(results)
@@ -64,6 +76,7 @@ const CustomMap = (props) => {
             addressData(results)
           })
           .catch((e) => window.alert("Geocoder failed due to: " + e));
+        }
       });
     };
 
