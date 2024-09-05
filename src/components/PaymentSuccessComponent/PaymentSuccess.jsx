@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Typography, Button, Container } from '@mui/material';
+import { Box, Typography, Button, Container, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ModTheme from '../ThemeComponent/ModTheme';
 
 const PaymentSuccess = () => {
   const navigate = useNavigate();
@@ -11,7 +12,8 @@ const PaymentSuccess = () => {
   };
 
   return (
-    <Container maxWidth="sm">
+    <ThemeProvider theme={ModTheme}>
+            <Container maxWidth="sm">
       <Box 
         display="flex" 
         flexDirection="column" 
@@ -20,8 +22,8 @@ const PaymentSuccess = () => {
         height="100vh" 
         textAlign="center"
       >
-        <CheckCircleIcon sx={{ fontSize: 100, color: 'green' }} />
-        <Typography variant="h4" gutterBottom>
+        <CheckCircleIcon sx={{ fontSize: 100, color: 'primary.main' }} />
+        <Typography variant="h4" color="primary" gutterBottom>
           Payment Successful!
         </Typography>
         <Typography variant="body1" gutterBottom>
@@ -37,6 +39,7 @@ const PaymentSuccess = () => {
         </Button>
       </Box>
     </Container>
+    </ThemeProvider>
   );
 };
 
