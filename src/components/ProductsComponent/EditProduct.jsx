@@ -32,19 +32,35 @@ const EditProduct = ({ userToken }) => {
   const history = useNavigate();
 
   useEffect(() => {
-    if (state.product) {
-      setProductName(state.product.item_name);
-      setDescription(state.product.item_description);
-      setImages(state.product.item_image);
-      setPrice(state.product.price);
-      setAddress(state.product.address);
-      setAcceptOffers(state.product.is_bid);
-      setSelectedCategory(state.product.sub_category.category_id);
-      setSelectedSubCategories(state.product.sub_category_id);
-      setSelectedSubCategoryId(state.product.sub_category_id);
-      setSelectedPropertyValues(state.product.propertyValues || {});
+    if (state && state.product) {
+      const {
+        item_name,
+        item_description,
+        item_image,
+        price,
+        address,
+        is_bid,
+        sub_category,
+        sub_category_id,
+        propertyValues = {}
+      } = state.product;
+  
+      setProductName(item_name || '');
+      setDescription(item_description || '');
+      setImages(item_image || []);
+      setPrice(price || '');
+      setAddress(address || null);
+      setAcceptOffers(is_bid || 0);
+      setSelectedCategory(sub_category?.category_id || '');
+      setSelectedSubCategories(sub_category_id || '');
+      setSelectedSubCategoryId(sub_category_id || '');
+      setSelectedPropertyValues(propertyValues);
+
+      loadCategories();
+      handleCategoryChange(sub_category?.category_id);
+      console.log(selectedSubCategories)
     }
-  }, [state.product]);
+  }, [state]);
 
   const handleImageUpload = (files) => {
     setImages((prevImages) => [...prevImages, ...files].slice(0, 10));
@@ -74,10 +90,9 @@ const EditProduct = ({ userToken }) => {
     setAcceptOffers(checked ? 1 : 0);
   };
 
-  const handleCategoryChange = async () => {
-    console.log(selectedCategory)
+  const handleCategoryChange = async (categoryId) => {
     try {
-      const response = await api.get(`api/global/sub-category?category_id=${selectedCategory}`);
+      const response = await api.get(`api/global/sub-category?category_id=${categoryId}`);
       if (response.status === 200) {
         setSubCategories(response.data.data);
 
@@ -205,11 +220,6 @@ const EditProduct = ({ userToken }) => {
     }
   }, []);
 
-  useEffect(() => {
-    loadCategories();
-    handleCategoryChange()
-  }, [loadCategories]);
-
   return (
     <ThemeProvider theme={ModTheme}>
       <Container sx={{
@@ -247,7 +257,7 @@ const EditProduct = ({ userToken }) => {
                 <FormControl fullWidth size="small" disabled>
                   <InputLabel>Select Subcategory</InputLabel>
                   <Select
-                    value={selectedSubCategories}
+                    value={selectedSubCategories || ""}
                     onChange={handleSubCategoryChange}
                     label="Select Subcategory"
                   >
@@ -304,8 +314,8 @@ const EditProduct = ({ userToken }) => {
                     />
                   </FormGroup>
                 </Grid>
-                {selectedSubCategories.property_values &&
-                  selectedSubCategories.property_values.map((property) => (
+                {selectedSubCategories.sub_category_property &&
+                  selectedSubCategories.sub_category_property.map((property) => (
                     <Grid item xs={12} key={property.id}>
                       <Typography variant="h6" gutterBottom>
                         {property.name}
