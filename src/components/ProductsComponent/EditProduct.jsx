@@ -140,20 +140,6 @@ const EditProduct = ({ userToken }) => {
     setAddress(addressDataFromProduct)
   };
 
-  const resetForm = () => {
-    setProductName('');
-    setDescription('');
-    setImages([]);
-    setPrice('');
-    setPriceError('');
-    setAddress(null);
-    setAcceptOffers(0);
-    setSelectedCategory('');
-    setSubCategories([]);
-    setSelectedSubCategories('');
-    setSelectedPropertyValues({});
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (priceError) return;
