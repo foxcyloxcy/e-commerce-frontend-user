@@ -18,8 +18,8 @@ import Swal from 'sweetalert2';
 
 export default function Register() {
     const history = useNavigate();
-    const [formValues, setFormValues] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '+971', remember: true });
-    const [formErrors, setFormErrors] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '' });
+    const [formValues, setFormValues] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '+971', remember: false });
+    const [formErrors, setFormErrors] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '', remember: '' });
     const [loading, setLoading] = useState(false);
 
     const validateEmail = (email) => {
@@ -54,13 +54,19 @@ export default function Register() {
             errors.password = 'Password field is required.';
         }
 
+        if (!formValues.confirmPassword) {
+            errors.confirmPassword = 'Confirm Password field is required.';
+        }
+
         if (!formValues.phoneNo) {
             errors.phoneNo = 'Phone Number field is required.';
         } else if (!validatePhoneNo(formValues.phoneNo)) {
             errors.phoneNo = 'Please use a phone number with the UAE country code.';
         }
 
-        console.log(formValues.remember)
+        if (!formValues.remember) {
+            errors.remember = "You haven't read and accept terms of use.";
+        }
 
         setFormErrors(errors);
 
@@ -114,12 +120,17 @@ export default function Register() {
             title: 'Registration Failed',
             text: 'Please check the highlighted fields and try again.',
         });
-    });
+    }, []);
 
     const handleInputChange = useCallback((event) => {
         const { name, value } = event.target;
         setFormValues({ ...formValues, [name]: value });
         setFormErrors({ ...formErrors, [name]: '' });
+    }, [formValues, formErrors]);
+
+    const handleCheckboxChange = useCallback(() => {
+        setFormValues({ ...formValues, remember: !formValues.remember });
+        setFormErrors({ ...formErrors, remember: '' });
     }, [formValues, formErrors]);
 
     return (
@@ -240,18 +251,21 @@ export default function Register() {
                             </Grid>
                         </Grid>
                         <FormControlLabel
-                            sx={{
-                                mt: 1,
-                                mb: 0
-                            }}
+                            sx={{ mt: 1, mb: 0 }}
                             control={<Checkbox
-                                value={formValues.remember} color="primary" />}
-
+                                checked={formValues.remember}
+                                onChange={handleCheckboxChange}
+                                color="primary" />}
                             label={<Typography sx={{ fontSize: { xs: '0.4rem', sm: '0.5rem', md: '0.7rem', lg: '0.8rem', xl: '1rem' } }}>I accept the <span></span>
                                 <Link href="/terms-of-use">
-                                     Terms of use.
+                                    Terms of use
                                 </Link></Typography>}
                         />
+                        {formErrors.remember && (
+                            <Typography color="error" sx={{ fontSize: { xs: '0.4rem', sm: '0.5rem', md: '0.7rem', lg: '0.8rem', xl: '1rem' }, mt: -1, mb: 1 }}>
+                                {formErrors.remember}
+                            </Typography>
+                        )}
                         <Box sx={{ position: 'relative' }}>
                             <Button
                                 type="submit"
@@ -265,8 +279,8 @@ export default function Register() {
                         </Box>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="/login" variant="body2">
-                                    Already have an account? Login here
+                                <Link href="/login" variant="body2" sx={{ fontSize: { xs: '0.4rem', sm: '0.5rem', md: '0.7rem', lg: '0.8rem', xl: '1rem' } }}>
+                                    Already have an account? Sign in
                                 </Link>
                             </Grid>
                         </Grid>
