@@ -7,6 +7,7 @@ import VendorProfileDetails from './VendorProfileComponent/VendorProfileDetails'
 import MyProducts from './MyProductsComponent/MyProducts';
 import MyOffers from './MyOffersComponent/MyOffers';
 import OffersToMe from './OffersToMeComponent/OffersToMe';
+import ChangePassword from './UserPasswordChangeComponent/ChangePassword';
 
 // Define the fade-in animation
 const fadeIn = keyframes`
@@ -57,7 +58,9 @@ const MyProfile = (props) => {
       case 'Offers to me':
         return <OffersToMe userToken={userToken} fromParentUserData={userData}/>; // Replace with your OffersToMe component
       case 'Vendor settings':
-        return <VendorProfileDetails userToken={userToken}/>; // Replace with your OffersToMe component
+        return <VendorProfileDetails userToken={userToken}/>;
+        case 'Change password':
+          return <ChangePassword userToken={userToken}/>; // Replace with your OffersToMe component
       default:
         return null;
     }
@@ -71,6 +74,9 @@ const MyProfile = (props) => {
             <List>
               <ListItem button onClick={() => setActiveTab('Profile settings')}>
                 <ListItemText primary="Personal Profile" />
+              </ListItem>
+              <ListItem button onClick={() => setActiveTab('Change password')}>
+                <ListItemText primary="Change Password" />
               </ListItem>
               <Divider />
               <ListItem button onClick={() => setActiveTab('Vendor settings')}>
