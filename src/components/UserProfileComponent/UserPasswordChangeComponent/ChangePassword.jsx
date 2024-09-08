@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, IconButton, InputAdornment } from '@mui/material';
+import { TextField, Button, Box, IconButton, InputAdornment, ThemeProvider } from '@mui/material';
+import ModTheme from '../../ThemeComponent/ModTheme';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
 
-  const isSaveDisabled =
-    !currentPassword || !newPassword || !confirmPassword;
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword((prevShowPassword) => !prevShowPassword);
-  };
+  const isSaveDisabled = !currentPassword || !newPassword || !confirmPassword;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -22,14 +21,11 @@ const ChangePassword = () => {
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit}
-      sx={{ ml: 5, mt: 4 }}
-    >
+    <ThemeProvider theme={ModTheme}>
+          <Box component="form" onSubmit={handleSubmit} sx={{ ml: 5, mt: 4 }}>
       <TextField
         label="Current Password"
-        type={showPassword ? 'text' : 'password'}
+        type={showCurrentPassword ? 'text' : 'password'}
         fullWidth
         margin="normal"
         size="small"
@@ -40,10 +36,10 @@ const ChangePassword = () => {
             <InputAdornment position="end">
               <IconButton
                 aria-label="toggle password visibility"
-                onClick={handleTogglePasswordVisibility}
+                onClick={() => setShowCurrentPassword(!showCurrentPassword)}
                 edge="end"
               >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
+                {showCurrentPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
             </InputAdornment>
           ),
@@ -51,7 +47,7 @@ const ChangePassword = () => {
       />
       <TextField
         label="New Password"
-        type={showPassword ? 'text' : 'password'}
+        type={showNewPassword ? 'text' : 'password'}
         fullWidth
         margin="normal"
         size="small"
@@ -62,10 +58,10 @@ const ChangePassword = () => {
             <InputAdornment position="end">
               <IconButton
                 aria-label="toggle password visibility"
-                onClick={handleTogglePasswordVisibility}
+                onClick={() => setShowNewPassword(!showNewPassword)}
                 edge="end"
               >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
+                {showNewPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
             </InputAdornment>
           ),
@@ -73,7 +69,7 @@ const ChangePassword = () => {
       />
       <TextField
         label="Confirm New Password"
-        type={showPassword ? 'text' : 'password'}
+        type={showConfirmPassword ? 'text' : 'password'}
         fullWidth
         margin="normal"
         size="small"
@@ -84,10 +80,10 @@ const ChangePassword = () => {
             <InputAdornment position="end">
               <IconButton
                 aria-label="toggle password visibility"
-                onClick={handleTogglePasswordVisibility}
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 edge="end"
               >
-                {showPassword ? <VisibilityOff /> : <Visibility />}
+                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
               </IconButton>
             </InputAdornment>
           ),
@@ -104,6 +100,7 @@ const ChangePassword = () => {
         Save
       </Button>
     </Box>
+    </ThemeProvider>
   );
 };
 
