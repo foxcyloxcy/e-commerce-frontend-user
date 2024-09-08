@@ -21,14 +21,12 @@ const ChangePassword = () => {
       onSubmit={handleSubmit}
       sx={{ maxWidth: 400, margin: '0 auto', mt: 4 }}
     >
-      <Typography variant="h5" gutterBottom>
-        Change Password
-      </Typography>
       <TextField
         label="Current Password"
         type="password"
         fullWidth
         margin="normal"
+        size="small"
         value={currentPassword}
         onChange={(e) => setCurrentPassword(e.target.value)}
       />
@@ -37,6 +35,7 @@ const ChangePassword = () => {
         type="password"
         fullWidth
         margin="normal"
+        size="small"
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
       />
@@ -45,6 +44,7 @@ const ChangePassword = () => {
         type="password"
         fullWidth
         margin="normal"
+        size="small"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
