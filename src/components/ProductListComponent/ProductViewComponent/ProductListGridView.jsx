@@ -70,12 +70,12 @@ const ProductListGridView = ({ productsData }) => {
                         <Typography variant="body1">{productsData.length} Items found</Typography>
                     </Grid>
                     <Grid item xs={4} sm={4} md={4}>
-                        <FormControl variant="outlined" sx={{ minWidth: '100%' }}>
+                        {/* <FormControl variant="outlined" sx={{ minWidth: '100%' }}>
                             <Select defaultValue="latest">
                                 <MenuItem value="latest">Latest items</MenuItem>
                                 <MenuItem value="cheapest">Cheapest</MenuItem>
                             </Select>
-                        </FormControl>
+                        </FormControl> */}
                     </Grid>
                 </Grid>
             </header>

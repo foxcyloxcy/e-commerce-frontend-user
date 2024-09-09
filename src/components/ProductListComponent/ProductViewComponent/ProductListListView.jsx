@@ -36,12 +36,12 @@ const ProductListGrid = ({ productsData, handleProductView  }) => {
                         <Typography variant="body1">{productsData.length} Items found</Typography>
                     </Grid>
                     <Grid item xs={6} sm={6} md={4}>
-                    <FormControl variant="outlined" sx={{minWidth:'100%'}}>
+                    {/* <FormControl variant="outlined" sx={{minWidth:'100%'}}>
                             <Select defaultValue="latest">
                                 <MenuItem value="latest">Latest items</MenuItem>
                                 <MenuItem value="cheapest">Cheapest</MenuItem>
                             </Select>
-                        </FormControl>
+                        </FormControl> */}
                     </Grid>
                     <Grid item xs={3} sm={3} md={4} display='flex' justifyContent='center'>
                         <Tooltip title="List view">
