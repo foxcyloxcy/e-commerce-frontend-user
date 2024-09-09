@@ -55,14 +55,13 @@ const OffersToMe = (props) => {
 
     return (
         <Grid container spacing={2}>
-            Offers to me
             {productsData.map((product) => (
                 <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
                     <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
                         {/* Status Badge */}
                         <StatusBadge status={product.status}>
                             {product.status === 0 ? 'Pending' : 
-                            product.status === 1 ? 'Approved' : 
+                            product.status === 1 ? 'Available offers {count}' : 
                             product.status === 2 ? 'Rejected': 
                             product.status === 3 ? 'Sold':
                             product.status === 4 ? 'Bid accepted': 'Archived'}
@@ -98,7 +97,7 @@ const OffersToMe = (props) => {
                                 sx={{ marginTop: '10px' }}
                                 onClick={() => handleDetailsClick(product)}
                             >
-                                Details
+                                View all offers
                             </Button>
                         </CardContent>
                     </Card>
