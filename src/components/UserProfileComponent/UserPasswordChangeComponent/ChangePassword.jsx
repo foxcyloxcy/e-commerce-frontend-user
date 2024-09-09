@@ -18,7 +18,7 @@ const ChangePassword = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const url = `/api/auth/me/profile?${field}=${encodeURIComponent(updatedData[field])}`;
+      const url = `/api/auth/me/change-password?password=${newPassword}&current_password=${currentPassword}&password_confirmation=${confirmPassword}`;
       const res = await api.put(url, {}, {
         headers: {
           Authorization: `Bearer ${userToken}`,
@@ -27,22 +27,14 @@ const ChangePassword = () => {
       });
 
       if (res.status === 200) {
-        setUserData((prevState) => ({
-          ...prevState,
-          [field]: updatedData[field],
-        }));
-        setIsEditing((prevState) => ({
-          ...prevState,
-          [field]: false,
-        }));
-        const dynamicFieldName = field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())
-        Swal.fire({
-          title: successMessage,
-          text: `${dynamicFieldName} successfully updated.`,
-          icon: 'success',
-          confirmButtonText: 'Ok',
-          confirmButtonColor: ModTheme.palette.primary.main,
-        })
+        console.log(res.data)
+        // Swal.fire({
+        //   title: successMessage,
+        //   text: `${dynamicFieldName} successfully updated.`,
+        //   icon: 'success',
+        //   confirmButtonText: 'Ok',
+        //   confirmButtonColor: ModTheme.palette.primary.main,
+        // })
       }
     } catch (error) {
       console.log("Error saving profile data:", error);
