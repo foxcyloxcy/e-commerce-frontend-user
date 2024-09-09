@@ -29,20 +29,40 @@ const ChangePassword = (props) => {
       });
 
       if (res.status === 200) {
-        console.log(res.data)
+        const successMessage = res.data.message
         Swal.fire({
           title: successMessage,
-          text: `${dynamicFieldName} successfully updated.`,
           icon: 'success',
           confirmButtonText: 'Ok',
           confirmButtonColor: ModTheme.palette.primary.main,
         })
+        setCurrentPassword("")
+        setNewPassword("")
+        setConfirmPassword("")
       }
     } catch (error) {
       console.log("Error saving profile data:", error);
-    }
+      if(error.response.data.message.current_password){
+        const errorMessage = error.response.data.message.current_password[0]
+        Swal.fire({
+          title: errorMessage,
+          text: 'Current password is incorrect. Please try again.',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+          confirmButtonColor: ModTheme.palette.primary.main,
+        })
+      }
 
-    console.log('Password changed!');
+      if(error.response.data.message.password){
+        const errorMessage = error.response.data.message.password[0]
+        Swal.fire({
+          title: errorMessage,
+          icon: 'error',
+          confirmButtonText: 'Ok',
+          confirmButtonColor: ModTheme.palette.primary.main,
+        })
+      }
+    }
   };
 
 
