@@ -3,8 +3,10 @@ import { TextField, Button, Box, IconButton, InputAdornment, ThemeProvider } fro
 import ModTheme from '../../ThemeComponent/ModTheme';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import api from '../../../assets/baseURL/api';
+import Swal from 'sweetalert2';
 
-const ChangePassword = () => {
+const ChangePassword = (props) => {
+  const { userToken } = props;
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -28,13 +30,13 @@ const ChangePassword = () => {
 
       if (res.status === 200) {
         console.log(res.data)
-        // Swal.fire({
-        //   title: successMessage,
-        //   text: `${dynamicFieldName} successfully updated.`,
-        //   icon: 'success',
-        //   confirmButtonText: 'Ok',
-        //   confirmButtonColor: ModTheme.palette.primary.main,
-        // })
+        Swal.fire({
+          title: successMessage,
+          text: `${dynamicFieldName} successfully updated.`,
+          icon: 'success',
+          confirmButtonText: 'Ok',
+          confirmButtonColor: ModTheme.palette.primary.main,
+        })
       }
     } catch (error) {
       console.log("Error saving profile data:", error);
