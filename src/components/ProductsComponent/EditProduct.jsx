@@ -22,6 +22,7 @@ const EditProduct = ({ userToken }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategories, setSelectedSubCategories] = useState('');
+  const [selectedSubCategoriesId, setSelectedSubCategoriesId] = useState('');
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState('');
   const [selectedPropertyValues, setSelectedPropertyValues] = useState({});
   const [openModal, setOpenModal] = useState(false); // State to manage modal visibility
@@ -52,12 +53,13 @@ const EditProduct = ({ userToken }) => {
       setAddress(JSON.parse(address) || null);
       setAcceptOffers(is_bid || 0);
       setSelectedCategory(sub_category?.category_id || '');
-      setSelectedSubCategories(sub_category_id || '');
+      setSelectedSubCategoriesId(sub_category_id || '');
       setSelectedSubCategoryId(sub_category_id || '');
       setSelectedPropertyValues(propertyValues);
 
       loadCategories();
-      handleCategoryChange(sub_category?.category_id);
+      loadSubCategory(sub_category_id)
+      handleCategoryChange(sub_category?.category_id, sub_category_id);
       handleAddressData(JSON.parse(address))
     }
   }, [state]);
@@ -90,11 +92,27 @@ const EditProduct = ({ userToken }) => {
     setAcceptOffers(checked ? 1 : 0);
   };
 
-  const handleCategoryChange = async (categoryId) => {
+  const handleCategoryChange = async (categoryId, subCategoryId) => {
     try {
       const response = await api.get(`api/global/sub-category?category_id=${categoryId}`);
+
       if (response.status === 200) {
         setSubCategories(response.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const loadSubCategory = async (subCategoryId) => {
+    try {
+      const response = await api.get(`api/global/sub-category/properties?sub_category_id=${subCategoryId}`);
+
+      //global/sub-category/properties?sub_category_id=2
+      if (response.status === 200) {
+        console.log('subcategory',response.data.data)
+        setSelectedSubCategories(response.data.data);
+        console.log('selectedSubcategory',selectedSubCategories)
       }
     } catch (error) {
       console.log(error);
@@ -242,7 +260,7 @@ const EditProduct = ({ userToken }) => {
               <FormControl fullWidth size="small" disabled>
                 <InputLabel>Select Subcategory</InputLabel>
                 <Select
-                  value={selectedSubCategories || ""}
+                  value={selectedSubCategoriesId || ""}
                   onChange={handleSubCategoryChange}
                   label="Select Subcategory"
                 >
@@ -299,30 +317,6 @@ const EditProduct = ({ userToken }) => {
                     />
                   </FormGroup>
                 </Grid>
-                {selectedSubCategories.sub_category_property &&
-                  selectedSubCategories.sub_category_property.map((property) => (
-                    <Grid item xs={12} key={property.id}>
-                      <Typography variant="h6" gutterBottom>
-                        {property.name}
-                      </Typography>
-                      <FormGroup>
-                        {property.values.map((value) => (
-                          <FormControlLabel
-                            key={value.id}
-                            control={
-                              <Checkbox
-                                checked={
-                                  selectedPropertyValues[property.id]?.includes(value.id) || false
-                                }
-                                onChange={handleCheckboxChange(property.id, value.id)}
-                              />
-                            }
-                            label={value.value}
-                          />
-                        ))}
-                      </FormGroup>
-                    </Grid>
-                  ))}
                 <Grid item xs={12}>
                   <FileInput
                     onChange={handleImageUpload}
@@ -357,6 +351,32 @@ const EditProduct = ({ userToken }) => {
                     mapDataValue={address}
                   />
                 </Grid>
+
+                {selectedSubCategories[0].sub_category_property &&
+                  selectedSubCategories[0].sub_category_property.map((property) => (
+                    <Grid item xs={12} key={property.id}>
+                      <Typography variant="h6" gutterBottom>
+                        {property.name}
+                      </Typography>
+                      <FormGroup row>
+                        {property.sub_category_property_value.map((value) => (
+                          <FormControlLabel
+                            key={value.id}
+                            control={
+                              <Checkbox
+                                checked={
+                                  selectedPropertyValues[property.id]?.includes(value.id) || false
+                                }
+                                onChange={handleCheckboxChange(property.id, value.id)}
+                              />
+                            }
+                            label={value.name}
+                          />
+                        ))}
+                      </FormGroup>
+                    </Grid>
+                  ))}
+
                 <Grid item xs={12}>
                   <Button type="submit" variant="contained" color="primary" fullWidth>
                     Save
