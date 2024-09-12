@@ -255,9 +255,11 @@ const NavBar = (props) => {
                   <ListItem button component={Link} to="/about" onClick={handleClose}>
                     <ListItemText primary="About" />
                   </ListItem>
-                  <ListItem button component={Link} to="/my-profile" onClick={handleClose}>
-                    <ListItemText primary="Profile" />
-                  </ListItem>
+                  {isLoggedIn && (
+                    <ListItem button component={Link} to="/my-profile" onClick={handleClose}>
+                      <ListItemText primary="Profile" />
+                    </ListItem>
+                  )}
                 </List>
               </Box>
             </Drawer>
