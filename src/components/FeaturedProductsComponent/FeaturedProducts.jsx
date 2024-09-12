@@ -163,7 +163,7 @@ const FeaturedProducts = () => {
                     marginBottom: 10,
                 }}
             >
-                <Typography variant="h1" align="center" gutterBottom marginBottom={1}>
+                <Typography variant="h3" align="center" gutterBottom marginBottom={1}>
                     Featured Products
                 </Typography>
                 <Slider {...settings}>
