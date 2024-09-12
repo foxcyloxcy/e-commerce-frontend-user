@@ -152,7 +152,7 @@ export default function Register() {
                         marginBottom: 10
                     }}
                 >
-                    <Typography component="h1" variant="h1">
+                    <Typography component="h3" variant="h3">
                         Register
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
