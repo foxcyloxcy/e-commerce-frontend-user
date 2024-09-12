@@ -56,7 +56,7 @@ const OffersToMe = (props) => {
     return (
         <Grid container spacing={2}>
             {productsData.map((product) => (
-                <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
+                <Grid item xs={12} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
                     <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
                         {/* Status Badge */}
                         <StatusBadge status={product.status}>
@@ -89,15 +89,14 @@ const OffersToMe = (props) => {
                         </CardContent>
 
                         {/* Details Button */}
-                        <CardContent sx={{ position: 'absolute', width: '100%', top: '83%' }}>
+                        <CardContent sx={{ position: 'absolute', width: '100%', top: '84%' }}>
                             <Button
                                 variant="contained"
                                 color="primary"
                                 fullWidth
-                                sx={{ marginTop: '10px' }}
                                 onClick={() => handleDetailsClick(product)}
                             >
-                                View all offers
+                                View offers
                             </Button>
                         </CardContent>
                     </Card>
