@@ -2,7 +2,7 @@ import { createTheme } from '@mui/material/styles';
 
 const ModTheme = createTheme({
     palette: {
-        background:{
+        background: {
             default: '#F5F5F2',
             paper: '#F5F5F2'
         },
@@ -13,145 +13,43 @@ const ModTheme = createTheme({
             contrastText: '#E3F2F7', // sky blue
         },
         secondary: {
-            main: '#606060', //charcoal
-            light: '#BDB6B0', //stone
+            main: '#606060', // charcoal
+            light: '#BDB6B0', // stone
             dark: '#EAEAE7', // medium gray
             contrastText: '#F5F5F2', // light gray
-            background: '#FFFFFF', //white
+            background: '#FFFFFF', // white
         },
         text: {
-                primary: '#606060',
-                secondary: '#255773',
-                disabled: "rgba(0, 0, 0, 0.38)"
-            }
+            primary: '#606060',
+            secondary: '#255773',
+            disabled: "rgba(0, 0, 0, 0.38)"
+        }
     },
     typography: {
         fontFamily: 'Poppins, sans-serif',
         h1: {
             fontFamily: 'Playfair Display, serif',
-            fontSize: '1.75rem',
-            '@media (min-width:400px)': {
-                fontSize: '1.75rem',
-            },
-            '@media (min-width:600px)': {
-                fontSize: '2.25rem',
-            },
-            '@media (min-width:960px)': {
-                fontSize: '2.75rem',
-            },
-            '@media (min-width:1280px)': {
-                fontSize: '3.25rem',
-            },
         },
         h2: {
             fontFamily: 'Playfair Display, serif',
-            fontSize: '1.5rem',
-            '@media (min-width:400px)': {
-                fontSize: '1.5rem',
-            },
-            '@media (min-width:600px)': {
-                fontSize: '2rem',
-            },
-            '@media (min-width:960px)': {
-                fontSize: '2.5rem',
-            },
-            '@media (min-width:1280px)': {
-                fontSize: '3rem',
-            },
         },
         h3: {
             fontFamily: 'Playfair Display, serif',
-            fontSize: '1.25rem',
-            '@media (min-width:400px)': {
-                fontSize: '1.25rem',
-            },
-            '@media (min-width:600px)': {
-                fontSize: '1.75rem',
-            },
-            '@media (min-width:960px)': {
-                fontSize: '2.25rem',
-            },
-            '@media (min-width:1280px)': {
-                fontSize: '2.75rem',
-            },
         },
         h4: {
             fontFamily: 'Playfair Display, serif',
-            fontSize: '1.10rem',
-            '@media (min-width:400px)': {
-                fontSize: '1.10rem',
-            },
-            '@media (min-width:600px)': {
-                fontSize: '1.5rem',
-            },
-            '@media (min-width:960px)': {
-                fontSize: '2rem',
-            },
-            '@media (min-width:1280px)': {
-                fontSize: '2.5rem',
-            },
         },
         h5: {
             fontFamily: 'Playfair Display, serif',
-            fontSize: '1rem',
-            '@media (min-width:400px)': {
-                fontSize: '1rem',
-            },
-            '@media (min-width:600px)': {
-                fontSize: '1.25rem',
-            },
-            '@media (min-width:960px)': {
-                fontSize: '1.75rem',
-            },
-            '@media (min-width:1280px)': {
-                fontSize: '2.25rem',
-            },
         },
         h6: {
             fontFamily: 'Playfair Display, serif',
-            fontSize: '0.9rem',
-            '@media (min-width:400px)': {
-                fontSize: '0.95rem',
-            },
-            '@media (min-width:600px)': {
-                fontSize: '1rem',
-            },
-            '@media (min-width:960px)': {
-                fontSize: '1.25rem',
-            },
-            '@media (min-width:1280px)': {
-                fontSize: '1.5rem',
-            },
         },
         body1: {
-            fontSize: '0.8rem',
-            '@media (min-width:400px)': {
-                fontSize: '0.875rem',
-            },
-            '@media (min-width:600px)': {
-                fontSize: '1rem',
-            },
-            '@media (min-width:960px)': {
-                fontSize: '1.125rem',
-            },
-            '@media (min-width:1280px)': {
-                fontSize: '1.25rem',
-            },
+            fontSize: '1rem', // 16px for all screen sizes
         },
         body2: {
-            fontSize: '0.75rem',
-            '@media (min-width:400px)': {
-                fontSize: '0.80rem',
-            },
-            '@media (min-width:600px)': {
-                fontSize: '0.90rem',
-            },
-            '@media (min-width:960px)': {
-                fontSize: '1rem',
-            },
-            '@media (min-width:1280px)': {
-                fontSize: '1.10rem',
-            },
+            fontSize: '1rem', // 16px for all screen sizes
         },
     },
     components: {
