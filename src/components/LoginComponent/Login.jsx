@@ -111,7 +111,7 @@ export default function Login({ refreshParent }) {
             minHeight: '60vh'
           }}
         >
-          <Typography component="h1" variant="h1">
+          <Typography component="h3" variant="h3">
             Login
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }} autoComplete="off">
