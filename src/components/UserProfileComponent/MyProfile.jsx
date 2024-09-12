@@ -57,9 +57,11 @@ const MyProfile = (props) => {
 
   const SidebarContent = (
     <List>
+      <Divider />
       <ListItem button onClick={() => setActiveTab('Profile settings')}>
         <ListItemText primary="Personal Profile" />
       </ListItem>
+      <Divider />
       <ListItem button onClick={() => setActiveTab('Change password')}>
         <ListItemText primary="Change Password" />
       </ListItem>
@@ -79,6 +81,7 @@ const MyProfile = (props) => {
       <ListItem button onClick={() => setActiveTab('Offers to me')}>
         <ListItemText primary="Offers to me" />
       </ListItem>
+      <Divider />
     </List>
   );
 
@@ -97,7 +100,8 @@ const MyProfile = (props) => {
             color="inherit"
             aria-label="menu"
             onClick={toggleDrawer}
-            sx={{ display: { md: 'none' } }} // Show only on small and medium screens
+            sx={{ display: { md: 'none' },
+             ml: 0}} // Show only on small and medium screens
           >
             <MenuIcon />
           </IconButton>
