@@ -21,6 +21,7 @@ import TermsOfUse from './staticPages/TermsOfUseComponent/TermsOfUse';
 import PrivacyPolicy from './staticPages/PrivacyPolicyComponent/PrivacyPolicy';
 import AddVendorProfileDetails from './components/UserProfileComponent/VendorProfileComponent/AddVendorProfileDetails';
 import PaymentSuccess from './components/PaymentSuccessComponent/PaymentSuccess';
+import ChatMessage from './components/ChatMessageComponent/ChatMessage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -130,7 +131,7 @@ function App() {
           path="/edit-product"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <EditProduct userToken={userToken}/>
+              <EditProduct userToken={userToken} />
             </ProtectedRoute>
           }
         />
@@ -149,6 +150,15 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <PaymentSuccess userToken={userToken} userData={userData} />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/chat"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <ChatMessage userToken={userToken} userData={userData} />
             </ProtectedRoute>
           }
         />
