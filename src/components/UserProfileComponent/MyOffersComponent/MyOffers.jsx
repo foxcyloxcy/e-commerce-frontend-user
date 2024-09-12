@@ -89,7 +89,7 @@ const MyOffers = (props) => {
                         </CardContent>
 
                         {/* Details Button */}
-                        <CardContent sx={{ position: 'absolute', width: '100%', top: '83%' }}>
+                        <CardContent sx={{ position: 'absolute', width: '100%', top: '84%' }}>
                             <Button
                                 variant="contained"
                                 color="primary"
