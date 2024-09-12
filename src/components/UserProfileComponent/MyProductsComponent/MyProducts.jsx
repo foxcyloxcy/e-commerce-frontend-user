@@ -31,7 +31,7 @@ const DashedCard = styled(Card)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    height: {sm:'400px', md:'500px'},
+    height: { sm: '400px', md: '500px' },
     background: '#fff',
     border: `2px dashed ${theme.palette.primary.main}`,
     alignItems: 'center',
@@ -106,9 +106,9 @@ const MyProducts = (props) => {
     };
 
     const handleAddProductClick = () => {
-        if(userData.is_vendor === "Yes"){
+        if (userData.is_vendor === "Yes") {
             navigate('/add-product');
-        }else{
+        } else {
             Swal.fire({
                 title: 'Oops!',
                 text: `You need to set your vendor details first before you can add an item.`,
@@ -117,11 +117,11 @@ const MyProducts = (props) => {
                 confirmButtonText: 'Ok',
                 confirmButtonColor: ModTheme.palette.primary.main,
                 cancelButtonText: 'Cancel'
-              }).then((result) => {
+            }).then((result) => {
                 if (result.isConfirmed) {
                     navigate('/add-vendor-profile');
                 }
-              });
+            });
         }
     };
 
@@ -140,7 +140,7 @@ const MyProducts = (props) => {
                         </Grid>
                     ) : (
                         <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
-                            <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: {sm:'400px', md:'500px'} }}>
+                            <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '500px' }}>
                                 <StatusBadge status={product.status}>
                                     {product.status === 0 ? 'Pending' :
                                         product.status === 1 ? 'Approved' :
@@ -168,7 +168,7 @@ const MyProducts = (props) => {
                                     </Typography>
                                 </CardContent>
 
-                                <CardContent sx={{ justifyContent: 'center', flexDirection: 'column', width: '100%', padding: '8px', }}>
+                                <CardContent sx={{ position: 'absolute', width: '100%', top: '79%' }}>
                                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                                         <IconButton color="primary" onClick={() => handleEditClick(product)}>
                                             <EditIcon />
