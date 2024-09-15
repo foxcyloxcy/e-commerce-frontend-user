@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/system';
 import PriceBreakdownModal from '../../ReusableComponents/ModalComponent/PriceBreakDownModal';
 
-const ProductListGridView = ({ productsData }) => {
+const ProductListGridView = ({ productsData, userToken }) => {
     const navigate = useNavigate();
 
     // Pagination state
@@ -34,7 +34,7 @@ const ProductListGridView = ({ productsData }) => {
     };
 
     const handleDetailsClick = (productUuid) => {
-        navigate('/product-details', { state: { productUuid } });
+        navigate('/product-details', { state: { productUuid, userToken } });
     };
 
     const handleOpenPriceBreakdown = (product) => {
