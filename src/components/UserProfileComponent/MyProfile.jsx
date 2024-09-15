@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Container, List, ListItem, ListItemText, ThemeProvider, Divider, IconButton, Drawer, Grid } from '@mui/material';
+import { Box, Container, List, ListItem, ListItemText, ThemeProvider, Divider, IconButton, Drawer, Grid, Typography } from '@mui/material';
 import { styled, keyframes } from '@mui/system';
 import MenuIcon from '@mui/icons-material/Menu';
 import ModTheme from '../ThemeComponent/ModTheme';
@@ -56,7 +56,8 @@ const MyProfile = (props) => {
   };
 
   const SidebarContent = (
-    <List>
+    <List sx={{ display: 'flex', flexDirection:'column', paddingTop: 0}}>
+      <Typography variant="h6" sx={{padding: 2, backgroundColor: 'primary.dark', width: "100%"}}>My Profile</Typography>
       <Divider />
       <ListItem button onClick={() => setActiveTab('Profile settings')}>
         <ListItemText primary="Personal Profile" />
