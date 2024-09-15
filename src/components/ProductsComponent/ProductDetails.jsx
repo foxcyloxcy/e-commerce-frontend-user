@@ -11,7 +11,7 @@ import api from '../../assets/baseURL/api';
 
 const ProductDetails = () => {
     const { state } = useLocation();
-    const { productUuid } = state;
+    const { productUuid, userToken } = state;
     const [productsData, setProductsData] = useState(null);
 
     const loadProducts = useCallback(async () => {
@@ -30,6 +30,24 @@ const ProductDetails = () => {
     useEffect(() => {
         loadProducts();
     }, [loadProducts]);
+
+    const handleStripeCheckout = async (uuid) => {
+        ///auth/payment/stripe/checkout/433fdb20-4407-11ef-b55e-c36eafd50a09
+        try {
+            const res = await api.post(`/api/auth/payment/stripe/checkout/session/${uuid}`, "sample", {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (res.status === 200) {
+                const stripeUrl = res.data.stripe_url
+                window.location.href = stripeUrl
+            }
+        } catch (error) {
+            console.log("Error:", error);
+        }
+      };
 
     const formatPrice = (price) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -117,6 +135,7 @@ const ProductDetails = () => {
                                     textColor="primary.contrastText"
                                     hoverTextColor="secondary.main"
                                     startIcon={<AddShoppingCartIcon />}
+                                    onClick={() =>handleStripeCheckout(productUuid)}
                                 />
                             </Grid>
                         </Grid>
