@@ -47,11 +47,7 @@ const VendorProfileDetails = (props) => {
     const [editBankDetails, setEditBankDetails] = useState(false);
     const [editField, setEditField] = useState(null); // Track which field is being edited
     const [formData, setFormData] = useState({
-        name: '',
-        address: '',
-        bank_name: '',
-        account_fullname: '',
-        account_number: '',
+        email: ""
     });
     const [selectedFile, setSelectedFile] = useState(null);
     const navigate = useNavigate();
@@ -65,11 +61,14 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
+                console.log(res.data)
                 setUserId(res.data.data.id)
                 setUserData(res.data.data.vendor);
                 setFormData({
                     name: res.data.data.vendor.name || '',
                     address: res.data.data.vendor.address || '',
+                    email: res.data.data.email,
+                    stripe_id: res.data.data.vendor.stripe_id
                 });
             }
         } catch (error) {
@@ -177,13 +176,9 @@ const VendorProfileDetails = (props) => {
 
     const handleBankSave = async () => {
         try {
-            const { bank_name, account_fullname, account_number } = formData;
-            const res = await api.post("/api/auth/me/bank-payment", {
-                user_id: userId,
-                bank_id: 1,
-                bank_name,
-                account_fullname,
-                account_number,
+            const { email } = formData;
+            const res = await api.post("/api/auth/payment/stripe/account", {
+                email: email
             }, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
@@ -322,7 +317,8 @@ const VendorProfileDetails = (props) => {
 
                                 <BankDetailsContainer>
                                     <BankDetailsLabel variant="caption">Bank details</BankDetailsLabel>
-                                    {['bank_name', 'account_fullname', 'account_number'].map((field) => (
+
+                                    {userData.stripe_id === null ? (['email'].map((field) => (
                                         <TextField
                                             key={field}
                                             label={field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}
@@ -332,11 +328,41 @@ const VendorProfileDetails = (props) => {
                                             fullWidth
                                             margin="normal"
                                             size="small"
-                                            disabled={editBankDetails ? false : true}
                                             required
                                         />
-                                    ))}
+                                    )))
+                                        :
+                                        (['stripe_id'].map((field) => (
+                                            <TextField
+                                                key={field}
+                                                placeholder={field}
+                                                label={field}
+                                                name={field}
+                                                value={formData[field]}
+                                                onChange={handleChange}
+                                                fullWidth
+                                                margin="normal"
+                                                size="small"
+                                                disabled
+                                                required
+                                            />
+                                        )))
+
+                                    }
                                     {
+                                        userData.stripe_id === null && (
+                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={handleBankSave}
+                                                    sx={{ mr: 1 }}
+                                                >
+                                                    Create
+                                                </Button>
+                                            </Box>
+                                        )}
+                                    {/* {
                                         editBankDetails ? (
                                             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
                                                 <Button
@@ -366,7 +392,7 @@ const VendorProfileDetails = (props) => {
                                                 </Button>
                                             </Box>
                                         )
-                                    }
+                                    } */}
                                 </BankDetailsContainer>
                             </Grid>
                         </>
