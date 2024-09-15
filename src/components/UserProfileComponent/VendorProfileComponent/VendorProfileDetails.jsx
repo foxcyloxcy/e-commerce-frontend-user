@@ -47,7 +47,10 @@ const VendorProfileDetails = (props) => {
     const [editBankDetails, setEditBankDetails] = useState(false);
     const [editField, setEditField] = useState(null); // Track which field is being edited
     const [formData, setFormData] = useState({
-        email: ""
+        name:"",
+        address:"",
+        email: "",
+        stripe_id: ""
     });
     const [selectedFile, setSelectedFile] = useState(null);
     const navigate = useNavigate();
@@ -70,27 +73,6 @@ const VendorProfileDetails = (props) => {
                     email: res.data.data.email,
                     stripe_id: res.data.data.vendor.stripe_id
                 });
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }, [userToken]);
-
-
-    const loadBankDetails = useCallback(async () => {
-        try {
-            const res = await api.get("/api/auth/me/bank-payment", {
-                headers: {
-                    Authorization: `Bearer ${userToken}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (res.status === 200) {
-                setFormData({
-                    bank_name: res.data.data[0].bank || '',
-                    account_fullname: res.data.data[0].account_fullname || '',
-                    account_number: res.data.data[0].account_number || '',
-                })
             }
         } catch (error) {
             console.log(error);
@@ -189,7 +171,7 @@ const VendorProfileDetails = (props) => {
                 const successMessage = res.data.message
                 Swal.fire({
                     title: successMessage,
-                    text: 'Bank details successfully added.',
+                    text: 'Stripe details successfully added.',
                     icon: 'success',
                     confirmButtonText: 'Ok',
                     confirmButtonColor: ModTheme.palette.primary.main,
@@ -198,7 +180,7 @@ const VendorProfileDetails = (props) => {
                 setEditBankDetails(false);
             }
         } catch (error) {
-            console.log("Error updating bank details:", error);
+            console.log("Error updating Stripe details:", error);
         }
     };
 
@@ -213,8 +195,7 @@ const VendorProfileDetails = (props) => {
 
     useEffect(() => {
         loadProfile();
-        loadBankDetails();
-    }, [loadProfile, loadBankDetails]);
+    }, [loadProfile]);
 
     return (
         <ThemeProvider theme={ModTheme}>
@@ -316,14 +297,14 @@ const VendorProfileDetails = (props) => {
                                 </Box>
 
                                 <BankDetailsContainer>
-                                    <BankDetailsLabel variant="caption">Bank details</BankDetailsLabel>
+                                    <BankDetailsLabel variant="caption">Stripe details</BankDetailsLabel>
 
                                     {userData.stripe_id === null ? (['email'].map((field) => (
                                         <TextField
                                             key={field}
                                             label={field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}
                                             name={field}
-                                            value={formData[field]}
+                                            value={formData[field]  || ""}
                                             onChange={handleChange}
                                             fullWidth
                                             margin="normal"
@@ -336,9 +317,9 @@ const VendorProfileDetails = (props) => {
                                             <TextField
                                                 key={field}
                                                 placeholder={field}
-                                                label={field}
+                                                label={field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}
                                                 name={field}
-                                                value={formData[field]}
+                                                value={formData[field] || ""}
                                                 onChange={handleChange}
                                                 fullWidth
                                                 margin="normal"
