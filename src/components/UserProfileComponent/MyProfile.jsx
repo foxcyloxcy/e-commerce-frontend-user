@@ -56,8 +56,7 @@ const MyProfile = (props) => {
   };
 
   const SidebarContent = (
-    <List sx={{ display: 'flex', flexDirection:'column', paddingTop: 0}}>
-      <Typography variant="h6" sx={{padding: 2, backgroundColor: 'primary.dark', width: "100%"}}>My Profile</Typography>
+    <List sx={{ display: 'flex', flexDirection: 'column', paddingTop: 0 }}>
       <Divider />
       <ListItem button onClick={() => setActiveTab('Profile settings')}>
         <ListItemText primary="Personal Profile" />
@@ -101,8 +100,10 @@ const MyProfile = (props) => {
             color="inherit"
             aria-label="menu"
             onClick={toggleDrawer}
-            sx={{ display: { md: 'none' },
-             ml: 0}} // Show only on small and medium screens
+            sx={{
+              display: { md: 'none' },
+              ml: 0
+            }} // Show only on small and medium screens
           >
             <MenuIcon />
           </IconButton>
@@ -112,6 +113,7 @@ const MyProfile = (props) => {
             onClose={toggleDrawer}
             sx={{ display: { md: 'none' } }} // Drawer only on small and medium screens
           >
+            <Typography variant="h6" sx={{ padding: 2, backgroundColor: 'primary.dark', width: "100%" }}>My Profile</Typography>
             {SidebarContent}
           </Drawer>
 
