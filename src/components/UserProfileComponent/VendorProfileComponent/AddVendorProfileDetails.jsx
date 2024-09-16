@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Grid, Paper, Typography, Button, TextField } from '@mui/material';
+import { Box, Grid, Paper, Typography, Button, TextField, ThemeProvider } from '@mui/material';
 import { styled } from '@mui/system';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import api from '../../../assets/baseURL/api';
@@ -48,11 +48,11 @@ const AddVendorProfileDetails = (props) => {
                     icon: 'success',
                     confirmButtonText: 'Ok',
                     confirmButtonColor: ModTheme.palette.primary.main,
-                  }).then((result) => {
+                }).then((result) => {
                     if (result.isConfirmed) {
                         navigate('/my-profile'); // Redirect to the VendorProfileDetails component
                     }
-                  });
+                });
             }
         } catch (error) {
             console.log("Error adding vendor profile:", error);
@@ -60,43 +60,45 @@ const AddVendorProfileDetails = (props) => {
     };
 
     return (
-        <ProfileForm>
-            <Grid container spacing={2} marginTop={10}>
-                <Grid item xs={12} sm={12}>
-                    <Typography variant="h6">Add Vendor Profile Details</Typography>
-                    <Box mt={2}>
-                        <TextField
-                            label="Name"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            fullWidth
-                            margin="normal"
-                            size='small'
-                            required
-                        />
-                        <TextField
-                            label="Address"
-                            name="address"
-                            value={formData.address}
-                            onChange={handleChange}
-                            fullWidth
-                            margin="normal"
-                            size='small'
-                            required
-                        />
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleSubmit}
-                            sx={{ mt: 2 }}
-                        >
-                            Submit
-                        </Button>
-                    </Box>
+        <ThemeProvider theme={ModTheme}>
+            <ProfileForm>
+                <Grid container spacing={2} marginTop={10}>
+                    <Grid item xs={12} sm={12}>
+                        <Typography variant="h5">Add Vendor Profile Details</Typography>
+                        <Box mt={2}>
+                            <TextField
+                                label="Name"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                fullWidth
+                                margin="normal"
+                                size='small'
+                                required
+                            />
+                            <TextField
+                                label="Address"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleChange}
+                                fullWidth
+                                margin="normal"
+                                size='small'
+                                required
+                            />
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleSubmit}
+                                sx={{ mt: 2 }}
+                            >
+                                Submit
+                            </Button>
+                        </Box>
+                    </Grid>
                 </Grid>
-            </Grid>
-        </ProfileForm>
+            </ProfileForm>
+        </ThemeProvider>
     );
 };
 
