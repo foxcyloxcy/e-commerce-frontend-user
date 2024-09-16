@@ -4,6 +4,7 @@ import { styled } from '@mui/system';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import api from '../../../assets/baseURL/api';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const ProfileForm = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(3),
@@ -21,9 +22,6 @@ const AddVendorProfileDetails = (props) => {
     const [formData, setFormData] = useState({
         name: '',
         address: '',
-        bank_id: '',
-        account_fullname: '',
-        account_number: '',
     });
     const navigate = useNavigate();
 
@@ -81,36 +79,6 @@ const AddVendorProfileDetails = (props) => {
                             label="Address"
                             name="address"
                             value={formData.address}
-                            onChange={handleChange}
-                            fullWidth
-                            margin="normal"
-                            size='small'
-                            required
-                        />
-                        <TextField
-                            label="Bank ID"
-                            name="bank_id"
-                            value={formData.bank_id}
-                            onChange={handleChange}
-                            fullWidth
-                            margin="normal"
-                            size='small'
-                            required
-                        />
-                        <TextField
-                            label="Bank Account Name"
-                            name="account_fullname"
-                            value={formData.account_fullname}
-                            onChange={handleChange}
-                            fullWidth
-                            margin="normal"
-                            size='small'
-                            required
-                        />
-                        <TextField
-                            label="Bank Account Number"
-                            name="account_number"
-                            value={formData.account_number}
                             onChange={handleChange}
                             fullWidth
                             margin="normal"
