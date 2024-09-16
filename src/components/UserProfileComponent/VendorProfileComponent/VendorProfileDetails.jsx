@@ -64,7 +64,7 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
-                console.log(res.data)
+                console.log(res.data.data)
                 setUserId(res.data.data.id)
                 setUserData(res.data.data);
                 setFormData({
@@ -175,9 +175,13 @@ const VendorProfileDetails = (props) => {
                     icon: 'success',
                     confirmButtonText: 'Ok',
                     confirmButtonColor: ModTheme.palette.primary.main,
-                })
-                loadProfile();
-                setEditBankDetails(false);
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const stripeUrlOnboarding = res.data.data.url
+                        window.location.href = stripeUrlOnboarding
+                    }
+                  });
+                  loadProfile();
             }
         } catch (error) {
             console.log("Error updating Stripe details:", error);
@@ -196,6 +200,10 @@ const VendorProfileDetails = (props) => {
     useEffect(() => {
         loadProfile();
     }, [loadProfile]);
+
+    if (!userData || !userData.vendor) {
+        return <Typography>Loading...</Typography>;
+    }
 
     return (
         <ThemeProvider theme={ModTheme}>
@@ -299,7 +307,7 @@ const VendorProfileDetails = (props) => {
                                 <BankDetailsContainer>
                                     <BankDetailsLabel variant="caption">Stripe details</BankDetailsLabel>
 
-                                    {userData.vendor.stripe_id === null ? (['email'].map((field) => (
+                                    {userData.vendor.stripe_id === null || userData.vendor.stripe_id === "" ? (['email'].map((field) => (
                                         <TextField
                                             key={field}
                                             label={field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}
@@ -343,37 +351,6 @@ const VendorProfileDetails = (props) => {
                                                 </Button>
                                             </Box>
                                         )}
-                                    {/* {
-                                        editBankDetails ? (
-                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    onClick={handleBankSave}
-                                                    sx={{ mr: 1 }}
-                                                >
-                                                    Save
-                                                </Button>
-                                                <Button
-                                                    variant="outlined"
-                                                    color="secondary"
-                                                    onClick={handleBankCancel}
-                                                >
-                                                    Cancel
-                                                </Button>
-                                            </Box>
-                                        ) : (
-                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
-                                                <Button
-                                                    variant="contained"
-                                                    color="secondary"
-                                                    onClick={handleBankEdit}
-                                                >
-                                                    Edit
-                                                </Button>
-                                            </Box>
-                                        )
-                                    } */}
                                 </BankDetailsContainer>
                             </Grid>
                         </>
