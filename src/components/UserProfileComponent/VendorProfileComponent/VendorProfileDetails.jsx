@@ -66,7 +66,7 @@ const VendorProfileDetails = (props) => {
             if (res.status === 200) {
                 console.log(res.data)
                 setUserId(res.data.data.id)
-                setUserData(res.data.data.vendor);
+                setUserData(res.data.data);
                 setFormData({
                     name: res.data.data.vendor.name || '',
                     address: res.data.data.vendor.address || '',
@@ -231,11 +231,11 @@ const VendorProfileDetails = (props) => {
                                     alignItems: 'center'
                                 }}>
                                     <Avatar
-                                        alt={userData.name || "User Avatar"}
-                                        src={userData.logo || "default_avatar.jpg"}
+                                        alt={userData.vendor.name || "User Avatar"}
+                                        src={userData.vendor.logo || "default_avatar.jpg"}
                                         sx={{ width: 150, height: 150 }}
                                     />
-                                    <Typography variant="h6">{userData.name}</Typography>
+                                    <Typography variant="h6">{userData.vendor.name}</Typography>
                                 </Grid>
 
                                 <Input
@@ -285,7 +285,7 @@ const VendorProfileDetails = (props) => {
                                             ) : (
                                                 <>
                                                     <Typography variant="body2" sx={{ flexGrow: 1 }}>
-                                                        {`${field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}: ${userData[field]}`}
+                                                        {`${field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}: ${userData.vendor[field]}`}
                                                     </Typography>
                                                     <IconButton onClick={() => handleEditClick(field)}>
                                                         <Edit />
@@ -299,7 +299,7 @@ const VendorProfileDetails = (props) => {
                                 <BankDetailsContainer>
                                     <BankDetailsLabel variant="caption">Stripe details</BankDetailsLabel>
 
-                                    {userData.stripe_id === null ? (['email'].map((field) => (
+                                    {userData.vendor.stripe_id === null ? (['email'].map((field) => (
                                         <TextField
                                             key={field}
                                             label={field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}
@@ -331,7 +331,7 @@ const VendorProfileDetails = (props) => {
 
                                     }
                                     {
-                                        userData.stripe_id === null && (
+                                        userData.vendor.stripe_id === null && (
                                             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
                                                 <Button
                                                     variant="contained"
