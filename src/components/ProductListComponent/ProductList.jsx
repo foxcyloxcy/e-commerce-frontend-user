@@ -34,6 +34,7 @@ const ProductList = (props) => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [hoveredCategory, setHoveredCategory] = useState(null);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+    const [keyword, setKeyword] = useState('');
     const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
     const [elevate, setElevate] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -69,6 +70,10 @@ const ProductList = (props) => {
                 query += `filter[min_price]=${priceRange[0]}&filter[max_price]=${priceRange[1]}&`;
             }
 
+            if (keyword) {
+                query += `keyword=${keyword}&`; // Added keyword to the query
+            }
+
             const res = await api.get(query);
             if (res.status === 200) {
                 console.log(res.data)
@@ -77,7 +82,7 @@ const ProductList = (props) => {
         } catch (error) {
             console.log(error);
         }
-    }, [priceRange]);
+    }, [priceRange, keyword]);
 
 
     const trigger = useScrollTrigger({
@@ -141,6 +146,11 @@ const ProductList = (props) => {
             setHoveredCategory(null);
             setAnchorEl(null);
         }
+    };
+
+    const handleSearchChange = (event) => {
+        console.log(event)
+        setKeyword(event.target.value); // Updates the keyword on input change
     };
 
     const Search = styled('div')(({ theme }) => ({
@@ -222,6 +232,8 @@ const ProductList = (props) => {
                             <StyledInputBase
                                 placeholder="Search…"
                                 inputProps={{ 'aria-label': 'search' }}
+                                value={keyword}
+                                onInput={handleSearchChange} // Update keyword on typing
                             />
                         </Search>
                         {!isSmallScreen && categories.map((category) => (
@@ -229,25 +241,7 @@ const ProductList = (props) => {
                                 key={category.id}
                                 onMouseEnter={(event) => handleMouseEnter(category.id, event)}
                                 sx={{
-                                    fontSize: '0.50rem',
-                                    '@media (min-width:200px)': {
-                                        fontSize: '0.3rem',
-                                    },
-                                    '@media (min-width:300px)': {
-                                        fontSize: '0.4rem',
-                                    },
-                                    '@media (min-width:400px)': {
-                                        fontSize: '0.5rem',
-                                    },
-                                    '@media (min-width:600px)': {
-                                        fontSize: '0.6rem',
-                                    },
-                                    '@media (min-width:960px)': {
-                                        fontSize: '0.8rem',
-                                    },
-                                    '@media (min-width:1280px)': {
-                                        fontSize: '1rem',
-                                    },
+                                    fontSize: '1rem',
                                 }}
                             >
                                 {category.name}
