@@ -22,6 +22,7 @@ import PrivacyPolicy from './staticPages/PrivacyPolicyComponent/PrivacyPolicy';
 import AddVendorProfileDetails from './components/UserProfileComponent/VendorProfileComponent/AddVendorProfileDetails';
 import PaymentSuccess from './components/PaymentSuccessComponent/PaymentSuccess';
 import ChatMessage from './components/ChatMessageComponent/ChatMessage';
+import ViewOffers from './components/UserProfileComponent/OffersToMeComponent/ViewOffers';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -141,6 +142,15 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <MyProfile userToken={userToken} userData={userData} />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/view-offers"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <ViewOffers userToken={userToken} userData={userData} />
             </ProtectedRoute>
           }
         />
