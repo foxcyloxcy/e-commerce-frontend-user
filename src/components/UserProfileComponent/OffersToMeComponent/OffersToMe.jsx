@@ -28,9 +28,9 @@ const OffersToMe = (props) => {
     const [productsData, setProductsData] = useState([]);
     const navigate = useNavigate();
 
-    const loadMyOffers = useCallback(async () => {
+    const loadOffersToMe = useCallback(async () => {
         try {
-            const res = await api.get(`/api/auth/me/items?status=0,1,2&page=1size=10`, {
+            const res = await api.get(`/api/auth/me/my-offers`, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -38,6 +38,7 @@ const OffersToMe = (props) => {
             });
 
             if (res.status === 200) {
+                console.log(res.data)
                 setProductsData(res.data.data.data);
             }
         } catch (error) {
@@ -46,12 +47,27 @@ const OffersToMe = (props) => {
     }, [userToken]);
 
     useEffect(() => {
-        loadMyOffers();
-    }, [loadMyOffers]);
+        loadOffersToMe();
+    }, [loadOffersToMe]);
 
-    const handleDetailsClick = (product) => {
-        navigate('/product-details', { state: { product } });
+    const handleViewOffers = (product) => {
+        navigate('/view-offers', { state: { product } });
     };
+
+    if (!productsData) {
+        return (
+            <Grid container spacing={2} sx={{
+                minHeight: "70vh",
+                mt: 5,
+            }}>
+                <Grid item>
+                <Typography>
+                    No offers available.
+                </Typography>
+                </Grid>
+            </Grid>
+        )
+    }
 
     return (
         <Grid container spacing={2}>
@@ -94,7 +110,7 @@ const OffersToMe = (props) => {
                                 variant="contained"
                                 color="primary"
                                 fullWidth
-                                onClick={() => handleDetailsClick(product)}
+                                onClick={() => handleViewOffers(product)}
                             >
                                 View offers
                             </Button>
