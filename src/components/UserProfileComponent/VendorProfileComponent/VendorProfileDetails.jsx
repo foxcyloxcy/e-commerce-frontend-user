@@ -43,12 +43,10 @@ const BankDetailsLabel = styled(Typography)(({ theme }) => ({
 const VendorProfileDetails = (props) => {
     const { userToken } = props;
     const [userData, setUserData] = useState({});
-    const [userId, setUserId] = useState("");
-    const [editBankDetails, setEditBankDetails] = useState(false);
     const [editField, setEditField] = useState(null); // Track which field is being edited
     const [formData, setFormData] = useState({
-        name:"",
-        address:"",
+        name: "",
+        address: "",
         email: "",
         stripe_id: ""
     });
@@ -180,8 +178,8 @@ const VendorProfileDetails = (props) => {
                         const stripeUrlOnboarding = res.data.data.url
                         window.location.href = stripeUrlOnboarding
                     }
-                  });
-                  loadProfile();
+                });
+                loadProfile();
             }
         } catch (error) {
             console.log("Error updating Stripe details:", error);
@@ -202,23 +200,25 @@ const VendorProfileDetails = (props) => {
     }, [loadProfile]);
 
     if (!userData || !userData.vendor) {
-        return <Typography>Loading...</Typography>;
+        return (
+            <Grid container spacing={2}>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    sx={{ mt: 2 }}
+                    onClick={handleAddVendorProfile}
+                >
+                    Add Vendor Profile Details
+                </Button>
+            </Grid>
+        )
     }
 
     return (
         <ThemeProvider theme={ModTheme}>
             <ProfileInfo>
                 <Grid container spacing={2}>
-                    {userData.is_vendor === 'No' ? (
-                        <Button
-                            variant="contained"
-                            color="secondary"
-                            sx={{ mt: 2 }}
-                            onClick={handleAddVendorProfile}
-                        >
-                            Add Vendor Profile Details
-                        </Button>
-                    ) : (
+                    {userData.is_vendor === 'Yes' && (
                         <>
                             <Grid item xs={12} sm={12}
                                 sx={{
@@ -312,7 +312,7 @@ const VendorProfileDetails = (props) => {
                                             key={field}
                                             label={field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}
                                             name={field}
-                                            value={formData[field]  || ""}
+                                            value={formData[field] || ""}
                                             onChange={handleChange}
                                             fullWidth
                                             margin="normal"
