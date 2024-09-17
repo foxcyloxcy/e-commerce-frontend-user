@@ -30,7 +30,7 @@ const MyOffers = (props) => {
 
     const loadMyOffers = useCallback(async () => {
         try {
-            const res = await api.get(`/api/auth/me/items?status=0,1,2&page=1size=10`, {
+            const res = await api.get(`/api/auth/me/offers-to-me`, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -38,6 +38,7 @@ const MyOffers = (props) => {
             });
 
             if (res.status === 200) {
+                console.log(res.data)
                 setProductsData(res.data.data.data);
             }
         } catch (error) {
@@ -60,11 +61,9 @@ const MyOffers = (props) => {
                     <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
                         {/* Status Badge */}
                         <StatusBadge status={product.status}>
-                            {product.status === 0 ? 'Pending' : 
-                            product.status === 1 ? 'Approved' : 
-                            product.status === 2 ? 'Rejected': 
-                            product.status === 3 ? 'Sold':
-                            product.status === 4 ? 'Bid accepted': 'Archived'}
+                            {
+                            product.status === 1 ? 'Offer accepted' : 'Offer rejected'
+                            }
                         </StatusBadge>
 
                         {/* Product Image */}
@@ -97,7 +96,7 @@ const MyOffers = (props) => {
                                 sx={{ marginTop: '10px' }}
                                 onClick={() => handleDetailsClick(product)}
                             >
-                                Details
+                                Buy item
                             </Button>
                         </CardContent>
                     </Card>
