@@ -27,7 +27,7 @@ import ProductListGridView from './ProductViewComponent/ProductListGridView';
 import { useLocation } from 'react-router-dom';
 
 const ProductList = (props) => {
-    const { parentIsLoggedIn } = props;
+    const { parentIsLoggedIn, userToken } = props;
     const [anchorEl, setAnchorEl] = useState(null);
     const [categories, setCategories] = useState([]);
     const [openCategory, setOpenCategory] = useState({});
@@ -66,7 +66,7 @@ const ProductList = (props) => {
             }
 
             if (priceRange[0] !== '' && priceRange[1] !== '') {
-                query += `filter[min_price]=${priceRange[0]}&filter[max_price]=${priceRange[1]}`;
+                query += `filter[min_price]=${priceRange[0]}&filter[max_price]=${priceRange[1]}&`;
             }
 
             const res = await api.get(query);
@@ -309,7 +309,7 @@ const ProductList = (props) => {
                             <ProductListGridView productsData={productsData} handleProductView={handleProductView} />
                     } */}
 
-                    <ProductListGridView productsData={productsData} handleProductView={handleProductView} />
+                    <ProductListGridView productsData={productsData} handleProductView={handleProductView} userToken={userToken} />
 
                 </Grid>
             </Container>
