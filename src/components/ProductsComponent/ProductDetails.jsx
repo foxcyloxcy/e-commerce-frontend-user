@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';  // Make sure you have SweetAlert2 installed
 import ModTheme from '../ThemeComponent/ModTheme';
 import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
@@ -12,12 +12,12 @@ import api from '../../assets/baseURL/api';
 
 const ProductDetails = () => {
     const { state } = useLocation();
-    const { productUuid, userToken } = state;
-    const history = useHistory();  // Required for redirection
+    const { productUuid, userToken, userData } = state;
+    const history = useNavigate();  // Required for redirection
     const [productsData, setProductsData] = useState(null);
     const [offerPrice, setOfferPrice] = useState('');
     const [loading, setLoading] = useState(false);  // Loading state for offers
-
+    console.log(userData)
     const loadProducts = useCallback(async () => {
         try {
             let query = `api/global/items/${productUuid}`;
