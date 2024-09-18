@@ -30,7 +30,7 @@ const OffersToMe = (props) => {
 
     const loadOffersToMe = useCallback(async () => {
         try {
-            const res = await api.get(`/api/auth/me/my-offers`, {
+            const res = await api.get(`/api/auth/me/offers-to-me`, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -76,11 +76,7 @@ const OffersToMe = (props) => {
                     <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
                         {/* Status Badge */}
                         <StatusBadge status={product.status}>
-                            {product.status === 0 ? 'Pending' : 
-                            product.status === 1 ? 'Available offers {count}' : 
-                            product.status === 2 ? 'Rejected': 
-                            product.status === 3 ? 'Sold':
-                            product.status === 4 ? 'Bid accepted': 'Archived'}
+                            Available offers(${product.offers})
                         </StatusBadge>
 
                         {/* Product Image */}

@@ -53,7 +53,7 @@ const ViewOffers = () => {
             }}>
                 <Grid item>
                 <Typography>
-                    No offers
+                    Loading...
                 </Typography>
                 </Grid>
             </Grid>
