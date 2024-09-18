@@ -17,11 +17,20 @@ const ProductDetails = () => {
     const [productsData, setProductsData] = useState(null);
     const [offerPrice, setOfferPrice] = useState('');
     const [loading, setLoading] = useState(false);  // Loading state for offers
-    console.log(userData)
+    const [parsedUserData, setParsedUserData] = useState("")
+    console.log(userToken)
+    // if(state){
+    //     setParsedUserData(JSON.parse(userData))
+    // }
+
     const loadProducts = useCallback(async () => {
         try {
-            let query = `api/global/items/${productUuid}`;
-            const res = await api.get(query);
+            const res = await api.get(`api/global/items/${productUuid}`, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                    'Content-Type': 'application/json',
+                },
+            });
             console.log(res.data)
             if (res.status === 200) {
                 setProductsData(res.data);
@@ -52,13 +61,14 @@ const ProductDetails = () => {
         }
     };
 
-    const handleOffers = async (productId) => {
+    const handleOffers = async (productData) => {
+        console.log(productData)
         setLoading(true);  // Set loading to true while processing
         const formData = new FormData();
-        formData.append('item_id', productId);
-        formData.append('seller_id', productsData.item_details.seller_id);  // Assuming seller_id is available in item_details
-        formData.append('buyer_id', productsData.buyer_id);  // Assuming buyer_id is fetched or passed in product details
-        formData.append('remarks', 'Your offer remarks');  // You can modify this to get input from a user field
+        formData.append('item_id', productData.item_details.id);
+        formData.append('seller_id', productData.item_details.user.id);  // Assuming seller_id is available in item_details
+        formData.append('buyer_id', parsedUserData.id);  // Assuming buyer_id is fetched or passed in product details
+        formData.append('remarks', 'sample remarks');  // You can modify this to get input from a user field
         formData.append('asking_price', offerPrice);  // Use state value for the asking price
 
         try {
@@ -74,9 +84,8 @@ const ProductDetails = () => {
 
                 Swal.fire({
                     title: successMessage,
-                    text: 'Your offer has been sent.',
                     icon: 'success',
-                    showCancelButton: true,
+                    showCancelButton: false,
                     confirmButtonText: 'Continue shopping',
                     confirmButtonColor: ModTheme.palette.primary.main,
                 }).then((result) => {
@@ -147,15 +156,25 @@ const ProductDetails = () => {
                         <Typography variant="h6" gutterBottom>
                             {productsData.item_details.item_name}
                         </Typography>
-                        <Typography component="div" color="primary">
-                            AED {formatPrice(productsData.item_details.price)}
-                        </Typography>
+                        {
+                            productsData.item_details.my_offer === null || productsData.item_details.my_offer === "" ? (
+                                <Typography component="div" color="primary">
+                                    AED {formatPrice(productsData.item_details.price)}
+                                </Typography>
+                            ) :
+                                (
+                                    <Typography component="div" color="primary">
+                                        AED {formatPrice(productsData.item_details.my_offer.asking_price)}
+                                    </Typography>
+                                )
+                        }
                         <Typography variant="body1" color="textSecondary" paragraph>
                             {productsData.item_details.item_description}
                         </Typography>
                         <Grid container alignItems="center" spacing={2} width="100%">
                             {productsData.item_details.is_bid === 1 && (
-                                <>
+                                productsData.item_details.my_offer === null &&(
+                                    <>
                                     <Grid item width="60%">
                                         <TextField
                                             size="small"
@@ -173,11 +192,12 @@ const ProductDetails = () => {
                                             buttonVariant="contained"
                                             textColor="primary.contrastText"
                                             hoverTextColor="secondary.main"
-                                            onClick={() => handleOffers(productsData.item_details.id)}
+                                            onClick={() => handleOffers(productsData)}
                                             disabled={loading || !offerPrice}
                                         />
                                     </Grid>
                                 </>
+                                )
                             )}
                             <Grid item width="100%">
                                 <ButtonComponent
