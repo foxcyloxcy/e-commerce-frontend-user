@@ -24,13 +24,14 @@ const StatusBadge = styled(Box)(({ theme, status }) => ({
 }));
 
 const MyOffers = (props) => {
-    const { userToken } = props;
+    const { userToken, fromParentUserData } = props;
     const [productsData, setProductsData] = useState([]);
     const navigate = useNavigate();
+    const userData = fromParentUserData
 
     const loadMyOffers = useCallback(async () => {
         try {
-            const res = await api.get(`/api/auth/me/offers-to-me`, {
+            const res = await api.get(`/api/auth/me/my-offers`, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -39,7 +40,7 @@ const MyOffers = (props) => {
 
             if (res.status === 200) {
                 console.log(res.data)
-                setProductsData(res.data.data.data);
+                setProductsData(res.data.data);
             }
         } catch (error) {
             console.log(error);
@@ -50,8 +51,8 @@ const MyOffers = (props) => {
         loadMyOffers();
     }, [loadMyOffers]);
 
-    const handleDetailsClick = (product) => {
-        navigate('/product-details', { state: { product } });
+    const handleDetailsClick = (productUuid) => {
+        navigate('/product-details', { state: { productUuid, userToken, userData } });
     };
 
     return (
@@ -61,9 +62,7 @@ const MyOffers = (props) => {
                     <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
                         {/* Status Badge */}
                         <StatusBadge status={product.status}>
-                            {
-                            product.status === 1 ? 'Offer accepted' : 'Offer rejected'
-                            }
+                            {product.my_offer.bid_status_name}
                         </StatusBadge>
 
                         {/* Product Image */}
@@ -89,15 +88,19 @@ const MyOffers = (props) => {
 
                         {/* Details Button */}
                         <CardContent sx={{ position: 'absolute', width: '100%', top: '84%' }}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                                sx={{ marginTop: '10px' }}
-                                onClick={() => handleDetailsClick(product)}
-                            >
-                                Buy item
-                            </Button>
+                            {
+                                product.my_offer.is_accepted === 1 && (
+                                    <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    sx={{ marginTop: '10px' }}
+                                    onClick={() => handleDetailsClick(product.uuid)}
+                                >
+                                    Buy item
+                                </Button>
+                                )
+                            }
                         </CardContent>
                     </Card>
                 </Grid>
