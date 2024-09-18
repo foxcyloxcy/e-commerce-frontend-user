@@ -14,8 +14,9 @@ import {
     List,
     ListItem,
     ListItemText,
+    Pagination
 } from '@mui/material';
-import { Search as SearchIcon, Menu as MenuIcon, ExpandLess, ExpandMore} from '@mui/icons-material';
+import { Search as SearchIcon, Menu as MenuIcon, ExpandLess, ExpandMore } from '@mui/icons-material';
 import InputBase from '@mui/material/InputBase';
 import ModTheme from '../ThemeComponent/ModTheme';
 import { styled } from '@mui/material/styles';
@@ -43,6 +44,10 @@ const ProductList = (props) => {
     const location = useLocation();
     const [priceRange, setPriceRange] = useState(['', '']);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [itemsPerPage] = useState(8);
+
     const handleApplyPriceRange = (minPrice, maxPrice) => {
         setPriceRange([minPrice, maxPrice]);
     };
@@ -58,9 +63,9 @@ const ProductList = (props) => {
         }
     }, []);
 
-    const loadProducts = useCallback(async (subCategoryId) => {
+    const loadProducts = useCallback(async (subCategoryId, page) => {
         try {
-            let query = `api/global/items?`;
+            let query = `api/global/items?page=${page}&size=${itemsPerPage}`;
 
             if (subCategoryId) {
                 query += `sub_category_id=${subCategoryId}&`;
@@ -77,7 +82,10 @@ const ProductList = (props) => {
             const res = await api.get(query);
             if (res.status === 200) {
                 console.log(res.data)
-                setProductsData(res.data.data.data);
+                let fetchedProducts = res.data.data.data;
+
+                setProductsData(fetchedProducts);
+                setTotalPages(res.data.data.last_page);
             }
         } catch (error) {
             console.log(error);
@@ -94,7 +102,7 @@ const ProductList = (props) => {
         loadCategories();
 
         const subCategoryIdFromRoute = location.state?.subCategoryId;
-        loadProducts(subCategoryIdFromRoute);
+        loadProducts(subCategoryIdFromRoute, currentPage);
 
         if (parentIsLoggedIn === true) {
             setIsLoggedIn(parentIsLoggedIn);
@@ -103,7 +111,7 @@ const ProductList = (props) => {
         }
 
 
-    }, [loadCategories, loadProducts, parentIsLoggedIn]);
+    }, [loadCategories, loadProducts, parentIsLoggedIn, currentPage]);
 
     useEffect(() => {
 
@@ -117,6 +125,10 @@ const ProductList = (props) => {
 
     const toggleDrawer = () => {
         setDrawerOpen(!drawerOpen);
+    };
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
     };
 
     const handleToggleCategory = (categoryId) => {
@@ -302,6 +314,16 @@ const ProductList = (props) => {
                     } */}
 
                     <ProductListGridView productsData={productsData} handleProductView={handleProductView} userToken={userToken} userData={userData} />
+
+                    <Grid item xs={12}>
+                        <Pagination
+                            count={totalPages}
+                            page={currentPage}
+                            onChange={handlePageChange}
+                            color="primary"
+                            shape="rounded"
+                        />
+                    </Grid>
 
                 </Grid>
             </Container>
