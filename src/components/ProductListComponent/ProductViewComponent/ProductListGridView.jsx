@@ -18,11 +18,9 @@ import { styled } from '@mui/system';
 import PriceBreakdownModal from '../../ReusableComponents/ModalComponent/PriceBreakDownModal';
 
 const ProductListGridView = ({ productsData, userToken, userData }) => {
+    console.log(productsData)
     const navigate = useNavigate();
 
-    // Pagination state
-    const [currentPage, setCurrentPage] = useState(1);
-    const productsPerPage = 8; // Number of products per page
 
     // State for managing the modal
     const [openPriceBreakdownModal, setOpenPriceBreakdownModal] = useState(false);
@@ -57,10 +55,6 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
-    // Get current products based on pagination
-    const indexOfLastProduct = currentPage * productsPerPage;
-    const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-    const currentProducts = productsData.slice(indexOfFirstProduct, indexOfLastProduct);
 
     return (
         <Grid item xs={12} md={8} lg={9}>
@@ -80,7 +74,7 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
                 </Grid>
             </header>
             <Grid container spacing={2}>
-                {currentProducts.map((product) => (
+                {productsData.map((product) => (
                     <Grid item xs={6} sm={6} md={4} lg={3} key={product.id}>
                         <Box sx={{ display: 'flex', alignItems: 'center', padding: 1 }}>
                             <Avatar src={product.user.vendor.logo} alt={product.user.vendor.name} />
@@ -144,15 +138,6 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
                 ))}
             </Grid>
 
-            {/* Pagination Controls */}
-            <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
-                <Pagination
-                    count={Math.ceil(productsData.length / productsPerPage)}
-                    page={currentPage}
-                    onChange={handlePageChange}
-                    color="primary"
-                />
-            </Box>
 
             {/* Reuse PriceBreakdownModal */}
             {selectedProduct && (
