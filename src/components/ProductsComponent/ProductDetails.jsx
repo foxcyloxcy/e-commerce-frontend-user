@@ -163,9 +163,14 @@ const ProductDetails = () => {
                                 </Typography>
                             ) :
                                 (
+                                    <>
+                                    <Typography component="div" color="primary" sx={{textDecoration: 'line-through'}}>
+                                    AED {formatPrice(productsData.item_details.price)}
+                                    </Typography>
                                     <Typography component="div" color="primary">
                                         AED {formatPrice(productsData.item_details.my_offer.asking_price)}
                                     </Typography>
+                                    </>
                                 )
                         }
                         <Typography variant="body1" color="textSecondary" paragraph>
