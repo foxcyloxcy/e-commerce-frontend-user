@@ -3,7 +3,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import { Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2';  // Make sure you have SweetAlert2 installed
 import ModTheme from '../ThemeComponent/ModTheme';
 import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
@@ -12,7 +13,10 @@ import api from '../../assets/baseURL/api';
 const ProductDetails = () => {
     const { state } = useLocation();
     const { productUuid, userToken } = state;
+    const history = useHistory();  // Required for redirection
     const [productsData, setProductsData] = useState(null);
+    const [offerPrice, setOfferPrice] = useState('');
+    const [loading, setLoading] = useState(false);  // Loading state for offers
 
     const loadProducts = useCallback(async () => {
         try {
@@ -32,7 +36,6 @@ const ProductDetails = () => {
     }, [loadProducts]);
 
     const handleStripeCheckout = async (uuid) => {
-        ///auth/payment/stripe/checkout/433fdb20-4407-11ef-b55e-c36eafd50a09
         try {
             const res = await api.post(`/api/auth/payment/stripe/checkout/session/${uuid}`, "sample", {
                 headers: {
@@ -47,7 +50,52 @@ const ProductDetails = () => {
         } catch (error) {
             console.log("Error:", error);
         }
-      };
+    };
+
+    const handleOffers = async (productId) => {
+        setLoading(true);  // Set loading to true while processing
+        const formData = new FormData();
+        formData.append('item_id', productId);
+        formData.append('seller_id', productsData.item_details.seller_id);  // Assuming seller_id is available in item_details
+        formData.append('buyer_id', productsData.buyer_id);  // Assuming buyer_id is fetched or passed in product details
+        formData.append('remarks', 'Your offer remarks');  // You can modify this to get input from a user field
+        formData.append('asking_price', offerPrice);  // Use state value for the asking price
+
+        try {
+            const res = await api.post("/api/auth/item-bid", formData, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            if (res.status === 200) {
+                const successMessage = res.data.message;
+
+                Swal.fire({
+                    title: successMessage,
+                    text: 'Your offer has been sent.',
+                    icon: 'success',
+                    showCancelButton: true,
+                    confirmButtonText: 'Continue shopping',
+                    confirmButtonColor: ModTheme.palette.primary.main,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        history("/shop");
+                    }
+                });
+            }
+        } catch (error) {
+            console.log(error);
+            Swal.fire({
+                title: 'Error!',
+                text: 'Something went wrong. Please try again later.',
+                icon: 'error',
+            });
+        } finally {
+            setLoading(false);  // Stop loading after processing
+        }
+    };
 
     const formatPrice = (price) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -113,6 +161,8 @@ const ProductDetails = () => {
                                             size="small"
                                             label="ENTER OFFER"
                                             variant="outlined"
+                                            value={offerPrice}
+                                            onChange={(e) => setOfferPrice(e.target.value)}
                                             sx={{ marginRight: 2 }}
                                         />
                                     </Grid>
@@ -123,6 +173,8 @@ const ProductDetails = () => {
                                             buttonVariant="contained"
                                             textColor="primary.contrastText"
                                             hoverTextColor="secondary.main"
+                                            onClick={() => handleOffers(productsData.item_details.id)}
+                                            disabled={loading || !offerPrice}
                                         />
                                     </Grid>
                                 </>
@@ -135,7 +187,7 @@ const ProductDetails = () => {
                                     textColor="primary.contrastText"
                                     hoverTextColor="secondary.main"
                                     startIcon={<AddShoppingCartIcon />}
-                                    onClick={() =>handleStripeCheckout(productUuid)}
+                                    onClick={() => handleStripeCheckout(productUuid)}
                                 />
                             </Grid>
                         </Grid>
@@ -166,7 +218,7 @@ const ProductDetails = () => {
                                             {info.values.length > 0
                                                 ? info.values.map((value) => (
                                                     <Typography key={value.id}>{value.name}</Typography>
-                                                  ))
+                                                ))
                                                 : 'Not Available'}
                                         </TableCell>
                                     ))}
