@@ -27,7 +27,7 @@ import ProductListGridView from './ProductViewComponent/ProductListGridView';
 import { useLocation } from 'react-router-dom';
 
 const ProductList = (props) => {
-    const { parentIsLoggedIn, userToken } = props;
+    const { parentIsLoggedIn, userToken, userData } = props;
     const [anchorEl, setAnchorEl] = useState(null);
     const [categories, setCategories] = useState([]);
     const [openCategory, setOpenCategory] = useState({});
@@ -210,8 +210,6 @@ const ProductList = (props) => {
                         boxShadow: elevate ? '4px 4px 0px 2px rgba(0, 0, 0, 0.3)' : 'none',
                         borderBottom: elevate ? 'none' : `2px #606060 solid`,
                         borderTop: elevate ? `2px #606060 solid` : 'none',
-                        paddingLeft: 1,
-                        paddingRight: 1,
                         zIndex: 3, // To make sure the AppBar is above the overlay
                     }}
                 >
@@ -303,7 +301,7 @@ const ProductList = (props) => {
                             <ProductListGridView productsData={productsData} handleProductView={handleProductView} />
                     } */}
 
-                    <ProductListGridView productsData={productsData} handleProductView={handleProductView} userToken={userToken} />
+                    <ProductListGridView productsData={productsData} handleProductView={handleProductView} userToken={userToken} userData={userData} />
 
                 </Grid>
             </Container>
