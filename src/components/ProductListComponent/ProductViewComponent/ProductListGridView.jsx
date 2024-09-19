@@ -58,21 +58,6 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
 
     return (
         <Grid item xs={12} md={8} lg={9}>
-            <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
-                <Grid container display="flex" justifyContent="space-between" alignItems="center">
-                    <Grid item xs={4} sm={4} md={4}>
-                        <Typography variant="body1">{productsData.length} Items found</Typography>
-                    </Grid>
-                    <Grid item xs={4} sm={4} md={4}>
-                        {/* <FormControl variant="outlined" sx={{ minWidth: '100%' }}>
-                            <Select defaultValue="latest">
-                                <MenuItem value="latest">Latest items</MenuItem>
-                                <MenuItem value="cheapest">Cheapest</MenuItem>
-                            </Select>
-                        </FormControl> */}
-                    </Grid>
-                </Grid>
-            </header>
             <Grid container spacing={2}>
                 {productsData.map((product) => (
                     <Grid item xs={6} sm={6} md={4} lg={3} key={product.id}>
