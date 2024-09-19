@@ -65,9 +65,12 @@ const ProductList = (props) => {
     }, []);
 
     const loadProducts = useCallback(async (subCategoryId, page) => {
+        if(!page){
+            page = 1
+        }
 
         try {
-            let query = `api/global/items?page=${page}&size=${itemsPerPage}`;
+            let query = `api/global/items?page=${page}&size=${itemsPerPage}&`;
 
             if (subCategoryId) {
                 query += `sub_category_id=${subCategoryId}&`;
