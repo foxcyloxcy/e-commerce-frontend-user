@@ -14,7 +14,8 @@ import {
     List,
     ListItem,
     ListItemText,
-    Pagination
+    Pagination,
+    Typography
 } from '@mui/material';
 import { Search as SearchIcon, Menu as MenuIcon, ExpandLess, ExpandMore } from '@mui/icons-material';
 import InputBase from '@mui/material/InputBase';
@@ -64,6 +65,7 @@ const ProductList = (props) => {
     }, []);
 
     const loadProducts = useCallback(async (subCategoryId, page) => {
+
         try {
             let query = `api/global/items?page=${page}&size=${itemsPerPage}`;
 
@@ -208,7 +210,7 @@ const ProductList = (props) => {
             <Container sx={{
                 minHeight: '60vh',
                 marginTop: 18,
-                marginBottom: 10,
+                marginBottom: 5,
                 maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
                 zIndex: 2, // To make sure the container is above the overlay
             }}>
@@ -235,17 +237,6 @@ const ProductList = (props) => {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Search>
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
-                                value={keyword}
-                                onInput={handleSearchChange} // Update keyword on typing
-                            />
-                        </Search>
                         {!isSmallScreen && categories.map((category) => (
                             <Button
                                 key={category.id}
@@ -260,6 +251,38 @@ const ProductList = (props) => {
                         ))}
                     </Toolbar>
                 </AppBar>
+                <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
+                    <Grid container display="flex" justifyContent="space-between" alignItems="center">
+                    <Grid item xs={6} sm={6} md={4} lg={4}>
+                        <Search>
+                            <SearchIconWrapper>
+                                <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                                placeholder="Search…"
+                                inputProps={{ 'aria-label': 'search' }}
+                                value={keyword}
+                                onInput={handleSearchChange} // Update keyword on typing
+                            />
+                        </Search>
+                        </Grid>
+                        <Grid item xs={6} sm={6} md={8} lg={8}>
+                            <Typography variant="body1" sx={{
+                                display: 'flex',
+                                justifyContent: {xs:'flex-end', sm:'flex-end', md:'flex-end'},
+                                flexDirection: 'row'
+                            }}>{productsData.length} Items found</Typography>
+                        </Grid>
+                        {/* <Grid item xs={4} sm={4} md={4}>
+                            <FormControl variant="outlined" sx={{ minWidth: '100%' }}>
+                            <Select defaultValue="latest">
+                                <MenuItem value="latest">Latest items</MenuItem>
+                                <MenuItem value="cheapest">Cheapest</MenuItem>
+                            </Select>
+                        </FormControl>
+                        </Grid> */}
+                    </Grid>
+                </header>
                 {hoveredCategory && (
                     <Popper
                         open={Boolean(hoveredCategory)}
@@ -306,16 +329,10 @@ const ProductList = (props) => {
                             />
                         </Grid>
                     )}
-                    {/* {
-                        listView === 'list' ?
-                            <ProductListListView productsData={productsData} handleProductView={handleProductView} />
-                            :
-                            <ProductListGridView productsData={productsData} handleProductView={handleProductView} />
-                    } */}
 
                     <ProductListGridView productsData={productsData} handleProductView={handleProductView} userToken={userToken} userData={userData} />
 
-                    <Grid item xs={12}>
+                    <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                         <Pagination
                             count={totalPages}
                             page={currentPage}
