@@ -17,7 +17,6 @@ import api from '../../assets/baseURL/api';
 import secureLocalStorage from "react-secure-storage";
 import secure from '../../assets/baseURL/secure';
 
-
 export default function Login({ refreshParent }) {
   const storageKey = secure.storageKey;
   const storagePrefix = secure.storagePrefix;
@@ -27,9 +26,14 @@ export default function Login({ refreshParent }) {
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState('');
 
-  const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(String(email).toLowerCase());
+  const validateEmailOrPhone = (input) => {
+    // Email regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    // UAE phone number regex (+971 123456789)
+    const phoneRegex = /^\+971\d{9}$/;
+
+    return emailRegex.test(String(input).toLowerCase()) || phoneRegex.test(input);
   };
 
   const handleSubmit = async (event) => {
@@ -38,8 +42,8 @@ export default function Login({ refreshParent }) {
 
     if (!formValues.email) {
       errors.email = 'Email or Phone no. field is required.';
-    } else if (!validateEmail(formValues.email)) {
-      errors.email = 'Please enter a valid email address.';
+    } else if (!validateEmailOrPhone(formValues.email)) {
+      errors.email = 'Please enter a valid email or UAE phone number.';
     }
 
     if (!formValues.password) {
@@ -80,15 +84,15 @@ export default function Login({ refreshParent }) {
     }
   };
 
-  const handleErrorMessage = useCallback((props)=>{
+  const handleErrorMessage = useCallback((props) => {
     let errors = {};
 
-    if(props.data.message){
-        setLoginError("Login failed! "+ props.data.message[0].password)
-     }
+    if (props.data.message) {
+      setLoginError("Login failed! " + props.data.message[0].password);
+    }
 
-     setFormErrors(errors);
-})
+    setFormErrors(errors);
+  });
 
   const handleInputChange = useCallback((event) => {
     const { name, value } = event.target;
