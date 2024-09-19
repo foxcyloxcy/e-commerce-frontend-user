@@ -84,8 +84,8 @@ const DrawerContent = ({
     }, [subCategoryFromParent]);
 
     return (
-        <Container sx={{ width: 300, padding: 2 }}>
-            <Typography variant="h6" sx={{ paddingTop: 2, paddingBottom: 2 }}>Filters</Typography>
+        <Container sx={{ width: 300}}>
+            <Typography variant="h6" sx={{ paddingBottom: 2 }}>Filters</Typography>
             <Divider />
 
             <Typography variant="h6" gutterBottom>Price range</Typography>
