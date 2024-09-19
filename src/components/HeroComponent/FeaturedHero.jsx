@@ -23,7 +23,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
 
   const item = {
     image: imageRoute, // Replace with your image URL
-    title: 'Relove and repurpose your belongings, buy and sell your second hand items.',
+    title: 'Shop and Sell Secondhand',
     description: 'Sell now and make space for something new!',
   };
 
@@ -68,17 +68,17 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
 
           <Button
             variant="contained"
-            color="primary"
             onClick={handlePostItemRoute}
-            sx={{marginBottom: 1, marginRight: 1}}
+            sx={{marginBottom: 1, marginRight: 1, borderRadius: 1,
+              backgroundColor: ModTheme.palette.primary.light,}}
           >
             POST AN ITEM
           </Button>
           or
           <Button
             variant="contained"
-            color="primary"
-            sx={{ marginLeft: 1, marginBottom: 1 }}
+            sx={{marginBottom: 1, marginLeft: 1, borderRadius: 1,
+              backgroundColor: ModTheme.palette.primary.light,}}
             onClick={handleSearchRoute}
           >
             SEARCH FOR ITEMS
