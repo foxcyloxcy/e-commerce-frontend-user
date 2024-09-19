@@ -92,10 +92,14 @@ const NavBar = (props) => {
           <Toolbar>
 
             {isSmallScreen || isMediumScreen ? (
-              <img src={elevate || linkPathName.pathname !== '/' ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              <a href="/" style={{height: '80px', width:'100%'}}>
+                <img src={elevate || linkPathName.pathname !== '/' ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+              </a>
             ) : (
               <Typography component="div" sx={{ flexGrow: 1 }}>
-                <img src={elevate || linkPathName.pathname !== '/' ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '150px', height: 'auto', objectFit: 'contain' }} />
+                <a href="/">
+                  <img src={elevate || linkPathName.pathname !== '/' ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '150px', height: 'auto', objectFit: 'contain' }} />
+                </a>
               </Typography>
             )}
 
