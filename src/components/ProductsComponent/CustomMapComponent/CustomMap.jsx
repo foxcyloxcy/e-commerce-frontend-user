@@ -93,7 +93,7 @@ const CustomMap = (props) => {
   return (
     <>
         <div className="map-container">
-        <input type="text" ref={inputRef} required/>
+        <input type="text" ref={inputRef} required style={{ height: "40px", width: "100%", zIndex: 1 }}/>
         <div id="map" ref={mapRef} style={{ height: "490px", width: "100%", zIndex: 1 }}>
         </div>
         <div id="infowindow-content" ref={infowindowContentRef}>
