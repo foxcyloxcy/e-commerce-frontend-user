@@ -73,9 +73,9 @@ const ViewOffers = () => {
 
     return (
         <ThemeProvider theme={ModTheme}>
-            <Grid container spacing={2} sx={{mt: 10, mb: 10}}>
+            <Grid container spacing={2} sx={{ mt: 10, mb: 10, pl: 2, pr: 2 }}>
                 <Grid item xs={12}>
-                    <Typography variant="h6">Available offers</Typography>
+                    <Typography variant="h6">Available offers for {product.item_name}</Typography>
                 </Grid>
                 {productsData.map((product) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
@@ -107,10 +107,13 @@ const ViewOffers = () => {
                             </CardContent>
 
                             {/* Details Button */}
-                            <CardContent sx={{ position: 'absolute', width: '100%', top: '84%' }}>
+                            <CardContent sx={{ position: 'absolute', width: '100%', top: '84%', display: 'flex' }}>
                                 <Button
                                     variant="contained"
-                                    color="primary"
+                                    sx={{
+                                        marginTop: 1, marginBottom: 1, marginRight: 1,
+                                        backgroundColor: ModTheme.palette.primary.main
+                                    }}
                                     fullWidth
                                     onClick={() => handleViewOffers(product)}
                                 >
@@ -118,7 +121,10 @@ const ViewOffers = () => {
                                 </Button>
                                 <Button
                                     variant="contained"
-                                    color="primary"
+                                    sx={{
+                                        marginTop: 1, marginBottom: 1, marginLeft: 1,
+                                        backgroundColor: ModTheme.palette.secondary.main
+                                    }}
                                     fullWidth
                                     onClick={() => handleViewOffers(product)}
                                 >
