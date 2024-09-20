@@ -39,7 +39,7 @@ const OffersToMe = (props) => {
 
             if (res.status === 200) {
                 console.log(res.data)
-                setProductsData(res.data.data.data);
+                setProductsData(res.data.data);
             }
         } catch (error) {
             console.log(error);
@@ -50,8 +50,8 @@ const OffersToMe = (props) => {
         loadOffersToMe();
     }, [loadOffersToMe]);
 
-    const handleViewOffers = (product) => {
-        navigate('/view-offers', { state: { product } });
+    const handleViewOffers = (productUuid) => {
+        navigate('/view-offers', { state: { productUuid, userToken } });
     };
 
     if (!productsData) {
@@ -76,7 +76,7 @@ const OffersToMe = (props) => {
                     <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
                         {/* Status Badge */}
                         <StatusBadge status={product.status}>
-                            Available offers(${product.offers})
+                            Available offers({product.offers_to_me})
                         </StatusBadge>
 
                         {/* Product Image */}
@@ -106,7 +106,7 @@ const OffersToMe = (props) => {
                                 variant="contained"
                                 color="primary"
                                 fullWidth
-                                onClick={() => handleViewOffers(product)}
+                                onClick={() => handleViewOffers(product.uuid)}
                             >
                                 View offers
                             </Button>
