@@ -62,9 +62,9 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
                 {productsData.map((product) => (
                     <Grid item xs={6} sm={6} md={4} lg={3} key={product.id}>
                         <Box sx={{ display: 'flex', alignItems: 'center', padding: 1 }}>
-                            <Avatar src={product.user.vendor.logo} alt={product.user.vendor.name} />
+                            <Avatar src={product.user.vendor ? product.user.vendor.logo : "No image available"} alt={product.user.vendor ? product.user.vendor.name : "No vendor name"} />
                             <Typography variant="body2" sx={{ marginLeft: 1 }}>
-                                {product.user.vendor.name}
+                                {product.user.vendor ? product.user.vendor.name : "No vendor name"}
                             </Typography>
                         </Box>
                         <Card
