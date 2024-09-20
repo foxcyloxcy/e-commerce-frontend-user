@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Box, Grid, Typography, Card, CardContent, Button, CardMedia } from '@mui/material';
+import { Box, Grid, Typography, Card, CardContent, Button, CardMedia, ThemeProvider } from '@mui/material';
 import { styled } from '@mui/system';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -63,60 +63,62 @@ const ViewOffers = () => {
                 mt: 5,
             }}>
                 <Grid item>
-                <Typography>
-                    Loading...
-                </Typography>
+                    <Typography>
+                        Loading...
+                    </Typography>
                 </Grid>
             </Grid>
         )
     }
 
     return (
-        <Grid container spacing={2}>
-            {productsData.map((product) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
-                    <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
-                        {/* Status Badge */}
-                        <StatusBadge status={product.status}>
-                            Available offers(${product.offers})
-                        </StatusBadge>
+        <ThemeProvider theme={ModTheme}>
+            <Grid container spacing={2}>
+                {productsData.map((product) => (
+                    <Grid item xs={12} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
+                        <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
+                            {/* Status Badge */}
+                            <StatusBadge status={product.status}>
+                                Available offers(${product.offers})
+                            </StatusBadge>
 
-                        {/* Product Image */}
-                        <CardMedia
-                            component="img"
-                            height="200"
-                            image={product.default_image ? product.default_image.image_url : 'no image available.'}
-                            alt={product.item_name}
-                            sx={{ objectFit: 'cover' }}
-                        />
+                            {/* Product Image */}
+                            <CardMedia
+                                component="img"
+                                height="200"
+                                image={product.default_image ? product.default_image.image_url : 'no image available.'}
+                                alt={product.item_name}
+                                sx={{ objectFit: 'cover' }}
+                            />
 
-                        {/* Card Content */}
-                        <CardContent sx={{ flexGrow: 1 }}>
-                            <TruncatedText variant="h6">{product.item_name}</TruncatedText>
-                            <TruncatedText variant="body2">{product.item_description}</TruncatedText>
-                            <Typography variant="h6" sx={{ marginTop: '10px' }}>
-                                AED {product.price}
-                            </Typography>
-                            <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
-                                {product.is_bid ? 'You are accepting offers' : ''}
-                            </Typography>
-                        </CardContent>
+                            {/* Card Content */}
+                            <CardContent sx={{ flexGrow: 1 }}>
+                                <TruncatedText variant="h6">{product.item_name}</TruncatedText>
+                                <TruncatedText variant="body2">{product.item_description}</TruncatedText>
+                                <Typography variant="h6" sx={{ marginTop: '10px' }}>
+                                    AED {product.price}
+                                </Typography>
+                                <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
+                                    {product.is_bid ? 'You are accepting offers' : ''}
+                                </Typography>
+                            </CardContent>
 
-                        {/* Details Button */}
-                        <CardContent sx={{ position: 'absolute', width: '100%', top: '84%' }}>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                                onClick={() => handleViewOffers(product)}
-                            >
-                                View offers
-                            </Button>
-                        </CardContent>
-                    </Card>
-                </Grid>
-            ))}
-        </Grid>
+                            {/* Details Button */}
+                            <CardContent sx={{ position: 'absolute', width: '100%', top: '84%' }}>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    onClick={() => handleViewOffers(product)}
+                                >
+                                    View offers
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+        </ThemeProvider>
     );
 };
 
