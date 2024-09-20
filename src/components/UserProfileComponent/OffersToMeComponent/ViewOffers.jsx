@@ -73,7 +73,10 @@ const ViewOffers = () => {
 
     return (
         <ThemeProvider theme={ModTheme}>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} sx={{mt: 10, mb: 10}}>
+                <Grid item xs={12}>
+                    <Typography variant="h6">Available offers</Typography>
+                </Grid>
                 {productsData.map((product) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
                         <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
@@ -111,7 +114,15 @@ const ViewOffers = () => {
                                     fullWidth
                                     onClick={() => handleViewOffers(product)}
                                 >
-                                    View offers
+                                    Accept
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    onClick={() => handleViewOffers(product)}
+                                >
+                                    Reject
                                 </Button>
                             </CardContent>
                         </Card>
