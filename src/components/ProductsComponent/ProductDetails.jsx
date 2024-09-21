@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControlLabel, Checkbox } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -18,7 +18,8 @@ const ProductDetails = () => {
     const [offerPrice, setOfferPrice] = useState('');
     const [loading, setLoading] = useState(false);  // Loading state for offers
     const [parsedUserData, setParsedUserData] = useState("")
-    console.log(userToken)
+    const [confirmCollection, setConfirmCollection] = useState(false);
+    const [agreeRefund, setAgreeRefund] = useState(false);
     // if(state){
     //     setParsedUserData(JSON.parse(userData))
     // }
@@ -65,16 +66,6 @@ const ProductDetails = () => {
     const handleOffers = async (productData) => {
         if (offerPrice < 50) {
             Swal.fire('Error', 'Item value must be over AED 50', 'error');
-            return;
-        }
-
-        if (!confirmCollection) {
-            Swal.fire('Error', 'You need to confirm collecting the item', 'error');
-            return;
-        }
-
-        if (!agreeRefund) {
-            Swal.fire('Error', 'You need to agree to the refund policy', 'error');
             return;
         }
 
@@ -171,12 +162,12 @@ const ProductDetails = () => {
                             ) :
                                 (
                                     <>
-                                    <Typography component="div" color="primary" sx={{textDecoration: 'line-through'}}>
-                                    AED {formatPrice(productsData.item_details.price)}
-                                    </Typography>
-                                    <Typography component="div" color="primary">
-                                        AED {formatPrice(productsData.item_details.my_offer.asking_price)}
-                                    </Typography>
+                                        <Typography component="div" color="primary" sx={{ textDecoration: 'line-through' }}>
+                                            AED {formatPrice(productsData.item_details.price)}
+                                        </Typography>
+                                        <Typography component="div" color="primary">
+                                            AED {formatPrice(productsData.item_details.my_offer.asking_price)}
+                                        </Typography>
                                     </>
                                 )
                         }
@@ -185,44 +176,44 @@ const ProductDetails = () => {
                         </Typography>
                         <Grid container alignItems="center" spacing={2} width="100%">
                             {productsData.item_details.is_bid === 1 && (
-                                productsData.item_details.my_offer === null &&(
+                                productsData.item_details.my_offer === null && (
                                     <>
-                                    <Grid item width="60%">
-                                        <TextField
-                                            size="small"
-                                            label="ENTER OFFER"
-                                            variant="outlined"
-                                            value={offerPrice}
-                                            onChange={(e) => setOfferPrice(e.target.value)}
-                                            sx={{ marginRight: 2 }}
-                                        />
-                                    </Grid>
-                                    <Grid item width="40%">
-                                        <ButtonComponent
-                                            label="Offer"
-                                            size="small"
-                                            buttonVariant="contained"
-                                            textColor="primary.contrastText"
-                                            hoverTextColor="secondary.main"
-                                            onClick={() => handleOffers(productsData)}
-                                            disabled={loading || !offerPrice}
-                                        />
-                                    </Grid>
-                                </>
+                                        <Grid item width="60%">
+                                            <TextField
+                                                size="small"
+                                                label="ENTER OFFER"
+                                                variant="outlined"
+                                                value={offerPrice}
+                                                onChange={(e) => setOfferPrice(e.target.value)}
+                                                sx={{ marginRight: 2 }}
+                                            />
+                                        </Grid>
+                                        <Grid item width="40%">
+                                            <ButtonComponent
+                                                label="Offer"
+                                                size="small"
+                                                buttonVariant="contained"
+                                                textColor="primary.contrastText"
+                                                hoverTextColor="secondary.main"
+                                                onClick={() => handleOffers(productsData)}
+                                                disabled={loading || !offerPrice}
+                                            />
+                                        </Grid>
+                                    </>
                                 )
                             )}
-                                                    <Grid item width="100%">
-                                                    <FormControlLabel
-                            control={<Checkbox checked={confirmCollection} onChange={(e) => setConfirmCollection(e.target.checked)} />}
-                            label="I can confirm it’s the buyer's responsibility to collect the item"
-                        />
-                                                    </Grid>
-                                                    <Grid item width="100%">
-                                                    <FormControlLabel
-                            control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
-                            label="I agree to the refund policy"
-                        />
-                                                        </Grid>
+                            <Grid item width="100%">
+                                <FormControlLabel
+                                    control={<Checkbox checked={confirmCollection} onChange={(e) => setConfirmCollection(e.target.checked)} />}
+                                    label="I can confirm it’s the buyer's responsibility to collect the item"
+                                />
+                            </Grid>
+                            <Grid item width="100%">
+                                <FormControlLabel
+                                    control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
+                                    label="I agree to the refund policy"
+                                />
+                            </Grid>
 
                             <Grid item width="100%">
                                 <ButtonComponent
