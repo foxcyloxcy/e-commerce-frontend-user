@@ -9,18 +9,23 @@ import ModTheme from '../ThemeComponent/ModTheme';
 import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import api from '../../assets/baseURL/api';
+import secureLocalStorage from 'react-secure-storage';
+import secure from '../../assets/baseURL/secure';
 
 const ProductDetails = () => {
     const { state } = useLocation();
     const { productUuid, userToken, userData } = state;
-    const history = useNavigate();  // Required for redirection
     const [productsData, setProductsData] = useState(null);
     const [offerPrice, setOfferPrice] = useState('');
     const [loading, setLoading] = useState(false);  // Loading state for offers
     const [parsedUserData, setParsedUserData] = useState("")
     const [confirmCollection, setConfirmCollection] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [agreeRefund, setAgreeRefund] = useState(false);
-    
+    const storageKey = secure.storageKey;
+    const storagePrefix = secure.storagePrefix;
+    const navigate = useNavigate();
+
     const loadProducts = useCallback(async () => {
         try {
             const res = await api.get(`api/global/items/${productUuid}`, {
@@ -41,12 +46,38 @@ const ProductDetails = () => {
 
     useEffect(() => {
         loadProducts();
+
+        const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
+            hash: storageKey,
+          });
+        
+        if(storedIsLoggedIn){
+            setIsLoggedIn(storedIsLoggedIn)
+        }
+
         if(state){
         setParsedUserData(JSON.parse(userData))
     }
     }, [loadProducts]);
 
     const handleStripeCheckout = async (uuid) => {
+
+        if (!isLoggedIn) {
+            Swal.fire({
+                title: 'Oops!',
+                text: 'You need to login first before you can buy an item.',
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonText: 'Ok',
+                confirmButtonColor: ModTheme.palette.primary.main,
+                cancelButtonText: 'Cancel'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate('/login');
+                }
+              });
+            return;
+        }
 
         if (!confirmCollection) {
             Swal.fire('Error', 'You need to confirm collecting the item', 'error');
@@ -75,6 +106,24 @@ const ProductDetails = () => {
     };
 
     const handleOffers = async (productData) => {
+
+        if (!isLoggedIn) {
+            Swal.fire({
+                title: 'Oops!',
+                text: 'You need to login first before you can make an offer to an item.',
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonText: 'Ok',
+                confirmButtonColor: ModTheme.palette.primary.main,
+                cancelButtonText: 'Cancel'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate('/login');
+                }
+              });
+            return;
+        }
+
         if (offerPrice < 50) {
             Swal.fire('Error', 'Item value must be over AED 50', 'error');
             return;
@@ -104,7 +153,7 @@ const ProductDetails = () => {
                     confirmButtonColor: ModTheme.palette.primary.main,
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        history("/shop");
+                        navigate("/shop");
                     }
                 });
             }
