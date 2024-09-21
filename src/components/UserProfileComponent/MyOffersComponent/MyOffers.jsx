@@ -61,7 +61,7 @@ const MyOffers = (props) => {
                 <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
                     <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
                         {/* Status Badge */}
-                        <StatusBadge status={product.status}>
+                        <StatusBadge status={product.my_offer.status}>
                             {product.my_offer.bid_status_name}
                         </StatusBadge>
 
