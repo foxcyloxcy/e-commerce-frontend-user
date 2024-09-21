@@ -29,18 +29,18 @@ export default function ButtonComponent(props) {
                     },
                     height: height || 'auto',
                     width: width || '100%',
-                    fontSize: '0.50rem',
+                    fontSize: '0.6rem',
                     '@media (min-width:200px)': {
-                        fontSize: '0.3rem',
+                        fontSize: '0.6rem',
                     },
                     '@media (min-width:300px)': {
-                        fontSize: '0.4rem',
+                        fontSize: '0.7rem',
                     },
                     '@media (min-width:400px)': {
-                        fontSize: '0.5rem',
+                        fontSize: '0.7rem',
                     },
                     '@media (min-width:600px)': {
-                        fontSize: '0.6rem',
+                        fontSize: '0.7rem',
                     },
                     '@media (min-width:960px)': {
                         fontSize: '0.8rem',
