@@ -81,9 +81,6 @@ const MyOffers = (props) => {
                             <Typography variant="h6" sx={{ marginTop: '10px' }}>
                                 AED {product.price}
                             </Typography>
-                            <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
-                                {product.is_bid ? 'You are accepting offers' : ''}
-                            </Typography>
                         </CardContent>
 
                         {/* Details Button */}
