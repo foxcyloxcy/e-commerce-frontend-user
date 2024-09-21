@@ -47,6 +47,17 @@ const ProductDetails = () => {
     }, [loadProducts]);
 
     const handleStripeCheckout = async (uuid) => {
+
+        if (!confirmCollection) {
+            Swal.fire('Error', 'You need to confirm collecting the item', 'error');
+            return;
+        }
+
+        if (!agreeRefund) {
+            Swal.fire('Error', 'You need to agree to the refund policy', 'error');
+            return;
+        }
+        
         try {
             const res = await api.post(`/api/auth/payment/stripe/checkout/session/${uuid}`, "sample", {
                 headers: {
