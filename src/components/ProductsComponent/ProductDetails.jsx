@@ -33,6 +33,7 @@ const ProductDetails = () => {
             });
             console.log(res.data)
             if (res.status === 200) {
+                console.log(res.data)
                 setProductsData(res.data);
             }
         } catch (error) {
@@ -62,14 +63,28 @@ const ProductDetails = () => {
     };
 
     const handleOffers = async (productData) => {
-        console.log(productData)
-        setLoading(true);  // Set loading to true while processing
+        if (offerPrice < 50) {
+            Swal.fire('Error', 'Item value must be over AED 50', 'error');
+            return;
+        }
+
+        if (!confirmCollection) {
+            Swal.fire('Error', 'You need to confirm collecting the item', 'error');
+            return;
+        }
+
+        if (!agreeRefund) {
+            Swal.fire('Error', 'You need to agree to the refund policy', 'error');
+            return;
+        }
+
+        setLoading(true);
         const formData = new FormData();
         formData.append('item_id', productData.item_details.id);
-        formData.append('seller_id', productData.item_details.user.id);  // Assuming seller_id is available in item_details
-        formData.append('buyer_id', parsedUserData.id);  // Assuming buyer_id is fetched or passed in product details
-        formData.append('remarks', 'sample remarks');  // You can modify this to get input from a user field
-        formData.append('asking_price', offerPrice);  // Use state value for the asking price
+        formData.append('seller_id', productData.item_details.user.id);
+        formData.append('buyer_id', parsedUserData.id);
+        formData.append('remarks', 'sample remarks');
+        formData.append('asking_price', offerPrice);
 
         try {
             const res = await api.post("/api/auth/item-bid", formData, {
@@ -80,12 +95,9 @@ const ProductDetails = () => {
             });
 
             if (res.status === 200) {
-                const successMessage = res.data.message;
-
                 Swal.fire({
-                    title: successMessage,
+                    title: res.data.message,
                     icon: 'success',
-                    showCancelButton: false,
                     confirmButtonText: 'Continue shopping',
                     confirmButtonColor: ModTheme.palette.primary.main,
                 }).then((result) => {
@@ -95,14 +107,9 @@ const ProductDetails = () => {
                 });
             }
         } catch (error) {
-            console.log(error);
-            Swal.fire({
-                title: 'Error!',
-                text: 'Something went wrong. Please try again later.',
-                icon: 'error',
-            });
+            Swal.fire('Error!', error.toString(), 'error');
         } finally {
-            setLoading(false);  // Stop loading after processing
+            setLoading(false);
         }
     };
 
@@ -204,6 +211,19 @@ const ProductDetails = () => {
                                 </>
                                 )
                             )}
+                                                    <Grid item width="100%">
+                                                    <FormControlLabel
+                            control={<Checkbox checked={confirmCollection} onChange={(e) => setConfirmCollection(e.target.checked)} />}
+                            label="I can confirm it’s the buyer's responsibility to collect the item"
+                        />
+                                                    </Grid>
+                                                    <Grid item width="100%">
+                                                    <FormControlLabel
+                            control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
+                            label="I agree to the refund policy"
+                        />
+                                                        </Grid>
+
                             <Grid item width="100%">
                                 <ButtonComponent
                                     label="Buy Item"
