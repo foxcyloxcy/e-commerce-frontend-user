@@ -62,8 +62,6 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
-                console.log(res.data.data)
-                setUserId(res.data.data.id)
                 setUserData(res.data.data);
                 setFormData({
                     name: res.data.data.vendor.name || '',
