@@ -42,41 +42,40 @@ const ViewOffers = () => {
 
     const handleAcceptOffer = async (productId) => {
         try {
-            Swal.fire({
+            const result = await Swal.fire({
                 title: 'Wait!',
                 text: 'Are you sure you want to accept this offer?',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonText: 'Yes',
                 confirmButtonColor: ModTheme.palette.primary.main,
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const res = api.put(`/api/auth/me/offers-to-me/accept/${productId}`, '', {
-                        headers: {
-                            Authorization: `Bearer ${userToken}`,
-                            'Content-Type': 'multipart/form-data',
-                        },
-                    });
-                    console.log(res)
-                    if (res.status === 200) {
-                        const successMessage = res.data.message;
-                        Swal.fire({
-                            title: 'Great!',
-                            text: successMessage,
-                            icon: 'success',
-                            confirmButtonText: 'Ok',
-                            confirmButtonColor: ModTheme.palette.primary.main,
-                        }).then(() => {
-                            navigate('/my-profile');
-                        });
-                    }
-                }
+                cancelButtonText: 'Cancel',
             });
-
+    
+            if (result.isConfirmed) {
+                const res = await api.put(`/api/auth/me/offers-to-me/accept/${productId}`, '', {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+    
+                if (res.status === 200) {
+                    const successMessage = res.data.message;
+                    await Swal.fire({
+                        title: 'Great!',
+                        text: successMessage,
+                        icon: 'success',
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: ModTheme.palette.primary.main,
+                    });
+    
+                    navigate('/my-profile');
+                }
+            }
         } catch (error) {
             console.log(error);
-            Swal.fire({
+            await Swal.fire({
                 title: 'Error!',
                 text: error.message,
                 icon: 'error',
