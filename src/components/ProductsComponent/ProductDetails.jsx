@@ -14,11 +14,11 @@ import secure from '../../assets/baseURL/secure';
 
 const ProductDetails = () => {
     const { state } = useLocation();
-    const { productUuid, userToken, userData } = state;
+    const { productUuid, userToken, parsedUserData } = state;
     const [productsData, setProductsData] = useState(null);
     const [offerPrice, setOfferPrice] = useState('');
     const [loading, setLoading] = useState(false);  // Loading state for offers
-    const [parsedUserData, setParsedUserData] = useState("")
+    const [userData, setUserData] = useState("")
     const [confirmCollection, setConfirmCollection] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [agreeRefund, setAgreeRefund] = useState(false);
@@ -34,9 +34,7 @@ const ProductDetails = () => {
                     'Content-Type': 'application/json',
                 },
             });
-            console.log(res.data)
             if (res.status === 200) {
-                console.log(res.data)
                 setProductsData(res.data);
             }
         } catch (error) {
@@ -56,7 +54,7 @@ const ProductDetails = () => {
         }
 
         if(state){
-        setParsedUserData(JSON.parse(userData))
+        setUserData(parsedUserData)
     }
     }, [loadProducts]);
 
@@ -133,7 +131,7 @@ const ProductDetails = () => {
         const formData = new FormData();
         formData.append('item_id', productData.item_details.id);
         formData.append('seller_id', productData.item_details.user.id);
-        formData.append('buyer_id', parsedUserData.id);
+        formData.append('buyer_id', userData.id);
         formData.append('remarks', 'sample remarks');
         formData.append('asking_price', offerPrice);
 
