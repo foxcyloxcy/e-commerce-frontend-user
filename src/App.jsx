@@ -23,6 +23,7 @@ import AddVendorProfileDetails from './components/UserProfileComponent/VendorPro
 import PaymentSuccess from './components/PaymentSuccessComponent/PaymentSuccess';
 import ChatMessage from './components/ChatMessageComponent/ChatMessage';
 import ViewOffers from './components/UserProfileComponent/OffersToMeComponent/ViewOffers';
+import ForgotPassword from './components/ForgotPasswordComponent/ForgotPassword';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -196,6 +197,15 @@ function App() {
           element={
             <PublicRoute isLoggedIn={isLoggedIn}>
               <UserVerification />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="/forgot-password"
+          element={
+            <PublicRoute isLoggedIn={isLoggedIn}>
+              <ForgotPassword />
             </PublicRoute>
           }
         />
