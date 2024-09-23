@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Box,
     Button,
@@ -10,8 +10,17 @@ import CustomMap from '../../ProductsComponent/CustomMapComponent/CustomMap';
 
 const MapViewModal = ({ open, onClose, address }) => {
     // Check if product exists before rendering the modal content
-    console.log(product)
-    if (!product) {
+    const [parseAddress, setParseAddress] = useState(null)
+
+    useEffect(() => {
+        if(address){
+            const addressObject = JSON.parse(address)
+            setParseAddress(addressObject)
+        }
+
+    },[address])
+
+    if (!address) {
         return null;
     }
 
@@ -30,15 +39,18 @@ const MapViewModal = ({ open, onClose, address }) => {
                         top: '50%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
-                        width: 500,
+                        width: {xs: 350, sm: 400, md: 500, lg: 600},
                         bgcolor: 'background.paper',
                         boxShadow: 24,
                         p: 4,
                     }}
                 >
-                    <CustomMap/>
+                    <CustomMap
+                        mapDataValue={parseAddress}
+                        Editing={false}
+                        modalIsOpen={true} />
                     <Button onClick={onClose} variant="contained" fullWidth sx={{ mt: 3 }}>
-                        Ok, close
+                        Close
                     </Button>
                 </Box>
             </Fade>
