@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { TextField } from "@mui/material";
 import './CustomMap.css'
 
 const CustomMap = (props) => {
-  const { addressData, mapDataValue, Editing } = props
-  console.log(mapDataValue)
+  const { addressData, mapDataValue, Editing } = props;
+  console.log(mapDataValue);
   const mapRef = useRef(null);
   const inputRef = useRef(null);
   const infowindowContentRef = useRef(null);
@@ -43,10 +42,10 @@ const CustomMap = (props) => {
         const place = autocomplete.getPlace();
         if (!place.place_id) return;
 
-          geocoder
+        geocoder
           .geocode({ placeId: place.place_id })
           .then(({ results }) => {
-            results.push({'name': place.name})
+            results.push({'name': place.name});
             map.setZoom(11);
             map.setCenter(results[0].geometry.location);
 
@@ -61,7 +60,7 @@ const CustomMap = (props) => {
             infowindowContent.children["place-address"].textContent = results[0].formatted_address;
 
             infowindow.open(map, marker);
-            addressData(results)
+            addressData(results);
           })
           .catch((e) => window.alert("Geocoder failed due to: " + e));
       });
@@ -93,18 +92,25 @@ const CustomMap = (props) => {
 
   return (
     <>
-        <div className="map-container">
-          {Editing && (
-              <input type="text" ref={inputRef} required style={{ height: "40px", width: "100%", zIndex: 1 }}/>
-          )}
-        <div id="map" ref={mapRef} style={{ height: "490px", width: "100%", zIndex: 1 }}>
-        </div>
+      <div className="map-container">
+        <input 
+          type="text" 
+          ref={inputRef} 
+          required 
+          style={{ 
+            height: "40px", 
+            width: "100%", 
+            zIndex: 1, 
+            display: Editing ? "block" : "none" // Show or hide the input based on Editing flag
+          }}
+        />
+        <div id="map" ref={mapRef} style={{ height: "490px", width: "100%", zIndex: 1 }} />
         <div id="infowindow-content" ref={infowindowContentRef}>
           <span id="place-name" className="title"></span><br />
           <span id="place-id"></span><br />
           <span id="place-address"></span>
         </div>
-        </div>
+      </div>
     </>
   );
 };
