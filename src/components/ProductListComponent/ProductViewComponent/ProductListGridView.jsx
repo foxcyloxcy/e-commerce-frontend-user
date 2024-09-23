@@ -16,6 +16,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/system';
 import PriceBreakdownModal from '../../ReusableComponents/ModalComponent/PriceBreakDownModal';
+import MapViewModal from '../../ReusableComponents/ModalComponent/MapViewModal';
 
 const ProductListGridView = ({ productsData, userToken, userData }) => {
     console.log(productsData)
@@ -24,7 +25,9 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
 
     // State for managing the modal
     const [openPriceBreakdownModal, setOpenPriceBreakdownModal] = useState(false);
+    const [openMap, setOpenMap] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const [selectedAddress, setSelectedAddress] = useState(null);
 
     // Handle pagination change
     const handlePageChange = (event, value) => {
@@ -44,6 +47,16 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
     const handleClosePriceBreakdown = () => {
         setOpenPriceBreakdownModal(false);
         setSelectedProduct(null);
+    }
+
+    const handleOpenMap = (address) => {
+        setSelectedAddress(address);
+        setOpenMap(true);
+    };
+
+    const handleCloseMap = () => {
+        setOpenMap(false);
+        setSelectedAddress(null);
     };
 
     const TruncatedText = styled(Typography)({
@@ -61,7 +74,7 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
         console.log(objectAddress)
         let addressName = ""
 
-        if(objectAddress[1]){
+        if (objectAddress[1]) {
             addressName = objectAddress[1].name
         }
         return addressName.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -104,8 +117,11 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
                                 <TruncatedText variant="body2">{product.item_description}</TruncatedText>
                                 {
                                     product.address && (
-                                        <Typography variant="body1" sx={{ marginTop: '10px' }}>
-                                            Collection {parseAddress(product.address)}
+                                        <Typography 
+                                            variant="body1" 
+                                            sx={{ marginTop: '10px', cursor: 'pointer', textDecoration: 'underline' }}
+                                            onClick={() => handleOpenMap(product.address)}>
+                                                Collection {parseAddress(product.address)}
                                         </Typography>
                                     )
                                 }
@@ -146,6 +162,14 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
                     open={openPriceBreakdownModal}
                     onClose={handleClosePriceBreakdown}
                     product={selectedProduct}
+                />
+            )}
+
+            {selectedAddress && (
+                <MapViewModal
+                    open={openMap}
+                    onClose={handleCloseMap}
+                    address={selectedAddress}
                 />
             )}
         </Grid>
