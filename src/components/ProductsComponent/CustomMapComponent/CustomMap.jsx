@@ -3,7 +3,8 @@ import { TextField } from "@mui/material";
 import './CustomMap.css'
 
 const CustomMap = (props) => {
-  const { addressData, mapDataValue } = props
+  const { addressData, mapDataValue, Editing } = props
+  console.log(mapDataValue)
   const mapRef = useRef(null);
   const inputRef = useRef(null);
   const infowindowContentRef = useRef(null);
@@ -66,18 +67,18 @@ const CustomMap = (props) => {
       });
 
       if(mapDataValue){
-        map.setCenter(mapDataValue.geometry.location);
+        map.setCenter(mapDataValue[0].geometry.location);
 
         marker.setPlace({
-          placeId: mapDataValue.place_id,
-          location: mapDataValue.geometry.location,
+          placeId: mapDataValue[0].place_id,
+          location: mapDataValue[0].geometry.location,
         });
   
         marker.setVisible(true);
   
-        infowindowContent.children["place-name"].textContent = mapDataValue.name;
-        infowindowContent.children["place-id"].textContent = mapDataValue.place_id;
-        infowindowContent.children["place-address"].textContent = mapDataValue.formatted_address;
+        infowindowContent.children["place-name"].textContent = mapDataValue[1].name;
+        infowindowContent.children["place-id"].textContent = mapDataValue[0].place_id;
+        infowindowContent.children["place-address"].textContent = mapDataValue[0].formatted_address;
   
         infowindow.open(map, marker);
       }
@@ -93,7 +94,9 @@ const CustomMap = (props) => {
   return (
     <>
         <div className="map-container">
-        <input type="text" ref={inputRef} required style={{ height: "40px", width: "100%", zIndex: 1 }}/>
+          {Editing && (
+              <input type="text" ref={inputRef} required style={{ height: "40px", width: "100%", zIndex: 1 }}/>
+          )}
         <div id="map" ref={mapRef} style={{ height: "490px", width: "100%", zIndex: 1 }}>
         </div>
         <div id="infowindow-content" ref={infowindowContentRef}>
