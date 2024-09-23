@@ -56,6 +56,17 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
+    const parseAddress = (address) => {
+        const objectAddress = JSON.parse(address)
+        console.log(objectAddress)
+        let addressName = ""
+
+        if(objectAddress[1]){
+            addressName = objectAddress[1].name
+        }
+        return addressName.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
 
     return (
         <Grid item xs={12} md={8} lg={9}>
@@ -91,9 +102,13 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
                             <CardContent sx={{ flexGrow: 1 }}>
                                 <TruncatedText variant="h6">{product.item_name}</TruncatedText>
                                 <TruncatedText variant="body2">{product.item_description}</TruncatedText>
-                                <Typography variant="body1" sx={{ marginTop: '10px' }}>
-                                    AED {formatPrice(product.price)}
-                                </Typography>
+                                {
+                                    product.address && (
+                                        <Typography variant="body1" sx={{ marginTop: '10px' }}>
+                                            Collection {parseAddress(product.address)}
+                                        </Typography>
+                                    )
+                                }
                                 <Typography
                                     variant="body1"
                                     color="primary"
