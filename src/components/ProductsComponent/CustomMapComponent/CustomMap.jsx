@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import './CustomMap.css'
 
 const CustomMap = (props) => {
-  const { addressData, mapDataValue, Editing } = props;
-  console.log(mapDataValue);
+  const { addressData, mapDataValue, Editing, modalIsOpen } = props;
   const mapRef = useRef(null);
   const inputRef = useRef(null);
   const infowindowContentRef = useRef(null);
+  const mapInstance = useRef(null);
+  const markerRef = useRef(null);
 
   useEffect(() => {
     const initMap = () => {
@@ -31,6 +32,7 @@ const CustomMap = (props) => {
 
       const geocoder = new window.google.maps.Geocoder();
       const marker = new window.google.maps.Marker({ map });
+      markerRef.current = marker;
 
       marker.addListener("click", () => {
         infowindow.open(map, marker);
@@ -65,30 +67,54 @@ const CustomMap = (props) => {
           .catch((e) => window.alert("Geocoder failed due to: " + e));
       });
 
-      if(mapDataValue){
+      if (mapDataValue) {
         map.setCenter(mapDataValue[0].geometry.location);
 
         marker.setPlace({
           placeId: mapDataValue[0].place_id,
           location: mapDataValue[0].geometry.location,
         });
-  
+
         marker.setVisible(true);
-  
+
         infowindowContent.children["place-name"].textContent = mapDataValue[1].name;
         infowindowContent.children["place-id"].textContent = mapDataValue[0].place_id;
         infowindowContent.children["place-address"].textContent = mapDataValue[0].formatted_address;
-  
+
         infowindow.open(map, marker);
       }
+
+      mapInstance.current = map;
     };
 
     if (window.google) {
       initMap();
-    } else {
-      // Add your Google Maps script loading logic here if needed
     }
-  }, []);
+  }, [mapDataValue]);
+
+  useEffect(() => {
+    if (modalIsOpen && mapInstance.current) {
+      // Small timeout to ensure the modal is fully visible
+      setTimeout(() => {
+        window.google.maps.event.trigger(mapInstance.current, "resize");
+
+        // Re-center the map after resize
+        if (mapDataValue) {
+          mapInstance.current.setCenter(mapDataValue[0].geometry.location);
+        } else {
+          mapInstance.current.setCenter({ lat: 25.2048, lng: 55.2708 });
+        }
+
+        if (markerRef.current && mapDataValue) {
+          markerRef.current.setPlace({
+            placeId: mapDataValue[0].place_id,
+            location: mapDataValue[0].geometry.location,
+          });
+          markerRef.current.setVisible(true);
+        }
+      }, 300); // Delay to allow the modal to fully open before resizing the map
+    }
+  }, [modalIsOpen, mapDataValue]);
 
   return (
     <>
@@ -101,7 +127,7 @@ const CustomMap = (props) => {
             height: "40px", 
             width: "100%", 
             zIndex: 1, 
-            display: Editing ? "block" : "none" // Show or hide the input based on Editing flag
+            display: Editing ? "block" : "none" 
           }}
         />
         <div id="map" ref={mapRef} style={{ height: "490px", width: "100%", zIndex: 1 }} />
