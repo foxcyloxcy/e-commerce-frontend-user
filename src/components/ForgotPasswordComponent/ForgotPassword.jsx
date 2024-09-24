@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Box, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ModTheme from '../ThemeComponent/ModTheme';
+import api from '../../assets/baseURL/api';
+import Swal from 'sweetalert2';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -14,14 +16,38 @@ const ForgotPassword = () => {
     return emailPattern.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !validateEmail(email)) {
       setError(true);
       return;
     }
+
+    
+    try {
+        const url = `/api/forgot-password`;
+        const res = await api.post(url, {email}, {
+        });
+  
+        if (res.status === 200) {
+            console.log(res)
+          Swal.fire({
+            title: `OTP is sent to your email:${email}`,
+            icon: 'success',
+            confirmButtonText: 'Ok',
+            confirmButtonColor: ModTheme.palette.primary.main,
+          }).then((result) => {
+            if (result.isConfirmed) {
+                navigate("/verify", { state: { email: email, mode: 'forgot-password' } });
+            }
+          });
+          
+        }
+      } catch (error) {
+        console.log("Error saving profile data:", error);
+  
+      }
     // If email is valid, redirect to verify page
-    navigate('/verify');
   };
 
   return (
@@ -32,7 +58,7 @@ const ForgotPassword = () => {
         mb: 1
     }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 5 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography variant="h5" component="h1" gutterBottom>
           Forgot Password
         </Typography>
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2, width: '100%' }}>
