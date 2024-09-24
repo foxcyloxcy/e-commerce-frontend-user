@@ -88,7 +88,7 @@ export default function Register() {
                         title: 'Registration Successful',
                         text: res.data.message,
                     });
-                    history("/verify", { state: { email: formValues.email } });
+                    history("/verify", { state: { email: formValues.email, password: formValues.password, mode: 'register' } });
                 }
             } catch (error) {
                 await handleErrorMessage(error.response);
