@@ -88,7 +88,7 @@ const MyProducts = (props) => {
         navigate('/edit-product', { state: { product } });
     };
 
-    const handleDeleteClick = (productId) => {
+    const handleDeleteClick = (productUuid) => {
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -97,10 +97,34 @@ const MyProducts = (props) => {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
                 // Implement delete functionality here
-                Swal.fire('Deleted!', 'Your product has been deleted.', 'success');
+                try {
+                    const res = await api.delete(`api/auth/items/${productUuid}`, {
+                        headers: {
+                            Authorization: `Bearer ${userToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    if (res.status === 200) {
+                        Swal.fire({
+                            title: 'Deleted!',
+                            text: res.data.data.message,
+                            icon: 'success',
+                            showCancelButton: false,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Ok'
+                        }).then((deleteResult) => {
+                            if (deleteResult.isConfirmed) {
+                                loadProducts();
+                            }
+                        })
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
             }
         });
     };
@@ -173,7 +197,7 @@ const MyProducts = (props) => {
                                         <IconButton color="primary" onClick={() => handleEditClick(product)}>
                                             <EditIcon />
                                         </IconButton>
-                                        <IconButton color="error" onClick={() => handleDeleteClick(product.id)}>
+                                        <IconButton color="error" onClick={() => handleDeleteClick(product.uuid)}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </Box>
