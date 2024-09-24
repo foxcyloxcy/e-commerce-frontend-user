@@ -38,7 +38,6 @@ const OffersToMe = (props) => {
             });
 
             if (res.status === 200) {
-                console.log(res.data)
                 setProductsData(res.data.data);
             }
         } catch (error) {
@@ -94,9 +93,6 @@ const OffersToMe = (props) => {
                             <TruncatedText variant="body2">{product.item_description}</TruncatedText>
                             <Typography variant="h6" sx={{ marginTop: '10px' }}>
                                 AED {product.price}
-                            </Typography>
-                            <Typography variant="body2" sx={{ color: ModTheme.palette.primary.light }}>
-                                {product.is_bid ? 'You are accepting offers' : ''}
                             </Typography>
                         </CardContent>
 
