@@ -58,7 +58,18 @@ const CreateNewPassword = (props) => {
 
   return (
     <ThemeProvider theme={ModTheme}>
-      <Box component="form" onSubmit={handleSubmit} sx={{mt: 10, pl: 5, pr: 5, minHeight: '60vh' }}>
+      <Box 
+        component="form" 
+        onSubmit={handleSubmit} 
+        sx={{ 
+          mt: 15, 
+          px: 3, // Padding on the sides for mobile screens
+          width: '100%', 
+          maxWidth: '400px', // Maximum width for larger screens
+          mx: 'auto', // Center horizontally
+          minHeight: '60vh', 
+        }}
+      >
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
