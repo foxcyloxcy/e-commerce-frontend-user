@@ -70,7 +70,19 @@ const ProductList = (props) => {
         }
 
         try {
-            let query = `api/global/items?page=${page}&size=${itemsPerPage}&`;
+            // api/auth/items
+            let dynamicApi;
+            if(userToken){
+
+                dynamicApi = 'auth'
+
+            }else{
+
+                dynamicApi = 'global'
+
+            }
+
+            let query = `api/${dynamicApi}/items?page=${page}&size=${itemsPerPage}&`;
 
             if (subCategoryId) {
                 query += `sub_category_id=${subCategoryId}&`;
@@ -81,17 +93,36 @@ const ProductList = (props) => {
             }
 
             if (keyword) {
-                query += `keyword=${keyword}&`; // Added keyword to the query
+                query += `filter[keyword]=${keyword}&`; // Added keyword to the query
             }
 
-            const res = await api.get(query);
-            if (res.status === 200) {
-                console.log(res.data)
-                let fetchedProducts = res.data.data.data;
+            if(userToken){
+                const res = await api.get(query, {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
 
-                setProductsData(fetchedProducts);
-                setTotalPages(res.data.data.last_page);
+                if (res.status === 200) {
+                    console.log(res.data)
+                    let fetchedProducts = res.data.data.data;
+    
+                    setProductsData(fetchedProducts);
+                    setTotalPages(res.data.data.last_page);
+                }
+            }else{
+                const res = await api.get(query);
+                
+                if (res.status === 200) {
+                    console.log(res.data)
+                    let fetchedProducts = res.data.data.data;
+    
+                    setProductsData(fetchedProducts);
+                    setTotalPages(res.data.data.last_page);
+                }
             }
+
         } catch (error) {
             console.log(error);
         }
