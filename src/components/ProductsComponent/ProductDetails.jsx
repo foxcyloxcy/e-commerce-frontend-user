@@ -11,6 +11,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import api from '../../assets/baseURL/api';
 import secureLocalStorage from 'react-secure-storage';
 import secure from '../../assets/baseURL/secure';
+import MapViewModal from '../ReusableComponents/ModalComponent/MapViewModal';
 
 const ProductDetails = () => {
     const { state } = useLocation();
@@ -22,6 +23,8 @@ const ProductDetails = () => {
     const [confirmCollection, setConfirmCollection] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [agreeRefund, setAgreeRefund] = useState(false);
+    const [selectedAddress, setSelectedAddress] = useState(null);
+    const [openMap, setOpenMap] = useState(false);
     const storageKey = secure.storageKey;
     const storagePrefix = secure.storagePrefix;
     const navigate = useNavigate();
@@ -35,6 +38,7 @@ const ProductDetails = () => {
                 },
             });
             if (res.status === 200) {
+                console.log(res.data)
                 setProductsData(res.data);
             }
         } catch (error) {
@@ -166,6 +170,27 @@ const ProductDetails = () => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
+    const handleOpenMap = (address) => {
+        setSelectedAddress(address);
+        setOpenMap(true);
+    };
+
+    const handleCloseMap = () => {
+        setOpenMap(false);
+        setSelectedAddress(null);
+    };
+
+    const parseAddress = (address) => {
+        const objectAddress = JSON.parse(address)
+        console.log(objectAddress)
+        let addressName = ""
+
+        if (objectAddress[1]) {
+            addressName = objectAddress[1].name
+        }
+        return addressName.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
     // Handle rendering after data is loaded
     if (!productsData || !productsData.item_details) {
         return <Typography>Loading...</Typography>;
@@ -232,6 +257,16 @@ const ProductDetails = () => {
                         <Typography variant="body1" color="textSecondary" paragraph>
                             {productsData.item_details.item_description}
                         </Typography>
+                        {
+                                    productsData.item_details.address && (
+                                        <Typography 
+                                            variant="body1" 
+                                            sx={{ marginTop: '10px', cursor: 'pointer', textDecoration: 'underline' }}
+                                            onClick={() => handleOpenMap(productsData.item_details.address)}>
+                                                Collection {parseAddress(productsData.item_details.address)}
+                                        </Typography>
+                                    )
+                                }
                         <Grid container alignItems="center" spacing={2} width="100%">
                             {productsData.item_details.is_bid === 1 && (
                                 productsData.item_details.my_offer === null && (
@@ -341,6 +376,14 @@ const ProductDetails = () => {
                         </Table>
                     </TableContainer>
                 </Paper>
+
+                {selectedAddress && (
+                <MapViewModal
+                    open={openMap}
+                    onClose={handleCloseMap}
+                    address={selectedAddress}
+                />
+            )}
             </Container>
         </ThemeProvider>
     );
