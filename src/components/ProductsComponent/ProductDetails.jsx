@@ -12,6 +12,7 @@ import api from '../../assets/baseURL/api';
 import secureLocalStorage from 'react-secure-storage';
 import secure from '../../assets/baseURL/secure';
 import MapViewModal from '../ReusableComponents/ModalComponent/MapViewModal';
+import PriceBreakdownModal from '../ReusableComponents/ModalComponent/PriceBreakDownModal';
 
 const ProductDetails = () => {
     const { state } = useLocation();
@@ -25,6 +26,8 @@ const ProductDetails = () => {
     const [agreeRefund, setAgreeRefund] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [openMap, setOpenMap] = useState(false);
+    const [openPriceBreakdownModal, setOpenPriceBreakdownModal] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const storageKey = secure.storageKey;
     const storagePrefix = secure.storagePrefix;
     const navigate = useNavigate();
@@ -191,6 +194,16 @@ const ProductDetails = () => {
         return addressName.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
+    const handleOpenPriceBreakdown = (product) => {
+        setSelectedProduct(product);
+        setOpenPriceBreakdownModal(true);
+    };
+
+    const handleClosePriceBreakdown = () => {
+        setOpenPriceBreakdownModal(false);
+        setSelectedProduct(null);
+    }
+
     // Handle rendering after data is loaded
     if (!productsData || !productsData.item_details) {
         return <Typography>Loading...</Typography>;
@@ -239,14 +252,19 @@ const ProductDetails = () => {
                         </Typography>
                         {
                             productsData.item_details.my_offer === null || productsData.item_details.my_offer === "" ? (
-                                <Typography component="div" color="primary">
-                                    AED {formatPrice(productsData.item_details.price)}
+                                <Typography
+                                    variant="body1"
+                                    color="primary"
+                                    onClick={() => handleOpenPriceBreakdown(productsData.item_details)}
+                                    sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                >
+                                    AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
                                 </Typography>
                             ) :
                                 (
                                     <>
                                         <Typography component="div" color="primary" sx={{ textDecoration: 'line-through' }}>
-                                            AED {formatPrice(productsData.item_details.price)}
+                                        AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
                                         </Typography>
                                         <Typography component="div" color="primary">
                                             AED {formatPrice(productsData.item_details.my_offer.asking_price)}
@@ -261,7 +279,7 @@ const ProductDetails = () => {
                                     productsData.item_details.address && (
                                         <Typography 
                                             variant="body1" 
-                                            sx={{ marginTop: '10px', cursor: 'pointer', textDecoration: 'underline' }}
+                                            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
                                             onClick={() => handleOpenMap(productsData.item_details.address)}>
                                                 Collection {parseAddress(productsData.item_details.address)}
                                         </Typography>
@@ -377,6 +395,13 @@ const ProductDetails = () => {
                     </TableContainer>
                 </Paper>
 
+                {selectedProduct && (
+                <PriceBreakdownModal
+                    open={openPriceBreakdownModal}
+                    onClose={handleClosePriceBreakdown}
+                    product={selectedProduct}
+                />
+                )}
                 {selectedAddress && (
                 <MapViewModal
                     open={openMap}
