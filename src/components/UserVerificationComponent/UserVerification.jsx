@@ -6,12 +6,14 @@ import './UserVerification.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ModTheme from '../ThemeComponent/ModTheme';
 
-const UserVerification = () => {
+const UserVerification = ({refreshParent}) => {
   const [code, setCode] = useState(Array(6).fill(''));
   const [countdown, setCountdown] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [mode, setMode] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -47,6 +49,36 @@ const UserVerification = () => {
     setIsLoading(false);
   };
 
+  const handleLogin = async () => {
+    try {
+      const res = await api.post("api/login", {
+        username: email,
+        password: password,
+      });
+      if (res.status === 200) {
+        const data = res.data.data;
+
+        secureLocalStorage.setItem(`${storagePrefix}_userData`, JSON.stringify(data.user), {
+          hash: storageKey,
+        });
+        secureLocalStorage.setItem(`${storagePrefix}_userToken`, data.access_token, {
+          hash: storageKey,
+        });
+        secureLocalStorage.setItem(`${storagePrefix}_isLoggedIn`, true, {
+          hash: storageKey,
+        });
+
+        refreshParent();
+        history("/");
+      }
+    } catch (error) {
+      console.log(error)
+      await handleErrorMessage(error.response)
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   const handleSubmit = async (verificationCode) => {
     setIsLoading(true);
     setError('');
@@ -54,6 +86,7 @@ const UserVerification = () => {
       const response = await api.post('api/verify', {
         email,
         code: verificationCode,
+        type: mode === 'forgot-password' ? 'forgot password' : null
       });
       console.log(response)
       // If verification is successful, show SweetAlert and redirect
@@ -64,10 +97,14 @@ const UserVerification = () => {
         timer: 2000,
         confirmButtonText: 'Ok',
         confirmButtonColor: ModTheme.palette.primary.main,
-      }).then((result) => {
+      }).then(async(result) => {
         // Redirect to the login page after the alert
         if (result.isConfirmed) {
-          navigate('/login'); // Replace with your login page route
+          if(mode === 'forgot-password'){
+            navigate('/create-password'); 
+          }else{
+            handleLogin()
+          }
         }
       });
     } catch (error) {
@@ -78,11 +115,17 @@ const UserVerification = () => {
 
   useEffect(() => {
     const EmailFromRoute = location.state?.email;
+    const PasswordFromRoute = location.state?.password;
+    const ModeFromRoute = location.state?.mode;
     // Load products with the Email from the route state if it exists
     if (EmailFromRoute) {
         setEmail(EmailFromRoute);
+        setPassword(PasswordFromRoute);
+        setMode(ModeFromRoute);
     } else {
-        setEmail("");
+      setEmail("");
+      setPassword("");
+      setMode("");
     }
 
     let timer;
@@ -93,7 +136,7 @@ const UserVerification = () => {
   }, [countdown, email]);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '60vh', justifyContent: 'center' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '60vh', justifyContent: 'center', pl: 1, pr: 1 }}>
       <Typography variant="h6" gutterBottom>
         Please enter the verification code sent to your email: {email}
       </Typography>
