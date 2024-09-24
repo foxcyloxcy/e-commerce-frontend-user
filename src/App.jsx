@@ -24,6 +24,7 @@ import PaymentSuccess from './components/PaymentSuccessComponent/PaymentSuccess'
 import ChatMessage from './components/ChatMessageComponent/ChatMessage';
 import ViewOffers from './components/UserProfileComponent/OffersToMeComponent/ViewOffers';
 import ForgotPassword from './components/ForgotPasswordComponent/ForgotPassword';
+import CreateNewPassword from './components/ForgotPasswordComponent/CreateNewPassword';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -196,7 +197,7 @@ function App() {
           path="/verify"
           element={
             <PublicRoute isLoggedIn={isLoggedIn}>
-              <UserVerification />
+              <UserVerification refreshParent={handleClick}/>
             </PublicRoute>
           }
         />
@@ -206,6 +207,15 @@ function App() {
           element={
             <PublicRoute isLoggedIn={isLoggedIn}>
               <ForgotPassword />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="/create-password"
+          element={
+            <PublicRoute isLoggedIn={isLoggedIn}>
+              <CreateNewPassword />
             </PublicRoute>
           }
         />
