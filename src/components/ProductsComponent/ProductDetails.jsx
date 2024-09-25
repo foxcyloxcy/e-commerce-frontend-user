@@ -16,11 +16,11 @@ import PriceBreakdownModal from '../ReusableComponents/ModalComponent/PriceBreak
 
 const ProductDetails = () => {
     const { state } = useLocation();
-    const { productUuid, userToken, parsedUserData } = state;
+    const { productUuid, userToken, userData } = state;
     const [productsData, setProductsData] = useState(null);
     const [offerPrice, setOfferPrice] = useState('');
     const [loading, setLoading] = useState(false);  // Loading state for offers
-    const [userData, setUserData] = useState("")
+    const [parsedUserData, setParsedUserData] = useState("")
     const [confirmCollection, setConfirmCollection] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [agreeRefund, setAgreeRefund] = useState(false);
@@ -54,15 +54,16 @@ const ProductDetails = () => {
 
         const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
             hash: storageKey,
-          });
-        
-        if(storedIsLoggedIn){
+        });
+
+        if (storedIsLoggedIn) {
             setIsLoggedIn(storedIsLoggedIn)
         }
 
-        if(state){
-        setUserData(parsedUserData)
-    }
+        if (state) {
+            const objectUserData = JSON.parse(userData)
+            setParsedUserData(objectUserData)
+        }
     }, [loadProducts]);
 
     const handleStripeCheckout = async (uuid) => {
@@ -76,11 +77,11 @@ const ProductDetails = () => {
                 confirmButtonText: 'Ok',
                 confirmButtonColor: ModTheme.palette.primary.main,
                 cancelButtonText: 'Cancel'
-              }).then((result) => {
+            }).then((result) => {
                 if (result.isConfirmed) {
-                  navigate('/login');
+                    navigate('/login');
                 }
-              });
+            });
             return;
         }
 
@@ -93,7 +94,7 @@ const ProductDetails = () => {
             Swal.fire('Error', 'You need to agree to the refund policy', 'error');
             return;
         }
-        
+
         try {
             const res = await api.post(`/api/auth/payment/stripe/checkout/session/${uuid}`, "sample", {
                 headers: {
@@ -121,11 +122,11 @@ const ProductDetails = () => {
                 confirmButtonText: 'Ok',
                 confirmButtonColor: ModTheme.palette.primary.main,
                 cancelButtonText: 'Cancel'
-              }).then((result) => {
+            }).then((result) => {
                 if (result.isConfirmed) {
-                  navigate('/login');
+                    navigate('/login');
                 }
-              });
+            });
             return;
         }
 
@@ -138,7 +139,7 @@ const ProductDetails = () => {
         const formData = new FormData();
         formData.append('item_id', productData.item_details.id);
         formData.append('seller_id', productData.item_details.user.id);
-        formData.append('buyer_id', userData.id);
+        formData.append('buyer_id', parsedUserData.id);
         formData.append('remarks', 'sample remarks');
         formData.append('asking_price', offerPrice);
 
@@ -264,7 +265,7 @@ const ProductDetails = () => {
                                 (
                                     <>
                                         <Typography component="div" color="primary" sx={{ textDecoration: 'line-through' }}>
-                                        AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
+                                            AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
                                         </Typography>
                                         <Typography component="div" color="primary">
                                             AED {formatPrice(productsData.item_details.my_offer.asking_price)}
@@ -276,15 +277,15 @@ const ProductDetails = () => {
                             {productsData.item_details.item_description}
                         </Typography>
                         {
-                                    productsData.item_details.address && (
-                                        <Typography 
-                                            variant="body1" 
-                                            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                            onClick={() => handleOpenMap(productsData.item_details.address)}>
-                                                Collection {parseAddress(productsData.item_details.address)}
-                                        </Typography>
-                                    )
-                                }
+                            productsData.item_details.address && (
+                                <Typography
+                                    variant="body1"
+                                    sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                    onClick={() => handleOpenMap(productsData.item_details.address)}>
+                                    Collection {parseAddress(productsData.item_details.address)}
+                                </Typography>
+                            )
+                        }
                         <Grid container alignItems="center" spacing={2} width="100%">
                             {productsData.item_details.is_bid === 1 && (
                                 productsData.item_details.my_offer === null && (
@@ -315,32 +316,32 @@ const ProductDetails = () => {
                             )}
                             <Grid item width="100%">
                                 <FormControlLabel
-                                        sx={{
-                                            '& .MuiTypography-root': {
-                                                fontSize: {
-                                                    xs: '0.65rem', // Smallest screen size
-                                                    sm: '0.75rem', // Small screen size
-                                                    md: '0.8rem',  // Medium screen size
-                                                    lg: '1rem',     // Large screen size
-                                                },
+                                    sx={{
+                                        '& .MuiTypography-root': {
+                                            fontSize: {
+                                                xs: '0.65rem', // Smallest screen size
+                                                sm: '0.75rem', // Small screen size
+                                                md: '0.8rem',  // Medium screen size
+                                                lg: '1rem',     // Large screen size
                                             },
-                                        }}
+                                        },
+                                    }}
                                     control={<Checkbox checked={confirmCollection} onChange={(e) => setConfirmCollection(e.target.checked)} />}
                                     label="I can confirm it’s the buyer's responsibility to collect the item"
                                 />
                             </Grid>
                             <Grid item width="100%">
                                 <FormControlLabel
-                                        sx={{
-                                            '& .MuiTypography-root': {
-                                                fontSize: {
-                                                    xs: '0.6rem', // Smallest screen size
-                                                    sm: '0.7rem', // Small screen size
-                                                    md: '0.8rem',  // Medium screen size
-                                                    lg: '1rem',     // Large screen size
-                                                },
+                                    sx={{
+                                        '& .MuiTypography-root': {
+                                            fontSize: {
+                                                xs: '0.6rem', // Smallest screen size
+                                                sm: '0.7rem', // Small screen size
+                                                md: '0.8rem',  // Medium screen size
+                                                lg: '1rem',     // Large screen size
                                             },
-                                        }}
+                                        },
+                                    }}
                                     control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
                                     label="I agree to the refund policy"
                                 />
@@ -395,20 +396,50 @@ const ProductDetails = () => {
                     </TableContainer>
                 </Paper>
 
+                {/* New Comments Section */}
+                <Paper sx={{ mt: 4, p: 2 }}>
+                    <Typography variant="h6" gutterBottom>
+                        Item Comments
+                    </Typography>
+                    <Divider />
+                    <Box sx={{ mt: 2 }}>
+                        {productsData.item_comments && productsData.item_comments.length > 0 ? (
+                            productsData.item_comments.map((comment, index) => (
+                                <Box key={index} sx={{ mb: 2 }}>
+                                    <Typography variant="body1" fontWeight="bold">
+                                        {comment.user.name}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary">
+                                        {comment.created_at}
+                                    </Typography>
+                                    <Typography variant="body1" sx={{ mt: 1 }}>
+                                        {comment.comment}
+                                    </Typography>
+                                    <Divider sx={{ mt: 1 }} />
+                                </Box>
+                            ))
+                        ) : (
+                            <Typography variant="body2" color="textSecondary">
+                                No comments available.
+                            </Typography>
+                        )}
+                    </Box>
+                </Paper>
+
                 {selectedProduct && (
-                <PriceBreakdownModal
-                    open={openPriceBreakdownModal}
-                    onClose={handleClosePriceBreakdown}
-                    product={selectedProduct}
-                />
+                    <PriceBreakdownModal
+                        open={openPriceBreakdownModal}
+                        onClose={handleClosePriceBreakdown}
+                        product={selectedProduct}
+                    />
                 )}
                 {selectedAddress && (
-                <MapViewModal
-                    open={openMap}
-                    onClose={handleCloseMap}
-                    address={selectedAddress}
-                />
-            )}
+                    <MapViewModal
+                        open={openMap}
+                        onClose={handleCloseMap}
+                        address={selectedAddress}
+                    />
+                )}
             </Container>
         </ThemeProvider>
     );
