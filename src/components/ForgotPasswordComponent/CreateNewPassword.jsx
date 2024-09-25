@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, IconButton, InputAdornment, Grid, ThemeProvider } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import api from '../../assets/baseURL/api';
 import Swal from 'sweetalert2';
 
 const CreateNewPassword = (props) => {
-  const { userToken } = props;
+    const { state } = useLocation();
+    const navigate = useNavigate();
+    const { userUuid, userToken } = state;
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -14,13 +17,14 @@ const CreateNewPassword = (props) => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const isSaveDisabled = !newPassword || !confirmPassword;
+//   console.log(state)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const url = `/api/auth/me/set-forgot-password`;
+      const url = `api/auth/me/set-forgot-password`;
       const res = await api.put(url, {
-        uuid: uuId,
+        uuid: userUuid,
         password: newPassword,
         password_confirmation: confirmPassword
       }, {
@@ -35,11 +39,16 @@ const CreateNewPassword = (props) => {
         Swal.fire({
           title: successMessage,
           icon: 'success',
+          text: 'Redirecting you to Login page.',
           confirmButtonText: 'Ok',
           confirmButtonColor: ModTheme.palette.primary.main,
-        });
-        setNewPassword("");
-        setConfirmPassword("");
+        }).then((result) => {
+            if (result.isConfirmed) {
+                navigate("/login");
+                setNewPassword("");
+                setConfirmPassword("");
+            }
+          });
       }
     } catch (error) {
       console.log("Error saving profile data:", error);
