@@ -19,7 +19,7 @@ import PriceBreakdownModal from '../../ReusableComponents/ModalComponent/PriceBr
 import MapViewModal from '../../ReusableComponents/ModalComponent/MapViewModal';
 
 const ProductListGridView = ({ productsData, userToken, userData }) => {
-    console.log(productsData)
+    // console.log(productsData)
     const navigate = useNavigate();
 
 
@@ -35,8 +35,7 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
     };
 
     const handleDetailsClick = (productUuid) => {
-        const parsedUserData = JSON.parse(userData)
-        navigate('/product-details', { state: { productUuid, userToken, parsedUserData } });
+        navigate('/product-details', { state: { productUuid, userToken, userData } });
     };
 
     const handleOpenPriceBreakdown = (product) => {
@@ -71,7 +70,7 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
 
     const parseAddress = (address) => {
         const objectAddress = JSON.parse(address)
-        console.log(objectAddress)
+        // console.log(objectAddress)
         let addressName = ""
 
         if (objectAddress[1]) {
