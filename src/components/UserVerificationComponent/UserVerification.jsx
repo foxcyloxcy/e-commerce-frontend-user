@@ -90,23 +90,28 @@ const UserVerification = ({refreshParent}) => {
       });
       console.log(response)
       // If verification is successful, show SweetAlert and redirect
-      Swal.fire({
-        icon: 'success',
-        title: response.data.data? response.data.data.message : 'Something went wrong.',
-        text: 'Redirecting you to the login page.',
-        timer: 2000,
-        confirmButtonText: 'Ok',
-        confirmButtonColor: ModTheme.palette.primary.main,
-      }).then(async(result) => {
-        // Redirect to the login page after the alert
-        if (result.isConfirmed) {
-          if(mode === 'forgot-password'){
-            navigate('/create-password'); 
-          }else{
-            handleLogin()
+
+      if (response.status === 200) {
+        const userUuid = response.data.data.user.uuid
+        const userToken = response.data.data.access_token
+        Swal.fire({
+          icon: 'success',
+          title: response.data.data? response.data.data.message : 'Something went wrong.',
+          text: mode === 'forgot-password' ? 'Redirecting you to the login page.' : 'Redirecting you to home page.',
+          timer: 2000,
+          confirmButtonText: 'Ok',
+          confirmButtonColor: ModTheme.palette.primary.main,
+        }).then(async(result) => {
+          // Redirect to the login page after the alert
+          if (result.isConfirmed) {
+            if(mode === 'forgot-password'){
+              navigate('/create-password', { state: { userUuid, userToken  } }); 
+            }else{
+              handleLogin()
+            }
           }
-        }
-      });
+        });
+      }
     } catch (error) {
       setError('Verification failed. Please try again.');
     }
