@@ -16,11 +16,12 @@ import PriceBreakdownModal from '../ReusableComponents/ModalComponent/PriceBreak
 
 const ProductDetails = () => {
     const { state } = useLocation();
-    const { productUuid, userToken, userData } = state;
+    const { productUuid } = state;
     const [productsData, setProductsData] = useState(null);
     const [offerPrice, setOfferPrice] = useState('');
     const [loading, setLoading] = useState(false);  // Loading state for offers
-    const [parsedUserData, setParsedUserData] = useState("")
+    const [parsedUserData, setParsedUserData] = useState(null)
+    const [userToken, setUserToken] = useState(null)
     const [confirmCollection, setConfirmCollection] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [agreeRefund, setAgreeRefund] = useState(false);
@@ -55,15 +56,31 @@ const ProductDetails = () => {
         const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
             hash: storageKey,
         });
+        const storedUserData = secureLocalStorage.getItem(`${storagePrefix}_userData`, {
+            hash: storageKey,
+          });
+          const storedUserToken = secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
+            hash: storageKey,
+          });
 
-        if (storedIsLoggedIn) {
-            setIsLoggedIn(storedIsLoggedIn)
-        }
+          if (storedIsLoggedIn) {
+            setIsLoggedIn(storedIsLoggedIn);
+          } else {
+            setIsLoggedIn(null);
+          }
 
-        if (state) {
-            const objectUserData = JSON.parse(userData)
-            setParsedUserData(objectUserData)
-        }
+          if (storedUserData) {
+            const objectUserData = JSON.parse(storedUserData)
+            setParsedUserData(objectUserData);
+          } else {
+            setParsedUserData(null);
+          }
+
+          if (storedUserToken) {
+            setUserToken(storedUserToken);
+          } else {
+            setUserToken(null);
+          }
     }, [loadProducts]);
 
     const handleStripeCheckout = async (uuid) => {
@@ -186,7 +203,7 @@ const ProductDetails = () => {
 
     const parseAddress = (address) => {
         const objectAddress = JSON.parse(address)
-        console.log(objectAddress)
+        // console.log(objectAddress)
         let addressName = ""
 
         if (objectAddress[1]) {
@@ -288,7 +305,7 @@ const ProductDetails = () => {
                         }
                         <Grid container alignItems="center" spacing={2} width="100%">
                             {productsData.item_details.is_bid === 1 && (
-                                productsData.item_details.my_offer === null && (
+                                productsData.item_details.my_offer === null || productsData.item_details.my_offer === "" && (
                                     <>
                                         <Grid item width="60%">
                                             <TextField
@@ -314,38 +331,44 @@ const ProductDetails = () => {
                                     </>
                                 )
                             )}
-                            <Grid item width="100%">
-                                <FormControlLabel
-                                    sx={{
-                                        '& .MuiTypography-root': {
-                                            fontSize: {
-                                                xs: '0.65rem', // Smallest screen size
-                                                sm: '0.75rem', // Small screen size
-                                                md: '0.8rem',  // Medium screen size
-                                                lg: '1rem',     // Large screen size
-                                            },
-                                        },
-                                    }}
-                                    control={<Checkbox checked={confirmCollection} onChange={(e) => setConfirmCollection(e.target.checked)} />}
-                                    label="I can confirm it’s the buyer's responsibility to collect the item"
-                                />
-                            </Grid>
-                            <Grid item width="100%">
-                                <FormControlLabel
-                                    sx={{
-                                        '& .MuiTypography-root': {
-                                            fontSize: {
-                                                xs: '0.6rem', // Smallest screen size
-                                                sm: '0.7rem', // Small screen size
-                                                md: '0.8rem',  // Medium screen size
-                                                lg: '1rem',     // Large screen size
-                                            },
-                                        },
-                                    }}
-                                    control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
-                                    label="I agree to the refund policy"
-                                />
-                            </Grid>
+                            { 
+                                parsedUserData &&(
+                                    <>
+                                        <Grid item width="100%">
+                                            <FormControlLabel
+                                                sx={{
+                                                    '& .MuiTypography-root': {
+                                                        fontSize: {
+                                                            xs: '0.65rem', // Smallest screen size
+                                                            sm: '0.75rem', // Small screen size
+                                                            md: '0.8rem',  // Medium screen size
+                                                            lg: '1rem',     // Large screen size
+                                                        },
+                                                    },
+                                                }}
+                                                control={<Checkbox checked={confirmCollection} onChange={(e) => setConfirmCollection(e.target.checked)} />}
+                                                label="I can confirm it’s the buyer's responsibility to collect the item"
+                                            />
+                                        </Grid>
+                                        <Grid item width="100%">
+                                            <FormControlLabel
+                                                sx={{
+                                                    '& .MuiTypography-root': {
+                                                        fontSize: {
+                                                            xs: '0.6rem', // Smallest screen size
+                                                            sm: '0.7rem', // Small screen size
+                                                            md: '0.8rem',  // Medium screen size
+                                                            lg: '1rem',     // Large screen size
+                                                        },
+                                                    },
+                                                }}
+                                                control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
+                                                label="I agree to the refund policy"
+                                            />
+                                        </Grid>
+                                    </>
+                                )
+                            }
 
                             <Grid item width="100%">
                                 <ButtonComponent
