@@ -71,15 +71,15 @@ const MyProfile = (props) => {
       </ListItem>
       <Divider />
       <ListItem button onClick={() => setActiveTab('My products')}>
-        <ListItemText primary="My items" />
+        <ListItemText primary="My Items" />
       </ListItem>
       <Divider />
       <ListItem button onClick={() => setActiveTab('My offers')}>
-        <ListItemText primary="My pending bids" />
+        <ListItemText primary="My Pending Bids" />
       </ListItem>
       <Divider />
       <ListItem button onClick={() => setActiveTab('Offers to me')}>
-        <ListItemText primary="Bids received" />
+        <ListItemText primary="Bids Received" />
       </ListItem>
       <Divider />
     </List>
