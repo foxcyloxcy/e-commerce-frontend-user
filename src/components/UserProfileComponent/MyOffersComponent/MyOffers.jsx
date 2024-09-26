@@ -4,6 +4,8 @@ import { styled } from '@mui/system';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../assets/baseURL/api';
+import PriceBreakdownModal from '../../ReusableComponents/ModalComponent/PriceBreakDownModal';
+import MapViewModal from '../../ReusableComponents/ModalComponent/MapViewModal';
 
 const TruncatedText = styled(Typography)({
     whiteSpace: 'nowrap',
@@ -28,6 +30,10 @@ const MyOffers = (props) => {
     const [productsData, setProductsData] = useState([]);
     const navigate = useNavigate();
     const userData = fromParentUserData
+    const [openPriceBreakdownModal, setOpenPriceBreakdownModal] = useState(false);
+    const [openMap, setOpenMap] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [selectedAddress, setSelectedAddress] = useState(null);
 
     const loadMyOffers = useCallback(async () => {
         try {
@@ -55,6 +61,41 @@ const MyOffers = (props) => {
         navigate('/product-details', { state: { productUuid, userToken, userData } });
     };
 
+    const handleOpenPriceBreakdown = (product) => {
+        setSelectedProduct(product);
+        setOpenPriceBreakdownModal(true);
+    };
+
+    const handleClosePriceBreakdown = () => {
+        setOpenPriceBreakdownModal(false);
+        setSelectedProduct(null);
+    }
+
+    const handleOpenMap = (address) => {
+        setSelectedAddress(address);
+        setOpenMap(true);
+    };
+
+    const handleCloseMap = () => {
+        setOpenMap(false);
+        setSelectedAddress(null);
+    };
+
+    const formatPrice = (price) => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
+    const parseAddress = (address) => {
+        const objectAddress = JSON.parse(address)
+        // console.log(objectAddress)
+        let addressName = ""
+
+        if (objectAddress[1]) {
+            addressName = objectAddress[1].name
+        }
+        return addressName.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+
     return (
         <Grid container spacing={2}>
             {productsData.map((product) => (
@@ -78,9 +119,24 @@ const MyOffers = (props) => {
                         <CardContent sx={{ flexGrow: 1 }}>
                             <TruncatedText variant="h6">{product.item_name}</TruncatedText>
                             <TruncatedText variant="body2">{product.item_description}</TruncatedText>
-                            <Typography variant="h6" sx={{ marginTop: '10px' }}>
-                                AED {product.price}
-                            </Typography>
+                            {
+                                    product.address && (
+                                        <Typography 
+                                            variant="body1" 
+                                            sx={{ marginTop: '10px', cursor: 'pointer', textDecoration: 'underline' }}
+                                            onClick={() => handleOpenMap(product.address)}>
+                                                Collection {parseAddress(product.address)}
+                                        </Typography>
+                                    )
+                                }
+                                <Typography
+                                    variant="body1"
+                                    color="primary"
+                                    onClick={() => handleOpenPriceBreakdown(product)}
+                                    sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                >
+                                    AED {formatPrice(product.total_fee)}
+                                </Typography>
                         </CardContent>
 
                         {/* Details Button */}
@@ -88,20 +144,37 @@ const MyOffers = (props) => {
                             {
                                 product.my_offer.is_accepted === 1 && (
                                     <Button
-                                    variant="contained"
-                                    color="primary"
-                                    fullWidth
-                                    sx={{ marginTop: '10px' }}
-                                    onClick={() => handleDetailsClick(product.uuid)}
-                                >
-                                    Buy item
-                                </Button>
+                                        variant="contained"
+                                        color="primary"
+                                        fullWidth
+                                        sx={{ marginTop: '10px' }}
+                                        onClick={() => handleDetailsClick(product.uuid)}
+                                    >
+                                        Buy item
+                                    </Button>
                                 )
                             }
                         </CardContent>
                     </Card>
                 </Grid>
             ))}
+
+            {/* Reuse PriceBreakdownModal */}
+            {selectedProduct && (
+                <PriceBreakdownModal
+                    open={openPriceBreakdownModal}
+                    onClose={handleClosePriceBreakdown}
+                    product={selectedProduct}
+                />
+            )}
+
+            {selectedAddress && (
+                <MapViewModal
+                    open={openMap}
+                    onClose={handleCloseMap}
+                    address={selectedAddress}
+                />
+            )}
         </Grid>
     );
 };
