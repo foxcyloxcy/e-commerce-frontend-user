@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Container, List, ListItem, ListItemText, ThemeProvider, Divider, IconButton, Drawer, Grid, Typography } from '@mui/material';
 import { styled, keyframes } from '@mui/system';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -9,6 +9,9 @@ import MyProducts from './MyProductsComponent/MyProducts';
 import MyOffers from './MyOffersComponent/MyOffers';
 import OffersToMe from './OffersToMeComponent/OffersToMe';
 import ChangePassword from './UserPasswordChangeComponent/ChangePassword';
+import secureLocalStorage from "react-secure-storage";
+import secure from '../../assets/baseURL/secure';
+
 
 // Define the fade-in animation
 const fadeIn = keyframes`
@@ -27,10 +30,36 @@ const Content = styled(Box)(({ theme }) => ({
   paddingRight: 10,
 }));
 
-const MyProfile = (props) => {
-  const { userToken, userData } = props;
+const MyProfile = () => {
+
+  const [userData, setUserData] = useState(null);
+  const [userToken, setUserToken] = useState(null);
+  const storageKey = secure.storageKey;
+  const storagePrefix = secure.storagePrefix;
   const [activeTab, setActiveTab] = useState('Profile settings');
   const [isDrawerOpen, setDrawerOpen] = useState(false); // State for drawer
+
+
+  useEffect(()=>{
+    const storedUserData = secureLocalStorage.getItem(`${storagePrefix}_userData`, {
+      hash: storageKey,
+    });
+    const storedUserToken = secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
+      hash: storageKey,
+    });
+    
+      if (storedUserData) {
+        setUserData(storedUserData);
+      } else {
+        setUserData(null);
+      }
+
+      if (storedUserToken) {
+        setUserToken(storedUserToken);
+      } else {
+        setUserToken(null);
+      }
+  },[userToken, userData])
 
   const toggleDrawer = () => {
     setDrawerOpen(!isDrawerOpen);
@@ -84,6 +113,16 @@ const MyProfile = (props) => {
       <Divider />
     </List>
   );
+
+  if (!userData || !userToken) {
+    return (
+        <Grid container spacing={2} marginLeft={5}>
+            <Typography>
+                Loading...
+            </Typography>
+        </Grid>
+    )
+}
 
   return (
     <ThemeProvider theme={ModTheme}>
