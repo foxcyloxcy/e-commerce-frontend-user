@@ -32,7 +32,8 @@ const ForgotPassword = () => {
         if (res.status === 200) {
             console.log(res)
           Swal.fire({
-            title: `OTP is sent to your email:${email}`,
+            title: `OTP sent!`,
+            text: 'An OTP has been sent to your email or registered email address, do check your junk file if you do not receive’',
             icon: 'success',
             confirmButtonText: 'Ok',
             confirmButtonColor: ModTheme.palette.primary.main,
