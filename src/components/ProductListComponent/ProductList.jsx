@@ -15,12 +15,11 @@ import {
     ListItem,
     ListItemText,
     Pagination,
-    Typography
+    Typography,
+    TextField
 } from '@mui/material';
 import { Search as SearchIcon, Menu as MenuIcon, ExpandLess, ExpandMore } from '@mui/icons-material';
-import InputBase from '@mui/material/InputBase';
 import ModTheme from '../ThemeComponent/ModTheme';
-import { styled } from '@mui/material/styles';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import api from '../../assets/baseURL/api';
 import DrawerContent from './DrawerContent';
@@ -65,23 +64,12 @@ const ProductList = (props) => {
     }, []);
 
     const loadProducts = useCallback(async (subCategoryId, page) => {
-        if(!page){
-            page = 1
+        if (!page) {
+            page = 1;
         }
 
         try {
-            // api/auth/items
-            let dynamicApi;
-            if(userToken){
-
-                dynamicApi = 'auth'
-
-            }else{
-
-                dynamicApi = 'global'
-
-            }
-
+            let dynamicApi = userToken ? 'auth' : 'global';
             let query = `api/${dynamicApi}/items?page=${page}&size=${itemsPerPage}&`;
 
             if (subCategoryId) {
@@ -96,37 +84,24 @@ const ProductList = (props) => {
                 query += `filter[keyword]=${keyword}&`; // Added keyword to the query
             }
 
-            if(userToken){
-                const res = await api.get(query, {
+            const res = userToken
+                ? await api.get(query, {
                     headers: {
                         Authorization: `Bearer ${userToken}`,
                         'Content-Type': 'multipart/form-data',
                     },
-                });
+                })
+                : await api.get(query);
 
-                if (res.status === 200) {
-                    console.log(res.data)
-                    let fetchedProducts = res.data.data.data;
-    
-                    setProductsData(fetchedProducts);
-                    setTotalPages(res.data.data.last_page);
-                }
-            }else{
-                const res = await api.get(query);
-                
-                if (res.status === 200) {
-                    console.log(res.data)
-                    let fetchedProducts = res.data.data.data;
-    
-                    setProductsData(fetchedProducts);
-                    setTotalPages(res.data.data.last_page);
-                }
+            if (res.status === 200) {
+                const fetchedProducts = res.data.data.data;
+                setProductsData(fetchedProducts);
+                setTotalPages(res.data.data.last_page);
             }
-
         } catch (error) {
             console.log(error);
         }
-    }, [priceRange, keyword]);
+    }, [priceRange, keyword, userToken]);
 
 
     const trigger = useScrollTrigger({
@@ -197,47 +172,8 @@ const ProductList = (props) => {
     };
 
     const handleSearchChange = (event) => {
-        console.log(event)
         setKeyword(event.target.value); // Updates the keyword on input change
     };
-
-    const Search = styled('div')(({ theme }) => ({
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        marginRight: theme.spacing(2),
-        marginLeft: 0,
-        width: '100%',
-        border: '1px solid',
-        borderColor: theme.palette.secondary.main,
-        backgroundColor: theme.palette.secondary.background,
-        [theme.breakpoints.up('md')]: {
-            marginLeft: theme.spacing(3),
-            width: 'auto',
-        },
-    }));
-
-    const SearchIconWrapper = styled('div')(({ theme }) => ({
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    }));
-
-    const StyledInputBase = styled(InputBase)(({ theme }) => ({
-        color: 'secondary.main',
-        '& .MuiInputBase-input': {
-            padding: theme.spacing(1, 1, 1, 0),
-            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-            transition: theme.transitions.create('width'),
-            width: '100%',
-            [theme.breakpoints.up('md')]: {
-                width: '20ch',
-            },
-        },
-    }));
 
     return (
         <ThemeProvider theme={ModTheme}>
@@ -288,17 +224,16 @@ const ProductList = (props) => {
                 <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
                     <Grid container display="flex" justifyContent="space-between" alignItems="center">
                     <Grid item xs={6} sm={6} md={4} lg={4}>
-                        <Search>
-                            <SearchIconWrapper>
-                                <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
+                            <TextField
+                                fullWidth
+                                variant="outlined"
+                                placeholder="Search..."
                                 value={keyword}
-                                onInput={handleSearchChange} // Update keyword on typing
+                                onChange={handleSearchChange} // Update keyword on typing
+                                InputProps={{
+                                    startAdornment: <SearchIcon sx={{mr: 1}}/>
+                                }}
                             />
-                        </Search>
                         </Grid>
                         <Grid item xs={6} sm={6} md={8} lg={8}>
                             <Typography variant="body1" sx={{
