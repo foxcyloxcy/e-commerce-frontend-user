@@ -25,6 +25,8 @@ import ChatMessage from './components/ChatMessageComponent/ChatMessage';
 import ViewOffers from './components/UserProfileComponent/OffersToMeComponent/ViewOffers';
 import ForgotPassword from './components/ForgotPasswordComponent/ForgotPassword';
 import CreateNewPassword from './components/ForgotPasswordComponent/CreateNewPassword';
+import FrequentlyAskQuestions from './staticPages/FAQComponent/FrequentAskQuestions';
+import RefundPolicy from './staticPages/RefundPolicyComponent/RefundPolicy';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -95,6 +97,9 @@ function App() {
     });
 
     setIsLoggedIn(false);
+
+    navigate('/');
+    location.reload();
   };
 
   return (
@@ -216,6 +221,24 @@ function App() {
           element={
             <PublicRoute isLoggedIn={isLoggedIn}>
               <CreateNewPassword />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="/faq"
+          element={
+            <PublicRoute isLoggedIn={isLoggedIn}>
+              <FrequentlyAskQuestions />
+            </PublicRoute>
+          }
+        />
+
+        <Route
+          path="/refund-policy"
+          element={
+            <PublicRoute isLoggedIn={isLoggedIn}>
+              <RefundPolicy />
             </PublicRoute>
           }
         />
