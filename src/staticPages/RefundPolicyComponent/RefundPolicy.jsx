@@ -1,9 +1,13 @@
 import React from 'react';
-import { Box, Typography, List, ListItem, ListItemText, Divider } from '@mui/material';
+import { Typography, List, ListItem, ListItemText, Divider, ThemeProvider, Container } from '@mui/material';
+import ModTheme from '../../components/ThemeComponent/ModTheme';
 
 const RefundPolicy = () => {
   return (
-    <Box sx={{ p: 3 }}>
+    <ThemeProvider theme={ModTheme}>
+        <Container sx={{ marginTop: 10,
+    maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
+    }}>
       <Typography variant="h4" gutterBottom>
         REFUND POLICY
       </Typography>
@@ -75,7 +79,8 @@ const RefundPolicy = () => {
       <Typography paragraph>
         If you have any questions or concerns about our refund policy, please contact us at <a href="mailto:hello@therelovedmarketplace.com">hello@therelovedmarketplace.com</a>.
       </Typography>
-    </Box>
+      </Container>
+      </ThemeProvider>
   );
 };
 
