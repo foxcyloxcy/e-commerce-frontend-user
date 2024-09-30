@@ -35,23 +35,45 @@ const ProductDetails = () => {
 
     const loadProducts = useCallback(async () => {
         try {
-            const res = await api.get(`api/global/items/${productUuid}`, {
-                headers: {
-                    Authorization: `Bearer ${userToken}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (res.status === 200) {
-                console.log(res.data)
-                setProductsData(res.data);
+
+            let dynamicApi;
+            if(userToken){
+
+                dynamicApi = 'auth'
+
+            }else{
+
+                dynamicApi = 'global'
+
+            }
+
+            let query = `api/${dynamicApi}/items/${productUuid}`;
+
+            if(userToken){
+                const res = await api.get(query, {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+                if (res.status === 200) {
+                    console.log(res.data)
+                    setProductsData(res.data);
+                }
+            }else{
+                const res = await api.get(query);
+                
+                if (res.status === 200) {
+                    console.log(res.data)
+                    setProductsData(res.data);
+                }
             }
         } catch (error) {
             console.log(error);
         }
-    }, [productUuid]);
+    }, [productUuid, userToken]);
 
     useEffect(() => {
-        loadProducts();
 
         const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
             hash: storageKey,
@@ -81,6 +103,8 @@ const ProductDetails = () => {
           } else {
             setUserToken(null);
           }
+
+          loadProducts(storedUserToken);
     }, [loadProducts]);
 
     const handleStripeCheckout = async (uuid) => {
@@ -363,7 +387,7 @@ const ProductDetails = () => {
                                                     },
                                                 }}
                                                 control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
-                                                label="I agree to the refund policy"
+                                                label="I agree to all terms and conditions’"
                                             />
                                         </Grid>
                                     </>
