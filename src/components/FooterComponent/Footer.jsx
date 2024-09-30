@@ -51,18 +51,18 @@ const Footer = () => {
                             <Link href="/our-story" color="inherit" underline="hover" variant="body2">Our Story</Link><br />
                             <Link href="#" color="inherit" underline="hover" variant="body2">Contact</Link><br />
                             <Link href="#" color="inherit" underline="hover" variant="body2">How it works</Link><br />
-                            <Link href="#" color="inherit" underline="hover" variant="body2">Frequently asked questions</Link><br />
+                            <Link href="/faq" color="inherit" underline="hover" variant="body2">Frequently asked questions</Link><br />
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
                             <Typography variant="h6">Follow Us</Typography>
-                            <Link href="#" color="inherit" underline="hover" variant="body2">Facebook</Link><br />
-                            <Link href="#" color="inherit" underline="hover" variant="body2">Instagram</Link><br />
+                            <Link href="https://www.instagram.com/reloveduae/" color="inherit" underline="hover" variant="body2">Facebook</Link><br />
+                            <Link href="https://www.facebook.com/people/Reloved-Marketplace/61564862618552/" color="inherit" underline="hover" variant="body2">Instagram</Link><br />
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
                             <Typography variant="h6">Policies</Typography>
                             <Link href="/terms-of-use" color="inherit" underline="hover" variant="body2">Terms of use</Link><br />
                             <Link href="/buyer-and-seller-terms" color="inherit" underline="hover" variant="body2">Seller and Buyer Terms</Link><br />
-                            <Link href="#" color="inherit" underline="hover" variant="body2">Return/Refund</Link><br />
+                            <Link href="/refund-policy" color="inherit" underline="hover" variant="body2">Return/Refund</Link><br />
                             <Link href="/privacy-policy" color="inherit" underline="hover" variant="body2">Privacy Policy</Link><br />
                         </Grid>
                     </Grid>
