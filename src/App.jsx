@@ -98,8 +98,7 @@ function App() {
 
     setIsLoggedIn(false);
 
-    navigate('/');
-    location.reload();
+    location.replace('/login');
   };
 
   return (
