@@ -5,7 +5,7 @@ import ModTheme from '../../components/ThemeComponent/ModTheme';
 const RefundPolicy = () => {
   return (
     <ThemeProvider theme={ModTheme}>
-        <Container sx={{ marginTop: 10,
+        <Container sx={{ marginTop: 10, marginBottom: 5,
     maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
     }}>
       <Typography variant="h4" gutterBottom>
