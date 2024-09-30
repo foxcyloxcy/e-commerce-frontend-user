@@ -163,7 +163,7 @@ const FeaturedProducts = () => {
                     marginBottom: 10,
                 }}
             >
-                <Typography variant="h5" align="center" gutterBottom marginBottom={1}>
+                <Typography variant="h4" align="center" gutterBottom marginBottom={1}>
                     Featured Products
                 </Typography>
                 <Slider {...settings}>
@@ -213,9 +213,6 @@ const FeaturedProducts = () => {
                                             marginTop: 1 
                                         }}
                                     >
-                                        <Typography variant="body1" color="primary">
-                                            AED {formatPrice(product.price)}
-                                        </Typography>
                                         <Typography
                                             variant="body1"
                                             color="primary"
@@ -278,9 +275,6 @@ const FeaturedProducts = () => {
                                     <Typography variant="body2" color="textSecondary" gutterBottom>
                                         {selectedProduct.sub_category.name}
                                     </Typography>
-                                    <Typography variant="body1" color="primary">
-                                        AED {formatPrice(selectedProduct.price)}
-                                    </Typography>
                                     <Typography
                                             variant="body1"
                                             color="primary"
@@ -293,6 +287,7 @@ const FeaturedProducts = () => {
                                         {selectedProduct.item_description}
                                     </Typography>
                                     <ButtonComponent
+                                        onClick={() => handleDetailsClick(selectedProduct.uuid)}
                                         label="Buy item"
                                         buttonVariant="contained"
                                         textColor="primary.contrastText"
