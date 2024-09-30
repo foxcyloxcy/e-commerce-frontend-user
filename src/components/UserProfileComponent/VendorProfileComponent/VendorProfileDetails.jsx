@@ -62,6 +62,7 @@ const VendorProfileDetails = (props) => {
                 },
             });
             if (res.status === 200) {
+                console.log(res.data.data)
                 setUserData(res.data.data);
                 setFormData({
                     name: res.data.data.vendor.name || '',
@@ -199,10 +200,10 @@ const VendorProfileDetails = (props) => {
 
     if (!userData || !userData.vendor) {
         return (
-            <Grid container spacing={2}>
+            <Grid container spacing={2} marginLeft={5}>
                 <Button
                     variant="contained"
-                    color="secondary"
+                    color="primary"
                     sx={{ mt: 2 }}
                     onClick={handleAddVendorProfile}
                 >
