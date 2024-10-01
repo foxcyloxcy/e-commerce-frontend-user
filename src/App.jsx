@@ -18,6 +18,7 @@ import { ProtectedRoute, PublicRoute } from './RouteProtection';
 import OurStoryPage from './staticPages/OurStoryPageComponent/OurStoryPage';
 import BuyerAndSellerTerms from './staticPages/BuyerAndSellerTermsComponent/BuyerAndSellerTerms';
 import TermsOfUse from './staticPages/TermsOfUseComponent/TermsOfUse';
+import TermsAndConditions from './staticPages/TermsAndConditions';
 import PrivacyPolicy from './staticPages/PrivacyPolicyComponent/PrivacyPolicy';
 import AddVendorProfileDetails from './components/UserProfileComponent/VendorProfileComponent/AddVendorProfileDetails';
 import PaymentSuccess from './components/PaymentSuccessComponent/PaymentSuccess';
@@ -113,6 +114,7 @@ function App() {
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn} userToken={userToken} userData={userData} />} />
         <Route path="/our-story" element={<OurStoryPage parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/terms-of-use" element={<TermsOfUse parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/buyer-and-seller-terms" element={<BuyerAndSellerTerms parentIsLoggedIn={isLoggedIn} />} />
 
