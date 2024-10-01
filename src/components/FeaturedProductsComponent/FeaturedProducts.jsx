@@ -24,6 +24,7 @@ import api from '../../assets/baseURL/api';
 import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
 import { useNavigate } from 'react-router-dom';
 import PriceBreakdownModal from '../ReusableComponents/ModalComponent/PriceBreakDownModal';
+import MapViewModal from '../ReusableComponents/ModalComponent/MapViewModal';
 
 // Custom styled components
 const TruncatedText = styled(Typography)({
@@ -70,6 +71,8 @@ const FeaturedProducts = () => {
     const [openPriceBreakdown, setOpenPriceBreakdown] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [products, setProducts] = useState([]);
+    const [selectedAddress, setSelectedAddress] = useState(null);
+    const [openMap, setOpenMap] = useState(false);
     const navigate = useNavigate();
 
     const handleOpenModal = (product) => {
@@ -115,6 +118,27 @@ const FeaturedProducts = () => {
 
     const handleDetailsClick = (productUuid) => {
         navigate('/product-details', { state: { productUuid } });
+    };
+
+    const handleOpenMap = (address) => {
+        setSelectedAddress(address);
+        setOpenMap(true);
+    };
+
+    const handleCloseMap = () => {
+        setOpenMap(false);
+        setSelectedAddress(null);
+    };
+
+    const parseAddress = (address) => {
+        const objectAddress = JSON.parse(address)
+        // console.log(objectAddress)
+        let addressName = ""
+
+        if (objectAddress[1]) {
+            addressName = objectAddress[1].name
+        }
+        return addressName.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
     // Slider settings
@@ -221,6 +245,16 @@ const FeaturedProducts = () => {
                                         >
                                             AED {formatPrice(product.total_fee)}
                                         </Typography>
+                                        {
+                                            product.address && (
+                                                <Typography
+                                                    variant="body1"
+                                                    sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                                    onClick={() => handleOpenMap(product.address)}>
+                                                    Collection {parseAddress(product.address)}
+                                                </Typography>
+                                            )
+                                        }
                                     </Box>
                                 </CardContent>
                                 <CardActions>
@@ -304,6 +338,13 @@ const FeaturedProducts = () => {
                     onClose={handleClosePriceBreakdown}
                     product={selectedProduct}
                 />
+            {selectedAddress && (
+                    <MapViewModal
+                        open={openMap}
+                        onClose={handleCloseMap}
+                        address={selectedAddress}
+                    />
+                )}
             </Box>
         </ThemeProvider>
     );
