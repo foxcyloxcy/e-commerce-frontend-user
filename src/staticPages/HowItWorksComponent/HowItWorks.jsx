@@ -38,7 +38,7 @@ const HowItWorks = () => {
               <Card>
                 <CardMedia
                   component="img"
-                  image="/images/item-listing.jpg"
+                  image="/item-listing.jpg"
                   alt="Listing items"
                   sx={{ height: 250 }}
                 />
@@ -70,7 +70,7 @@ const HowItWorks = () => {
               <Card>
                 <CardMedia
                   component="img"
-                  image="/images/buying-process.jpg"
+                  image="/buying-process.jpg"
                   alt="Buying process"
                   sx={{ height: 250 }}
                 />
@@ -102,7 +102,7 @@ const HowItWorks = () => {
               <Card>
                 <CardMedia
                   component="img"
-                  image="/images/shipping.jpg"
+                  image="/shipping.png"
                   alt="Shipping process"
                   sx={{ height: 250 }}
                 />
@@ -132,7 +132,7 @@ const HowItWorks = () => {
               <Card>
                 <CardMedia
                   component="img"
-                  image="/images/cash-free.jpg"
+                  image="/cash-free.jpg"
                   alt="Cash-free transactions"
                   sx={{ height: 250 }}
                 />
