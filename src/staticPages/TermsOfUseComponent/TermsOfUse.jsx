@@ -130,7 +130,7 @@ const TermsOfUse = () => {
                         <Typography variant="body1" paragraph>
                             You may not access or use the Platform for any purpose other than that for which we make the Platform available. The Platform may not be used in connection with any commercial endeavors except those that are specifically endorsed or approved by us.
                         </Typography>
-                        <Typography variant="body1" paragraph>
+                        <Typography variant="body1" paragraph component='span'>
                             As a user of the Platform, you agree not to:
                             <ul>
                                 <li>Systematically retrieve data or other content from the Platform to create or compile, directly or indirectly, a collection, compilation, database, or directory without written permission from us.</li>
