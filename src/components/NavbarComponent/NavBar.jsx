@@ -134,7 +134,7 @@ const NavBar = (props) => {
                 />
                 <ButtonComponent
                   component={Link}
-                  to="/about"
+                  to="/our-story"
                   label="about"
                   textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
@@ -256,7 +256,7 @@ const NavBar = (props) => {
                     <ListItemText primary="Shop" />
                   </ListItem>
                   <Divider />
-                  <ListItem button component={Link} to="/about" onClick={handleClose}>
+                  <ListItem button component={Link} to="/our-story" onClick={handleClose}>
                     <ListItemText primary="About" />
                   </ListItem>
                   {isLoggedIn && (
