@@ -15,7 +15,6 @@ const HowItWorks = () => {
             display: 'flex',
             justifyContent: 'center',
             mt: 5,
-            mb: 5
           }}>
             List your items in just a few minutes:
           </Typography>
@@ -53,7 +52,6 @@ const HowItWorks = () => {
             display: 'flex',
             justifyContent: 'center',
             mt: 5,
-            mb: 5
           }}>
             User-Friendly Purchasing:
           </Typography>
@@ -85,7 +83,6 @@ const HowItWorks = () => {
             display: 'flex',
             justifyContent: 'center',
             mt: 5,
-            mb: 5
           }}>
             Easy Shipping:
           </Typography>
@@ -117,7 +114,6 @@ const HowItWorks = () => {
             display: 'flex',
             justifyContent: 'center',
             mt: 5,
-            mb: 5
           }}
           >
             Cash-Free Transactions:
