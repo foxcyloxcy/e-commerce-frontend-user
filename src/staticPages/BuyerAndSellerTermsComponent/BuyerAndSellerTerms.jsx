@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, Container, Paper, ThemeProvider } from '@mui/material';
 import ModTheme from '../../components/ThemeComponent/ModTheme';
 
-const TermsAndConditions = () => {
+const BuyerAndSellerTerms = () => {
     return (
         <ThemeProvider theme={ModTheme}>
         <Container sx={{
@@ -145,4 +145,4 @@ const TermsAndConditions = () => {
     );
 };
 
-export default TermsAndConditions;
+export default BuyerAndSellerTerms;
