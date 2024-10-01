@@ -8,7 +8,7 @@ const OurStoryPage = () => {
             <Container sx={{ marginTop: 15,
                 maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
              }}>
-                <Typography variant="h2" align="center" gutterBottom>
+                <Typography variant="h4" align="center" gutterBottom>
                     Our Story
                 </Typography>
 
