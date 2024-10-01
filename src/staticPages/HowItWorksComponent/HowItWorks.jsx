@@ -11,10 +11,18 @@ const HowItWorks = () => {
         
         {/* List Items Section */}
         <Box mb={4}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            mt: 5,
+            mb: 5
+          }}>
             List your items in just a few minutes:
           </Typography>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} sx={{
+            display: 'flex',
+            justifyContent: 'center'
+          }}>
             <Grid item xs={12} md={6}>
               <Typography variant="body1" gutterBottom>
                 1. <strong>Upload Photos:</strong> Add high-quality images of the items you want to sell.
@@ -41,7 +49,12 @@ const HowItWorks = () => {
 
         {/* User-Friendly Purchasing */}
         <Box mb={4}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            mt: 5,
+            mb: 5
+          }}>
             User-Friendly Purchasing:
           </Typography>
           <Grid container spacing={2}>
@@ -68,7 +81,12 @@ const HowItWorks = () => {
 
         {/* Easy Shipping */}
         <Box mb={4}>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            mt: 5,
+            mb: 5
+          }}>
             Easy Shipping:
           </Typography>
           <Grid container spacing={2}>
@@ -95,7 +113,13 @@ const HowItWorks = () => {
 
         {/* Cash-Free Transactions */}
         <Box>
-          <Typography variant="h5" gutterBottom>
+          <Typography variant="h5" gutterBottom sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            mt: 5,
+            mb: 5
+          }}
+          >
             Cash-Free Transactions:
           </Typography>
           <Grid container spacing={2}>
