@@ -257,8 +257,8 @@ export default function Register() {
                                 onChange={handleCheckboxChange}
                                 color="primary" />}
                             label={<Typography sx={{ fontSize: { xs: '0.4rem', sm: '0.5rem', md: '0.7rem', lg: '0.8rem', xl: '1rem' } }}>I accept the <span></span>
-                                <Link href="/terms-of-use">
-                                    Terms of use
+                                <Link href="/terms-and-conditions">
+                                    Terms And Conditions
                                 </Link></Typography>}
                         />
                         {formErrors.remember && (
