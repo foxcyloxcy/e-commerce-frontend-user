@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
                 marginBottom: 10,
                 maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
             }}>
-                <Typography variant="h1" gutterBottom align="center">
+                <Typography variant="h4" gutterBottom align="center">
                     Privacy Policy
                 </Typography>
                 <Paper elevation={3} sx={{ padding: 4, marginBottom: 4, background: '#fff' }}>
@@ -26,7 +26,7 @@ const PrivacyPolicy = () => {
                     Please read this privacy notice carefully, as it will help you understand what we do with the information that we collect.
                 </Typography>
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     Table of Contents
                 </Typography>
 
@@ -47,7 +47,7 @@ const PrivacyPolicy = () => {
 
                 <Divider style={{ margin: '20px 0' }} />
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     1. WHAT INFORMATION DO WE COLLECT?
                 </Typography>
 
@@ -107,7 +107,7 @@ const PrivacyPolicy = () => {
                     <strong>Location Data:</strong> We collect location data such as information about your device's location, which can be either precise or imprecise. How much information we collect depends on the type and settings of the device you use to access the App and/or Website. For example, we may use GPS and other technologies to collect geolocation data that tells us your current location (based on your IP address). You can opt out of allowing us to collect this information either by refusing access to the information or by disabling your Location setting on your device. Note however, if you choose to opt out, you may not be able to use certain aspects of the Services.
                 </Typography>
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     2. HOW DO WE USE YOUR INFORMATION?
                 </Typography>
 
@@ -138,7 +138,7 @@ const PrivacyPolicy = () => {
 
                 <Divider style={{ margin: '2rem 0' }} />
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     3. WILL YOUR INFORMATION BE SHARED WITH ANYONE?
                 </Typography>
 
@@ -168,7 +168,7 @@ const PrivacyPolicy = () => {
 
                 <Divider style={{ margin: '2rem 0' }} />
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     4. DO WE USE COOKIES AND OTHER TRACKING TECHNOLOGIES?
                 </Typography>
 
@@ -178,7 +178,7 @@ const PrivacyPolicy = () => {
 
                 <Divider style={{ margin: '2rem 0' }} />
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     5. HOW LONG DO WE KEEP YOUR INFORMATION?
                 </Typography>
 
@@ -196,7 +196,7 @@ const PrivacyPolicy = () => {
 
                 <Divider style={{ margin: '2rem 0' }} />
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     6. HOW DO WE KEEP YOUR INFORMATION SAFE?
                 </Typography>
 
@@ -208,7 +208,7 @@ const PrivacyPolicy = () => {
                     We have implemented appropriate technical and organizational security measures designed to protect the security of any personal information we process. However, despite our safeguards and efforts to secure your information, no electronic transmission over the Internet or information storage technology can be guaranteed to be 100% secure, so we cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat our security, and improperly collect, access, steal, or modify your information. Although we will do our best to protect your personal information, transmission of personal information to and from our App and/or Website is at your own risk. You should only access the App and/or Website within a secure environment.
                 </Typography>
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     7. DO WE COLLECT INFORMATION FROM MINORS?
                 </Typography>
 
@@ -222,7 +222,7 @@ const PrivacyPolicy = () => {
 
                 <Divider style={{ margin: '2rem 0' }} />
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     8. WHAT ARE YOUR PRIVACY RIGHTS?
                 </Typography>
 
@@ -246,7 +246,7 @@ const PrivacyPolicy = () => {
                     If you are a resident in Switzerland, the contact details for the data protection authorities are available here: <a href="https://www.edoeb.admin.ch/edoeb/en/home.html" target="_blank" rel="noopener noreferrer">Swiss Data Protection Authorities</a>.
                 </Typography>
 
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h4" gutterBottom>
                     GENERAL DATA PROTECTION REGULATION (GDPR)
                 </Typography>
 
@@ -266,7 +266,7 @@ const PrivacyPolicy = () => {
                     <ListItem>To comply with the law</ListItem>
                 </List>
 
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h4" gutterBottom>
                     Retention of Data
                 </Typography>
 
@@ -278,7 +278,7 @@ const PrivacyPolicy = () => {
                     reloved will also retain Usage Data for internal analysis purposes. Usage Data is generally retained for a shorter period of time, except when this data is used to strengthen the security or to improve the functionality of our Service, or we are legally obligated to retain this data for longer time periods.
                 </Typography>
 
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h4" gutterBottom>
                     Transfer of Data
                 </Typography>
 
@@ -290,7 +290,7 @@ const PrivacyPolicy = () => {
                     reloved will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Policy and no transfer of your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of your data and other personal information.
                 </Typography>
 
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h4" gutterBottom>
                     Disclosure of Data. Legal Requirements
                 </Typography>
 
@@ -302,7 +302,7 @@ const PrivacyPolicy = () => {
                     <ListItem>To protect against legal liability</ListItem>
                 </List>
 
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h4" gutterBottom>
                     Security of Data
                 </Typography>
 
@@ -310,7 +310,7 @@ const PrivacyPolicy = () => {
                     The security of your data is important to us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security.
                 </Typography>
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     Your Rights Under the GDPR
                 </Typography>
 
@@ -377,7 +377,7 @@ const PrivacyPolicy = () => {
 
                 <Divider style={{ margin: '2rem 0' }} />
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     9. CONTROLS FOR DO-NOT-TRACK FEATURES
                 </Typography>
 
@@ -387,7 +387,7 @@ const PrivacyPolicy = () => {
 
                 <Divider style={{ margin: '2rem 0' }} />
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     10. DO CALIFORNIA RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?
                 </Typography>
 
@@ -461,7 +461,7 @@ const PrivacyPolicy = () => {
                         </Typography>
                     </ListItem>
                 </List>
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     How Do We Use and Share Your Personal Information?
                 </Typography>
 
@@ -491,7 +491,7 @@ const PrivacyPolicy = () => {
 
                 <Divider style={{ margin: '2rem 0' }} />
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     Your Rights with Respect to Your Personal Data
                 </Typography>
 
@@ -602,7 +602,7 @@ const PrivacyPolicy = () => {
 
                 <Divider style={{ margin: '2rem 0' }} />
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     11. Do We Make Updates to This Notice?
                 </Typography>
 
@@ -616,7 +616,7 @@ const PrivacyPolicy = () => {
 
                 <Divider style={{ margin: '2rem 0' }} />
 
-                <Typography variant="h2" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     12. How Can You Contact Us About This Notice?
                 </Typography>
 
