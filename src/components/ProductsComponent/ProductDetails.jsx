@@ -31,17 +31,18 @@ const ProductDetails = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const storageKey = secure.storageKey;
     const storagePrefix = secure.storagePrefix;
+    const [comment, setComment] = useState('');  // New state for comment
     const navigate = useNavigate();
 
     const loadProducts = useCallback(async () => {
         try {
 
             let dynamicApi;
-            if(userToken){
+            if (userToken) {
 
                 dynamicApi = 'auth'
 
-            }else{
+            } else {
 
                 dynamicApi = 'global'
 
@@ -49,7 +50,7 @@ const ProductDetails = () => {
 
             let query = `api/${dynamicApi}/items/${productUuid}`;
 
-            if(userToken){
+            if (userToken) {
                 const res = await api.get(query, {
                     headers: {
                         Authorization: `Bearer ${userToken}`,
@@ -60,9 +61,9 @@ const ProductDetails = () => {
                     console.log(res.data)
                     setProductsData(res.data);
                 }
-            }else{
+            } else {
                 const res = await api.get(query);
-                
+
                 if (res.status === 200) {
                     console.log(res.data)
                     setProductsData(res.data);
@@ -80,31 +81,31 @@ const ProductDetails = () => {
         });
         const storedUserData = secureLocalStorage.getItem(`${storagePrefix}_userData`, {
             hash: storageKey,
-          });
-          const storedUserToken = secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
+        });
+        const storedUserToken = secureLocalStorage.getItem(`${storagePrefix}_userToken`, {
             hash: storageKey,
-          });
+        });
 
-          if (storedIsLoggedIn) {
+        if (storedIsLoggedIn) {
             setIsLoggedIn(storedIsLoggedIn);
-          } else {
+        } else {
             setIsLoggedIn(null);
-          }
+        }
 
-          if (storedUserData) {
+        if (storedUserData) {
             const objectUserData = JSON.parse(storedUserData)
             setParsedUserData(objectUserData);
-          } else {
+        } else {
             setParsedUserData(null);
-          }
+        }
 
-          if (storedUserToken) {
+        if (storedUserToken) {
             setUserToken(storedUserToken);
-          } else {
+        } else {
             setUserToken(null);
-          }
+        }
 
-          loadProducts(storedUserToken);
+        loadProducts(storedUserToken);
     }, [loadProducts]);
 
     const handleStripeCheckout = async (uuid) => {
@@ -246,6 +247,55 @@ const ProductDetails = () => {
         setSelectedProduct(null);
     }
 
+    const handleCommentSubmit = async () => {
+        if (!comment) {
+            Swal.fire('Error', 'Please enter a comment', 'error');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('item_id', productsData.item_details.id);
+        formData.append('owner_id', productsData.item_details.user.id);
+        formData.append('user_id', parsedUserData.id);
+        formData.append('comments', comment);
+
+        try {
+            const res = await api.post("/api/auth/item-comment", formData, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            if (res.status === 200) {
+                console.log(res)
+                setComment('');  // Clear the input field after submission
+                loadProducts()
+            }
+        } catch (error) {
+            Swal.fire('Error', 'Failed to submit comment', 'error');
+        }
+    };
+
+    const dateParser = (dateInput) => {
+        const months = [
+          'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        ];
+      
+        const date = new Date(dateInput);
+      
+        // Extract values
+        const month = months[date.getMonth()];
+        const day = String(date.getDate()).padStart(2, '0'); // Ensures 2-digit day
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0'); // Ensures 2-digit hours
+        const minutes = String(date.getMinutes()).padStart(2, '0'); // Ensures 2-digit minutes
+      
+        // Format date as "Oct-dd-yyyy hh:mm"
+        return `${month}-${day}-${year} ${hours}:${minutes}`;
+      };
+
     // Handle rendering after data is loaded
     if (!productsData || !productsData.item_details) {
         return <Typography>Loading...</Typography>;
@@ -355,8 +405,8 @@ const ProductDetails = () => {
                                     </>
                                 )
                             )}
-                            { 
-                                parsedUserData &&(
+                            {
+                                parsedUserData && (
                                     <>
                                         <Grid item width="100%">
                                             <FormControlLabel
@@ -453,15 +503,7 @@ const ProductDetails = () => {
                         {productsData.item_comments && productsData.item_comments.length > 0 ? (
                             productsData.item_comments.map((comment, index) => (
                                 <Box key={index} sx={{ mb: 2 }}>
-                                    <Typography variant="body1" fontWeight="bold">
-                                        {comment.user.name}
-                                    </Typography>
-                                    <Typography variant="body2" color="textSecondary">
-                                        {comment.created_at}
-                                    </Typography>
-                                    <Typography variant="body1" sx={{ mt: 1 }}>
-                                        {comment.comment}
-                                    </Typography>
+
                                     <Divider sx={{ mt: 1 }} />
                                 </Box>
                             ))
@@ -470,6 +512,26 @@ const ProductDetails = () => {
                                 No comments available.
                             </Typography>
                         )}
+
+                        <TextField
+                            label="Add a comment"
+                            multiline
+                            rows={4}
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            fullWidth
+                            variant="outlined"
+                            sx={{ mt: 2 }}
+                        />
+                        <ButtonComponent
+                            label="Submit Comment"
+                            size="small"
+                            buttonVariant="contained"
+                            textColor="primary.contrastText"
+                            hoverTextColor="secondary.main"
+                            sx={{ mt: 1 }}
+                            onClick={handleCommentSubmit}
+                        />
                     </Box>
                 </Paper>
 
