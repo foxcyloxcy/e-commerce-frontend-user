@@ -43,7 +43,8 @@ const EditProduct = ({ userToken }) => {
         is_bid,
         sub_category,
         sub_category_id,
-        propertyValues = {}
+        propertyValues = {},
+        uuid
       } = state.product;
 
       setProductName(item_name || '');
@@ -55,10 +56,10 @@ const EditProduct = ({ userToken }) => {
       setSelectedCategory(sub_category?.category_id || '');
       setSelectedSubCategoriesId(sub_category_id || '');
       setSelectedSubCategoryId(sub_category_id || '');
-      setSelectedPropertyValues(propertyValues);
 
       loadCategories();
-      loadSubCategory(sub_category_id)
+      loadSubCategory(sub_category_id);
+      loadProductDetail(uuid)
       handleCategoryChange(sub_category?.category_id, sub_category_id);
       handleAddressData(JSON.parse(address))
     }
@@ -110,14 +111,25 @@ const EditProduct = ({ userToken }) => {
 
       //global/sub-category/properties?sub_category_id=2
       if (response.status === 200) {
-        console.log('subcategory',response.data.data)
         setSelectedSubCategories(response.data.data);
-        console.log('selectedSubcategory',selectedSubCategories)
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const loadProductDetail = useCallback(async (productUuid) => {
+    try {
+        let query = `api/global/items/${productUuid}`;
+        const res = await api.get(query);
+        if (res.status === 200) {
+            // console.log(res.data)
+            setSelectedPropertyValues(res.data.item_property_details);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+  }, []);
 
   const handleSubCategoryChange = (event) => {
     const subCategory = event.target.value;
@@ -166,24 +178,24 @@ const EditProduct = ({ userToken }) => {
     formData.append('item_name', productName);
     formData.append('item_description', description);
     formData.append('address', address);
-    formData.append('price', price);
-    formData.append('is_bid', acceptOffers);
-    formData.append('sub_category_id', selectedSubCategoryId);
+    // formData.append('price', price);
+    // formData.append('is_bid', acceptOffers);
+    // formData.append('sub_category_id', selectedSubCategoryId);
 
-    let index = 0;
-    Object.keys(selectedPropertyValues).forEach((propertyId) => {
-      selectedPropertyValues[propertyId].forEach((valueId) => {
-        formData.append(`properties[${index}]`, valueId);
-        index++;
-      });
-    });
+    // let index = 0;
+    // Object.keys(selectedPropertyValues).forEach((propertyId) => {
+    //   selectedPropertyValues[propertyId].forEach((valueId) => {
+    //     formData.append(`properties[${index}]`, valueId);
+    //     index++;
+    //   });
+    // });
 
     images.forEach((image, index) => {
       formData.append(`imgs[${index}]`, image);
     });
 
     try {
-      const res = await api.post("/api/auth/items", formData, {
+      const res = await api.put("/api/auth/items", formData, {
         headers: {
           Authorization: `Bearer ${userToken}`,
           'Content-Type': 'multipart/form-data',
@@ -240,7 +252,7 @@ const EditProduct = ({ userToken }) => {
         </Typography>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <FormControl fullWidth size="small" disabled>
                 <InputLabel>Select Category</InputLabel>
                 <Select
@@ -271,7 +283,7 @@ const EditProduct = ({ userToken }) => {
                   ))}
                 </Select>
               </FormControl>
-            </Grid>
+            </Grid> */}
             {selectedSubCategories && (
               <>
                 <Grid item xs={12} sm={6}>
@@ -284,7 +296,7 @@ const EditProduct = ({ userToken }) => {
                     required
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                {/* <Grid item xs={12} sm={6}>
                   <TextField
                     size="small"
                     fullWidth
@@ -296,7 +308,7 @@ const EditProduct = ({ userToken }) => {
                     helperText={priceError}
                     required
                   />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                   <TextField
                     size="small"
@@ -309,14 +321,14 @@ const EditProduct = ({ userToken }) => {
                     required
                   />
                 </Grid>
-                <Grid item xs={12}>
+                {/* <Grid item xs={12}>
                   <FormGroup>
                     <FormControlLabel
                       control={<Checkbox checked={acceptOffers === 1} onChange={handleBidChange} />}
                       label="Accept offers"
                     />
                   </FormGroup>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12}>
                   <FileInput
                     onChange={handleImageUpload}
@@ -349,10 +361,11 @@ const EditProduct = ({ userToken }) => {
                   <CustomMap
                     addressData={handleAddressData}
                     mapDataValue={address}
+                    Editing={true}
                   />
                 </Grid>
 
-                {selectedSubCategories[0].sub_category_property &&
+                {/* {selectedSubCategories[0].sub_category_property &&
                   selectedSubCategories[0].sub_category_property.map((property) => (
                     <Grid item xs={12} key={property.id}>
                       <Typography variant="h6" gutterBottom>
@@ -375,7 +388,7 @@ const EditProduct = ({ userToken }) => {
                         ))}
                       </FormGroup>
                     </Grid>
-                  ))}
+                  ))} */}
 
                 <Grid item xs={12}>
                   <Button type="submit" variant="contained" color="primary" fullWidth>
