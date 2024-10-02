@@ -503,7 +503,15 @@ const ProductDetails = () => {
                         {productsData.item_comments && productsData.item_comments.length > 0 ? (
                             productsData.item_comments.map((comment, index) => (
                                 <Box key={index} sx={{ mb: 2 }}>
-
+                                    <Typography variant="body1" fontWeight="bold">
+                                      {parsedUserData.id === comment.user.id ? 'You': comment.user.first_name+ ' ' +comment.user.last_name}  
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        {comment.comments}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary">
+                                        {dateParser(comment.created_at)}
+                                    </Typography>
                                     <Divider sx={{ mt: 1 }} />
                                 </Box>
                             ))
