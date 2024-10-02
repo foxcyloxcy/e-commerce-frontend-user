@@ -79,7 +79,7 @@ const AddProduct = (props) => {
   const handleCheckboxChange = (propertyId, valueId) => (event) => {
     const { checked } = event.target;
 
-    console.log(selectedPropertyValues)
+    console.log(propertyId, valueId)
     setSelectedPropertyValues((prevValues) => {
       const updatedValues = { ...prevValues };
       if (checked) {
@@ -93,8 +93,12 @@ const AddProduct = (props) => {
           delete updatedValues[propertyId];
         }
       }
+      console.log(updatedValues)
       return updatedValues;
     });
+
+    console.log(selectedPropertyValues)
+    console.log(selectedSubCategories)
   };
 
 
@@ -322,7 +326,8 @@ const AddProduct = (props) => {
                   {isLoaded ? (
                     <APIProvider apiKey={apiKey}>
                       <CustomMap
-                        addressData={handleAddressData} />
+                        addressData={handleAddressData}
+                        Editing={true} />
                     </APIProvider>
                   ) : (
                     <Typography>Loading map...</Typography>
