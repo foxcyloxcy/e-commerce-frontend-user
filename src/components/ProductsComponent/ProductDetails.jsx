@@ -65,6 +65,7 @@ const ProductDetails = () => {
                 const res = await api.get(query);
 
                 if (res.status === 200) {
+                    console.log(parsedUserData)
                     console.log(res.data)
                     setProductsData(res.data);
                 }
@@ -503,9 +504,18 @@ const ProductDetails = () => {
                         {productsData.item_comments && productsData.item_comments.length > 0 ? (
                             productsData.item_comments.map((comment, index) => (
                                 <Box key={index} sx={{ mb: 2 }}>
-                                    <Typography variant="body1" fontWeight="bold">
-                                      {parsedUserData.id === comment.user.id ? 'You': comment.user.first_name+ ' ' +comment.user.last_name}  
-                                    </Typography>
+                                    {
+                                        parsedUserData ? (
+                                            <Typography variant="body1" fontWeight="bold">
+                                            {parsedUserData.id === comment.user.id ? 'You': comment.user.first_name+ ' ' +comment.user.last_name}  
+                                          </Typography>
+                                        ) : (
+                                            <Typography variant="body1" fontWeight="bold">
+                                            {comment.user.first_name} {comment.user.last_name}  
+                                          </Typography>
+                                        )
+
+                                    }
                                     <Typography variant="body1">
                                         {comment.comments}
                                     </Typography>
