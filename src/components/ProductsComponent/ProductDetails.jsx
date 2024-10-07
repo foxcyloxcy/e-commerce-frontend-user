@@ -280,22 +280,22 @@ const ProductDetails = () => {
 
     const dateParser = (dateInput) => {
         const months = [
-          'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
         ];
-      
+
         const date = new Date(dateInput);
-      
+
         // Extract values
         const month = months[date.getMonth()];
         const day = String(date.getDate()).padStart(2, '0'); // Ensures 2-digit day
         const year = date.getFullYear();
         const hours = String(date.getHours()).padStart(2, '0'); // Ensures 2-digit hours
         const minutes = String(date.getMinutes()).padStart(2, '0'); // Ensures 2-digit minutes
-      
+
         // Format date as "Oct-dd-yyyy hh:mm"
         return `${month}-${day}-${year} ${hours}:${minutes}`;
-      };
+    };
 
     // Handle rendering after data is loaded
     if (!productsData || !productsData.item_details) {
@@ -379,8 +379,8 @@ const ProductDetails = () => {
                             )
                         }
                         <Grid container alignItems="center" spacing={2} width="100%">
-                            {productsData.item_details.is_bid === 1 && (
-                                productsData.item_details.my_offer === null || productsData.item_details.my_offer === "" && (
+                            {productsData.item_details.is_bid === 1 &&
+                                (productsData.item_details.my_offer === null || productsData.item_details.my_offer === "") && (
                                     <>
                                         <Grid item width="60%">
                                             <TextField
@@ -405,7 +405,7 @@ const ProductDetails = () => {
                                         </Grid>
                                     </>
                                 )
-                            )}
+                            }
                             {
                                 parsedUserData && (
                                     <>
@@ -507,12 +507,12 @@ const ProductDetails = () => {
                                     {
                                         parsedUserData ? (
                                             <Typography variant="body1" fontWeight="bold">
-                                            {parsedUserData.id === comment.user.id ? 'You': comment.user.first_name+ ' ' +comment.user.last_name}  
-                                          </Typography>
+                                                {parsedUserData.id === comment.user.id ? 'You' : comment.user.first_name + ' ' + comment.user.last_name}
+                                            </Typography>
                                         ) : (
                                             <Typography variant="body1" fontWeight="bold">
-                                            {comment.user.first_name} {comment.user.last_name}  
-                                          </Typography>
+                                                {comment.user.first_name} {comment.user.last_name}
+                                            </Typography>
                                         )
 
                                     }
