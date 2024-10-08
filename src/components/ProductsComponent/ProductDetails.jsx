@@ -438,7 +438,7 @@ const ProductDetails = () => {
                                                     },
                                                 }}
                                                 control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
-                                                label="I agree to all terms and conditions’"
+                                                label="I agree to all terms and conditions"
                                             />
                                         </Grid>
                                     </>
@@ -497,7 +497,7 @@ const ProductDetails = () => {
                 {/* New Comments Section */}
                 <Paper sx={{ mt: 4, p: 2 }}>
                     <Typography variant="h6" gutterBottom>
-                        Item Comments
+                        Item questions and answers
                     </Typography>
                     <Divider />
                     <Box sx={{ mt: 2 }}>
@@ -527,12 +527,12 @@ const ProductDetails = () => {
                             ))
                         ) : (
                             <Typography variant="body2" color="textSecondary">
-                                No comments available.
+                                No question available.
                             </Typography>
                         )}
 
                         <TextField
-                            label="Add a comment"
+                            label="Add a question"
                             multiline
                             rows={4}
                             value={comment}
