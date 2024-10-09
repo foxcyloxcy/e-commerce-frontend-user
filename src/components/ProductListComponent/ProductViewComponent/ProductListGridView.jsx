@@ -113,17 +113,6 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
                             {/* Card Content */}
                             <CardContent sx={{ flexGrow: 1 }}>
                                 <TruncatedText variant="h6">{product.item_name}</TruncatedText>
-                                <TruncatedText variant="body2">{product.item_description}</TruncatedText>
-                                {
-                                    product.address && (
-                                        <Typography 
-                                            variant="body1" 
-                                            sx={{ marginTop: '10px', cursor: 'pointer', textDecoration: 'underline' }}
-                                            onClick={() => handleOpenMap(product.address)}>
-                                                Collection {parseAddress(product.address)}
-                                        </Typography>
-                                    )
-                                }
                                 <Typography
                                     variant="body1"
                                     color="primary"
@@ -132,6 +121,17 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
                                 >
                                     AED {formatPrice(product.total_fee)}
                                 </Typography>
+                                {
+                                    product.address && (
+                                        <Typography 
+                                            variant="body1" 
+                                            sx={{ marginBottom: '5px', cursor: 'pointer', textDecoration: 'underline' }}
+                                            onClick={() => handleOpenMap(product.address)}>
+                                                Collection {parseAddress(product.address)}
+                                        </Typography>
+                                    )
+                                }
+                                <TruncatedText variant="body2">{product.item_description}</TruncatedText>
                                 <Typography variant="body2" sx={{ color: 'primary.light' }}>
                                     {product.is_bid ? 'Accepting offers' : ''}
                                 </Typography>
