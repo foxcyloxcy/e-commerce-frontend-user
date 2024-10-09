@@ -565,7 +565,7 @@ const ProductDetails = () => {
                         )}
 
                         <TextField
-                            label="Add a question"
+                            label={parsedUserData.id === productsData.item_details.user.id ? 'Add an answer' : 'Add a question'}
                             multiline
                             rows={4}
                             value={comment}
@@ -575,7 +575,7 @@ const ProductDetails = () => {
                             sx={{ mt: 2 }}
                         />
                         <ButtonComponent
-                            label="Submit Question"
+                            label={parsedUserData.id === productsData.item_details.user.id ? 'Submit answer' : 'Submit question'}
                             size="small"
                             buttonVariant="contained"
                             textColor="primary.contrastText"
