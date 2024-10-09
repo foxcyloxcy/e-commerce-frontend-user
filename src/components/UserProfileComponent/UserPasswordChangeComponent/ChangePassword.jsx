@@ -68,7 +68,7 @@ const ChangePassword = (props) => {
 
   return (
     <ThemeProvider theme={ModTheme}>
-      <Box component="form" onSubmit={handleSubmit} sx={{ ml: 5, mt: 4 }}>
+      <Box component="form" onSubmit={handleSubmit} sx={{ ml: 3, mt: 4 }}>
         <TextField
           label="Current Password"
           type={showCurrentPassword ? 'text' : 'password'}
