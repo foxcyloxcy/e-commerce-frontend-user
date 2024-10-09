@@ -13,6 +13,7 @@ import secureLocalStorage from 'react-secure-storage';
 import secure from '../../assets/baseURL/secure';
 import MapViewModal from '../ReusableComponents/ModalComponent/MapViewModal';
 import PriceBreakdownModal from '../ReusableComponents/ModalComponent/PriceBreakDownModal';
+import { CommentsDisabled } from '@mui/icons-material';
 
 const ProductDetails = () => {
     const { state } = useLocation();
@@ -510,11 +511,12 @@ const ProductDetails = () => {
                                     {
                                         parsedUserData ? (
                                             <Typography variant="body1" fontWeight="bold">
-                                                {parsedUserData.id === comment.user.id ? 'You' : comment.user.first_name + ' ' + comment.user.last_name}
+                                                {
+                                                parsedUserData.id === comment.user.id ? 'You' : comment.user.id === productsData.item_details.user.id ? 'Item Owner' : comment.user.vendor.name}
                                             </Typography>
                                         ) : (
                                             <Typography variant="body1" fontWeight="bold">
-                                                {comment.user.first_name} {comment.user.last_name}
+                                                {comment.user.id === productsData.item_details.user.id ? 'Item Owner' : comment.user.vendor.name}
                                             </Typography>
                                         )
 
