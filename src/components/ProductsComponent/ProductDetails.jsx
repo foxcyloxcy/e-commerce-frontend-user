@@ -80,6 +80,7 @@ const ProductDetails = () => {
         Swal.fire({
             text: "You may explore additional details and ask any questions about the item below. After completing your purchase, the chat button will become available, allowing you to coordinate collection.",
             icon:'info',
+            confirmButtonColor: ModTheme.palette.primary.main,
             confirmButtonText: 'OK, I got it.'
           });
 
@@ -123,7 +124,7 @@ const ProductDetails = () => {
                 text: 'You need to login first before you can buy an item.',
                 icon: 'error',
                 showCancelButton: true,
-                confirmButtonText: 'Ok',
+                confirmButtonText: "Ok, I'll login.",
                 confirmButtonColor: ModTheme.palette.primary.main,
                 cancelButtonText: 'Cancel'
             }).then((result) => {
@@ -255,9 +256,31 @@ const ProductDetails = () => {
     }
 
     const handleCommentSubmit = async () => {
+        if (!parsedUserData && !isLoggedIn) {
+            Swal.fire({
+                title: 'Oops!',
+                text: 'You need to login first before you can ask/answer questions.',
+                icon: 'error',
+                showCancelButton: false,
+                confirmButtonText: "Ok, I'll login.",
+                confirmButtonColor: ModTheme.palette.primary.main,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login');
+                }
+            });
+        }
+
+
         if (!comment) {
             Swal.fire('Error', 'Please enter a comment', 'error');
-            return;
+            Swal.fire({
+                title: 'Oops!',
+                text: 'Please enter a comment',
+                icon: 'error',
+                confirmButtonText: "Ok",
+                confirmButtonColor: ModTheme.palette.primary.main,
+            })
         }
 
         const formData = new FormData();
