@@ -378,6 +378,9 @@ const ProductDetails = () => {
                         <Typography variant="body1" color="textSecondary" paragraph>
                             {productsData.item_details.item_description}
                         </Typography>
+                        <Typography variant="body1" color="textSecondary" fontStyle='italic' paragraph>
+                            Chat button to contact the seller appers once you purchase the item.
+                        </Typography>
                         <Grid container alignItems="center" spacing={2} width="100%">
                             {productsData.item_details.is_bid === 1 &&
                                 (productsData.item_details.my_offer === null || productsData.item_details.my_offer === "") && (
