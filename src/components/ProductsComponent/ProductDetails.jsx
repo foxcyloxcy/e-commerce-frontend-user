@@ -365,9 +365,6 @@ const ProductDetails = () => {
                                     </>
                                 )
                         }
-                        <Typography variant="body1" color="textSecondary" paragraph>
-                            {productsData.item_details.item_description}
-                        </Typography>
                         {
                             productsData.item_details.address && (
                                 <Typography
@@ -378,6 +375,9 @@ const ProductDetails = () => {
                                 </Typography>
                             )
                         }
+                        <Typography variant="body1" color="textSecondary" paragraph>
+                            {productsData.item_details.item_description}
+                        </Typography>
                         <Grid container alignItems="center" spacing={2} width="100%">
                             {productsData.item_details.is_bid === 1 &&
                                 (productsData.item_details.my_offer === null || productsData.item_details.my_offer === "") && (
@@ -542,7 +542,7 @@ const ProductDetails = () => {
                             sx={{ mt: 2 }}
                         />
                         <ButtonComponent
-                            label="Submit Comment"
+                            label="Submit Question"
                             size="small"
                             buttonVariant="contained"
                             textColor="primary.contrastText"
