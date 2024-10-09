@@ -92,7 +92,7 @@ const NavBar = (props) => {
           <Toolbar>
 
             {isSmallScreen || isMediumScreen ? (
-              <a href="/" style={{height: '80px', width:'100%'}}>
+              <a href="/" style={{ height: '80px', width: '100%' }}>
                 <img src={elevate || linkPathName.pathname !== '/' ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </a>
             ) : (
@@ -145,6 +145,13 @@ const NavBar = (props) => {
                       component={Link}
                       to="/my-profile"
                       label="Profile"
+                      textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
+                      hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
+                    />
+                    <ButtonComponent
+                      component={Link}
+                      to="/add-product"
+                      label="Sell"
                       textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
                       hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                     />
@@ -260,9 +267,15 @@ const NavBar = (props) => {
                     <ListItemText primary="About" />
                   </ListItem>
                   {isLoggedIn && (
-                    <ListItem button component={Link} to="/my-profile" onClick={handleClose}>
-                      <ListItemText primary="Profile" />
-                    </ListItem>
+                    <>
+                      <ListItem button component={Link} to="/my-profile" onClick={handleClose}>
+                        <ListItemText primary="Profile" />
+                      </ListItem>
+                      <ListItem button component={Link} to="/add-product" onClick={handleClose}>
+                        <ListItemText primary="Sell" />
+                      </ListItem>
+                    </>
+
                   )}
                 </List>
               </Box>
