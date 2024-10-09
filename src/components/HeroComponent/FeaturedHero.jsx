@@ -23,7 +23,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
 
   const item = {
     image: imageRoute, // Replace with your image URL
-    title: 'Shop and Sell Secondhand',
+    title: 'Shop and Sell Second hand',
     description: 'Sell now and make space for something new!',
   };
 
@@ -55,14 +55,14 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
             top: { md: '50%' },
             left: { md: '25%' },
             transform: { md: 'translate(-50%, -50%)' },
-            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Semi-transparent background
+            background: {xs:'linear-gradient(to top, rgba(37, 87, 115, 0.6), rgba(37, 87, 115, 0))', md:'rgba(255, 255, 255, 0.8)'}, // Semi-transparent background
             padding: { xs: 2, md: 4 },
-            borderRadius: '8px',
+            borderRadius: {xs: 0, md:'8px'},
             textAlign: 'center',
             width: { xs: '100%', md: '40%' },
           }}
         >
-          <Typography variant="h6" gutterBottom color="text.primary">
+          <Typography variant="h5" gutterBottom color="text.primary">
             {item.title}
           </Typography>
 
@@ -84,10 +84,10 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
             SEARCH FOR ITEMS
           </Button>
 
-          <Typography>
+          <Typography variant="h5">
             <Box
               component="a"
-              href="#"
+              href="/how-it-works"
               sx={{ textDecoration: 'underline', color: 'primary.main'}}
             >
               Learn how it works
