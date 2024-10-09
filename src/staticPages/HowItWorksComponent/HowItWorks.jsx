@@ -1,9 +1,11 @@
 import React from 'react';
-import { Container, Typography, Box, Grid, Paper, Card, CardMedia } from '@mui/material';
+import { Container, Typography, Box, Grid, Paper, Card, CardMedia, ThemeProvider } from '@mui/material';
+import ModTheme from '../../components/ThemeComponent/ModTheme';
 
 const HowItWorks = () => {
   return (
-    <Container maxWidth="lg" sx={{ mt: 10, mb: 5 }}>
+    <ThemeProvider theme={ModTheme}>
+          <Container maxWidth="lg" sx={{ mt: 10, mb: 5 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h4" gutterBottom align="center">
           How It Works
@@ -138,6 +140,7 @@ const HowItWorks = () => {
         </Box>
       </Paper>
     </Container>
+    </ThemeProvider>
   );
 };
 
