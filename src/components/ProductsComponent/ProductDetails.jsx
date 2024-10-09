@@ -77,6 +77,11 @@ const ProductDetails = () => {
     }, [productUuid, userToken]);
 
     useEffect(() => {
+        Swal.fire({
+            text: "You may explore additional details and ask any questions about the item below. After completing your purchase, the chat button will become available, allowing you to coordinate collection.",
+            icon:'info',
+            confirmButtonText: 'OK, I got it.'
+          });
 
         const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
             hash: storageKey,
@@ -380,7 +385,7 @@ const ProductDetails = () => {
                             {productsData.item_details.item_description}
                         </Typography>
                         <Typography variant="body1" color="textSecondary" fontStyle='italic' paragraph>
-                            Chat button to contact the seller appers once you purchase the item.
+                            Chat button will become available after you purchase the item.
                         </Typography>
                         <Grid container alignItems="center" spacing={2} width="100%">
                             {productsData.item_details.is_bid === 1 &&
