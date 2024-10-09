@@ -38,7 +38,7 @@ const Footer = () => {
                         }}>
                             <Box component="img" src="reloved_footer_banner.png" alt="Reloved Icon" 
                             sx={{ 
-                                width: '80%', 
+                                width: {xs: '50%', md: '70%'}, 
                                 maxWidth: { xs: 'xs', sm: 'md', md: 'lg', lg: 'lg', xl: 'xl' },
                                 alignSelf: { xs: 'center', sm:'center', md:'start'}
                                 }} />
@@ -49,7 +49,7 @@ const Footer = () => {
                             <Typography variant="h6">Quick Links</Typography>
                             <Link href="/" color="inherit" underline="hover" variant="body2">Home</Link><br />
                             <Link href="/our-story" color="inherit" underline="hover" variant="body2">Our Story</Link><br />
-                            <Link href="#" color="inherit" underline="hover" variant="body2">Contact</Link><br />
+                            {/* <Link href="#" color="inherit" underline="hover" variant="body2">Contact</Link><br /> */}
                             <Link href="/how-it-works" color="inherit" underline="hover" variant="body2">How it works</Link><br />
                             <Link href="/faq" color="inherit" underline="hover" variant="body2">Frequently asked questions</Link><br />
                         </Grid>
