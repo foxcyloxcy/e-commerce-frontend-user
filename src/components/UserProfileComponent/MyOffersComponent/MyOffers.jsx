@@ -132,10 +132,10 @@ const MyOffers = (props) => {
                                 <Typography
                                     variant="body1"
                                     color="primary"
-                                    onClick={() => handleOpenPriceBreakdown(product)}
+                                    onClick={() => handleOpenPriceBreakdown(product.my_offer)}
                                     sx={{ cursor: 'pointer', textDecoration: 'underline' }}
                                 >
-                                    AED {formatPrice(product.total_fee)}
+                                    AED {formatPrice(product.my_offer.asking_price)}
                                 </Typography>
                         </CardContent>
 
