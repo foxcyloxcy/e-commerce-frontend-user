@@ -3,14 +3,8 @@ import { Typography, Box, Card, CardContent, Link, CardMedia } from '@mui/materi
 
 const DeliveryPartners = () => {
   return (
-    <Box sx={{ maxWidth: 600, margin: 'auto', padding: 2 }}>
+    <Box sx={{ maxWidth: 900, margin: 'auto', marginTop: 8, marginBottom: 5, padding: 2 }}>
       <Card>
-        <CardMedia
-          component="img"
-          image="/delivery-partners-image.jpg" // Update the path if needed
-          alt="Delivery Partners"
-          sx={{ height: 300, objectFit: 'cover' }}
-        />
         <CardContent>
           <Typography variant="h4" gutterBottom>
             Our Delivery Partners
@@ -50,6 +44,13 @@ const DeliveryPartners = () => {
           <Typography variant="body1" gutterBottom>
             Ensure you have spoken with the seller prior to using our delivery partners to check they are available to hand over your item.
           </Typography>
+
+          <CardMedia
+          component="img"
+          image="/delivery-partners-image.jpg" // Update the path if needed
+          alt="Delivery Partners"
+          sx={{ height: 300, objectFit: 'contain' }}
+        />
 
           <Typography variant="body1" color="textSecondary">
             Reloved is not responsible for any of the delivery options you choose, and delivery is an additional payment from the buyer.
