@@ -29,6 +29,7 @@ import CreateNewPassword from './components/ForgotPasswordComponent/CreateNewPas
 import FrequentlyAskQuestions from './staticPages/FAQComponent/FrequentAskQuestions';
 import RefundPolicy from './staticPages/RefundPolicyComponent/RefundPolicy';
 import HowItWorks from './staticPages/HowItWorksComponent/HowItWorks';
+import DeliveryPartners from './staticPages/DeliveryPartnersComponent/DeliveryPartners';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -115,6 +116,7 @@ function App() {
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn} userToken={userToken} userData={userData} />} />
         <Route path="/our-story" element={<OurStoryPage parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/how-it-works" element={<HowItWorks parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/our-delivery-partners" element={<DeliveryPartners parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/terms-of-use" element={<TermsOfUse parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy parentIsLoggedIn={isLoggedIn} />} />
