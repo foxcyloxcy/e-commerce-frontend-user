@@ -33,7 +33,7 @@ const ForgotPassword = () => {
             console.log(res)
           Swal.fire({
             title: `OTP sent!`,
-            text: 'An OTP has been sent to your email or registered email address, do check your junk file if you do not receive’',
+            text: 'An OTP has been sent to your registered email, this may have gone to your junk folder',
             icon: 'success',
             confirmButtonText: 'Ok',
             confirmButtonColor: ModTheme.palette.primary.main,
