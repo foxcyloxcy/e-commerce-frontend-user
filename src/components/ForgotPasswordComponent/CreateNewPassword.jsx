@@ -22,7 +22,7 @@ const CreateNewPassword = (props) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const url = `api/auth/me/set-forgot-password`;
+      const url = `api/set-forgot-password`;
       const res = await api.put(url, {
         uuid: userUuid,
         password: newPassword,
