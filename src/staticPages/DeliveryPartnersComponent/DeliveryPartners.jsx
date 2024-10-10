@@ -51,7 +51,7 @@ const DeliveryPartners = () => {
                             component="img"
                             image="/delivery-partners-image.jpg" // Update the path if needed
                             alt="Delivery Partners"
-                            sx={{ height: 300, objectFit: 'contain' }}
+                            sx={{ height: 300, objectFit: 'contain', marginBottom: 2 }}
                         />
 
                         <Typography variant="body1" color="textSecondary">
