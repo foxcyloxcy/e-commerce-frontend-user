@@ -96,12 +96,11 @@ const UserVerification = ({refreshParent}) => {
         const userToken = response.data.data.access_token
         Swal.fire({
           icon: 'success',
-          title: response.data.data? response.data.data.message : 'Something went wrong.',
-          text: mode === 'forgot-password' ? 'Redirecting you to the login page.' : 'Redirecting you to home page.',
-          timer: 2000,
+          title: response.data? response.data.message : 'Something went wrong.',
+          text: mode === 'forgot-password' ? '' : 'Redirecting you to home page.',
           confirmButtonText: 'Ok',
           confirmButtonColor: ModTheme.palette.primary.main,
-        }).then(async(result) => {
+        }).then((result) => {
           // Redirect to the login page after the alert
           if (result.isConfirmed) {
             if(mode === 'forgot-password'){
