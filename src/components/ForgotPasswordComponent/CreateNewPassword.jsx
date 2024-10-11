@@ -23,7 +23,7 @@ const CreateNewPassword = (props) => {
     event.preventDefault();
     try {
       const url = `api/set-forgot-password`;
-      const res = await api.put(url, {
+      const res = await api.post(url, {
         uuid: userUuid,
         password: newPassword,
         password_confirmation: confirmPassword
