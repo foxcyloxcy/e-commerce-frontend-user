@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 const FeaturedHero = ({ parentIsLoggedIn }) => {
   const navigate = useNavigate();
   const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
-  const imageRoute = isSmallScreen ? 'featuredHeroMobile.jpg': 'featuredHero.jpg'
+  // const imageRoute = isSmallScreen ? 'featuredHeroMobile.jpg': 'featuredHero.jpg'
+  const imageRoute = 'featuredHeroMobile.jpg'
 
   const handlePostItemRoute = () => {
     if (parentIsLoggedIn) {
@@ -34,6 +35,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
           position: 'relative',
           width: '100%',
           overflow: 'hidden',
+          mt: {xs: 8, md: 0}
         }}
       >
         {/* Background Image as Banner */}
