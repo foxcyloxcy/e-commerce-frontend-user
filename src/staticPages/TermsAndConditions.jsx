@@ -16,10 +16,9 @@ const TermsAndConditions = () => {
                 marginTop: 13,
                 marginBottom: 10,
                 minHeight: '60vh',
-                maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
+                maxWidth: { xs: 'sm', sm: 'md', md: 'xl' },
             }}>
-                <Paper elevation={3} sx={{ padding: 4, background: '#fff', width: '100%' }}>
-                    <Box>
+                <Paper elevation={3} sx={{ background: '#fff', width: '100%', pb: 1, pt: 2 }}>
                         <Typography variant="h4" align="center" gutterBottom>
                             TERMS AND CONDITIONS
                         </Typography>
@@ -32,7 +31,6 @@ const TermsAndConditions = () => {
                         <ShippingAndDelivery/>
                         <CookiesPolicy/>
 
-                    </Box>
                 </Paper>
             </Container>
         </ThemeProvider>
