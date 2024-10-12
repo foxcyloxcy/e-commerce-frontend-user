@@ -6,13 +6,13 @@ const TermsOfUse = () => {
     return (
         <ThemeProvider theme={ModTheme}>
             <Container sx={{
-                marginTop: 13,
+                marginTop: 5,
                 marginBottom: 10,
                 maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
             }}>
                 <Paper elevation={3} sx={{ padding: 4, background: '#fff', width: '100%' }}>
                     <Box>
-                        <Typography variant="h2" align="center" gutterBottom>
+                        <Typography variant="h4" align="center" gutterBottom>
                             TERMS OF USE
                         </Typography>
 
@@ -114,7 +114,7 @@ const TermsOfUse = () => {
                             Provided that you are eligible to use the Platform, you are granted a limited license to access and use the Platform and to download or print a copy of any portion of the Content to which you have properly gained access solely for your personal, non-commercial use. We reserve all rights not expressly granted to you in and to the Platform, the Content and the Marks.
                         </Typography>
 
-                        <Typography variant="h5" gutterBottom>
+                        <Typography variant="h6" gutterBottom>
                             USER REPRESENTATIONS
                         </Typography>
                         <Typography variant="body1" paragraph>
