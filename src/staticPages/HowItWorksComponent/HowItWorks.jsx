@@ -26,13 +26,13 @@ const HowItWorks = () => {
           }}>
             <Grid item xs={12} md={6}>
               <Typography variant="body1" gutterBottom>
-                1. <strong>Upload Photos:</strong> Add high-quality images of the items you want to sell.
+                - <strong>Upload Photos:</strong> Add high-quality images of the items you want to sell.
               </Typography>
               <Typography variant="body1" gutterBottom>
-                2. <strong>Provide a Detailed Description:</strong> Make sure your description is clear and accurate.
+                - <strong>Provide a Detailed Description:</strong> Make sure your description is clear and accurate.
               </Typography>
               <Typography variant="body1" gutterBottom>
-                3. <strong>Top Tip:</strong> Price your item based on its condition to attract buyers.
+                - <strong>Top Tip:</strong> Price your item based on its condition to attract buyers.
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
