@@ -41,7 +41,7 @@ const HowItWorks = () => {
                   component="img"
                   image="/item-listing.jpg"
                   alt="Listing items"
-                  sx={{ height: 250 }}
+                  sx={{ height: 355, objectFit: 'contain' }}
                 />
               </Card>
             </Grid>
@@ -72,7 +72,7 @@ const HowItWorks = () => {
                   component="img"
                   image="/buying-process.jpg"
                   alt="Buying process"
-                  sx={{ height: 250 }}
+                  sx={{ height: 355, objectFit: 'contain' }}
                 />
               </Card>
             </Grid>
@@ -103,7 +103,8 @@ const HowItWorks = () => {
                   component="img"
                   image="/shipping.png"
                   alt="Shipping process"
-                  sx={{ height: 250 }}
+                  width="100%"
+                  sx={{ height: 'auto', objectFit: 'contain' }}
                 />
               </Card>
             </Grid>
@@ -132,7 +133,7 @@ const HowItWorks = () => {
                   component="img"
                   image="/cash-free.jpg"
                   alt="Cash-free transactions"
-                  sx={{ height: 250 }}
+                  sx={{ height: 'auto', objectFit: 'contain' }}
                 />
               </Card>
             </Grid>
