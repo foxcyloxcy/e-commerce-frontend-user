@@ -20,25 +20,6 @@ const ProfileInfo = styled(Paper)(({ theme }) => ({
     },
 }));
 
-const BankDetailsContainer = styled(Box)(({ theme }) => ({
-    border: `2px dashed ${theme.palette.primary.main}`,
-    borderRadius: theme.shape.borderRadius,
-    position: 'relative',
-    padding: theme.spacing(2),
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(2),
-}));
-
-const BankDetailsLabel = styled(Typography)(({ theme }) => ({
-    position: 'absolute',
-    top: '-12px',
-    left: '16px',
-    backgroundColor: theme.palette.secondary.background,
-    paddingLeft: theme.spacing(0.5),
-    paddingRight: theme.spacing(0.5),
-    color: theme.palette.primary.main,
-    fontWeight: 'bold',
-}));
 
 const VendorProfileDetails = (props) => {
     const { userToken } = props;
@@ -51,7 +32,6 @@ const VendorProfileDetails = (props) => {
         stripe_id: ""
     });
     const [selectedFile, setSelectedFile] = useState(null);
-    const navigate = useNavigate();
 
     const loadProfile = useCallback(async () => {
         try {
@@ -102,9 +82,6 @@ const VendorProfileDetails = (props) => {
         }
     };
 
-    const handleAddVendorProfile = () => {
-        navigate('/add-vendor-profile');
-    };
 
     const handleEditClick = (field) => {
         setEditField(field);
@@ -149,51 +126,6 @@ const VendorProfileDetails = (props) => {
         }
     };
 
-    const handleBankEdit = () => {
-        setEditBankDetails(true);
-    };
-
-    const handleBankSave = async () => {
-        try {
-            const { email } = formData;
-            const res = await api.post("/api/auth/payment/stripe/account", {
-                email: email
-            }, {
-                headers: {
-                    Authorization: `Bearer ${userToken}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (res.status === 200) {
-                const successMessage = res.data.message
-                Swal.fire({
-                    title: successMessage,
-                    text: 'Stripe details successfully added.',
-                    icon: 'success',
-                    confirmButtonText: 'Ok',
-                    confirmButtonColor: ModTheme.palette.primary.main,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const stripeUrlOnboarding = res.data.data.url
-                        window.location.href = stripeUrlOnboarding
-                    }
-                });
-                loadProfile();
-            }
-        } catch (error) {
-            console.log("Error updating Stripe details:", error);
-        }
-    };
-
-    const handleBankCancel = () => {
-        setEditBankDetails(false);
-        setFormData({
-            bank_name: userData.bank_name || '',
-            account_fullname: userData.account_fullname || '',
-            account_number: userData.account_number || '',
-        });
-    };
-
     useEffect(() => {
         loadProfile();
     }, [loadProfile]);
@@ -201,14 +133,7 @@ const VendorProfileDetails = (props) => {
     if (!userData || !userData.vendor) {
         return (
             <Grid container spacing={2} marginLeft={5}>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    sx={{ mt: 2 }}
-                    onClick={handleAddVendorProfile}
-                >
-                    Add Vendor Profile Details
-                </Button>
+                Loading...
             </Grid>
         )
     }
@@ -302,55 +227,6 @@ const VendorProfileDetails = (props) => {
                                         </Box>
                                     ))}
                                 </Box>
-
-                                <BankDetailsContainer>
-                                    <BankDetailsLabel variant="caption">Stripe details</BankDetailsLabel>
-
-                                    {userData.vendor.stripe_id === null || userData.vendor.stripe_id === "" ? (['email'].map((field) => (
-                                        <TextField
-                                            key={field}
-                                            label={field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}
-                                            name={field}
-                                            value={formData[field] || ""}
-                                            onChange={handleChange}
-                                            fullWidth
-                                            margin="normal"
-                                            size="small"
-                                            required
-                                        />
-                                    )))
-                                        :
-                                        (['stripe_id'].map((field) => (
-                                            <TextField
-                                                key={field}
-                                                placeholder={field}
-                                                label={field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())}
-                                                name={field}
-                                                value={formData[field] || ""}
-                                                onChange={handleChange}
-                                                fullWidth
-                                                margin="normal"
-                                                size="small"
-                                                disabled
-                                                required
-                                            />
-                                        )))
-
-                                    }
-                                    {
-                                        userData.vendor.stripe_id === null && (
-                                            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    onClick={handleBankSave}
-                                                    sx={{ mr: 1 }}
-                                                >
-                                                    Create
-                                                </Button>
-                                            </Box>
-                                        )}
-                                </BankDetailsContainer>
                             </Grid>
                         </>
                     )}
