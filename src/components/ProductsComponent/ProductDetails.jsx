@@ -79,10 +79,10 @@ const ProductDetails = () => {
     useEffect(() => {
         Swal.fire({
             text: "You may explore additional details and ask any questions about the item below. After completing your purchase, the chat button will become available, allowing you to coordinate collection.",
-            icon:'info',
+            icon: 'info',
             confirmButtonColor: ModTheme.palette.primary.main,
             confirmButtonText: 'OK, I got it.'
-          });
+        });
 
         const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
             hash: storageKey,
@@ -540,7 +540,7 @@ const ProductDetails = () => {
                                         parsedUserData ? (
                                             <Typography variant="body1" fontWeight="bold">
                                                 {
-                                                parsedUserData.id === comment.user.id ? 'You' : comment.user.id === productsData.item_details.user.id ? 'Item Owner' : comment.user.vendor.name}
+                                                    parsedUserData.id === comment.user.id ? 'You' : comment.user.id === productsData.item_details.user.id ? 'Item Owner' : comment.user.vendor.name}
                                             </Typography>
                                         ) : (
                                             <Typography variant="body1" fontWeight="bold">
@@ -563,26 +563,55 @@ const ProductDetails = () => {
                                 No question available.
                             </Typography>
                         )}
-
-                        <TextField
-                            label={parsedUserData.id === productsData.item_details.user.id ? 'Add an answer' : 'Add a question'}
-                            multiline
-                            rows={4}
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                            fullWidth
-                            variant="outlined"
-                            sx={{ mt: 2 }}
-                        />
-                        <ButtonComponent
-                            label={parsedUserData.id === productsData.item_details.user.id ? 'Submit answer' : 'Submit question'}
-                            size="small"
-                            buttonVariant="contained"
-                            textColor="primary.contrastText"
-                            hoverTextColor="secondary.main"
-                            sx={{ mt: 1 }}
-                            onClick={handleCommentSubmit}
-                        />
+                        {
+                            parsedUserData ? (
+                                <>
+                                    <TextField
+                                        label={parsedUserData.id === productsData.item_details.user.id ? 'Add an answer' : 'Add a question'}
+                                        multiline
+                                        rows={4}
+                                        value={comment}
+                                        onChange={(e) => setComment(e.target.value)}
+                                        fullWidth
+                                        variant="outlined"
+                                        sx={{ mt: 2 }}
+                                    />
+                                    <ButtonComponent
+                                        label={parsedUserData.id === productsData.item_details.user.id ? 'Submit answer' : 'Submit question'}
+                                        size="small"
+                                        buttonVariant="contained"
+                                        textColor="primary.contrastText"
+                                        hoverTextColor="secondary.main"
+                                        sx={{ mt: 1 }}
+                                        onClick={handleCommentSubmit}
+                                    />
+                                </>
+                            ) 
+                            :
+                            (
+                                <>
+                                <TextField
+                                    label='Add a question'
+                                    multiline
+                                    rows={4}
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)}
+                                    fullWidth
+                                    variant="outlined"
+                                    sx={{ mt: 2 }}
+                                />
+                                <ButtonComponent
+                                    label='Submit question'
+                                    size="small"
+                                    buttonVariant="contained"
+                                    textColor="primary.contrastText"
+                                    hoverTextColor="secondary.main"
+                                    sx={{ mt: 1 }}
+                                    onClick={handleCommentSubmit}
+                                />
+                            </>
+                            )
+                        }
                     </Box>
                 </Paper>
 
