@@ -128,15 +128,15 @@ const NavBar = (props) => {
                 />
                 <ButtonComponent
                   component={Link}
-                  to="/shop"
-                  label="Shop"
+                  to="/our-story"
+                  label="about"
                   textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
                 <ButtonComponent
                   component={Link}
-                  to="/our-story"
-                  label="about"
+                  to="/shop"
+                  label="Shop"
                   textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
                   hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                 />
@@ -144,15 +144,15 @@ const NavBar = (props) => {
                   <>
                     <ButtonComponent
                       component={Link}
-                      to="/my-profile"
-                      label="Profile"
+                      to="/add-product"
+                      label="Sell"
                       textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
                       hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                     />
                     <ButtonComponent
                       component={Link}
-                      to="/add-product"
-                      label="Sell"
+                      to="/my-profile"
+                      label="Profile"
                       textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
                       hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
                     />
@@ -260,20 +260,20 @@ const NavBar = (props) => {
                     <ListItemText primary="Home" />
                   </ListItem>
                   <Divider />
-                  <ListItem button component={Link} to="/shop" onClick={handleClose}>
-                    <ListItemText primary="Shop" />
-                  </ListItem>
-                  <Divider />
                   <ListItem button component={Link} to="/our-story" onClick={handleClose}>
                     <ListItemText primary="About" />
                   </ListItem>
+                  <Divider />
+                  <ListItem button component={Link} to="/shop" onClick={handleClose}>
+                    <ListItemText primary="Shop" />
+                  </ListItem>
                   {isLoggedIn && (
                     <>
-                      <ListItem button component={Link} to="/my-profile" onClick={handleClose}>
-                        <ListItemText primary="Profile" />
-                      </ListItem>
                       <ListItem button component={Link} to="/add-product" onClick={handleClose}>
                         <ListItemText primary="Sell" />
+                      </ListItem>
+                      <ListItem button component={Link} to="/my-profile" onClick={handleClose}>
+                        <ListItemText primary="Profile" />
                       </ListItem>
                     </>
 
