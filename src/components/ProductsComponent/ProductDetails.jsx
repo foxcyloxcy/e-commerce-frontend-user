@@ -408,7 +408,7 @@ const ProductDetails = () => {
                             {productsData.item_details.item_description}
                         </Typography>
                         <Typography variant="body1" color="textSecondary" fontStyle='italic' paragraph>
-                            Chat button will become available after you purchase the item.
+                        The chat function will become available after you purchase your item, you can ask questions related to the item in the Q&A below’.
                         </Typography>
                         <Grid container alignItems="center" spacing={2} width="100%">
                             {productsData.item_details.is_bid === 1 &&
