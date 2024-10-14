@@ -116,7 +116,7 @@ const ProductDetails = () => {
         loadProducts(storedUserToken);
     }, [loadProducts]);
 
-    const handleStripeCheckout = async (uuid) => {
+    const handleMamoCheckout = async (uuid) => {
 
         if (!isLoggedIn) {
             Swal.fire({
@@ -146,15 +146,16 @@ const ProductDetails = () => {
         }
 
         try {
-            const res = await api.post(`/api/auth/payment/stripe/checkout/session/${uuid}`, "sample", {
+            const res = await api.post(`/api/auth/payment/mamopay/checkout/${uuid}`, "checkout", {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'application/json',
                 },
             });
+
             if (res.status === 200) {
-                const stripeUrl = res.data.stripe_url
-                window.location.href = stripeUrl
+                const mamopayUrl = res.data.data.payment_url
+                window.location.href = mamopayUrl
             }
         } catch (error) {
             console.log("Error:", error);
@@ -485,7 +486,7 @@ const ProductDetails = () => {
                                     textColor="primary.contrastText"
                                     hoverTextColor="secondary.main"
                                     startIcon={<AddShoppingCartIcon />}
-                                    onClick={() => handleStripeCheckout(productUuid)}
+                                    onClick={() => handleMamoCheckout(productUuid)}
                                 />
                             </Grid>
                         </Grid>
