@@ -46,7 +46,7 @@ const OurStoryPage = () => {
                         Thank you for contributing to environmental sustainability and supporting my dream of providing the people of the UAE with a platform I wish had existed years ago.
                     </Typography>
                     <Typography variant="body1" paragraph>
-                        Warm regards,
+                        Thank you,
                     </Typography>
                     <Typography variant="body1" paragraph>
                         Annie x
