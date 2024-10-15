@@ -49,12 +49,12 @@ const UserBankDetails = ({ userToken }) => {
                 console.log(res.data);
                 setUserData(res.data.data);
                 setFormData({
-                    iban: res.data.data.vendor.iban || '',
-                    account_number: res.data.data.vendor.account_number || '',
-                    bank_name: res.data.data.vendor.bank_name || '',
-                    bank_address: res.data.data.vendor.bank_address || '',
-                    bic_code: res.data.data.vendor.bic_code || '',
-                    account_fullname: res.data.data.vendor.account_fullname || '',
+                    iban: res.data.data.vendor_bank.iban || '',
+                    account_number: res.data.data.vendor_bank.account_number || '',
+                    bank_name: res.data.data.vendor_bank.bank_name || '',
+                    bank_address: res.data.data.vendor_bank.bank_address || '',
+                    bic_code: res.data.data.vendor_bank.bic_code || '',
+                    account_fullname: res.data.data.vendor_bank.account_fullname || '',
                 });
             }
         } catch (error) {
@@ -75,8 +75,21 @@ const UserBankDetails = ({ userToken }) => {
     };
 
     const handleBankSave = async () => {
+        const { iban, account_number, bank_name, bank_address, bic_code, account_fullname } = formData;
+    
+        // Validation for required fields
+        if (!iban || !account_number || !bank_name || !bank_address || !bic_code || !account_fullname) {
+            Swal.fire({
+                title: 'Error',
+                text: 'All fields are required. Please fill out all the fields.',
+                icon: 'error',
+                confirmButtonText: 'Ok',
+                confirmButtonColor: ModTheme.palette.primary.main,
+            });
+            return; // Stop the function if validation fails
+        }
+    
         try {
-            const { iban, account_number, bank_name, bank_address, bic_code, account_fullname } = formData;
             const res = await api.post("/api/auth/payment/mamopay/account", {
                 iban,
                 account_number,
@@ -105,6 +118,7 @@ const UserBankDetails = ({ userToken }) => {
             console.log("Error updating bank details:", error);
         }
     };
+    
 
     const handleBankCancel = () => {
         setEditBankDetails(false);
@@ -116,6 +130,7 @@ const UserBankDetails = ({ userToken }) => {
             bic_code: userData.vendor?.bic_code || '',
             account_fullname: userData.vendor?.account_fullname || '',
         });
+        loadProfile()
     };
 
     useEffect(() => {
@@ -199,20 +214,15 @@ const UserBankDetails = ({ userToken }) => {
                         />
                     </BankDetailsContainer>
 
-                    <Paper display="flex" 
-                    sx={{
-                        justifyContent: "flex-end",
-                        background: '#F5F5F2'
-                    }} 
-                    mt={2}>
+                    <Box display="flex" justifyContent="flex-end" mt={2}>
                         {userData.has_bank_details === "Yes" ? (
                             <>
                                 {editBankDetails ? (
-                                    <Button variant="contained" onClick={handleBankSave} color="primary">
+                                    <Button variant="contained" onClick={handleBankSave} color="primary" sx={{ mr: 2 }}>
                                         Save Changes
                                     </Button>
                                 ) : (
-                                    <Button variant="contained" onClick={handleBankEdit} sx={{ mr: 2 }}>
+                                    <Button variant="contained" onClick={handleBankEdit} color="primary" sx={{ mr: 2 }}>
                                         Edit
                                     </Button>
                                 )}
@@ -225,7 +235,7 @@ const UserBankDetails = ({ userToken }) => {
                                 Save
                             </Button>
                         )}
-                    </Paper>
+                    </Box>
                 </Grid>
             </Grid>
         </ThemeProvider>
