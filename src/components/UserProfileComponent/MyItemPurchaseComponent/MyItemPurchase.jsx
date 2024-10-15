@@ -25,7 +25,7 @@ const StatusBadge = styled(Box)(({ theme, status }) => ({
     fontWeight: 'bold',
 }));
 
-const MyOffers = (props) => {
+const MyItemPurchase = (props) => {
     const { userToken, fromParentUserData } = props;
     const [productsData, setProductsData] = useState([]);
     const navigate = useNavigate();
@@ -35,7 +35,7 @@ const MyOffers = (props) => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [selectedAddress, setSelectedAddress] = useState(null);
 
-    const loadMyOffers = useCallback(async () => {
+    const loadMyItemPurchase = useCallback(async () => {
         try {
             const res = await api.get(`/api/auth/me/my-offers`, {
                 headers: {
@@ -45,7 +45,6 @@ const MyOffers = (props) => {
             });
 
             if (res.status === 200) {
-                console.log(res.data)
                 setProductsData(res.data.data);
             }
         } catch (error) {
@@ -54,11 +53,11 @@ const MyOffers = (props) => {
     }, [userToken]);
 
     useEffect(() => {
-        loadMyOffers();
-    }, [loadMyOffers]);
+        loadMyItemPurchase();
+    }, [loadMyItemPurchase]);
 
     const handleDetailsClick = (productUuid) => {
-        navigate('/product-details', { state: { productUuid, userToken, userData } });
+        navigate('/my-item-purchase-details', { state: { productUuid, userToken, userData } });
     };
 
     const handleOpenPriceBreakdown = (product) => {
@@ -150,7 +149,7 @@ const MyOffers = (props) => {
                                         sx={{ marginTop: '10px' }}
                                         onClick={() => handleDetailsClick(product.uuid)}
                                     >
-                                        Buy item
+                                        View Details
                                     </Button>
                                 )
                             }
@@ -179,4 +178,4 @@ const MyOffers = (props) => {
     );
 };
 
-export default MyOffers;
+export default MyItemPurchase;
