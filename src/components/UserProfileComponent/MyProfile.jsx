@@ -8,6 +8,7 @@ import VendorProfileDetails from './VendorProfileComponent/VendorProfileDetails'
 import MyProducts from './MyProductsComponent/MyProducts';
 import MyOffers from './MyOffersComponent/MyOffers';
 import OffersToMe from './OffersToMeComponent/OffersToMe';
+import MyItemPurchase from './MyItemPurchaseComponent/MyItemPurchase';
 import ChangePassword from './UserPasswordChangeComponent/ChangePassword';
 import secureLocalStorage from "react-secure-storage";
 import secure from '../../assets/baseURL/secure';
@@ -79,6 +80,8 @@ const MyProfile = () => {
         return <VendorProfileDetails userToken={userToken} />;
       case 'Change password':
         return <ChangePassword userToken={userToken} />;
+        case 'My Item Purchase':
+          return <MyItemPurchase userToken={userToken} />;
       default:
         return null;
     }
@@ -109,6 +112,10 @@ const MyProfile = () => {
       <Divider />
       <ListItem button onClick={() => setActiveTab('Offers to me')}>
         <ListItemText primary="Bids Received" />
+      </ListItem>
+      <Divider />
+      <ListItem button onClick={() => setActiveTab('My Item Purchase')}>
+        <ListItemText primary="My Purchase" />
       </ListItem>
       <Divider />
     </List>
