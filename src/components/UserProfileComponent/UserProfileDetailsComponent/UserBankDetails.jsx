@@ -57,6 +57,7 @@ const UserBankDetails = ({ userToken }) => {
                 },
             });
             if (res.status === 200) {
+                console.log(res.data)
                 setUserData(res.data.data);
                 setFormData({
                     iban: res.data.data.vendor.iban || '',
@@ -149,6 +150,7 @@ const UserBankDetails = ({ userToken }) => {
                             <BankDetailsLabel variant="caption">Bank details</BankDetailsLabel>
 
                             <TextField
+                                size='small'
                                 label="IBAN"
                                 name="iban"
                                 value={formData.iban}
@@ -158,6 +160,7 @@ const UserBankDetails = ({ userToken }) => {
                                 margin="normal"
                             />
                             <TextField
+                                size='small'
                                 label="Account Number"
                                 name="account_number"
                                 value={formData.account_number}
@@ -167,6 +170,7 @@ const UserBankDetails = ({ userToken }) => {
                                 margin="normal"
                             />
                             <TextField
+                                size='small'
                                 label="Bank Name"
                                 name="bank_name"
                                 value={formData.bank_name}
@@ -176,6 +180,7 @@ const UserBankDetails = ({ userToken }) => {
                                 margin="normal"
                             />
                             <TextField
+                                size='small'
                                 label="Bank Address"
                                 name="bank_address"
                                 value={formData.bank_address}
@@ -185,6 +190,7 @@ const UserBankDetails = ({ userToken }) => {
                                 margin="normal"
                             />
                             <TextField
+                                size='small'
                                 label="BIC Code"
                                 name="bic_code"
                                 value={formData.bic_code}
@@ -194,6 +200,7 @@ const UserBankDetails = ({ userToken }) => {
                                 margin="normal"
                             />
                             <TextField
+                                size='small'
                                 label="Account Full Name"
                                 name="account_fullname"
                                 value={formData.account_fullname}
@@ -203,11 +210,19 @@ const UserBankDetails = ({ userToken }) => {
                                 margin="normal"
                             />
                         </BankDetailsContainer>
-                        {userData.vendor?.iban ? (
+                        {userData.has_bank_details === "Yes" ? (
                             <>
-                                <Button variant="contained" onClick={handleBankEdit} sx={{ mr: 2 }}>
-                                    Edit
-                                </Button>
+                                {editBankDetails ? (
+                                    <Button variant="contained" onClick={handleBankSave} color="primary">
+                                        Save Changes
+                                    </Button>
+                                )
+                                    : (
+                                        <Button variant="contained" onClick={handleBankEdit} sx={{ mr: 2 }}>
+                                            Edit
+                                        </Button>
+                                    )
+                                }
                                 <Button variant="contained" onClick={handleBankCancel} color="secondary">
                                     Cancel
                                 </Button>
@@ -215,11 +230,6 @@ const UserBankDetails = ({ userToken }) => {
                         ) : (
                             <Button variant="contained" onClick={handleBankSave} color="primary">
                                 Save
-                            </Button>
-                        )}
-                        {editBankDetails && (
-                            <Button variant="contained" onClick={handleBankSave} color="primary">
-                                Save Changes
                             </Button>
                         )}
                     </Grid>
