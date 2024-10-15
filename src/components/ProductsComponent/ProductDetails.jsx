@@ -13,6 +13,7 @@ import secureLocalStorage from 'react-secure-storage';
 import secure from '../../assets/baseURL/secure';
 import MapViewModal from '../ReusableComponents/ModalComponent/MapViewModal';
 import PriceBreakdownModal from '../ReusableComponents/ModalComponent/PriceBreakDownModal';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import { CommentsDisabled } from '@mui/icons-material';
 
 const ProductDetails = () => {
@@ -327,6 +328,16 @@ const ProductDetails = () => {
         return `${month}-${day}-${year} ${hours}:${minutes}`;
     };
 
+    const handleChatSeller = (userMobileNo) => {
+        
+        // Remove '+' and spaces from the mobile number
+        const filteredMobileNo = userMobileNo.replace(/[+ ]/g, '');
+    
+        const userWhatsApp = `https://wa.me/${filteredMobileNo}`;
+    
+        window.open(userWhatsApp, '_blank');
+    };
+
     // Handle rendering after data is loaded
     if (!productsData || !productsData.item_details) {
         return <Typography>Loading...</Typography>;
@@ -409,8 +420,20 @@ const ProductDetails = () => {
                             {productsData.item_details.item_description}
                         </Typography>
                         <Typography variant="body1" color="textSecondary" fontStyle='italic' paragraph>
-                        The chat function will become available after you purchase your item, you can ask questions related to the item in the Q&A below’.
+                            The chat function will become available after you purchase your item, you can ask questions related to the item in the Q&A below’.
                         </Typography>
+                        <Grid item width="30%">
+                        <ButtonComponent
+                            label="Chat seller"
+                            size="small"
+                            buttonVariant="contained"
+                            textColor="primary.contrastText"
+                            hoverTextColor="secondary.main"
+                            startIcon={<WhatsAppIcon />}
+                            onClick={() => handleChatSeller(productsData.item_details.user.mobile_number)}
+                            disabled={loading || !offerPrice}
+                        />
+                        </Grid>
                         <Grid container alignItems="center" spacing={2} width="100%">
                             {productsData.item_details.is_bid === 1 &&
                                 (productsData.item_details.my_offer === null || productsData.item_details.my_offer === "") && (
@@ -587,31 +610,31 @@ const ProductDetails = () => {
                                         onClick={handleCommentSubmit}
                                     />
                                 </>
-                            ) 
-                            :
-                            (
-                                <>
-                                <TextField
-                                    label='Add a question'
-                                    multiline
-                                    rows={4}
-                                    value={comment}
-                                    onChange={(e) => setComment(e.target.value)}
-                                    fullWidth
-                                    variant="outlined"
-                                    sx={{ mt: 2 }}
-                                />
-                                <ButtonComponent
-                                    label='Submit question'
-                                    size="small"
-                                    buttonVariant="contained"
-                                    textColor="primary.contrastText"
-                                    hoverTextColor="secondary.main"
-                                    sx={{ mt: 1 }}
-                                    onClick={handleCommentSubmit}
-                                />
-                            </>
                             )
+                                :
+                                (
+                                    <>
+                                        <TextField
+                                            label='Add a question'
+                                            multiline
+                                            rows={4}
+                                            value={comment}
+                                            onChange={(e) => setComment(e.target.value)}
+                                            fullWidth
+                                            variant="outlined"
+                                            sx={{ mt: 2 }}
+                                        />
+                                        <ButtonComponent
+                                            label='Submit question'
+                                            size="small"
+                                            buttonVariant="contained"
+                                            textColor="primary.contrastText"
+                                            hoverTextColor="secondary.main"
+                                            sx={{ mt: 1 }}
+                                            onClick={handleCommentSubmit}
+                                        />
+                                    </>
+                                )
                         }
                     </Box>
                 </Paper>
