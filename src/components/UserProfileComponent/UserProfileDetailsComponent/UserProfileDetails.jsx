@@ -7,6 +7,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import ModTheme from '../../ThemeComponent/ModTheme';
 import api from '../../../assets/baseURL/api';
 import Swal from 'sweetalert2';
+import UserBankDetails from './UserBankDetails';
 
 const ProfileInfo = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(3),
@@ -230,6 +231,9 @@ const UserProfileDetails = (props) => {
                             );
                         })}
                     </Box>
+                </Grid>
+                <Grid item xs={12} sm={12}>
+                        <UserBankDetails userToken={userToken}/>
                 </Grid>
             </Grid>
         </ProfileInfo >
