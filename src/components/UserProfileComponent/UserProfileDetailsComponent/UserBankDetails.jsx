@@ -5,17 +5,6 @@ import ModTheme from '../../ThemeComponent/ModTheme';
 import api from '../../../assets/baseURL/api';
 import Swal from 'sweetalert2';
 
-const ProfileInfo = styled(Paper)(({ theme }) => ({
-    padding: theme.spacing(3),
-    marginBottom: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: ModTheme.palette.secondary.background,
-    [theme.breakpoints.down('sm')]: {
-        padding: theme.spacing(2),
-    },
-}));
-
 const BankDetailsContainer = styled(Box)(({ theme }) => ({
     border: `2px dashed ${theme.palette.primary.main}`,
     borderRadius: theme.shape.borderRadius,
@@ -57,7 +46,7 @@ const UserBankDetails = ({ userToken }) => {
                 },
             });
             if (res.status === 200) {
-                console.log(res.data)
+                console.log(res.data);
                 setUserData(res.data.data);
                 setFormData({
                     iban: res.data.data.vendor.iban || '',
@@ -143,86 +132,90 @@ const UserBankDetails = ({ userToken }) => {
 
     return (
         <ThemeProvider theme={ModTheme}>
-            <ProfileInfo>
-                <Grid container spacing={2}>
-                    <Grid item xs={12} sm={12}>
-                        <BankDetailsContainer>
-                            <BankDetailsLabel variant="caption">Bank details</BankDetailsLabel>
+            <Grid container>
+                <Grid item xs={12} sm={12}>
+                    <BankDetailsContainer>
+                        <BankDetailsLabel variant="caption">Bank details</BankDetailsLabel>
 
-                            <TextField
-                                size='small'
-                                label="IBAN"
-                                name="iban"
-                                value={formData.iban}
-                                onChange={handleChange}
-                                disabled={!editBankDetails}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                size='small'
-                                label="Account Number"
-                                name="account_number"
-                                value={formData.account_number}
-                                onChange={handleChange}
-                                disabled={!editBankDetails}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                size='small'
-                                label="Bank Name"
-                                name="bank_name"
-                                value={formData.bank_name}
-                                onChange={handleChange}
-                                disabled={!editBankDetails}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                size='small'
-                                label="Bank Address"
-                                name="bank_address"
-                                value={formData.bank_address}
-                                onChange={handleChange}
-                                disabled={!editBankDetails}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                size='small'
-                                label="BIC Code"
-                                name="bic_code"
-                                value={formData.bic_code}
-                                onChange={handleChange}
-                                disabled={!editBankDetails}
-                                fullWidth
-                                margin="normal"
-                            />
-                            <TextField
-                                size='small'
-                                label="Account Full Name"
-                                name="account_fullname"
-                                value={formData.account_fullname}
-                                onChange={handleChange}
-                                disabled={!editBankDetails}
-                                fullWidth
-                                margin="normal"
-                            />
-                        </BankDetailsContainer>
+                        <TextField
+                            size='small'
+                            label="IBAN"
+                            name="iban"
+                            value={formData.iban}
+                            onChange={handleChange}
+                            disabled={!(editBankDetails || userData.has_bank_details === "No")}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField
+                            size='small'
+                            label="Account Number"
+                            name="account_number"
+                            value={formData.account_number}
+                            onChange={handleChange}
+                            disabled={!(editBankDetails || userData.has_bank_details === "No")}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField
+                            size='small'
+                            label="Bank Name"
+                            name="bank_name"
+                            value={formData.bank_name}
+                            onChange={handleChange}
+                            disabled={!(editBankDetails || userData.has_bank_details === "No")}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField
+                            size='small'
+                            label="Bank Address"
+                            name="bank_address"
+                            value={formData.bank_address}
+                            onChange={handleChange}
+                            disabled={!(editBankDetails || userData.has_bank_details === "No")}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField
+                            size='small'
+                            label="BIC Code"
+                            name="bic_code"
+                            value={formData.bic_code}
+                            onChange={handleChange}
+                            disabled={!(editBankDetails || userData.has_bank_details === "No")}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <TextField
+                            size='small'
+                            label="Account Full Name"
+                            name="account_fullname"
+                            value={formData.account_fullname}
+                            onChange={handleChange}
+                            disabled={!(editBankDetails || userData.has_bank_details === "No")}
+                            fullWidth
+                            margin="normal"
+                        />
+                    </BankDetailsContainer>
+
+                    <Paper display="flex" 
+                    sx={{
+                        justifyContent: "flex-end",
+                        background: '#F5F5F2'
+                    }} 
+                    mt={2}>
                         {userData.has_bank_details === "Yes" ? (
                             <>
                                 {editBankDetails ? (
                                     <Button variant="contained" onClick={handleBankSave} color="primary">
                                         Save Changes
                                     </Button>
-                                )
-                                    : (
-                                        <Button variant="contained" onClick={handleBankEdit} sx={{ mr: 2 }}>
-                                            Edit
-                                        </Button>
-                                    )
-                                }
+                                ) : (
+                                    <Button variant="contained" onClick={handleBankEdit} sx={{ mr: 2 }}>
+                                        Edit
+                                    </Button>
+                                )}
                                 <Button variant="contained" onClick={handleBankCancel} color="secondary">
                                     Cancel
                                 </Button>
@@ -232,9 +225,9 @@ const UserBankDetails = ({ userToken }) => {
                                 Save
                             </Button>
                         )}
-                    </Grid>
+                    </Paper>
                 </Grid>
-            </ProfileInfo>
+            </Grid>
         </ThemeProvider>
     );
 };
