@@ -182,7 +182,7 @@ const AddProduct = (props) => {
       console.log(error);
       Swal.fire({
         title: 'Error!',
-        text: 'Something went wrong. Please try again later.',
+        text: error,
         icon: 'error',
       });
     } finally {
