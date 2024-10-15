@@ -49,12 +49,12 @@ const UserBankDetails = ({ userToken }) => {
                 console.log(res.data);
                 setUserData(res.data.data);
                 setFormData({
-                    iban: res.data.data.vendor_bank.iban || '',
-                    account_number: res.data.data.vendor_bank.account_number || '',
-                    bank_name: res.data.data.vendor_bank.bank_name || '',
-                    bank_address: res.data.data.vendor_bank.bank_address || '',
-                    bic_code: res.data.data.vendor_bank.bic_code || '',
-                    account_fullname: res.data.data.vendor_bank.account_fullname || '',
+                    iban: res.data.data.vendor_bank?.iban || '',
+                    account_number: res.data.data.vendor_bank?.account_number || '',
+                    bank_name: res.data.data.vendor_bank?.bank_name || '',
+                    bank_address: res.data.data.vendor_bank?.bank_address || '',
+                    bic_code: res.data.data.vendor_bank?.bic_code || '',
+                    account_fullname: res.data.data.vendor_bank?.account_fullname || '',
                 });
             }
         } catch (error) {
@@ -123,12 +123,12 @@ const UserBankDetails = ({ userToken }) => {
     const handleBankCancel = () => {
         setEditBankDetails(false);
         setFormData({
-            iban: userData.vendor?.iban || '',
-            account_number: userData.vendor?.account_number || '',
-            bank_name: userData.vendor?.bank_name || '',
-            bank_address: userData.vendor?.bank_address || '',
-            bic_code: userData.vendor?.bic_code || '',
-            account_fullname: userData.vendor?.account_fullname || '',
+            iban: userData.vendor_bank?.iban || '',
+            account_number: userData.vendor_bank?.account_number || '',
+            bank_name: userData.vendor_bank?.bank_name || '',
+            bank_address: userData.vendor_bank?.bank_address || '',
+            bic_code: userData.vendor_bank?.bic_code || '',
+            account_fullname: userData.vendor_bank?.account_fullname || '',
         });
         loadProfile()
     };
