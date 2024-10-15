@@ -31,6 +31,7 @@ import RefundPolicy from './staticPages/RefundPolicyComponent/RefundPolicy';
 import HowItWorks from './staticPages/HowItWorksComponent/HowItWorks';
 import DeliveryPartners from './staticPages/DeliveryPartnersComponent/DeliveryPartners';
 import DataProcessingAgreement from './staticPages/DataProcessingComponent/DataProcessing';
+import MyItemPurchaseDetails from './components/UserProfileComponent/MyItemPurchaseComponent/MyItemPurchaseDetails';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -183,6 +184,15 @@ function App() {
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <ChatMessage userToken={userToken} userData={userData} />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/my-item-purchase-details"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <MyItemPurchaseDetails userToken={userToken} userData={userData} />
             </ProtectedRoute>
           }
         />
