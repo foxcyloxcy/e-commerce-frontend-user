@@ -19,7 +19,7 @@ const StatusBadge = styled(Box)(({ theme, status }) => ({
     position: 'absolute',
     top: theme.spacing(1),
     left: theme.spacing(1),
-    backgroundColor: status === 0 ? '#ff9800' : status === 1 ? '#4caf50' : '#f44336',
+    backgroundColor: status === 1 ? '#255773' : '#606060',
     color: '#fff',
     borderRadius: '4px',
     padding: '2px 8px',
