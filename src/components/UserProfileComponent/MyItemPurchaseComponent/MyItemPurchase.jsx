@@ -13,17 +13,6 @@ const TruncatedText = styled(Typography)({
     textOverflow: 'ellipsis',
 });
 
-const StatusBadge = styled(Box)(({ theme, status }) => ({
-    position: 'absolute',
-    top: theme.spacing(1),
-    left: theme.spacing(1),
-    backgroundColor: status === 0 ? '#ff9800' : status === 1 ? '#4caf50' : '#f44336', // Orange for pending, green for approved, red for rejected
-    color: '#fff',
-    borderRadius: '4px',
-    padding: '2px 8px',
-    fontSize: '12px',
-    fontWeight: 'bold',
-}));
 
 const MyItemPurchase = (props) => {
     const { userToken, fromParentUserData } = props;
@@ -100,10 +89,6 @@ const MyItemPurchase = (props) => {
             {productsData.map((product) => (
                 <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
                     <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '450px' }}>
-                        {/* Status Badge */}
-                        <StatusBadge status={product.my_offer.status}>
-                            {product.my_offer.bid_status_name}
-                        </StatusBadge>
 
                         {/* Product Image */}
                         <CardMedia
