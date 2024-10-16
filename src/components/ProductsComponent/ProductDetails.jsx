@@ -419,21 +419,21 @@ const ProductDetails = () => {
                         <Typography variant="body1" color="textSecondary" paragraph>
                             {productsData.item_details.item_description}
                         </Typography>
-                        <Typography variant="body1" color="textSecondary" fontStyle='italic' paragraph>
-                            The chat function will become available after you purchase your item, you can ask questions related to the item in the Q&A below’.
-                        </Typography>
-                        <Grid item width="30%">
-                        <ButtonComponent
-                            label="Chat seller"
-                            size="small"
-                            buttonVariant="contained"
-                            textColor="primary.contrastText"
-                            hoverTextColor="secondary.main"
-                            startIcon={<WhatsAppIcon />}
-                            onClick={() => handleChatSeller(productsData.item_details.user.mobile_number)}
-                            disabled={loading || !offerPrice}
-                        />
-                        </Grid>
+                            <Typography variant="body1" color="textSecondary" fontStyle='italic' paragraph>
+                                The chat function will become available after you purchase your item, you can ask questions related to the item in the Q&A below’.
+                            </Typography>
+                            {/* <Grid item width="30%">
+                                <ButtonComponent
+                                    label="Chat seller"
+                                    size="small"
+                                    buttonVariant="contained"
+                                    textColor="primary.contrastText"
+                                    hoverTextColor="secondary.main"
+                                    startIcon={<WhatsAppIcon />}
+                                    onClick={() => handleChatSeller(productsData.item_details.user.mobile_number)}
+                                    disabled={loading || !offerPrice}
+                                />
+                            </Grid> */}
                         <Grid container alignItems="center" spacing={2} width="100%">
                             {productsData.item_details.is_bid === 1 &&
                                 (productsData.item_details.my_offer === null || productsData.item_details.my_offer === "") && (
