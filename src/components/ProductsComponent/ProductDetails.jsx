@@ -464,6 +464,29 @@ const ProductDetails = () => {
                                     </>
                                 )
                             }
+                                    <Grid item width="60%" 
+                                    sx={{marginTop: 0 }}>
+                                            <TextField
+                                                size="small"
+                                                label="ENTER DISCOUNT CODE"
+                                                variant="outlined"
+                                                // value={offerPrice}
+                                                // onChange={(e) => setOfferPrice(e.target.value)}
+                                                sx={{ marginRight: 2, marginTop: 0 }}
+                                            />
+                                        </Grid>
+                                        <Grid item width="40%" 
+                                        sx={{marginTop: 0 }}>
+                                            <ButtonComponent
+                                                label="aPPLY DISCOUNT"
+                                                size="small"
+                                                buttonVariant="contained"
+                                                textColor="primary.contrastText"
+                                                hoverTextColor="secondary.main"
+                                                // onClick={() => handleOffers(productsData)}
+                                                disabled={loading || !offerPrice}
+                                            />
+                                        </Grid>
                             {
                                 parsedUserData && (
                                     <>
