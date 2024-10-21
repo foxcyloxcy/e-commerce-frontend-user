@@ -194,7 +194,7 @@ const UserBankDetails = ({ userToken }) => {
                         />
                         <TextField
                             size='small'
-                            label="BIC Code"
+                            label="Swift No."
                             name="bic_code"
                             value={formData.bic_code}
                             onChange={handleChange}
