@@ -121,6 +121,7 @@ function App() {
         <Route path="/how-it-works" element={<HowItWorks parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/contact-us" element={<ContactUs parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/data-processing" element={<DataProcessingAgreement parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/payment-success" element={<PaymentSuccess parentIsLoggedIn={isLoggedIn} userToken={userToken} />} />
         <Route path="/our-delivery-partners" element={<DeliveryPartners parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/terms-of-use" element={<TermsOfUse parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions parentIsLoggedIn={isLoggedIn} />} />
@@ -172,14 +173,14 @@ function App() {
           }
         />
 
-        <Route
+        {/* <Route
           path="/payment-success"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <PaymentSuccess userToken={userToken} userData={userData} />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
         <Route
           path="/chat"
