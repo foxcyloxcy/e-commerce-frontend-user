@@ -26,15 +26,16 @@ const MyItemPurchase = (props) => {
 
     const loadMyItemPurchase = useCallback(async () => {
         try {
-            const res = await api.get(`/api/auth/me/my-offers`, {
+            const res = await api.get(`/api/auth/me/my-purchased`, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
+            
+            console.log(res.data)
             if (res.status === 200) {
-                setProductsData(res.data.data);
+                setProductsData(res.data.offers.data);
             }
         } catch (error) {
             console.log(error);
@@ -83,6 +84,14 @@ const MyItemPurchase = (props) => {
         }
         return addressName.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
+
+    if (!productsData || productsData.length <= 0) {
+        return (
+            <Grid container spacing={2} marginLeft={5}>
+                You got no item purchased.
+            </Grid>
+        );
+    }
 
     return (
         <Grid container spacing={2}>
