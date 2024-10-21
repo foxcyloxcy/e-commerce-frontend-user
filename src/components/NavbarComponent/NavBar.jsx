@@ -230,6 +230,7 @@ const NavBar = (props) => {
                         buttonVariant="contained"
                         textColor='primary.contrastText'
                         hoverTextColor='secondary.main'
+                        onClick={handleClose}
                       />
                       <Divider orientation="vertical" flexItem />
                       <ButtonComponent
@@ -239,6 +240,7 @@ const NavBar = (props) => {
                         buttonVariant="contained"
                         textColor='primary.contrastText'
                         hoverTextColor='secondary.main'
+                        onClick={handleClose}
                       />
                     </>
                   )}
