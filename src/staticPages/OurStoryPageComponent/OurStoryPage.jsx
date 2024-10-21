@@ -34,7 +34,7 @@ const OurStoryPage = () => {
                         sx={{ width: 350, height: 350, marginBottom: 2, alignSelf:'center' }}
                     />
                     <Typography variant="h5" align="center" gutterBottom>
-                        A message from the founder
+                        A message from the Founder
                     </Typography>
                     <Typography variant="body1" paragraph>
                         Drawing from my own experiences, I realised how many items we all have in our homes and wardrobes that could be resold or recycled to support sustainability. The UAE, with its stunning cities, inspired me to want new outfits each weekend without spending a fortune or feeling guilty about the environmental impact. Moreover, Dubai’s transient nature, with expats frequently leaving, often leads to luxurious furniture being sold at low prices or even given away for free. I wanted a way to access these items for my home without always buying new.
