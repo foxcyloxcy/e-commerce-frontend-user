@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, List, ListItem, Link, Paper, Container } from '@mui/material';
 
-const CookiesPolicy = () => {
+const ContactUs = () => {
   return (
     <Container sx={{
       marginTop: 15,
@@ -22,4 +22,4 @@ const CookiesPolicy = () => {
   );
 };
 
-export default CookiesPolicy;
+export default ContactUs;
