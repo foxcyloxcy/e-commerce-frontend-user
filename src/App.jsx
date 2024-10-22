@@ -33,6 +33,7 @@ import DeliveryPartners from './staticPages/DeliveryPartnersComponent/DeliveryPa
 import DataProcessingAgreement from './staticPages/DataProcessingComponent/DataProcessing';
 import MyItemPurchaseDetails from './components/UserProfileComponent/MyItemPurchaseComponent/MyItemPurchaseDetails';
 import ContactUs from './staticPages/ContactUsComponent/ContactUs';
+import MyProductDetails from './components/UserProfileComponent/MyProductsComponent/MyProductDetails';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -116,6 +117,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/product-details" element={<ProductDetails userToken={userToken} />} />
+        <Route path="/my-product-details" element={<MyProductDetails userToken={userToken} />} />
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn} userToken={userToken} userData={userData} />} />
         <Route path="/our-story" element={<OurStoryPage parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/how-it-works" element={<HowItWorks parentIsLoggedIn={isLoggedIn} />} />
