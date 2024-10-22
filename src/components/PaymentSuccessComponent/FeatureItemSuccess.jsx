@@ -5,13 +5,13 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 
-const PaymentSuccess = (props) => {
+const FeatureItemSuccess = (props) => {
     const { userToken } = props
     const navigate = useNavigate();
     const location = useLocation();
     
     const handleBrowseShop = () => {
-        navigate('/shop');
+        navigate('/my-profile');
 
         //https://www.mamopay.com/?{createdAt=2023-08-09-16-42-35&paymentLinkId=MB-LINK-3216D27C9D&status=captured&transactionId=MPB-CHRG-BEE56990A9}
     };
@@ -25,7 +25,7 @@ const PaymentSuccess = (props) => {
 
         try {
 
-          const res = await api.post("/api/auth/payment/mamopay/transaction/success", formData, {
+          const res = await api.post("/api/auth/payment/mamopay/transaction/featured-product/success", formData, {
             headers: {
               Authorization: `Bearer ${userToken}`,
               'Content-Type': 'multipart/form-data',
@@ -100,4 +100,4 @@ const PaymentSuccess = (props) => {
     );
 };
 
-export default PaymentSuccess;
+export default FeatureItemSuccess;
