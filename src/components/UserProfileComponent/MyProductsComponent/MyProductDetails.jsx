@@ -105,9 +105,7 @@ const MyProductDetails = () => {
     const handleMamoFeatureItem = async (uuid) => {
 
         try {
-            const res = await api.post(`/api/auth/payment/mamopay/checkout/${uuid}`, {
-                discount: ""
-            }, {
+            const res = await api.post(`/api/auth/payment/mamopay/checkout/featured-product/${uuid}`, "", {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
                     'Content-Type': 'application/json',
