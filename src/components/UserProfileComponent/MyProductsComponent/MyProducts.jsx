@@ -81,7 +81,28 @@ const MyProducts = (props) => {
     };
 
     const handleDetailsClick = (productUuid) => {
-        navigate('/product-details', { state: { productUuid } });
+        navigate('/my-product-details', { state: { productUuid } });
+    };
+
+    const handleMamoFeatureItem = async (uuid) => {
+
+        try {
+            const res = await api.post(`/api/auth/payment/mamopay/checkout/${uuid}`, {
+                discount: ""
+            }, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (res.status === 200) {
+                const mamopayUrl = res.data.data.payment_url
+                window.location.href = mamopayUrl
+            }
+        } catch (error) {
+            console.log("Error:", error);
+        }
     };
 
     const handleEditClick = (product) => {
@@ -154,7 +175,7 @@ const MyProducts = (props) => {
             <Grid container spacing={2}>
                 {productsData.map((product, index) => (
                     product.isAddItemCard ? (
-                        <Grid item xs={6} sm={6} md={4} lg={3} key={`add-item`} style={{ display: 'flex' }}>
+                        <Grid item xs={12} sm={12} md={6} lg={4} key={`add-item`} style={{ display: 'flex' }}>
                             <DashedCard onClick={handleAddProductClick} sx={{ background: ModTheme.palette.secondary.dark }}>
                                 <AddCircleOutlineIcon sx={{ fontSize: 50, color: ModTheme.palette.primary.main }} />
                                 <Typography variant="body1">
@@ -163,7 +184,7 @@ const MyProducts = (props) => {
                             </DashedCard>
                         </Grid>
                     ) : (
-                        <Grid item xs={6} sm={6} md={4} lg={3} key={product.id} style={{ display: 'flex' }}>
+                        <Grid item xs={12} sm={12} md={6} lg={4} key={product.id} style={{ display: 'flex' }}>
                             <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '500px' }}>
                                 <StatusBadge status={product.status}>
                                     {product.status === 0 ? 'Pending' :
@@ -192,7 +213,7 @@ const MyProducts = (props) => {
                                     </Typography>
                                 </CardContent>
 
-                                <CardContent sx={{ position: 'absolute', width: '100%', top: '79%' }}>
+                                <CardContent sx={{ position: 'absolute', width: '100%', top: '70%' }}>
                                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                                         <IconButton color="primary" onClick={() => handleEditClick(product)}>
                                             <EditIcon />
@@ -205,7 +226,16 @@ const MyProducts = (props) => {
                                         variant="contained"
                                         color="primary"
                                         fullWidth
+                                        onClick={() => handleMamoFeatureItem(product.uuid)}
+                                    >
+                                        Feature Item
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        fullWidth
                                         onClick={() => handleDetailsClick(product.uuid)}
+                                        sx={{ marginTop: 1 }}
                                     >
                                         Details
                                     </Button>
