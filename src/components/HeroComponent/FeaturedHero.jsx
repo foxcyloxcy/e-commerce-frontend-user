@@ -24,7 +24,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
 
   const item = {
     image: imageRoute, // Replace with your image URL
-    title: 'Shop and Sell Second hand',
+    title: 'Shop and Sell Secondhand',
     description: 'Sell now and make space for something new!',
   };
 
