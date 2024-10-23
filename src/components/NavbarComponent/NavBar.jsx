@@ -261,11 +261,9 @@ const NavBar = (props) => {
                   <ListItem button component={Link} to="/" onClick={handleClose}>
                     <ListItemText primary="Home" />
                   </ListItem>
-                  <Divider />
                   <ListItem button component={Link} to="/our-story" onClick={handleClose}>
                     <ListItemText primary="About" />
                   </ListItem>
-                  <Divider />
                   <ListItem button component={Link} to="/shop" onClick={handleClose}>
                     <ListItemText primary="Shop" />
                   </ListItem>
