@@ -122,6 +122,11 @@ function App() {
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn} userToken={userToken} userData={userData} />} />
         <Route path="/our-story" element={<OurStoryPage parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/how-it-works" element={<HowItWorks parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/faq" element={<FrequentlyAskQuestions parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/refund-policy" element={<RefundPolicy parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/forgot-password" element={<ForgotPassword parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/verify" element={<UserVerification parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/create-password" element={<CreateNewPassword parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/contact-us" element={<ContactUs parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/data-processing" element={<DataProcessingAgreement parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/payment-success" element={<PaymentSuccess parentIsLoggedIn={isLoggedIn} userToken={userToken} />} />
@@ -222,50 +227,6 @@ function App() {
           }
         />
 
-        <Route
-          path="/verify"
-          element={
-            <PublicRoute isLoggedIn={isLoggedIn}>
-              <UserVerification refreshParent={handleClick}/>
-            </PublicRoute>
-          }
-        />
-
-        <Route
-          path="/forgot-password"
-          element={
-            <PublicRoute isLoggedIn={isLoggedIn}>
-              <ForgotPassword />
-            </PublicRoute>
-          }
-        />
-
-        <Route
-          path="/create-password"
-          element={
-            <PublicRoute isLoggedIn={isLoggedIn}>
-              <CreateNewPassword />
-            </PublicRoute>
-          }
-        />
-
-        <Route
-          path="/faq"
-          element={
-            <PublicRoute isLoggedIn={isLoggedIn}>
-              <FrequentlyAskQuestions />
-            </PublicRoute>
-          }
-        />
-
-        <Route
-          path="/refund-policy"
-          element={
-            <PublicRoute isLoggedIn={isLoggedIn}>
-              <RefundPolicy />
-            </PublicRoute>
-          }
-        />
       </Routes>
       <Footer />
     </>
