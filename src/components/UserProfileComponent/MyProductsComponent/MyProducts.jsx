@@ -61,7 +61,8 @@ const MyProducts = (props) => {
                 let fetchedProducts = res.data.data.data;
 
                 if (page === 1) {
-                    fetchedProducts = [{ isAddItemCard: true }, ...fetchedProducts];
+                    // fetchedProducts = [{ isAddItemCard: true }, ...fetchedProducts];
+                    fetchedProducts = [...fetchedProducts];
                 }
 
                 setProductsData(fetchedProducts);
@@ -87,7 +88,7 @@ const MyProducts = (props) => {
     const handleMamoFeatureItem = async (uuid) => {
 
         try {
-            const res = await api.post(`/api/auth/payment/mamopay/checkout/${uuid}`, {
+            const res = await api.post(`/api/auth/payment/mamopay/checkout/featured-product/${uuid}`, {
                 discount: ""
             }, {
                 headers: {
@@ -174,17 +175,17 @@ const MyProducts = (props) => {
         <Box>
             <Grid container spacing={2}>
                 {productsData.map((product, index) => (
-                    product.isAddItemCard ? (
-                        <Grid item xs={12} sm={12} md={6} lg={4} key={`add-item`} style={{ display: 'flex' }}>
-                            <DashedCard onClick={handleAddProductClick} sx={{ background: ModTheme.palette.secondary.dark }}>
-                                <AddCircleOutlineIcon sx={{ fontSize: 50, color: ModTheme.palette.primary.main }} />
-                                <Typography variant="body1">
-                                    Add item
-                                </Typography>
-                            </DashedCard>
-                        </Grid>
-                    ) : (
-                        <Grid item xs={12} sm={12} md={6} lg={4} key={product.id} style={{ display: 'flex' }}>
+                    // product.isAddItemCard ? (
+                    //     <Grid item xs={12} sm={12} md={6} lg={4} key={`add-item`} style={{ display: 'flex' }}>
+                    //         <DashedCard onClick={handleAddProductClick} sx={{ background: ModTheme.palette.secondary.dark }}>
+                    //             <AddCircleOutlineIcon sx={{ fontSize: 50, color: ModTheme.palette.primary.main }} />
+                    //             <Typography variant="body1">
+                    //                 Add item
+                    //             </Typography>
+                    //         </DashedCard>
+                    //     </Grid>
+                    // ) : (
+                        <Grid item xs={12} sm={12} md={4} lg={4} key={product.id} style={{ display: 'flex' }}>
                             <Card sx={{ display: 'flex', flexDirection: 'column', width: '100%', background: '#fff', position: 'relative', height: '500px' }}>
                                 <StatusBadge status={product.status}>
                                     {product.status === 0 ? 'Pending' :
@@ -227,6 +228,7 @@ const MyProducts = (props) => {
                                         color="primary"
                                         fullWidth
                                         onClick={() => handleMamoFeatureItem(product.uuid)}
+                                        disabled={product.status !== 1 && product.status !== 0}
                                     >
                                         Feature Item
                                     </Button>
@@ -243,7 +245,7 @@ const MyProducts = (props) => {
                             </Card>
                         </Grid>
                     )
-                ))}
+                )}
             </Grid>
 
             <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 4 }}>
