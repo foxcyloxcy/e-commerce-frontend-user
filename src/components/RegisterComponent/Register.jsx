@@ -256,13 +256,13 @@ export default function Register() {
                                 checked={formValues.remember}
                                 onChange={handleCheckboxChange}
                                 color="primary" />}
-                            label={<Typography sx={{ fontSize: { xs: '0.4rem', sm: '0.5rem', md: '0.7rem', lg: '0.8rem', xl: '1rem' } }}>I accept the <span></span>
+                            label={<Typography sx={{ fontSize: { xs: '0.7rem', sm: '0.75rem', md: '0.8rem', lg: '0.85rem', xl: '1rem' } }}>I accept the <span></span>
                                 <Link href="/terms-and-conditions">
                                     Terms And Conditions
                                 </Link></Typography>}
                         />
                         {formErrors.remember && (
-                            <Typography color="error" sx={{ fontSize: { xs: '0.4rem', sm: '0.5rem', md: '0.7rem', lg: '0.8rem', xl: '1rem' }, mt: -1, mb: 1 }}>
+                            <Typography color="error" sx={{ fontSize: { xs: '0.7rem', sm: '0.75rem', md: '0.8rem', lg: '0.85rem', xl: '1rem' }, mt: -1, mb: 1 }}>
                                 {formErrors.remember}
                             </Typography>
                         )}
