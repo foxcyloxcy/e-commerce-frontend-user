@@ -22,7 +22,7 @@ const ImageContainer = styled(Box)(({ theme, image }) => ({
       left: 0,
       width: '100%',
       height: '100%',
-      background: 'linear-gradient(to top, rgba(37, 87, 115, 0.6), rgba(37, 87, 115, 0))', //rgba(184, 212, 230, baby blue color
+      // background: 'linear-gradient(to top, rgba(37, 87, 115, 0.6), rgba(37, 87, 115, 0))', //rgba(184, 212, 230, baby blue color
       borderRadius: theme.shape.borderRadius,
     },
     cursor: 'pointer',
