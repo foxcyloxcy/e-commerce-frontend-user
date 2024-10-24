@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Box, Grid, Typography, Card, CardContent, Divider, Button } from '@mui/material';
+import { Box, Grid, Typography, Card, CardContent, Divider, Button, Link, CardMedia } from '@mui/material';
 import { styled } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import api from '../../../assets/baseURL/api';
@@ -70,7 +70,7 @@ const MyItemPurchase = (props) => {
                             background: '#f8f8f8',
                             border: '1px solid #ddd',
                             borderRadius: '8px',
-                            height: '500px',
+                            height: '700px',
                             display: 'flex',
                             flexDirection: 'column',
                             justifyContent: 'space-between',
@@ -86,14 +86,21 @@ const MyItemPurchase = (props) => {
 
                         {/* Item Details */}
                         <CardContent>
+                            <CardMedia
+                                component="img"
+                                height="200"
+                                image={product.transaction_item.item ? product.transaction_item.item.default_image.image_url : 'no image available.'}
+                                alt={product.item_name}
+                                sx={{ objectFit: 'cover' }}
+                            />
                             <Typography variant="subtitle1" fontWeight="bold">
-                                Item: {product.item_name}
+                                Item: {product.transaction_item.item?.item_name}
                             </Typography>
                             <Typography variant="body2" color="textSecondary">
-                                Sold by: {product.seller.vendor.name}
+                                Seller Name: {product.seller.vendor.name}
                             </Typography>
                             <Typography variant="body2" color="textSecondary">
-                                Seller email: {product.seller.email}
+                                Seller Email: <Link href={'mailto:'+product.seller.email}>{product.seller.email}</Link>
                             </Typography>
                         </CardContent>
 
@@ -123,14 +130,14 @@ const MyItemPurchase = (props) => {
                                 Chat Seller
                             </Button>
 
-                            <Button
+                            {/* <Button
                                 variant="contained"
                                 color="primary"
                                 onClick={() => handleDetailsClick(product.uuid)}
                                 sx={{ flex: 1 }}
                             >
                                 View Item Details
-                            </Button>
+                            </Button> */}
                         </Box>
                     </Card>
                 </Grid>
