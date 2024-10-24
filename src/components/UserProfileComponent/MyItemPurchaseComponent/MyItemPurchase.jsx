@@ -26,7 +26,7 @@ const MyItemPurchase = (props) => {
                 },
             });
             if (res.status === 200) {
-                console.log(res.data)
+                console.log(res.data);
                 setProductsData(res.data.offers.data);
             }
         } catch (error) {
@@ -42,18 +42,13 @@ const MyItemPurchase = (props) => {
         navigate('/my-item-purchase-details', { state: { productUuid, userToken, userData } });
     };
 
-
     const formatPrice = (price) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
     const handleChatSeller = (userMobileNo) => {
-        
-        // Remove '+' and spaces from the mobile number
         const filteredMobileNo = userMobileNo.replace(/[+ ]/g, '');
-    
         const userWhatsApp = `https://wa.me/${filteredMobileNo}`;
-    
         window.open(userWhatsApp, '_blank');
     };
 
@@ -69,7 +64,19 @@ const MyItemPurchase = (props) => {
         <Grid container spacing={2}>
             {productsData.map((product) => (
                 <Grid item xs={12} sm={6} md={6} lg={4} key={product.id}>
-                    <Card sx={{ padding: '16px', background: '#f8f8f8', border: '1px solid #ddd', borderRadius: '8px', height: '500px', position: 'relative', }}>
+                    <Card
+                        sx={{
+                            padding: '16px',
+                            background: '#f8f8f8',
+                            border: '1px solid #ddd',
+                            borderRadius: '8px',
+                            height: '500px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                            position: 'relative',
+                        }}
+                    >
                         {/* Transaction Header */}
                         <Typography variant="h6" fontWeight="bold" gutterBottom>
                             Transaction #{product.transaction_number}
@@ -83,7 +90,10 @@ const MyItemPurchase = (props) => {
                                 Item: {product.item_name}
                             </Typography>
                             <Typography variant="body2" color="textSecondary">
-                                Sold by: {product.seller.first_name} {product.seller.last_name}
+                                Sold by: {product.seller.vendor.name}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary">
+                                Seller email: {product.seller.email}
                             </Typography>
                         </CardContent>
 
@@ -98,32 +108,30 @@ const MyItemPurchase = (props) => {
                                 Total: AED {formatPrice(product.total_amount)}
                             </Typography>
                         </CardContent>
+
                         <Divider />
-                        <CardContent sx={{ position: 'absolute', width: '100%', top: '70%' }}>
-                        <Grid item>
-                        <Button
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                            startIcon={<WhatsAppIcon />}
-                            onClick={() => handleChatSeller(product.seller.mobile_number)}
-                        >
-                            Chat seller
-                        </Button>
-                        </Grid>
-                        {/* View Details Button */}
-                        <Box sx={{ textAlign: 'center' }}>
+
+                        {/* Button Section */}
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, marginTop: 2 }}>
                             <Button
                                 variant="contained"
                                 color="primary"
-                                fullWidth
-                                sx={{marginTop: 1}}
+                                startIcon={<WhatsAppIcon />}
+                                onClick={() => handleChatSeller(product.seller.mobile_number)}
+                                sx={{ flex: 1 }}
+                            >
+                                Chat Seller
+                            </Button>
+
+                            <Button
+                                variant="contained"
+                                color="primary"
                                 onClick={() => handleDetailsClick(product.uuid)}
+                                sx={{ flex: 1 }}
                             >
                                 View Item Details
                             </Button>
                         </Box>
-                        </CardContent>
                     </Card>
                 </Grid>
             ))}
