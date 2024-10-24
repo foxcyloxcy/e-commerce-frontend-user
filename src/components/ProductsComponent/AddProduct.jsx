@@ -159,6 +159,27 @@ const AddProduct = (props) => {
         },
       });
 
+      console.log(res)
+      // if(res.status === 400){
+      //   const successMessage = res.data.message;
+
+      //   Swal.fire({
+      //     title: successMessage,
+      //     text: 'You will receive an email after your item gets approved. This can take up to 72hrs max.',
+      //     icon: 'success',
+      //     showCancelButton: true,
+      //     confirmButtonText: 'Add Another',
+      //     confirmButtonColor: ModTheme.palette.primary.main,
+      //     cancelButtonText: 'Go to Shop'
+      //   }).then((result) => {
+      //     if (result.isConfirmed) {
+      //       resetForm();
+      //     } else {
+      //       history("/shop");
+      //     }
+      //   });
+      // }
+
       if (res.status === 200) {
         const successMessage = res.data.message;
 
@@ -182,8 +203,18 @@ const AddProduct = (props) => {
       console.log(error);
       Swal.fire({
         title: 'Error!',
-        text: error,
+        text: error.response.data.message ? error.response.data.message : error.response,
         icon: 'error',
+        showCancelButton: true,
+        confirmButtonText: 'Go to My Profile',
+        confirmButtonColor: ModTheme.palette.primary.main,
+        cancelButtonText: 'Cancel'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          history("/my-profile");
+        } else {
+          
+        }
       });
     } finally {
       setLoading(false);
