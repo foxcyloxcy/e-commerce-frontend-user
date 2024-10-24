@@ -21,6 +21,7 @@ const ProductDetails = () => {
     const { productUuid } = state;
     const [productsData, setProductsData] = useState(null);
     const [offerPrice, setOfferPrice] = useState('');
+    const [discountCode, setDiscountCode] = useState('');
     const [loading, setLoading] = useState(false);  // Loading state for offers
     const [parsedUserData, setParsedUserData] = useState(null)
     const [userToken, setUserToken] = useState(null)
@@ -148,7 +149,7 @@ const ProductDetails = () => {
 
         try {
             const res = await api.post(`/api/auth/payment/mamopay/checkout/${uuid}`, {
-                discount: ""
+                discount: "" //discount_code ito
             }, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
@@ -164,6 +165,58 @@ const ProductDetails = () => {
             console.log("Error:", error);
         }
     };
+
+    const handleApplyDiscountCode = async (itemId) => {
+
+        if (!isLoggedIn) {
+            Swal.fire({
+                title: 'Oops!',
+                text: 'You need to login first before you can buy an item.',
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonText: "Ok, I'll login.",
+                confirmButtonColor: ModTheme.palette.primary.main,
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login');
+                }
+            });
+            return;
+        }
+
+        const discountData = new FormData();
+        discountData.append('discount', discountCode);
+        discountData.append('item_id', itemId);
+
+        try {
+            const res = await api.post("/api/auth/discount/validate", discountData, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            if (res.status === 200) {
+                console.log(res.data)
+                Swal.fire({
+                    title: res.data.message,
+                    icon: 'success',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: ModTheme.palette.primary.main,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        
+                    }
+                });
+            }
+        } catch (error) {
+            Swal.fire('Error!', error.toString(), 'error');
+        } finally {
+            setLoading(false);
+        }
+
+    }
 
     const handleOffers = async (productData) => {
 
@@ -422,20 +475,8 @@ const ProductDetails = () => {
                             {productsData.item_details.item_description}
                         </Typography>
                             <Typography variant="body1" color="textSecondary" fontStyle='italic' paragraph>
-                                The chat function will become available after you purchase your item, you can ask questions related to the item in the Q&A below’.
+                                The chat function will become available after you purchase your item, you can ask questions related to the item in the Q&A below.
                             </Typography>
-                            {/* <Grid item width="30%">
-                                <ButtonComponent
-                                    label="Chat seller"
-                                    size="small"
-                                    buttonVariant="contained"
-                                    textColor="primary.contrastText"
-                                    hoverTextColor="secondary.main"
-                                    startIcon={<WhatsAppIcon />}
-                                    onClick={() => handleChatSeller(productsData.item_details.user.mobile_number)}
-                                    disabled={loading || !offerPrice}
-                                />
-                            </Grid> */}
                         <Grid container alignItems="center" spacing={2} width="100%">
                             {productsData.item_details.is_bid === 1 &&
                                 (productsData.item_details.my_offer === null || productsData.item_details.my_offer === "") && (
@@ -470,8 +511,8 @@ const ProductDetails = () => {
                                                 size="small"
                                                 label="ENTER DISCOUNT CODE"
                                                 variant="outlined"
-                                                // value={offerPrice}
-                                                // onChange={(e) => setOfferPrice(e.target.value)}
+                                                value={discountCode}
+                                                onChange={(e) => setDiscountCode(e.target.value)}
                                                 sx={{ marginRight: 2, marginTop: 0 }}
                                             />
                                         </Grid>
@@ -483,8 +524,8 @@ const ProductDetails = () => {
                                                 buttonVariant="contained"
                                                 textColor="primary.contrastText"
                                                 hoverTextColor="secondary.main"
-                                                // onClick={() => handleOffers(productsData)}
-                                                disabled={loading || !offerPrice}
+                                                onClick={() => handleApplyDiscountCode(productsData.item_details.id)}
+                                                disabled={loading}
                                             />
                                         </Grid>
                             {
