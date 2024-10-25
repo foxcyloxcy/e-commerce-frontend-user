@@ -55,7 +55,7 @@ const MyItemPurchase = (props) => {
     if (!productsData || productsData.length <= 0) {
         return (
             <Grid container spacing={2} marginLeft={5}>
-                You have no item purchased.
+                You have no purchased items.
             </Grid>
         );
     }
