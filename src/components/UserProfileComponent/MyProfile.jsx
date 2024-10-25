@@ -78,7 +78,7 @@ const MyProfile = () => {
       case 'Change password':
         return <ChangePassword userToken={userToken} />;
       case 'My Item Purchase':
-        return <MyItemPurchase userToken={userToken} />;
+        return <MyItemPurchase userToken={userToken} fromParentUserData={userData}/>;
       default:
         return null;
     }
@@ -125,7 +125,7 @@ const MyProfile = () => {
       <Divider />
       <Tooltip title="View your purchases" placement="right" TransitionComponent={Zoom}>
         <ListItem button onClick={() => setActiveTab('My Item Purchase')}>
-          <ListItemText primary="My Purchase" />
+          <ListItemText primary="My Purchases" />
         </ListItem>
       </Tooltip>
       <Divider />
