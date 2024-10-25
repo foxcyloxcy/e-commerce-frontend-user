@@ -10,13 +10,14 @@ import {
 } from '@mui/material';
 
 // Price breakdown modal component
-// Price breakdown modal component
 const PriceBreakdownModal = ({ open, onClose, product }) => {
     // Check if product exists before rendering the modal content
-    console.log(product)
     if (!product) {
         return null;
     }
+
+    // Use total_discount_breakdown if total_fee_breakdown is null
+    const breakdown = product.total_fee_breakdown || product.total_discount_breakdown || {};
 
     return (
         <Modal
@@ -44,13 +45,13 @@ const PriceBreakdownModal = ({ open, onClose, product }) => {
                     </Typography>
                     <Divider sx={{ mb: 2 }} />
                     <Typography variant="body1">
-                        Item: AED {product.price || product.asking_price}
+                        Item: AED {product.price || product.asking_price || breakdown.item}
                     </Typography>
                     <Typography variant="body1" sx={{ mt: 1 }}>
-                        Platform fee: AED {(product.total_fee_breakdown.platform_fee)} ({(product.total_fee_breakdown.platform_fee_percentage)} of item price)
+                        Platform fee: AED {breakdown.platform_fee || product.platform_fee} ({breakdown.platform_fee_percentage || product.platform_fee_percentage}% of item price)
                     </Typography>
                     <Typography variant="body1" sx={{ mt: 1 }}>
-                        Total: AED {(product.total_fee_breakdown.total)}
+                        Total: AED {breakdown.total || product.total}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" sx={{ mt: 2 }}>
                         Postage fees will be added at checkout.
@@ -66,6 +67,5 @@ const PriceBreakdownModal = ({ open, onClose, product }) => {
         </Modal>
     );
 };
-
 
 export default PriceBreakdownModal;
