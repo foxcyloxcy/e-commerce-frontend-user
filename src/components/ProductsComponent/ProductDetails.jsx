@@ -22,6 +22,7 @@ const ProductDetails = () => {
     const [productsData, setProductsData] = useState(null);
     const [offerPrice, setOfferPrice] = useState('');
     const [discountCode, setDiscountCode] = useState('');
+    const [discountBreakDown, setDiscountBreakDown] = useState(null);
     const [loading, setLoading] = useState(false);  // Loading state for offers
     const [parsedUserData, setParsedUserData] = useState(null)
     const [userToken, setUserToken] = useState(null)
@@ -197,8 +198,8 @@ const ProductDetails = () => {
                 },
             });
 
-            if (res.status === 200) {
-                console.log(res.data)
+            if (res.status === 200 && res.data.total_discount_breakdown) {
+                console.log(res.data); // Check the entire response for debugging
                 Swal.fire({
                     title: res.data.message,
                     icon: 'success',
@@ -206,7 +207,7 @@ const ProductDetails = () => {
                     confirmButtonColor: ModTheme.palette.primary.main,
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        
+                        setDiscountBreakDown(res.data); // Ensure the correct path here
                     }
                 });
             }
@@ -303,6 +304,7 @@ const ProductDetails = () => {
     };
 
     const handleOpenPriceBreakdown = (product) => {
+        console.log(product)
         setSelectedProduct(product);
         setOpenPriceBreakdownModal(true);
     };
@@ -440,17 +442,31 @@ const ProductDetails = () => {
                             {productsData.item_details.item_name}
                         </Typography>
                         {
-                            productsData.item_details.my_offer === null || productsData.item_details.my_offer === "" ? (
-                                <Typography
-                                    variant="body1"
-                                    color="primary"
-                                    onClick={() => handleOpenPriceBreakdown(productsData.item_details)}
-                                    sx={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                >
-                                    AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
-                                </Typography>
-                            ) :
-                                (
+                            discountBreakDown && discountBreakDown.total_discount_breakdown.total ? ( // Check for discountBreakDown and its total
+                                <>
+                                    <Typography component="div" color="primary" sx={{ textDecoration: 'line-through' }}>
+                                        AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
+                                    </Typography>
+                                    <Typography 
+                                        component="div" 
+                                        color="primary"
+                                        onClick={() => handleOpenPriceBreakdown(discountBreakDown)}
+                                        sx={{ cursor: 'pointer', textDecoration: 'underline' }}>
+                                        AED {formatPrice(discountBreakDown.total_discount_breakdown.total)}  {/* Render the correct total after discount */}
+                                    </Typography>
+                                </>
+                            ) : (
+                                // Only render this block if discountBreakDown is not true
+                                productsData.item_details.my_offer === null || productsData.item_details.my_offer === "" ? (
+                                    <Typography
+                                        variant="body1"
+                                        color="primary"
+                                        onClick={() => handleOpenPriceBreakdown(productsData.item_details)}
+                                        sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                    >
+                                        AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
+                                    </Typography>
+                                ) : (
                                     <>
                                         <Typography component="div" color="primary" sx={{ textDecoration: 'line-through' }}>
                                             AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
@@ -460,6 +476,7 @@ const ProductDetails = () => {
                                         </Typography>
                                     </>
                                 )
+                            )
                         }
                         {
                             productsData.item_details.address && (
