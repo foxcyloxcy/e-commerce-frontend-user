@@ -86,6 +86,9 @@ const FeatureItemSuccess = (props) => {
                     <Typography variant="h4" color="primary" gutterBottom>
                         Featuring Item Successful!
                     </Typography>
+                    <Typography variant="h6" color="secondary" gutterBottom>
+                        Check My Purchase tab in your My Profile to contact the seller directly.
+                    </Typography>
                     <Button
                         variant="contained"
                         color="primary"
