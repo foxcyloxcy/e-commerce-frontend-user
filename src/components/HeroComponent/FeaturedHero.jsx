@@ -45,7 +45,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
           alt={item.title}
           sx={{
             width: '100%',
-            height: { md: '500px' }, // Adjust height for banner size
+            height: { md: '450px' }, // Adjust height for banner size
             objectFit: {xs: 'contain', md: 'cover'},
           }}
         />
@@ -57,7 +57,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
             top: { md: '50%' },
             left: { md: '25%' },
             transform: { md: 'translate(-50%, -50%)' },
-            background: {xs:'linear-gradient(to top, rgba(37, 87, 115, 0.6), rgba(37, 87, 115, 0))', md:'rgba(255, 255, 255, 0.8)'}, // Semi-transparent background
+            background: {xs:'#E3F2F7', md:'rgba(255, 255, 255, 0.8)'}, // Semi-transparent background
             padding: { xs: 2, md: 4 },
             borderRadius: {xs: 0, md:'8px'},
             textAlign: 'center',
