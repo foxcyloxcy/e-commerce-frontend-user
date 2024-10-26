@@ -48,7 +48,7 @@ const PriceBreakdownModal = ({ open, onClose, product }) => {
                         Item: AED {product.price || product.asking_price || breakdown.item}
                     </Typography>
                     <Typography variant="body1" sx={{ mt: 1 }}>
-                        Platform fee: AED {breakdown.platform_fee || product.platform_fee} ({breakdown.platform_fee_percentage || product.platform_fee_percentage}% of item price)
+                        Platform fee: AED {breakdown.platform_fee || product.platform_fee} ({breakdown.platform_fee_percentage || product.platform_fee_percentage} of item price)
                     </Typography>
                     <Typography variant="body1" sx={{ mt: 1 }}>
                         Total: AED {breakdown.total || product.total}
