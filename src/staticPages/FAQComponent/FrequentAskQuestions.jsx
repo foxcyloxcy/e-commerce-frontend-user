@@ -19,8 +19,8 @@ const FrequentlyAskQuestions = () => {
     },
     {
       question: 'How do I get paid for an item I sell?',
-      answer: `If you sell an item you will receive the full price you selected to sell the item for. Payments are processed through Stripe. 
-      When linking a card to the app you will be directed to Stripe's terms and conditions. Payments may take up to 5 working days to be received, as per Stripe's policy.`,
+      answer: `If you sell an item you will receive the full price you selected to sell the item for. Payments are processed through Mamo Pay. 
+      When linking a card to the app you will be directed to Mamo Pay's terms and conditions. Payments may take up to 5 working days to be received, as per Mamo Pay's policy.`,
     },
     {
       question: 'When purchasing an item I notice there is a platform fee what is this?',
@@ -36,39 +36,39 @@ const FrequentlyAskQuestions = () => {
     },
     {
       question: 'What payment methods do you accept?',
-      answer: 'All payment is made through the website via Stripe.',
+      answer: 'All payments are processed through our third party provider Mamo Pay.',
     },
     {
       question: 'What is your shipping/delivery policy?',
-      answer: 'All items are collection only, we can recommend trusted partners for collection and delivery.',
+      answer: 'All items are collection only, we can recommend trusted partners for collection and delivery. It is the buyers responsibility to arrange collection / delivery for their item. They will also pay any necessary fees for this if they use our delivery partners. ',
     },
     {
       question: 'What is your return/exchange policy?',
-      answer: `Notify the buyer within 2 days if you're unhappy with your item. For full information, refer to our refund policy.`,
+      answer: `You must notify the seller within 2 days if you are unhappy with the product, you will liaise directly for the seller in regards to this. If you need assistance in mitigating an issue please contact our support team. Further information can be found in our refund policy. The reloved platform is not responsible for any refunds.`,
     },
     {
       question: 'Can I track my order?',
-      answer: 'Once purchased, contact the seller to arrange collection.',
+      answer: 'Once you have purchased your item you will contact the seller to arrange collection. ',
     },
     {
       question: 'Are the prices negotiable?',
       answer: 'If the seller accepts offers, this will be shown before purchase. Sellers can accept or reject offers.',
     },
+    // {
+    //   question: 'What condition are the pre-loved luxury items in?',
+    //   answer: 'All conditions are stated in the item description.',
+    // },
+    // {
+    //   question: `Can I return an item if it doesn't fit me or if I'm not satisfied?`,
+    //   answer: `Liaise with the seller to arrange a refund. Reloved is not liable for returns or refunds.`,
+    // },
+    // {
+    //   question: 'Can I request a specific pick-up or delivery time for furniture items?',
+    //   answer: 'You can liaise with the seller, or use our delivery partners for collection.',
+    // },
     {
-      question: 'What condition are the pre-loved luxury items in?',
-      answer: 'All conditions are stated in the item description.',
-    },
-    {
-      question: `Can I return an item if it doesn't fit me or if I'm not satisfied?`,
-      answer: `Liaise with the seller to arrange a refund. Reloved is not liable for returns or refunds.`,
-    },
-    {
-      question: 'Can I request a specific pick-up or delivery time for furniture items?',
-      answer: 'You can liaise with the seller, or use our delivery partners for collection.',
-    },
-    {
-      question: 'What steps do you take to ensure the cleanliness and hygiene of pet items?',
-      answer: 'You can ask sellers specific questions about the item, which will be public.',
+      question: 'What steps do you take to ensure the cleaniness of items?',
+      answer: 'All items are managed by the seller you can ask any questions related to the item on the public Q&A at the bottom of each listed item',
     },
     {
       question: 'Can I purchase items directly from your social media channels?',
@@ -76,7 +76,7 @@ const FrequentlyAskQuestions = () => {
     },
     {
       question: 'How do you determine the pricing of pre-loved items?',
-      answer: `Pricing is set by the seller, based on the original price and condition. Contact support at hello@pre-amada.com for assistance.`,
+      answer: `Pricing is set by the seller, based on the original price and condition. Contact support at hello@therelovedmarketplace.com for assistance.`,
     },
     {
       question: 'How do I contact customer support?',
