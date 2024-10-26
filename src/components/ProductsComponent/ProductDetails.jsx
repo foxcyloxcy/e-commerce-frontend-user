@@ -243,6 +243,11 @@ const ProductDetails = () => {
             return;
         }
 
+        if (offerPrice > 50000) {
+            Swal.fire('Error', 'Item value must be under AED 50,000', 'error');
+            return;
+        }
+
         setLoading(true);
         const formData = new FormData();
         formData.append('item_id', productData.item_details.id);
