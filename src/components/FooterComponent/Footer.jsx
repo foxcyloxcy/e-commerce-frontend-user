@@ -50,7 +50,7 @@ const Footer = () => {
                             <Link href="/" color="inherit" underline="hover" variant="body2">Home</Link><br />
                             <Link href="/our-story" color="inherit" underline="hover" variant="body2">Our Story</Link><br />
                             <Link href="/contact-us" color="inherit" underline="hover" variant="body2">Contact Us</Link><br />
-                            <Link href="/our-delivery-partners" color="inherit" underline="hover" variant="body2">Delivery Partner</Link><br />
+                            <Link href="/our-delivery-partners" color="inherit" underline="hover" variant="body2">Delivery Partners</Link><br />
                             <Link href="/how-it-works" color="inherit" underline="hover" variant="body2">How It Works</Link><br />
                             <Link href="/faq" color="inherit" underline="hover" variant="body2">Frequently Asked Questions</Link><br />
                         </Grid>
