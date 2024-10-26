@@ -5,142 +5,72 @@ import ModTheme from '../../components/ThemeComponent/ModTheme';
 const HowItWorks = () => {
   return (
     <ThemeProvider theme={ModTheme}>
-          <Container maxWidth="lg" sx={{ mt: 10, mb: 5 }}>
-      <Paper elevation={3} sx={{ p: 4 }}>
-        <Typography variant="h4" gutterBottom align="center">
-          How It Works
-        </Typography>
-        
-        {/* List Items Section */}
-        <Box mb={4}>
-          <Typography variant="h5" gutterBottom sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            mt: 5,
-          }}>
-            List your items in just a few minutes:
-          </Typography>
-          <Grid container spacing={2} sx={{
-            display: 'flex',
-            justifyContent: 'center'
-          }}>
-            <Grid item xs={12} md={6}>
-              <Typography variant="body1" gutterBottom>
-                - <strong>Upload Photos:</strong> Add high-quality images of the items you want to sell.
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                - <strong>Provide a Detailed Description:</strong> Make sure your description is clear and accurate.
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                - <strong>Top Tip:</strong> Price your item based on its condition to attract buyers.
-              </Typography>
+      <Container maxWidth="lg" sx={{ mt: 10, mb: 5 }}>
+          
+          {/* Stacked List Items Section */}
+          <Box mb={4}>
+            <Grid container spacing={2} direction="column" alignItems="center">
+              <Grid item xs={12} md={6}>
+                <Card>
+                  <CardMedia
+                    component="img"
+                    image="https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/how-it-works-imgs/list_your_items1.png"
+                    alt="Listing items"
+                    sx={{ height: 'auto', objectFit: 'contain' }}
+                  />
+                </Card>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  image="/item-listing.jpg"
-                  alt="Listing items"
-                  sx={{ height: 355, objectFit: 'contain' }}
-                />
-              </Card>
-            </Grid>
-          </Grid>
-        </Box>
+          </Box>
 
-        {/* User-Friendly Purchasing */}
-        <Box mb={4}>
-          <Typography variant="h5" gutterBottom sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            mt: 5,
-          }}>
-            User-Friendly Purchasing:
-          </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <Typography variant="body1">
-                - You can browse and filter for secondhand items.
-              </Typography>
-              <Typography variant="body1">
-                - Place bids on items where sellers are open to offers.
-              </Typography>
+          {/* User-Friendly Purchasing */}
+          <Box mb={4}>
+            <Grid container spacing={2} direction="column" alignItems="center">
+              <Grid item xs={12} md={6}>
+                <Card>
+                  <CardMedia
+                    component="img"
+                    image="https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/how-it-works-imgs/user_friendly_purchase2.png"
+                    alt="Buying process"
+                    sx={{ height: 'auto', objectFit: 'contain' }}
+                  />
+                </Card>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  image="/buying-process.jpg"
-                  alt="Buying process"
-                  sx={{ height: 355, objectFit: 'contain' }}
-                />
-              </Card>
-            </Grid>
-          </Grid>
-        </Box>
+          </Box>
 
-        {/* Easy Shipping */}
-        <Box mb={4}>
-          <Typography variant="h5" gutterBottom sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            mt: 5,
-          }}>
-            Easy Shipping:
-          </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <Typography variant="body1">
-                - Buyers are responsible for item collection, either in person, via courier, or through our trusted delivery partners.
-              </Typography>
-              <Typography variant="body1">
-                - After a purchase, buyers and sellers will receive each other's contact details to arrange the collection or delivery.
-              </Typography>
+          {/* Easy Shipping */}
+          <Box mb={4}>
+            <Grid container spacing={2} direction="column" alignItems="center">
+              <Grid item xs={12} md={6}>
+                <Card>
+                  <CardMedia
+                    component="img"
+                    image="https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/how-it-works-imgs/easy_delivery3.png"
+                    alt="Shipping process"
+                    sx={{ height: 'auto', objectFit: 'contain' }}
+                  />
+                </Card>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  image="/shipping.png"
-                  alt="Shipping process"
-                  width="100%"
-                  sx={{ height: 'auto', objectFit: 'contain' }}
-                />
-              </Card>
-            </Grid>
-          </Grid>
-        </Box>
+          </Box>
 
-        {/* Cash-Free Transactions */}
-        <Box>
-          <Typography variant="h5" gutterBottom sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            mt: 5,
-          }}
-          >
-            Cash-Free Transactions:
-          </Typography>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <Typography variant="body1">
-                - All payments are processed securely through Stripe and deposited into your bank account, making the process smoother and more convenient than cash transactions.
-              </Typography>
+          {/* Cash-Free Transactions */}
+          <Box>
+            <Grid container spacing={2} direction="column" alignItems="center">
+              <Grid item xs={12} md={6}>
+                <Card>
+                  <CardMedia
+                    component="img"
+                    image="https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/how-it-works-imgs/cash_free_transactions4.png"
+                    alt="Cash-free transactions"
+                    sx={{ height: 'auto', objectFit: 'contain' }}
+                  />
+                </Card>
+              </Grid>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Card>
-                <CardMedia
-                  component="img"
-                  image="/cash-free.jpg"
-                  alt="Cash-free transactions"
-                  sx={{ height: 'auto', objectFit: 'contain' }}
-                />
-              </Card>
-            </Grid>
-          </Grid>
-        </Box>
-      </Paper>
-    </Container>
+          </Box>
+      </Container>
     </ThemeProvider>
   );
 };
