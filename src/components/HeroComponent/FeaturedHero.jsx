@@ -86,7 +86,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
             SEARCH FOR ITEMS
           </Button>
 
-          <Typography variant="h5">
+          <Typography variant="h6" sx={{fontSize: "1rem"}}>
             <Box
               component="a"
               href="/how-it-works"
