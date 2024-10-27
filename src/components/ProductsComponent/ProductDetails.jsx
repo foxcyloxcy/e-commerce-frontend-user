@@ -148,6 +148,7 @@ const ProductDetails = () => {
             return;
         }
 
+        setLoading(true);
         try {
             const res = await api.post(`/api/auth/payment/mamopay/checkout/${uuid}`, {
                 discount: "" //discount_code ito
@@ -164,6 +165,8 @@ const ProductDetails = () => {
             }
         } catch (error) {
             console.log("Error:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -185,7 +188,7 @@ const ProductDetails = () => {
             });
             return;
         }
-
+        setLoading(true);
         const discountData = new FormData();
         discountData.append('discount', discountCode);
         discountData.append('item_id', itemId);
@@ -346,7 +349,7 @@ const ProductDetails = () => {
                 confirmButtonColor: ModTheme.palette.primary.main,
             })
         }
-
+        setLoading(true);
         const formData = new FormData();
         formData.append('item_id', productsData.item_details.id);
         formData.append('owner_id', productsData.item_details.user.id);
@@ -368,6 +371,8 @@ const ProductDetails = () => {
             }
         } catch (error) {
             Swal.fire('Error', 'Failed to submit comment', 'error');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -388,16 +393,6 @@ const ProductDetails = () => {
 
         // Format date as "Oct-dd-yyyy hh:mm"
         return `${month}-${day}-${year} ${hours}:${minutes}`;
-    };
-
-    const handleChatSeller = (userMobileNo) => {
-        
-        // Remove '+' and spaces from the mobile number
-        const filteredMobileNo = userMobileNo.replace(/[+ ]/g, '');
-    
-        const userWhatsApp = `https://wa.me/${filteredMobileNo}`;
-    
-        window.open(userWhatsApp, '_blank');
     };
 
     // Handle rendering after data is loaded
