@@ -23,7 +23,8 @@ const DrawerContent = ({
     isSmallScreen,
     handleSubCategoryClick,
     onApplyPriceRange,
-    subCategoryFromParent
+    subCategoryFromParent,
+    onApplyPropertiesFilter
 }) => {
     const [priceRange, setPriceRange] = useState({ minPrice: '', maxPrice: '' });
     const [selectedFilters, setSelectedFilters] = useState({});
@@ -57,6 +58,11 @@ const DrawerContent = ({
         if (validatePriceRange()) {
             onApplyPriceRange(priceRange.minPrice, priceRange.maxPrice);
         }
+    };
+
+    const handleApplyPropertiesFilter = (id) => {
+        console.log(id)
+            onApplyPropertiesFilter(id);
     };
 
     const handleFilterChange = (propertyId, value) => {
@@ -171,7 +177,7 @@ const DrawerContent = ({
                                         key={value.id}
                                         control={
                                             <Checkbox
-                                                onChange={() => handleFilterChange(property.id, value.id)}
+                                                onChange={() => handleApplyPropertiesFilter(value.id)}
                                                 checked={selectedFilters[property.id]?.includes(value.id) || false}
                                             />
                                         }
