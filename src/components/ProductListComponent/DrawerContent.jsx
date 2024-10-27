@@ -60,23 +60,31 @@ const DrawerContent = ({
         }
     };
 
-    const handleApplyPropertiesFilter = (id) => {
-        console.log(id)
-            onApplyPropertiesFilter(id);
-    };
-
-    const handleFilterChange = (propertyId, value) => {
+    const handleFilterChange = (propertyId, valueId) => {
         setSelectedFilters((prevFilters) => ({
             ...prevFilters,
-            [propertyId]: prevFilters[propertyId]?.includes(value)
-                ? prevFilters[propertyId].filter((item) => item !== value)
-                : [...(prevFilters[propertyId] || []), value],
+            [propertyId]: prevFilters[propertyId]?.includes(valueId)
+                ? prevFilters[propertyId].filter((id) => id !== valueId)
+                : [...(prevFilters[propertyId] || []), valueId],
         }));
+    };
+
+    const handleApplyPropertiesFilter = (valueId) => {
+        // Apply the filter logic as before
+        console.log(valueId);
+        onApplyPropertiesFilter(valueId);
+    };
+
+    const handleCheckboxChange = (propertyId, valueId) => {
+        // Update the filter state first
+        handleFilterChange(propertyId, valueId);
+        // Apply the properties filter
+        handleApplyPropertiesFilter(valueId);
     };
 
     const handleSubCategorySelect = (subCategory) => {
         setSelectedSubCategory(subCategory);
-        handleSubCategoryClick(subCategory)
+        handleSubCategoryClick(subCategory);
     };
 
     const handleSubCategorySelectFromParent = (subCategory) => {
@@ -90,7 +98,7 @@ const DrawerContent = ({
     }, [subCategoryFromParent]);
 
     return (
-        <Container sx={{ width: 300}}>
+        <Container sx={{ width: 300 }}>
             <Typography variant="h6" sx={{ paddingBottom: 2 }}>Filters</Typography>
             <Divider />
 
@@ -177,7 +185,7 @@ const DrawerContent = ({
                                         key={value.id}
                                         control={
                                             <Checkbox
-                                                onChange={() => handleApplyPropertiesFilter(value.id)}
+                                                onChange={() => handleCheckboxChange(property.id, value.id)}
                                                 checked={selectedFilters[property.id]?.includes(value.id) || false}
                                             />
                                         }
