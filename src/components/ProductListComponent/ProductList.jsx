@@ -43,6 +43,7 @@ const ProductList = (props) => {
     const [listView, setListView] = useState('list');
     const location = useLocation();
     const [priceRange, setPriceRange] = useState(['', '']);
+    const [propertiesFilter, setPropertiesFilter] = useState("");
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -50,6 +51,10 @@ const ProductList = (props) => {
 
     const handleApplyPriceRange = (minPrice, maxPrice) => {
         setPriceRange([minPrice, maxPrice]);
+    };
+
+    const handleApplyPropertiesFilter = (properties) => {
+        setPropertiesFilter(properties);
     };
 
     const loadCategories = useCallback(async () => {
@@ -84,6 +89,10 @@ const ProductList = (props) => {
                 query += `filter[keyword]=${keyword}&`; // Added keyword to the query
             }
 
+            if (propertiesFilter) {
+                query += `filter[properties]=${propertiesFilter}&`; // Added keyword to the query
+            }
+
             const res = userToken
                 ? await api.get(query, {
                     headers: {
@@ -94,6 +103,7 @@ const ProductList = (props) => {
                 : await api.get(query);
 
             if (res.status === 200) {
+                console.log(res.data)
                 const fetchedProducts = res.data.data.data;
                 setProductsData(fetchedProducts);
                 setTotalPages(res.data.data.last_page);
@@ -101,7 +111,7 @@ const ProductList = (props) => {
         } catch (error) {
             console.log(error);
         }
-    }, [priceRange, keyword, userToken]);
+    }, [priceRange, keyword, userToken, propertiesFilter]);
 
 
     const trigger = useScrollTrigger({
@@ -280,6 +290,7 @@ const ProductList = (props) => {
                         isSmallScreen={isSmallScreen}
                         handleSubCategoryClick={handleSubCategoryClick}
                         onApplyPriceRange={handleApplyPriceRange}
+                        onApplyPropertiesFilter={handleApplyPropertiesFilter}
                         subCategoryFromParent={selectedSubCategory}
                     />
                 </Drawer>
@@ -294,6 +305,7 @@ const ProductList = (props) => {
                                 isSmallScreen={isSmallScreen}
                                 handleSubCategoryClick={handleSubCategoryClick}
                                 onApplyPriceRange={handleApplyPriceRange}
+                                onApplyPropertiesFilter={handleApplyPropertiesFilter}
                                 subCategoryFromParent={selectedSubCategory}
                             />
                         </Grid>
