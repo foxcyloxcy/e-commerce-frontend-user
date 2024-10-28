@@ -56,7 +56,7 @@ const MyProducts = (props) => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-
+            console.log(res.data)
             if (res.status === 200) {
                 let fetchedProducts = res.data.data.data;
 

@@ -4,6 +4,6 @@ export default axios.create({
   // baseURL: 'https://be.talentsage.com/',
 //   baseURL: 'https://uatbe.talentsage.com/',
   // baseURL: 'https://betest.gcm3.com/',
-  baseURL: 'http://127.0.0.1:8000/',
+  baseURL: 'http://ec2-52-194-187-214.ap-northeast-1.compute.amazonaws.com/',
   headers: { 'token': 'cCW7PW2CRotxuALrBuMob5lXgVhY4xo' }
 });
