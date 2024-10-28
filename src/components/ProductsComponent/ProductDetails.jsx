@@ -151,7 +151,7 @@ const ProductDetails = () => {
         setLoading(true);
         try {
             const res = await api.post(`/api/auth/payment/mamopay/checkout/${uuid}`, {
-                discount: "" //discount_code ito
+                discount: discountCode //discount_code ito
             }, {
                 headers: {
                     Authorization: `Bearer ${userToken}`,
