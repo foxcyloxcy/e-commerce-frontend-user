@@ -94,12 +94,12 @@ const NavBar = (props) => {
             {isSmallScreen || isMediumScreen ? (
               <a href="/" style={{ height: '80px', width: '100%' }}>
                 {/* <img src={elevate || linkPathName.pathname !== '/' ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> */}
-                <img src={'reloved_header_logo.png'} alt='reloved_header_logo' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                <img src={'https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/reloved_header_logo.png'} alt='reloved_header_logo' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </a>
             ) : (
               <Typography component="div" sx={{ flexGrow: 1 }}>
                 <a href="/">
-                  <img src={elevate || linkPathName.pathname !== '/' ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '150px', height: 'auto', objectFit: 'contain' }} />
+                  <img src={elevate || linkPathName.pathname !== '/' ? 'https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/reloved_header_logo.png' : 'https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '150px', height: 'auto', objectFit: 'contain' }} />
                 </a>
               </Typography>
             )}
