@@ -135,7 +135,7 @@ const MyOffers = (props) => {
                                     onClick={() => handleOpenPriceBreakdown(product.my_offer)}
                                     sx={{ cursor: 'pointer', textDecoration: 'underline' }}
                                 >
-                                    AED {formatPrice(product.my_offer.asking_price)}
+                                    AED {formatPrice(product.my_offer.total_fee_breakdown.total)}
                                 </Typography>
                         </CardContent>
 
