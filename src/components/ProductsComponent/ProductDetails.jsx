@@ -447,8 +447,8 @@ const ProductDetails = () => {
                                     <Typography component="div" color="primary" sx={{ textDecoration: 'line-through' }}>
                                         AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
                                     </Typography>
-                                    <Typography 
-                                        component="div" 
+                                    <Typography
+                                        component="div"
                                         color="primary"
                                         onClick={() => handleOpenPriceBreakdown(discountBreakDown)}
                                         sx={{ cursor: 'pointer', textDecoration: 'underline' }}>
@@ -471,8 +471,13 @@ const ProductDetails = () => {
                                         <Typography component="div" color="primary" sx={{ textDecoration: 'line-through' }}>
                                             AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
                                         </Typography>
-                                        <Typography component="div" color="primary">
-                                            AED {formatPrice(productsData.item_details.my_offer.asking_price)}
+                                        <Typography
+                                            component="div"
+                                            color="primary"
+                                            onClick={() => handleOpenPriceBreakdown(productsData.item_details.my_offer)}
+                                            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                        >
+                                            AED {formatPrice(productsData.item_details.my_offer.total_fee_breakdown.total)}
                                         </Typography>
                                     </>
                                 )
@@ -491,9 +496,9 @@ const ProductDetails = () => {
                         <Typography variant="body1" color="textSecondary" paragraph>
                             {productsData.item_details.item_description}
                         </Typography>
-                            <Typography variant="body1" color="textSecondary" fontStyle='italic' paragraph>
-                                The chat function will become available after you purchase your item, you can ask questions related to the item in the Q&A below.
-                            </Typography>
+                        <Typography variant="body1" color="textSecondary" fontStyle='italic' paragraph>
+                            The chat function will become available after you purchase your item, you can ask questions related to the item in the Q&A below.
+                        </Typography>
                         <Grid container alignItems="center" spacing={2} width="100%">
                             {productsData.item_details.is_bid === 1 &&
                                 (productsData.item_details.my_offer === null || productsData.item_details.my_offer === "") && (
@@ -522,29 +527,29 @@ const ProductDetails = () => {
                                     </>
                                 )
                             }
-                                    <Grid item width="60%" 
-                                    sx={{marginTop: 0 }}>
-                                            <TextField
-                                                size="small"
-                                                label="ENTER DISCOUNT CODE"
-                                                variant="outlined"
-                                                value={discountCode}
-                                                onChange={(e) => setDiscountCode(e.target.value)}
-                                                sx={{ marginRight: 2, marginTop: 0 }}
-                                            />
-                                        </Grid>
-                                        <Grid item width="40%" 
-                                        sx={{marginTop: 0 }}>
-                                            <ButtonComponent
-                                                label="aPPLY DISCOUNT"
-                                                size="small"
-                                                buttonVariant="contained"
-                                                textColor="primary.contrastText"
-                                                hoverTextColor="secondary.main"
-                                                onClick={() => handleApplyDiscountCode(productsData.item_details.id)}
-                                                disabled={loading}
-                                            />
-                                        </Grid>
+                            <Grid item width="60%"
+                                sx={{ marginTop: 0 }}>
+                                <TextField
+                                    size="small"
+                                    label="ENTER DISCOUNT CODE"
+                                    variant="outlined"
+                                    value={discountCode}
+                                    onChange={(e) => setDiscountCode(e.target.value)}
+                                    sx={{ marginRight: 2, marginTop: 0 }}
+                                />
+                            </Grid>
+                            <Grid item width="40%"
+                                sx={{ marginTop: 0 }}>
+                                <ButtonComponent
+                                    label="aPPLY DISCOUNT"
+                                    size="small"
+                                    buttonVariant="contained"
+                                    textColor="primary.contrastText"
+                                    hoverTextColor="secondary.main"
+                                    onClick={() => handleApplyDiscountCode(productsData.item_details.id)}
+                                    disabled={loading}
+                                />
+                            </Grid>
                             {
                                 parsedUserData && (
                                     <>
