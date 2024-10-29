@@ -36,7 +36,7 @@ const Footer = () => {
                             display: 'flex',
                             flexDirection: 'column'
                         }}>
-                            <Box component="img" src="reloved_footer_banner.png" alt="Reloved Icon" 
+                            <Box component="img" src="https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/reloved_footer_banner.png" alt="Reloved Icon" 
                             sx={{ 
                                 width: {xs: '50%', md: '70%'}, 
                                 maxWidth: { xs: 'xs', sm: 'md', md: 'lg', lg: 'lg', xl: 'xl' },
