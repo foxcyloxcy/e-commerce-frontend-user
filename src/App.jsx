@@ -125,7 +125,7 @@ function App() {
         <Route path="/faq" element={<FrequentlyAskQuestions parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/refund-policy" element={<RefundPolicy parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/forgot-password" element={<ForgotPassword parentIsLoggedIn={isLoggedIn} />} />
-        <Route path="/verify" element={<UserVerification parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/verify" element={<UserVerification parentIsLoggedIn={isLoggedIn} refreshParent={handleClick} />} />
         <Route path="/create-password" element={<CreateNewPassword parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/contact-us" element={<ContactUs parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/data-processing" element={<DataProcessingAgreement parentIsLoggedIn={isLoggedIn} />} />
