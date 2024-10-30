@@ -11,7 +11,7 @@ const FeatureItemSuccess = (props) => {
     const location = useLocation();
     
     const handleBrowseShop = () => {
-        navigate('/my-profile');
+        navigate('/');
 
         //https://www.mamopay.com/?{createdAt=2023-08-09-16-42-35&paymentLinkId=MB-LINK-3216D27C9D&status=captured&transactionId=MPB-CHRG-BEE56990A9}
     };
@@ -87,7 +87,7 @@ const FeatureItemSuccess = (props) => {
                         Featuring Item Successful!
                     </Typography>
                     <Typography variant="h6" color="secondary" gutterBottom>
-                        Check My Purchase tab in your My Profile to contact the seller directly.
+                        Check your item in Home page - Featured Products section.
                     </Typography>
                     <Button
                         variant="contained"
@@ -95,7 +95,7 @@ const FeatureItemSuccess = (props) => {
                         onClick={handleBrowseShop}
                         sx={{ mt: 4 }}
                     >
-                        Back to My Profile
+                        Back to Home
                     </Button>
                 </Box>
             </Container>
