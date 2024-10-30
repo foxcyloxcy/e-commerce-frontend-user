@@ -5,8 +5,11 @@ import api from '../../assets/baseURL/api';
 import './UserVerification.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ModTheme from '../ThemeComponent/ModTheme';
+import secureLocalStorage from "react-secure-storage";
+import secure from '../../assets/baseURL/secure';
 
 const UserVerification = ({refreshParent}) => {
+
   const [code, setCode] = useState(Array(6).fill(''));
   const [countdown, setCountdown] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,6 +19,9 @@ const UserVerification = ({refreshParent}) => {
   const [mode, setMode] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
+  const storageKey = secure.storageKey;
+  const storagePrefix = secure.storagePrefix;
+  const history = useNavigate();
 
   const handleChange = (e, index) => {
     const newCode = [...code];
@@ -73,7 +79,6 @@ const UserVerification = ({refreshParent}) => {
       }
     } catch (error) {
       console.log(error)
-      await handleErrorMessage(error.response)
     } finally {
       setIsLoading(false);
     }
