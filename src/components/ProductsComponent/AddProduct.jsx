@@ -60,6 +60,10 @@ const AddProduct = (props) => {
     } else {
       setPriceError('');
     }
+
+    if (value === '50') {
+      setAcceptOffers(0); // Uncheck the "Accept Offers" checkbox
+    }
   };
 
   const handleCategoryChange = async (event) => {
@@ -327,7 +331,11 @@ const AddProduct = (props) => {
                 <Grid item xs={12}>
                   <FormGroup>
                     <FormControlLabel
-                      control={<Checkbox checked={acceptOffers} onChange={handleBidChange} />}
+                      control={<Checkbox 
+                        checked={acceptOffers} 
+                        onChange={handleBidChange}
+                        disabled={price === '50'} // Disable if price is 50
+                       />}
                       label="Accept Offers"
                     />
                   </FormGroup>
