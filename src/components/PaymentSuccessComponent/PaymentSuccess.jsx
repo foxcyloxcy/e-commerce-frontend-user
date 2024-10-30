@@ -11,7 +11,7 @@ const PaymentSuccess = (props) => {
     const location = useLocation();
     
     const handleBrowseShop = () => {
-        navigate('/shop');
+        navigate('/my-profile');
 
         //https://www.mamopay.com/?{createdAt=2023-08-09-16-42-35&paymentLinkId=MB-LINK-3216D27C9D&status=captured&transactionId=MPB-CHRG-BEE56990A9}
     };
@@ -87,7 +87,7 @@ const PaymentSuccess = (props) => {
                         Payment Successful!
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                        Thank you for your purchase. Your payment has been successfully processed.
+                    Thank you for your payment, your sellers contact details will now be available when you select your profile – my purchases.
                     </Typography>
                     <Button
                         variant="contained"
@@ -95,7 +95,7 @@ const PaymentSuccess = (props) => {
                         onClick={handleBrowseShop}
                         sx={{ mt: 4 }}
                     >
-                        Browse Shop
+                        Go to My Profile
                     </Button>
                 </Box>
             </Container>
