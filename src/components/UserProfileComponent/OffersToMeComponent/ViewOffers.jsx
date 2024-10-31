@@ -28,7 +28,7 @@ const ViewOffers = () => {
             });
 
             if (res.status === 200) {
-                console.log('data offers',res.data.offers)
+
                 setProductsData(res.data.offers);
             }
         } catch (error) {
@@ -87,6 +87,14 @@ const ViewOffers = () => {
         // Reject offer functionality
         navigate('/view-offers', { state: { productId } });
     };
+
+    if (!productsData || productsData.length <= 0) {
+        return (
+            <Grid container spacing={2} marginLeft={5}>
+                You have no bids available.
+            </Grid>
+        );
+    }
 
     return (
         <ThemeProvider theme={ModTheme}>
