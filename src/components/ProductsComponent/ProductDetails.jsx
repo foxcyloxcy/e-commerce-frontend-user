@@ -62,15 +62,14 @@ const ProductDetails = () => {
                     },
                 });
                 if (res.status === 200) {
-                    console.log(res.data)
+
                     setProductsData(res.data);
                 }
             } else {
                 const res = await api.get(query);
 
                 if (res.status === 200) {
-                    console.log(parsedUserData)
-                    console.log(res.data)
+
                     setProductsData(res.data);
                 }
             }
@@ -202,7 +201,7 @@ const ProductDetails = () => {
             });
 
             if (res.status === 200 && res.data.total_discount_breakdown) {
-                console.log(res.data); // Check the entire response for debugging
+
                 Swal.fire({
                     title: res.data.message,
                     icon: 'success',
@@ -215,7 +214,7 @@ const ProductDetails = () => {
                 });
             }
         } catch (error) {
-            Swal.fire('Error!', error.toString(), 'error');
+            Swal.fire('Error!', error.message, 'error');
         } finally {
             setLoading(false);
         }
@@ -312,7 +311,7 @@ const ProductDetails = () => {
     };
 
     const handleOpenPriceBreakdown = (product) => {
-        console.log(product)
+
         setSelectedProduct(product);
         setOpenPriceBreakdownModal(true);
     };
@@ -365,7 +364,7 @@ const ProductDetails = () => {
             });
 
             if (res.status === 200) {
-                console.log(res)
+
                 setComment('');  // Clear the input field after submission
                 loadProducts()
             }
