@@ -32,7 +32,7 @@ const PaymentSuccess = (props) => {
             },
           });
             
-            console.log(res)
+
             if (res.status === 200) {
               const successMessage = res.data.message;
       
