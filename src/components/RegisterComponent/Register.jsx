@@ -65,7 +65,7 @@ export default function Register() {
         }
 
         if (!formValues.remember) {
-            errors.remember = "You haven't read and accept terms of use.";
+            errors.remember = "You haven't read and accept Terms and Conditions.";
         }
 
         setFormErrors(errors);

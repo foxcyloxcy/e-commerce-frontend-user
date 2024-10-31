@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Typography, Box, ThemeProvider, Paper } from '@mui/material';
+import { Container, Typography, Box, ThemeProvider, Paper, Link } from '@mui/material';
 import ModTheme from '../../components/ThemeComponent/ModTheme';
 
 const TermsOfUse = () => {
@@ -21,7 +21,7 @@ const TermsOfUse = () => {
                         </Typography>
 
                         <Typography variant="body1" paragraph>
-                            These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity (“you”) and Reloved ("Company," “we," “us," or “our”), concerning your access to and use of the Platform.
+                            These Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an entity (“you”) and Pre Amada Fze, also referred to as Reloved ("Company," “we," “us," or “our”), concerning your access to and use of the Platform.  
                         </Typography>
 
                         <Typography variant="body1" paragraph>
@@ -33,11 +33,11 @@ const TermsOfUse = () => {
                         </Typography>
 
                         <Typography variant="body1" paragraph>
-                            As a seller on our platform, you are responsible for accurately describing your item and its condition, as well as ensuring that you have the right to sell the item. You are also responsible for ensuring accurate shipping information and location collection. You are responsible to ensure the item is collected within 48 hours of purchase through an agreed delivery method as agreed with the buyer.
+                            As a seller on our platform, you are responsible for accurately describing your item and its condition, as well as ensuring that you have the right to sell the item. You are also responsible for ensuring accurate shipping information and location collection. You are responsible to ensure the item is collected within agreed timeframes of the buyer through an agreed delivery method as agreed with the buyer. When receiving payment from the buyer this will be listed as 'Mamo pay' on your bank statement. 
                         </Typography>
 
                         <Typography variant="body1" paragraph>
-                            As a buyer on our platform, you are responsible for paying for the item in a timely manner. You are also responsible for inspecting the item upon receipt and notifying the seller of any issues or discrepancies. As the buyer, it is your responsibility for arranging the collection of the item, whether it be through personal collection or arranging for a courier to deliver to your address. The buyer is responsible for paying the service platform fee.
+                            As a buyer on our platform, you are responsible for paying for the item in a timely manner. You are also responsible for inspecting the item upon receipt and notifying the seller of any issues or discrepancies. As the buyer, it is your responsibility for arranging the collection of the item, whether it be through personal collection or arranging for a courier to deliver to your address. The buyer is responsible for paying the service platform fee. 
                         </Typography>
 
                         <Typography variant="body1" paragraph>
@@ -65,7 +65,7 @@ const TermsOfUse = () => {
                         </Typography>
 
                         <Typography variant="body1" paragraph>
-                            As a registered user, you will have access to a dashboard where you can view your purchase history, track your shipments, and manage your orders. You can also view your selling activity, including your listings, sales, and feedback from buyers.
+                            As a registered user, you will have access to a dashboard where you can view your items and manage your orders. You can also view your selling activity, including your listings, sales, and offers from buyers.
                         </Typography>
 
                         <Typography variant="body1" paragraph>
@@ -81,7 +81,7 @@ const TermsOfUse = () => {
                         </Typography>
 
                         <Typography variant="body1" paragraph>
-                            Our platform facilitates the buying and selling of used items between individuals. When a buyer purchases an item, they will pay the seller directly through our platform. We will charge the buyer a 20% commission fee for the item they sell through our platform. This fee will be included in the check-out process of the purchase. The commission percentage may be subject to change.
+                            Our platform facilitates the buying and selling of used items between individuals. When a buyer purchases an item, they will pay the seller directly through our platform. We will charge the buyer a 20% commission fee for the item they sell through our platform. This fee will be included in the check-out process of the purchase. The commission percentage may be subject to change. 
                         </Typography>
 
                         <Typography variant="body1" paragraph>
@@ -89,11 +89,16 @@ const TermsOfUse = () => {
                         </Typography>
 
                         <Typography variant="body1" paragraph>
-                            The seller's contact details will only become available to the buyer once the purchase has been completed. It is the buyer's responsibility to arrange collection, and an agreed method will be confirmed between the buyer and seller. Reloved will not be involved in the collection, shipping, or delivery of the item, and will not be liable for any issues that may arise during this process.
+                            The seller's contact details will only become available to the buyer once the purchase has been completed. It is the buyers responsibility to arrange collection, an agreed method will be confirmed between the buyer and seller.  Reloved will not be involved in the collection, shipping, or delivery of the item, and will not be liable for any issues that may arise during this process.
                         </Typography>
 
                         <Typography variant="body1" paragraph>
-                            The buyer will have two days from the transaction date to arrange delivery from the seller. Buyers may request a refund within two days of receiving the item, if the item received does not match the description provided by the seller or if there are significant issues with the item. Refund requests should be submitted to the seller directly. If the buyer and seller cannot resolve the issue, please contact our customer support team for assistance.
+                        The buyer will have two days from the transaction date to arrange collection from the seller. 
+                        </Typography>
+
+                        <Typography variant="body1" paragraph> 
+                        Buyers may request a refund within two days of receiving the item, if the item received does not match the description provided by the seller or if there are significant issues with the item. 
+                        Refund requests should be submitted to the seller directly. If the buyer and seller cannot resolve the issue, please contact our customer support team for assistance.
                         </Typography>
 
                         <Typography variant="body1" paragraph>
@@ -118,7 +123,7 @@ const TermsOfUse = () => {
                             USER REPRESENTATIONS
                         </Typography>
                         <Typography variant="body1" paragraph>
-                            By using the Platform, you represent and warrant that: (1) you have the legal capacity and you agree to comply with these Terms of Use; (2) you are not a minor in the jurisdiction in which you reside; (3) you will not access the Platform through automated or non-human means, whether through a bot, script, or otherwise; (4) you will not use the Platform for any illegal or unauthorized purpose; and (5) your use of the Platform will not violate any applicable law or regulation.
+                            By using the Platform, you represent and warrant that:  (1) you have the legal capacity and you agree to comply with these Terms of Use; (2) you are not a minor in the jurisdiction in which you reside; (3) you will not access the Platform through automated or non-human means, whether through a bot, script, or otherwise; (4) you will not use the Platform for any illegal or unauthorized purpose; and (5) your use of the Platform will not violate any applicable law or regulation.
                         </Typography>
                         <Typography variant="body1" paragraph>
                             If you provide any information that is untrue, inaccurate, not current, or incomplete, we have the right to suspend or terminate your account and refuse any and all current or future use of the Platform (or any portion thereof).
@@ -178,6 +183,9 @@ const TermsOfUse = () => {
                             <li>Your Contributions do not violate any applicable law concerning child pornography, or otherwise intended to protect the health or well-being of minors.</li>
                             <li>Your Contributions do not include any offensive comments that are connected to race, national origin, gender, sexual preference, or physical handicap.</li>
                             <li>Your Contributions do not otherwise violate, or link to material that violates, any provision of these Terms of Use, or any applicable law or regulation.</li>
+                        </Typography>
+                        <Typography variant="h6" gutterBottom>
+                            Any use of the Platform in violation of the foregoing violates these Terms of Use and may result in, among other things, termination or suspension of your rights to use the Platform.
                         </Typography>
 
                         <Typography variant="h6" gutterBottom>
@@ -251,7 +259,7 @@ const TermsOfUse = () => {
                             Dispute Resolution
                         </Typography>
                         <Typography variant="body1" paragraph>
-                            Any legal action of whatever nature brought by either you or us (collectively, the “Parties” and individually, a “Party”) shall be commenced or prosecuted at the headquarters of Company, and the Parties hereby consent to, and waive all defenses of lack of personal jurisdiction and forum non conveniens with respect to venue and jurisdiction in such state and federal courts. Application of the United Nations Convention on Contracts for the International Sale of Goods and the Uniform Computer Information Transaction Act (UCITA) are excluded from these Terms of Use. In no event shall any claim, action, or proceeding brought by either Party related in any way to the Platform be commenced more than one (1) year after the cause of action arose.
+                            Any legal action of whatever nature brought by either you or us (collectively, the “Parties” and individually, a “Party”) shall be commenced or prosecuted at the headquarters of Company, and the Parties hereby consent to, and waive all defenses of lack of personal jurisdiction and forum non conveniens with respect to venue and jurisdiction in such state and federal courts. Application of the United Nations Convention on Contracts for the International Sale of Goods and the Uniform Computer Information Transaction Act (UCITA) are excluded from these Terms of Use. In no event shall any claim, action, or proceeding brought by either Party related in any way to the Platform be commenced more than one (1) years after the cause of action arose.
                         </Typography>
 
                         <Typography variant="h6" gutterBottom>
@@ -307,14 +315,15 @@ const TermsOfUse = () => {
                             Contact Us
                         </Typography>
                         <Typography variant="body1" paragraph>
-                            In order to resolve a complaint regarding the Platform or to receive further information regarding use of the Platform, please contact us at MAIL.
+                            In order to resolve a complaint regarding the Platform or to receive further information regarding use of the Platform, please contact us at
+                            <Link href="mailto:hello@therelovedmarketplace.com">hello@therelovedmarketplace.com</Link>
                         </Typography>
 
                         <Typography variant="h6" gutterBottom>
                             Terms of Use
                         </Typography>
                         <Typography variant="body1" paragraph>
-                            By agreeing to this policy you are also agreeing to the other policies which include the following: buyer terms, cookie policy, data processing, privacy policy, refund policy, seller terms and the shipping and delivery policy. These policies can be found on our website and application.
+                            By agreeing to this policy you are also agreeing to the other policies which include the following: buyer terms, cookie policy, data processing, privacy policy, refund policy, seller terms and the shipping and delivery policy. These policies can be found on our website and application. 
                         </Typography>
                     </Box>
                 </Paper>

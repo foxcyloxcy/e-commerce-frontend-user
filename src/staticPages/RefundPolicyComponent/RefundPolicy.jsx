@@ -15,71 +15,59 @@ const RefundPolicy = () => {
           </Typography>
 
           <Typography paragraph>
-            At Pre Amada Fze (Reloved), we strive to provide a safe and reliable platform for buyers and sellers to transact with each other. We understand that sometimes a buyer may need to return an item or request a refund, and we are committed to ensuring a fair and transparent refund process. Reloved works with Stripe, a payment gateway service, for smooth transaction processes.
+            At Pre Amada Fze (Reloved), we strive to provide a safe and reliable platform for buyers and sellers to transact with each other. We understand that sometimes a buyer may need to return an item or request a refund, and we are committed to ensuring a fair and transparent refund process. Reloved work with Mamo Pay, a payment gateway service for a smooth process of transactions.
           </Typography>
 
           <Typography variant="h6" gutterBottom>
-            Steps to Request a Refund:
+            In the event that you need to request a refund for an item purchased on our platform, please follow the steps outlined below:
           </Typography>
 
           <List>
             <ListItem>
-              <ListItemText primary="1. Contact the seller" secondary="If you are not satisfied with your purchase, contact the seller directly to request a return or refund. The buyer has two days to request a refund from the seller." />
+              <ListItemText primary="1. Contact the seller: " secondary=" If you are not satisfied with your purchase, please contact the seller directly to request a return or refund. The seller will have the opportunity to resolve the issue with you directly. The buyer has two days to request a refund from the seller." />
             </ListItem>
             <ListItem>
-              <ListItemText primary="2. Wait for the seller's response" secondary="The seller has up to 7 days to respond to your refund request. During this time, they will provide their own explanation or resolution." />
+              <ListItemText primary="2.	Wait for the seller's response:" secondary=" Once you have initiated a refund request, the seller will have the opportunity to respond and provide their own explanation or resolution. The seller will have up to 7 days to respond to the refund request." />
             </ListItem>
             <ListItem>
-              <ListItemText primary="3. Escalate the refund request" secondary="If you can't reach a resolution with the seller, escalate the refund request to our customer support team. We will review the case and make a determination." />
+              <ListItemText primary="3.	Escalate the refund request:" secondary=" If you are unable to reach a resolution with the seller, you can escalate the refund request to our customer support team. We will review the case and make a determination based on the information provided by both parties." />
             </ListItem>
           </List>
 
           <Divider sx={{ my: 2 }} />
 
+          <Typography paragraph>
+            Please note that our refund policy applies only to items purchased through our platform. We are not responsible for any refunds or returns for items purchased outside of our platform and nor are we responsible for reimbursing any costs, this sits solely with the seller however the platform, Reloved will assist those where required in receiving the refund from the seller. 
+          </Typography>
+          <Typography paragraph>
+            For any service fees paid for the purchase of an item will not be refunded but the price of the item will be. 
+          </Typography>
           <Typography variant="h6" gutterBottom>
-            Important Notes:
+            Additionally, we will not issue refunds for the following:
           </Typography>
           <List>
             <ListItem>
-              <ListItemText primary="Refunds apply only to items purchased through our platform." />
+              <ListItemText primary="●	Items that have been used, altered, or damaged after delivery" />
             </ListItem>
             <ListItem>
-              <ListItemText primary="We are not responsible for refunds or returns for items purchased outside of our platform." />
+              <ListItemText primary="●	Items that are not in their original condition or packaging" />
             </ListItem>
             <ListItem>
-              <ListItemText primary="Reloved can assist in cases where required but is not liable for reimbursing any costs." />
+              <ListItemText primary="●	Items that were purchased more than two days prior to the refund request" />
             </ListItem>
             <ListItem>
-              <ListItemText primary="Service fees paid for the purchase of an item are non-refundable." />
+              <ListItemText primary="●	Items that were custom-made or personalized" />
             </ListItem>
           </List>
 
           <Divider sx={{ my: 2 }} />
-
-          <Typography variant="h6" gutterBottom>
-            No Refunds Will Be Issued For:
-          </Typography>
-          <List>
-            <ListItem>
-              <ListItemText primary="Items used, altered, or damaged after delivery." />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Items not in original condition or packaging." />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Items purchased more than two days prior to the refund request." />
-            </ListItem>
-            <ListItem>
-              <ListItemText primary="Custom-made or personalized items." />
-            </ListItem>
-          </List>
 
           <Typography paragraph sx={{ mt: 2 }}>
-            Please note that our refund policy may be subject to change. We encourage you to review this policy regularly to stay informed of any updates or changes.
+            Finally, please be aware that our refund policy may be subject to change at any time. We encourage you to review this policy regularly to stay informed of any updates or changes. Reloved are not liable for any refunds, however we can help in cases where there are disputes.
           </Typography>
 
           <Typography paragraph>
-            If you have any questions or concerns about our refund policy, please contact us at <a href="mailto:hello@therelovedmarketplace.com">hello@therelovedmarketplace.com</a>.
+            Thank you for choosing our platform for your buying and selling needs. If you have any questions or concerns about our refund policy, please do not hesitate to contact us on <a href="mailto:hello@therelovedmarketplace.com">hello@therelovedmarketplace.com</a>.
           </Typography>
         </Paper>
       </Container>
