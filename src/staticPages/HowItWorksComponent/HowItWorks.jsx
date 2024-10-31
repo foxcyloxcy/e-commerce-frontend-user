@@ -5,7 +5,7 @@ import ModTheme from '../../components/ThemeComponent/ModTheme';
 const HowItWorks = () => {
   return (
     <ThemeProvider theme={ModTheme}>
-      <Container maxWidth="lg" sx={{ mt: 10, mb: 5 }}>
+      <Container maxWidth="lg" sx={{ mt: 15, mb: 5 }}>
           
           {/* Stacked List Items Section */}
           <Box mb={4}>

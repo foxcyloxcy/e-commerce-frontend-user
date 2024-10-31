@@ -5,7 +5,7 @@ import ModTheme from '../../components/ThemeComponent/ModTheme';
 const DeliveryPartners = () => {
     return (
         <ThemeProvider theme={ModTheme}>
-            <Box sx={{ maxWidth: 900, margin: 'auto', marginTop: 8, marginBottom: 5, padding: 2 }}>
+            <Box sx={{ maxWidth: 900, margin: 'auto', marginTop: 10, marginBottom: 5, padding: 2 }}>
                 <Card>
                     <CardContent>
                         <Typography variant="h4" gutterBottom>

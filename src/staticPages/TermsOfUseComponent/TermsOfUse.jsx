@@ -6,7 +6,7 @@ const TermsOfUse = () => {
     return (
         <ThemeProvider theme={ModTheme}>
             <Container sx={{
-                marginTop: 5,
+                marginTop: 10,
                 marginBottom: 10,
                 maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
             }}>
