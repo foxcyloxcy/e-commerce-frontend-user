@@ -26,7 +26,7 @@ const MyItemPurchase = (props) => {
                 },
             });
             if (res.status === 200) {
-                console.log(res.data);
+
                 setProductsData(res.data.offers.data);
             }
         } catch (error) {
