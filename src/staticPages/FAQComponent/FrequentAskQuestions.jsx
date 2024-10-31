@@ -82,6 +82,10 @@ const FrequentlyAskQuestions = () => {
       question: 'How do I contact customer support?',
       answer: 'You can email us at hello@therelovedmarketplace.com, and our team will respond within 72 hours.',
     },
+    {
+      question: 'How can I feature an item on the home page?',
+      answer: 'Once you have posted your item you can click on your profile, my items and then you can feature your item here. The price is AED 100 for 7 days.',
+    },
   ];
 
   return (
