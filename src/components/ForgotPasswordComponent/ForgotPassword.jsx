@@ -30,7 +30,7 @@ const ForgotPassword = () => {
         });
   
         if (res.status === 200) {
-            console.log(res)
+
           Swal.fire({
             title: `OTP sent!`,
             text: 'An OTP has been sent to your registered email, this may have gone to your junk folder',
