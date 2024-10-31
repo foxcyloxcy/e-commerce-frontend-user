@@ -83,7 +83,7 @@ const AddProduct = (props) => {
   const handleCheckboxChange = (propertyId, valueId) => (event) => {
     const { checked } = event.target;
 
-    console.log(propertyId, valueId)
+
     setSelectedPropertyValues((prevValues) => {
       const updatedValues = { ...prevValues };
       if (checked) {
@@ -97,12 +97,11 @@ const AddProduct = (props) => {
           delete updatedValues[propertyId];
         }
       }
-      console.log(updatedValues)
+
       return updatedValues;
     });
 
-    console.log(selectedPropertyValues)
-    console.log(selectedSubCategories)
+
   };
 
 
@@ -163,7 +162,7 @@ const AddProduct = (props) => {
         },
       });
 
-      console.log(res)
+
       // if(res.status === 400){
       //   const successMessage = res.data.message;
 
