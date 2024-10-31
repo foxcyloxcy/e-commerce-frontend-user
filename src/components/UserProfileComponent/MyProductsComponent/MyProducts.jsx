@@ -56,7 +56,7 @@ const MyProducts = (props) => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            console.log(res.data)
+            
             if (res.status === 200) {
                 let fetchedProducts = res.data.data.data;
 
@@ -151,25 +151,13 @@ const MyProducts = (props) => {
         });
     };
 
-    const handleAddProductClick = () => {
-        if (userData.is_vendor === "Yes") {
-            navigate('/add-product');
-        } else {
-            Swal.fire({
-                title: 'Oops!',
-                text: `You need to set your vendor details first before you can add an item.`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ok',
-                confirmButtonColor: ModTheme.palette.primary.main,
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    navigate('/add-vendor-profile');
-                }
-            });
-        }
-    };
+    if (!productsData || productsData.length <= 0) {
+        return (
+            <Grid container spacing={2} marginLeft={5}>
+                You have no posted items.
+            </Grid>
+        );
+    }
 
     return (
         <Box>
