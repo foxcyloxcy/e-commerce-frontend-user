@@ -103,7 +103,7 @@ const ProductList = (props) => {
                 : await api.get(query);
 
             if (res.status === 200) {
-                console.log(res.data)
+
                 const fetchedProducts = res.data.data.data;
                 setProductsData(fetchedProducts);
                 setTotalPages(res.data.data.last_page);
