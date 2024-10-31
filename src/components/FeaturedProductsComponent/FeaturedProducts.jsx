@@ -98,7 +98,7 @@ const FeaturedProducts = () => {
         try {
             const res = await api.get(`api/global/featured?size=7`);
             if (res.status === 200) {
-                console.log(res.data.data)
+
                 const data = res.data.data;
                 setProducts(data.data);
             }
