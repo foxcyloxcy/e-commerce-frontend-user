@@ -71,7 +71,7 @@ const DrawerContent = ({
 
     const handleApplyPropertiesFilter = (valueId) => {
         // Apply the filter logic as before
-        console.log(valueId);
+
         onApplyPropertiesFilter(valueId);
     };
 
