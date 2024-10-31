@@ -29,7 +29,7 @@ const EditProduct = ({ userToken }) => {
   const [modalImageUrl, setModalImageUrl] = useState('');
 
   const { state } = useLocation();
-  console.log(state)
+
   const history = useNavigate();
 
   useEffect(() => {
