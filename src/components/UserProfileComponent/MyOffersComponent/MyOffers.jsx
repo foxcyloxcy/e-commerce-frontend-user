@@ -45,7 +45,6 @@ const MyOffers = (props) => {
             });
 
             if (res.status === 200) {
-                console.log(res.data)
                 setProductsData(res.data.data);
             }
         } catch (error) {
@@ -95,6 +94,14 @@ const MyOffers = (props) => {
         }
         return addressName.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
+
+    if (!productsData || productsData.length <= 0) {
+        return (
+            <Grid container spacing={2} marginLeft={5}>
+                You have no pending bids.
+            </Grid>
+        );
+    }
 
     return (
         <Grid container spacing={2}>
