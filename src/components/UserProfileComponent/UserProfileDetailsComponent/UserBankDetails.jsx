@@ -46,7 +46,7 @@ const UserBankDetails = ({ userToken }) => {
                 },
             });
             if (res.status === 200) {
-                console.log(res.data);
+
                 setUserData(res.data.data);
                 setFormData({
                     iban: res.data.data.vendor_bank?.iban || '',
