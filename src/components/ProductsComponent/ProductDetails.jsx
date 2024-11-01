@@ -214,7 +214,8 @@ const ProductDetails = () => {
                 });
             }
         } catch (error) {
-            Swal.fire('Error!', error.message, 'error');
+            console.log(error)
+            Swal.fire('Oops!', error.response.data.message, 'error');
         } finally {
             setLoading(false);
         }
