@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControlLabel, Checkbox } from '@mui/material';
+import { Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControlLabel, Checkbox, Link } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -582,7 +582,12 @@ const ProductDetails = () => {
                                                     },
                                                 }}
                                                 control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
-                                                label="I agree to all terms and conditions"
+                                                label={
+                                                    <div>
+                                                       <span>I agree to all </span>
+                                                       <Link href={'/terms-and-conditions'} target="_blank">terms and conditions</Link>
+                                                    </div>
+                                                    }
                                             />
                                         </Grid>
                                     </>
