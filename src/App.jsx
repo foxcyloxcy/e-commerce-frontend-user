@@ -59,17 +59,19 @@ function App() {
     } else {
       setIsLoggedIn("");
     }
+
     if (storedUserData) {
       setUserData(storedUserData);
     } else {
       setUserData("");
     }
+
     if (storedUserToken) {
       setUserToken(storedUserToken);
     } else {
       setUserToken("");
     }
-  }, []);
+  }, [userData]);
 
   const handleClick = async () => {
     const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
@@ -116,7 +118,7 @@ function App() {
         refreshParent={handleClickLogout}
       />
       <Routes>
-        <Route path="/" element={<Home parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/" element={<Home parentIsLoggedIn={isLoggedIn} userData={userData} />} />
         <Route path="/product-details" element={<ProductDetails userToken={userToken} />} />
         <Route path="/my-product-details" element={<MyProductDetails userToken={userToken} />} />
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn} userToken={userToken} userData={userData} />} />
