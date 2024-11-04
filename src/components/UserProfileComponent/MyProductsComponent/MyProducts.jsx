@@ -116,7 +116,7 @@ const MyProducts = (props) => {
             text: "You won't be able to revert this!",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
+            confirmButtonColor: ModTheme.palette.primary.main,
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!'
         }).then(async (result) => {
@@ -136,7 +136,7 @@ const MyProducts = (props) => {
                             text: res.data.data.message,
                             icon: 'success',
                             showCancelButton: false,
-                            confirmButtonColor: '#3085d6',
+                            confirmButtonColor: ModTheme.palette.primary.main,
                             confirmButtonText: 'Ok'
                         }).then((deleteResult) => {
                             if (deleteResult.isConfirmed) {
