@@ -8,7 +8,7 @@ import ModTheme from '../ThemeComponent/ModTheme';
 
 
 export default function Home(props) {
-    const { parentIsLoggedIn, userData, userToken } = props
+    const { parentIsLoggedIn, userData, userToken, refreshParent } = props
     const history = useNavigate();
 
     useEffect(() => {
@@ -26,6 +26,7 @@ export default function Home(props) {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         history("/my-profile");
+                        refreshParent()
                     }
                 })
             }
