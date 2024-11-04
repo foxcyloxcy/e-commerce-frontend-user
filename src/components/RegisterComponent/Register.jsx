@@ -87,8 +87,12 @@ export default function Register() {
                         icon: 'success',
                         title: 'Registration Successful',
                         text: res.data.message,
+                        confirmButtonColor: ModTheme.palette.primary.main,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                          history("/verify", { state: { email: formValues.email, password: formValues.password, mode: 'register' } });
+                        }
                     });
-                    history("/verify", { state: { email: formValues.email, password: formValues.password, mode: 'register' } });
                 }
             } catch (error) {
                 await handleErrorMessage(error.response);
@@ -119,6 +123,7 @@ export default function Register() {
             icon: 'error',
             title: 'Registration Failed',
             text: 'Please check the highlighted fields and try again.',
+            confirmButtonColor: ModTheme.palette.primary.main,
         });
     }, []);
 
