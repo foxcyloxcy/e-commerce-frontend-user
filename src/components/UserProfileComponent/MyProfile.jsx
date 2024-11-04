@@ -58,7 +58,6 @@ const MyProfile = () => {
       setUserToken(null);
     }
 
-    console.log(userData)
   }, [userToken, userData]);
 
   const toggleDrawer = () => {
