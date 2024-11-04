@@ -79,6 +79,7 @@ const ViewOffers = () => {
                 title: 'Error!',
                 text: error.message,
                 icon: 'error',
+                confirmButtonColor: ModTheme.palette.primary.main,
             });
         }
     };
