@@ -16,6 +16,7 @@ import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 import secureLocalStorage from "react-secure-storage";
 import secure from '../../assets/baseURL/secure';
+import Swal from 'sweetalert2';
 
 export default function Login({ refreshParent }) {
   const storageKey = secure.storageKey;
@@ -61,8 +62,7 @@ export default function Login({ refreshParent }) {
         });
         if (res.status === 200) {
           const data = res.data.data;
-          console.log('res.data',res.data)
-          console.log('token',data.access_token)
+
           if(data.redirect === 'dashboard'){
 
             secureLocalStorage.setItem(`${storagePrefix}_userData`, JSON.stringify(data.user), {
@@ -79,7 +79,17 @@ export default function Login({ refreshParent }) {
             history("/");
 
           }else{
-            history("/verify", { state: { email: formValues.email, password: formValues.password, mode: 'register' } });
+            Swal.fire({
+              title: 'Oops!',
+              text: data.message,
+              icon: 'success',
+              confirmButtonText: 'Verify my account',
+              confirmButtonColor: ModTheme.palette.primary.main,
+          }).then((result) => {
+              if (result.isConfirmed) {
+                history("/verify", { state: { email: formValues.email, password: formValues.password, mode: 'register' } });
+              }
+          });
           }
         }
       } catch (error) {
