@@ -61,6 +61,8 @@ export default function Login({ refreshParent }) {
         });
         if (res.status === 200) {
           const data = res.data.data;
+          console.log('res.data',res.data)
+          console.log('token',data.access_token)
 
           secureLocalStorage.setItem(`${storagePrefix}_userData`, JSON.stringify(data.user), {
             hash: storageKey,
