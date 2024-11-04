@@ -82,7 +82,7 @@ export default function Login({ refreshParent }) {
             Swal.fire({
               title: 'Oops!',
               text: res.data.message,
-              icon: 'success',
+              icon: 'warning',
               confirmButtonText: 'Verify my account',
               confirmButtonColor: ModTheme.palette.primary.main,
           }).then((result) => {
