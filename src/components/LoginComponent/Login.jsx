@@ -63,19 +63,24 @@ export default function Login({ refreshParent }) {
           const data = res.data.data;
           console.log('res.data',res.data)
           console.log('token',data.access_token)
+          if(data.redirect === 'dashboard'){
 
-          secureLocalStorage.setItem(`${storagePrefix}_userData`, JSON.stringify(data.user), {
-            hash: storageKey,
-          });
-          secureLocalStorage.setItem(`${storagePrefix}_userToken`, data.access_token, {
-            hash: storageKey,
-          });
-          secureLocalStorage.setItem(`${storagePrefix}_isLoggedIn`, true, {
-            hash: storageKey,
-          });
+            secureLocalStorage.setItem(`${storagePrefix}_userData`, JSON.stringify(data.user), {
+              hash: storageKey,
+            });
+            secureLocalStorage.setItem(`${storagePrefix}_userToken`, data.access_token, {
+              hash: storageKey,
+            });
+            secureLocalStorage.setItem(`${storagePrefix}_isLoggedIn`, true, {
+              hash: storageKey,
+            });
+  
+            refreshParent();
+            history("/");
 
-          refreshParent();
-          history("/");
+          }else{
+            history("/verify", { state: { email: formValues.email, password: formValues.password, mode: 'register' } });
+          }
         }
       } catch (error) {
         console.log(error)
