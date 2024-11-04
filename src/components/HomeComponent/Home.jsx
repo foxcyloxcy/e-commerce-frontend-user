@@ -8,11 +8,11 @@ import ModTheme from '../ThemeComponent/ModTheme';
 
 
 export default function Home(props) {
-    const { parentIsLoggedIn, userData } = props
+    const { parentIsLoggedIn, userData, userToken } = props
     const history = useNavigate();
 
     useEffect(() => {
-        if(userData){
+        if(userData && userToken){
             const parsedUserData = JSON.parse(userData)
             if(parsedUserData.has_bank_details === "No"){
                 Swal.fire({
@@ -31,7 +31,7 @@ export default function Home(props) {
             }
         }
 
-    }, [userData])
+    }, [userData, userToken])
     return (
         <>
             <FeaturedHero parentIsLoggedIn={parentIsLoggedIn} />
