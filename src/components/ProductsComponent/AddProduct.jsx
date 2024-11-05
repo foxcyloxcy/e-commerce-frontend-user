@@ -128,8 +128,29 @@ const AddProduct = (props) => {
     setLoading(true);
     e.preventDefault();
     if (priceError) {
-      setLoading(false);
-      return;
+        setLoading(false);
+        return;
+    }
+
+    if (!images.length) {
+        Swal.fire({
+          title: 'Error',
+          text: 'Upload at least one image.',
+          icon: 'error',
+          confirmButtonColor: ModTheme.palette.primary.main,
+      });
+        setLoading(false);
+        return;
+    }
+    if (!address) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Location is required.',
+            icon: 'error',
+            confirmButtonColor: ModTheme.palette.primary.main,
+        });
+        setLoading(false);
+        return;
     }
 
     const formData = new FormData();
@@ -141,88 +162,64 @@ const AddProduct = (props) => {
     formData.append('sub_category_id', selectedSubCategoryId);
 
     let index = 0;
-
     // Append selected property values
     Object.keys(selectedPropertyValues).forEach((propertyId) => {
-      selectedPropertyValues[propertyId].forEach((valueId) => {
-        formData.append(`properties[${index}]`, valueId);
-        index++;
-      });
+        selectedPropertyValues[propertyId].forEach((valueId) => {
+            formData.append(`properties[${index}]`, valueId);
+            index++;
+        });
     });
 
     images.forEach((image, index) => {
-      formData.append(`imgs[${index}]`, image);
+        formData.append(`imgs[${index}]`, image);
     });
 
     try {
-      const res = await api.post("/api/auth/items", formData, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-
-      // if(res.status === 400){
-      //   const successMessage = res.data.message;
-
-      //   Swal.fire({
-      //     title: successMessage,
-      //     text: 'You will receive an email after your item gets approved. This can take up to 72hrs max.',
-      //     icon: 'success',
-      //     showCancelButton: true,
-      //     confirmButtonText: 'Add Another',
-      //     confirmButtonColor: ModTheme.palette.primary.main,
-      //     cancelButtonText: 'Go to Shop'
-      //   }).then((result) => {
-      //     if (result.isConfirmed) {
-      //       resetForm();
-      //     } else {
-      //       history("/shop");
-      //     }
-      //   });
-      // }
-
-      if (res.status === 200) {
-        const successMessage = res.data.message;
-
-        Swal.fire({
-          title: successMessage,
-          text: 'You will receive an email after your item gets approved. This can take up to 72hrs max.',
-          icon: 'success',
-          showCancelButton: true,
-          confirmButtonText: 'Add Another',
-          confirmButtonColor: ModTheme.palette.primary.main,
-          cancelButtonText: 'Go to Shop'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            resetForm();
-          } else {
-            history("/shop");
-          }
+        const res = await api.post("/api/auth/items", formData, {
+            headers: {
+                Authorization: `Bearer ${userToken}`,
+                'Content-Type': 'multipart/form-data',
+            },
         });
-      }
-    } catch (error) {
-      console.log(error);
-      Swal.fire({
-        title: 'Error!',
-        text: error.response.data.message ? error.response.data.message : error.response,
-        icon: 'error',
-        showCancelButton: true,
-        confirmButtonText: 'Go to My Profile',
-        confirmButtonColor: ModTheme.palette.primary.main,
-        cancelButtonText: 'Cancel'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          history("/my-profile");
-        } else {
-          
+
+        if (res.status === 200) {
+            const successMessage = res.data.message;
+            Swal.fire({
+                title: successMessage,
+                text: 'You will receive an email after your item gets approved. This can take up to 72hrs max.',
+                icon: 'success',
+                showCancelButton: true,
+                confirmButtonText: 'Add Another',
+                confirmButtonColor: ModTheme.palette.primary.main,
+                cancelButtonText: 'Go to Shop'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    resetForm();
+                } else {
+                    history("/shop");
+                }
+            });
         }
-      });
+    } catch (error) {
+        console.log(error);
+        Swal.fire({
+            title: 'Error!',
+            text: error.response.data.message ? error.response.data.message : error.response,
+            icon: 'error',
+            showCancelButton: true,
+            confirmButtonText: 'Go to My Profile',
+            confirmButtonColor: ModTheme.palette.primary.main,
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                history("/my-profile");
+            }
+        });
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
+
 
   const loadCategories = useCallback(async () => {
     try {
@@ -364,6 +361,7 @@ const AddProduct = (props) => {
                   {isLoaded ? (
                     <APIProvider apiKey={apiKey}>
                       <CustomMap
+                        required
                         addressData={handleAddressData}
                         Editing={true} />
                     </APIProvider>
