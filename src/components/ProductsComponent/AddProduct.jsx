@@ -134,18 +134,35 @@ const AddProduct = (props) => {
 
     if (!images.length) {
         Swal.fire({
-          title: 'Error',
-          text: 'Upload at least one image.',
-          icon: 'error',
-          confirmButtonColor: ModTheme.palette.primary.main,
-      });
+            title: 'Error',
+            text: 'Upload at least one image.',
+            icon: 'error',
+            confirmButtonColor: ModTheme.palette.primary.main,
+        });
         setLoading(false);
         return;
     }
+
     if (!address) {
-          Swal.fire({
+        Swal.fire({
             title: 'Error',
             text: 'Location is required.',
+            icon: 'error',
+            confirmButtonColor: ModTheme.palette.primary.main,
+        });
+        setLoading(false);
+        return;
+    }
+
+    // Validation to check if at least one property value is selected per property
+    const missingProperties = selectedSubCategories.sub_category_property.filter(property => 
+        !selectedPropertyValues[property.id] || selectedPropertyValues[property.id].length === 0
+    );
+
+    if (missingProperties.length > 0) {
+        Swal.fire({
+            title: 'Error',
+            text: `Please select at least one option for each property: ${missingProperties.map(prop => prop.name).join(', ')}`,
             icon: 'error',
             confirmButtonColor: ModTheme.palette.primary.main,
         });
@@ -195,6 +212,10 @@ const AddProduct = (props) => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     resetForm();
+                    window.scrollTo({
+                      top: 0,
+                      behavior: 'smooth'
+                    });
                 } else {
                     history("/shop");
                 }
@@ -219,6 +240,7 @@ const AddProduct = (props) => {
         setLoading(false);
     }
 };
+
 
 
   const loadCategories = useCallback(async () => {
