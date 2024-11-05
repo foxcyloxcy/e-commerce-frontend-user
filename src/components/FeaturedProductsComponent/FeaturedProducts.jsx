@@ -302,7 +302,11 @@ const FeaturedProducts = () => {
                                     <CardMedia
                                         component="img"
                                         height="250"
-                                        image={selectedProduct.default_image.image_url}
+                                        image={
+                                            selectedProduct.default_image
+                                                ? selectedProduct.default_image.image_url
+                                                : selectedProduct.default_image
+                                        }
                                         alt={selectedProduct.item_name}
                                         sx={{ objectFit: 'contain' }}
                                     />
