@@ -210,6 +210,7 @@ const EditProduct = ({ userToken }) => {
           text: 'Your item has been updated.',
           icon: 'success',
           confirmButtonText: 'OK',
+          confirmButtonColor: ModTheme.palette.primary.main,
         }).then(() => {
           history("/shop");
         });
@@ -220,6 +221,7 @@ const EditProduct = ({ userToken }) => {
         title: 'Error!',
         text: 'Something went wrong. Please try again later.',
         icon: 'error',
+        confirmButtonColor: ModTheme.palette.primary.main,
       });
     }
   };
