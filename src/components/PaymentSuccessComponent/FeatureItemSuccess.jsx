@@ -58,6 +58,7 @@ const FeatureItemSuccess = (props) => {
               title: 'Error!',
               text: 'Something went wrong. Please try again later.',
               icon: 'error',
+              confirmButtonColor: ModTheme.palette.primary.main,
             });
           } finally {
             console.log("final")
