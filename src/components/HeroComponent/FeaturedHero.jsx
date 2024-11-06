@@ -41,7 +41,6 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
         {/* Background Image as Banner */}
         <Box
           component="img"
-          loading="lazy"
           src={item.image}
           alt={item.title}
           sx={{
