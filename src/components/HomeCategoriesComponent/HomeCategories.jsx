@@ -50,6 +50,8 @@ const HomeCategories = () => {
             {categories.map((category) => (
               <Grid item xs={4} sm={4} md={4} lg={3} key={category.id}>
                 <ImageContainer
+                  component="img"
+                  loading="lazy"
                   alt={category.name}
                   image={
                     category.name === 'Women' ? 

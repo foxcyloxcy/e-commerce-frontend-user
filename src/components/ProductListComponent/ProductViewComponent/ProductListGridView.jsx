@@ -17,7 +17,6 @@ import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/system';
 import PriceBreakdownModal from '../../ReusableComponents/ModalComponent/PriceBreakDownModal';
 import MapViewModal from '../../ReusableComponents/ModalComponent/MapViewModal';
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const ProductListGridView = ({ productsData, userToken, userData }) => {
     // console.log(productsData)
@@ -103,12 +102,13 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
                             }}
                         >
                             {/* Product Image */}
-                            <LazyLoadImage
-                                src={product.default_image ? product.default_image.image_url : 'no image available.'}
+                            <CardMedia
+                                component="img"
+                                height="200"
+                                loading="lazy"
+                                image={product.default_image ? product.default_image.image_url : 'no image available.'}
                                 alt={product.item_name}
-                                height={200}
-                                width="100%"
-                                style={{ objectFit: 'cover' }}
+                                sx={{ objectFit: 'cover' }}
                             />
 
                             {/* Card Content */}

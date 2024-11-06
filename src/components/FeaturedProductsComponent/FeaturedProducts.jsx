@@ -25,7 +25,6 @@ import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonCompone
 import { useNavigate } from 'react-router-dom';
 import PriceBreakdownModal from '../ReusableComponents/ModalComponent/PriceBreakDownModal';
 import MapViewModal from '../ReusableComponents/ModalComponent/MapViewModal';
-import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // Custom styled components
 const TruncatedText = styled(Typography)({
@@ -97,7 +96,7 @@ const FeaturedProducts = () => {
 
     const loadProducts = useCallback(async () => {
         try {
-            const res = await api.get(`api/global/featured?size=7`);
+            const res = await api.get(`api/global/featured?size=100`);
             if (res.status === 200) {
 
                 const data = res.data.data;
@@ -212,11 +211,16 @@ const FeaturedProducts = () => {
                                     },
                                 }}
                             >
-                                <LazyLoadImage
-                                    effect="blur"
-                                    src={product.default_image ? product.default_image.image_url : product.default_image}
+                                <CardMedia
+                                    component="img"
+                                    loading="lazy"
+                                    image={
+                                        product.default_image
+                                            ? product.default_image.image_url
+                                            : product.default_image
+                                    }
                                     alt={product.name}
-                                    style={{ objectFit: 'cover', maxHeight: 200, width: '100%' }}
+                                    sx={{ objectFit: 'cover', maxHeight: 200, width: '100%' }}
                                 />
                                 <Divider />
                                 <CardContent sx={{ flexGrow: 1, marginBottom: 2 }}>
