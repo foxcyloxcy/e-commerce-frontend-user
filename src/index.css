@@ -8,8 +8,8 @@
   :root {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    -webkit-transform: translate3d(0,0,1px); 
-    -webkit-backface-visibility: hidden;
+    transform: translate3d(0,0,1px); 
+    backface-visibility: hidden;
   }
 
   ::-webkit-scrollbar-thumb {
