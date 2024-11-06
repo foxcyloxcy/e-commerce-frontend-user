@@ -296,15 +296,16 @@ const FeaturedProducts = () => {
                                     <Typography variant="h6" component="h2">
                                         {selectedProduct.item_name}
                                     </Typography>
-                                    <LazyLoadImage
-                                        effect="blur"
-                                        src={
+                                    <CardMedia
+                                        component="img"
+                                        height="250"
+                                        image={
                                             selectedProduct.default_image
                                                 ? selectedProduct.default_image.image_url
                                                 : selectedProduct.default_image
                                         }
                                         alt={selectedProduct.item_name}
-                                        style={{ objectFit: 'contain', height: 250, width: '100%' }}
+                                        sx={{ objectFit: 'contain' }}
                                     />
                                     <Typography variant="body2" color="textSecondary" gutterBottom>
                                         {selectedProduct.sub_category.name}
