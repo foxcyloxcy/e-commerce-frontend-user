@@ -62,7 +62,6 @@ const HomeCategories = () => {
                   onClick={() => handleCategoryClick(category.id)}
                 >
                   <Typography variant="h6" component="div" sx={{ position: 'relative', zIndex: 1 }}>
-                    {/* {category.name} */}
                   </Typography>
                 </ImageContainer>
               </Grid>
@@ -114,7 +113,6 @@ const HomeCategories = () => {
                   onClick={() => routeToProductList(subCategory.id)}
                 >
                   <Typography variant="h6" component="div" sx={{ position: 'relative', zIndex: 1 }}>
-                    {/* {subCategory.name} */}
                   </Typography>
                 </ImageContainer>
                   </Grid>
