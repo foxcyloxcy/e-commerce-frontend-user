@@ -25,6 +25,7 @@ import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonCompone
 import { useNavigate } from 'react-router-dom';
 import PriceBreakdownModal from '../ReusableComponents/ModalComponent/PriceBreakDownModal';
 import MapViewModal from '../ReusableComponents/ModalComponent/MapViewModal';
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // Custom styled components
 const TruncatedText = styled(Typography)({
@@ -211,15 +212,11 @@ const FeaturedProducts = () => {
                                     },
                                 }}
                             >
-                                <CardMedia
-                                    component="img"
-                                    image={
-                                        product.default_image
-                                            ? product.default_image.image_url
-                                            : product.default_image
-                                    }
+                                <LazyLoadImage
+                                    effect="blur"
+                                    src={product.default_image ? product.default_image.image_url : product.default_image}
                                     alt={product.name}
-                                    sx={{ objectFit: 'cover', maxHeight: 200, width: '100%' }}
+                                    style={{ objectFit: 'cover', maxHeight: 200, width: '100%' }}
                                 />
                                 <Divider />
                                 <CardContent sx={{ flexGrow: 1, marginBottom: 2 }}>
@@ -299,16 +296,15 @@ const FeaturedProducts = () => {
                                     <Typography variant="h6" component="h2">
                                         {selectedProduct.item_name}
                                     </Typography>
-                                    <CardMedia
-                                        component="img"
-                                        height="250"
-                                        image={
+                                    <LazyLoadImage
+                                        effect="blur"
+                                        src={
                                             selectedProduct.default_image
                                                 ? selectedProduct.default_image.image_url
                                                 : selectedProduct.default_image
                                         }
                                         alt={selectedProduct.item_name}
-                                        sx={{ objectFit: 'contain' }}
+                                        style={{ objectFit: 'contain', height: 250, width: '100%' }}
                                     />
                                     <Typography variant="body2" color="textSecondary" gutterBottom>
                                         {selectedProduct.sub_category.name}
