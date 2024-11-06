@@ -1,22 +1,29 @@
 /* Reset the styles for all elements */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  :root {
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    scroll-behavior: smooth;
-  }
+:root {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
 
-  ::-webkit-scrollbar-thumb {
-    background: #255773;
-    border-radius: 10px;
-  }
-  
-  ::-webkit-scrollbar {
-    width: 6px;
-    background: #B8D4E6;
-  }
+html,
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #255773;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  background: #B8D4E6;
+}
