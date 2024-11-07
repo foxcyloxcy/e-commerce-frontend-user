@@ -46,14 +46,28 @@ const UserVerification = ({refreshParent}) => {
     setIsLoading(true);
     setError('');
     try {
-      // Simulate an API call to resend the code
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      setCountdown(30);
+      const response = await api.post('/api/resend-verification', {
+        email: email
+      }, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      
+      if (response.status === 200) {
+        setCountdown(60); // Start the countdown again if resend is successful
+        Swal.fire({
+          icon: 'success',
+          title: 'Verification code resent!',
+          text: 'Please check your email for the new verification code.',
+          confirmButtonText: 'Ok',
+          confirmButtonColor: ModTheme.palette.primary.main,
+        });
+      }
     } catch (error) {
       setError('Failed to resend the code. Please try again.');
     }
     setIsLoading(false);
   };
+  
 
   const handleLogin = async () => {
     try {
@@ -93,7 +107,6 @@ const UserVerification = ({refreshParent}) => {
         code: verificationCode,
         type: mode === 'forgot-password' ? 'forgot password' : null
       });
-      console.log(response)
       // If verification is successful, show SweetAlert and redirect
 
       if (response.status === 200) {
@@ -131,10 +144,6 @@ const UserVerification = ({refreshParent}) => {
         setEmail(EmailFromRoute);
         setPassword(PasswordFromRoute);
         setMode(ModeFromRoute);
-    } else {
-      setEmail("");
-      setPassword("");
-      setMode("");
     }
 
     let timer;
