@@ -312,7 +312,9 @@ const ProductList = (props) => {
                         </Grid>
                     )}
 
-                    <ProductListGridView productsData={productsData} handleProductView={handleProductView} userToken={userToken} userData={userData} />
+                    <Grid item xs={12} md={8} lg={9}>
+                        <ProductListGridView productsData={productsData} handleProductView={handleProductView} userToken={userToken} userData={userData} />
+                    </Grid>
 
                     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                         <Pagination
