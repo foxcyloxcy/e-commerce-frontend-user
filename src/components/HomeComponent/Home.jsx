@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Grid } from '@mui/material';
 import FeaturedProducts from '../FeaturedProductsComponent/FeaturedProducts';
 import FeaturedHero from '../HeroComponent/FeaturedHero';
 import HomeCategories from '../HomeCategoriesComponent/HomeCategories';
@@ -12,9 +13,9 @@ export default function Home(props) {
     const history = useNavigate();
 
     useEffect(() => {
-        if(userData && userToken){
+        if (userData && userToken) {
             const parsedUserData = JSON.parse(userData)
-            if(parsedUserData.has_bank_details === "No"){
+            if (parsedUserData.has_bank_details === "No") {
                 Swal.fire({
                     title: 'Read me',
                     text: "Please visit your My Profile page and create your bank details. You are required to add bank details before you can post an item.",
@@ -34,10 +35,16 @@ export default function Home(props) {
 
     }, [userData, userToken])
     return (
-        <>
+        <Grid container>
             <FeaturedHero parentIsLoggedIn={parentIsLoggedIn} />
-            <HomeCategories />
-            <FeaturedProducts />
-        </>
+            <Grid item xs={12}>
+                <HomeCategories />
+            </Grid>
+            <Grid item xs={12}>
+                <FeaturedProducts />
+            </Grid>
+
+
+        </Grid>
     )
 }
