@@ -53,11 +53,11 @@ const HomeCategories = () => {
                   alt={category.name}
                   image={
                     category.name === 'Women' ? 
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/women.png': category.name === 'Men' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/men.png' : category.name === 'Baby and Children' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/baby.png': category.name === 'Furniture and Home' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/Home.png': category.name === 'Pets' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/pets.png' : ''
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/women.png': category.name === 'Men' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/men.png' : category.name === 'Baby and Children' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/baby.png': category.name === 'Furniture and Home' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/Home.png': category.name === 'Pets' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/pets.png' : ''
                   }
                   onClick={() => handleCategoryClick(category.id)}
                 >
@@ -84,31 +84,31 @@ const HomeCategories = () => {
                   alt={subCategory.name}
                   image={
                     subCategory.name === 'Clothes' ? 
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/clothes.png': subCategory.name === 'Shoes' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/shoes.png' : subCategory.name === 'Bags' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/bags.png': subCategory.name === 'Accessories' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/accessories.png': subCategory.name === 'Baby Clothes (0-4yrs)' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/baby_cloth_0_to_4.png' : subCategory.name === 'Baby Clothes (0-4yrs)' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/baby_cloth_0_to_4.png' : subCategory.name === 'Girls Clothing' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/girls_cloth.png' : subCategory.name === 'Boys Clothing' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/boys_cloth.png' : subCategory.name === 'Teenage Girls Clothes' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/teen_girls_cloth.png' : subCategory.name === 'Teenage Boys Clothes' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/teen_boys_cloth.png' : subCategory.name === 'Toys and Games' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/toys_and_games.png' : subCategory.name === 'Baby Care' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/baby_care.png' : subCategory.name === 'Buggies and Travel' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/baggies_and_travel.png' : subCategory.name === 'Bed' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/bed.png' : subCategory.name === 'Kitchenwear' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/kitchenware.png' : subCategory.name === 'Outside' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/outside_furniture.png' : subCategory.name === 'Seating' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/seating.png' : subCategory.name === 'Storage and Wardrobes' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/storage_and_wardrobes.png' : subCategory.name === 'Table' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/tables.png' : subCategory.name === 'Birds' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/birds.png' : subCategory.name === 'Cats' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/cats.png' : subCategory.name === 'Dogs' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/dogs.png' : subCategory.name === 'Fish' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/fish.png' : subCategory.name === 'Tortoise' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/tortoise.png' : subCategory.name === 'Others' ?
-                    'https://reloved-prod.s3.eu-west-1.amazonaws.com//asset/categories-imgs/others.png' :""
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/clothes.png': subCategory.name === 'Shoes' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/shoes.png' : subCategory.name === 'Bags' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/bags.png': subCategory.name === 'Accessories' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/accessories.png': subCategory.name === 'Baby Clothes (0-4yrs)' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/baby_cloth_0_to_4.png' : subCategory.name === 'Baby Clothes (0-4yrs)' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/baby_cloth_0_to_4.png' : subCategory.name === 'Girls Clothing' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/girls_cloth.png' : subCategory.name === 'Boys Clothing' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/boys_cloth.png' : subCategory.name === 'Teenage Girls Clothes' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/teen_girls_cloth.png' : subCategory.name === 'Teenage Boys Clothes' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/teen_boys_cloth.png' : subCategory.name === 'Toys and Games' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/toys_and_games.png' : subCategory.name === 'Baby Care' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/baby_care.png' : subCategory.name === 'Buggies and Travel' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/baggies_and_travel.png' : subCategory.name === 'Bed' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/bed.png' : subCategory.name === 'Kitchenwear' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/kitchenware.png' : subCategory.name === 'Outside' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/outside_furniture.png' : subCategory.name === 'Seating' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/seating.png' : subCategory.name === 'Storage and Wardrobes' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/storage_and_wardrobes.png' : subCategory.name === 'Table' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/tables.png' : subCategory.name === 'Birds' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/birds.png' : subCategory.name === 'Cats' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/cats.png' : subCategory.name === 'Dogs' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/dogs.png' : subCategory.name === 'Fish' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/fish.png' : subCategory.name === 'Tortoise' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/tortoise.png' : subCategory.name === 'Others' ?
+                    'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/categories-imgs/others.png' :""
                   }
                   onClick={() => routeToProductList(subCategory.id)}
                 >
