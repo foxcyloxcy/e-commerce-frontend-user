@@ -30,13 +30,13 @@ const Footer = () => {
                     borderTop: `1px solid ${ModTheme.palette.primary.light}`,
                 }}
             >
-                <Container>
+
                     <Grid container spacing={2} textAlign="left">
                         <Grid item xs={12} sm={6} md={3} sx={{
                             display: 'flex',
                             flexDirection: 'column'
                         }}>
-                            <Box component="img" src="https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/reloved_footer_banner.png" alt="Reloved Icon" 
+                            <Box component="img" src="https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_footer_banner.png" alt="Reloved Icon" 
                             sx={{ 
                                 width: {xs: '50%', md: '70%'}, 
                                 maxWidth: { xs: 'xs', sm: 'md', md: 'lg', lg: 'lg', xl: 'xl' },
@@ -67,7 +67,6 @@ const Footer = () => {
                             <Link href="/privacy-policy" color="inherit" underline="hover" variant="body2">Privacy Policy</Link><br />
                         </Grid>
                     </Grid>
-                </Container>
             </Box>
             <Box
                 sx={{
