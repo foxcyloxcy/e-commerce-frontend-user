@@ -47,7 +47,7 @@ const ProductList = (props) => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [itemsPerPage] = useState(20);
+    const [itemsPerPage] = useState(12);
 
     const handleApplyPriceRange = (minPrice, maxPrice) => {
         setPriceRange([minPrice, maxPrice]);
