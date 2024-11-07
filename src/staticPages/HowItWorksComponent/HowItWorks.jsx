@@ -18,8 +18,8 @@ const HowItWorks = () => {
                   component="img"
                   image={
                     isMediumScreen
-                      ? "https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/how-it-works-imgs/desktop_images/list_your_items1.png"
-                      : "https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/how-it-works-imgs/list_your_items1.png"
+                      ? "https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/how-it-works-imgs/desktop_images/list_your_items1.png"
+                      : "https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/how-it-works-imgs/list_your_items1.png"
                   }
                   alt="Listing items"
                   sx={{ height: 'auto', objectFit: 'contain' }}
@@ -38,8 +38,8 @@ const HowItWorks = () => {
                   component="img"
                   image={
                     isMediumScreen
-                      ? "https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/how-it-works-imgs/desktop_images/user_friendly_purchase2.png"
-                      : "https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/how-it-works-imgs/user_friendly_purchase2.png"
+                      ? "https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/how-it-works-imgs/desktop_images/user_friendly_purchase2.png"
+                      : "https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/how-it-works-imgs/user_friendly_purchase2.png"
                   }
                   alt="Buying process"
                   sx={{ height: 'auto', objectFit: 'contain' }}
@@ -58,8 +58,8 @@ const HowItWorks = () => {
                   component="img"
                   image={
                     isMediumScreen
-                      ? "https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/how-it-works-imgs/desktop_images/easy_delivery3.png"
-                      : "https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/how-it-works-imgs/easy_delivery3.png"
+                      ? "https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/how-it-works-imgs/desktop_images/easy_delivery3.png"
+                      : "https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/how-it-works-imgs/easy_delivery3.png"
                   }
                   alt="Shipping process"
                   sx={{ height: 'auto', objectFit: 'contain' }}
@@ -78,8 +78,8 @@ const HowItWorks = () => {
                   component="img"
                   image={
                     isMediumScreen
-                      ? "https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/how-it-works-imgs/desktop_images/cash_free_transactions4.png"
-                      : "https://reloved-uat.s3.ap-northeast-1.amazonaws.com/asset/how-it-works-imgs/cash_free_transactions4.png"
+                      ? "https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/how-it-works-imgs/desktop_images/cash_free_transactions4.png"
+                      : "https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/how-it-works-imgs/cash_free_transactions4.png"
                   }
                   alt="Cash-free transactions"
                   sx={{ height: 'auto', objectFit: 'contain' }}
