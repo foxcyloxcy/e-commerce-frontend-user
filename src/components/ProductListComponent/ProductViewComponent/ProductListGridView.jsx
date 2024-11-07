@@ -78,7 +78,7 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
 
 
     return (
-        <Grid item xs={12} md={8} lg={9}>
+        <Grid md={12} lg={12}>
             <Grid container spacing={2}>
                 {productsData.map((product) => (
                     <Grid item xs={6} sm={6} md={4} lg={3} key={product.id}>
