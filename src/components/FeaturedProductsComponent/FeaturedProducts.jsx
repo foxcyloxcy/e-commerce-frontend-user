@@ -187,6 +187,7 @@ const FeaturedProducts = () => {
                     padding: ModTheme.spacing(3),
                     marginTop: 2,
                     marginBottom: 10,
+                    WebkitOverflowScrolling: 'touch'
                 }}
             >
                 <Typography variant="h4" align="center" gutterBottom marginBottom={1}>
