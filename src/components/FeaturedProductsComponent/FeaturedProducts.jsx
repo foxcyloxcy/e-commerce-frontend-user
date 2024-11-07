@@ -25,6 +25,8 @@ import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonCompone
 import { useNavigate } from 'react-router-dom';
 import PriceBreakdownModal from '../ReusableComponents/ModalComponent/PriceBreakDownModal';
 import MapViewModal from '../ReusableComponents/ModalComponent/MapViewModal';
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 // Custom styled components
 const TruncatedText = styled(Typography)({
@@ -211,16 +213,11 @@ const FeaturedProducts = () => {
                                     },
                                 }}
                             >
-                                <CardMedia
-                                    component="img"
-                                    loading="lazy"
-                                    image={
-                                        product.default_image
-                                            ? product.default_image.image_url
-                                            : product.default_image
-                                    }
+                                <LazyLoadImage
+                                    effect="blur"
+                                    src={product.default_image ? product.default_image.image_url : product.default_image}
                                     alt={product.name}
-                                    sx={{ objectFit: 'cover', maxHeight: 200, width: '100%' }}
+                                    style={{ objectFit: 'cover', maxHeight: 200, width: '100%' }}
                                 />
                                 <Divider />
                                 <CardContent sx={{ flexGrow: 1, marginBottom: 2 }}>
