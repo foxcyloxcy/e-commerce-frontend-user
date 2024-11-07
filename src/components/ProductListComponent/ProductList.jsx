@@ -193,6 +193,7 @@ const ProductList = (props) => {
                 marginBottom: 5,
                 maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
                 zIndex: 2, // To make sure the container is above the overlay
+                WebkitOverflowScrolling: 'touch'
             }}>
                 <AppBar
                     position={isLoggedIn ? 'fixed' : 'absolute'}
