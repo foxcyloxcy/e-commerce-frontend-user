@@ -26,6 +26,7 @@ const Footer = () => {
                     backgroundColor: 'primary.dark',
                     color: 'primary.main',
                     py: 3,
+                    px: 3,
                     mt: 'auto',
                     borderTop: `1px solid ${ModTheme.palette.primary.light}`,
                 }}
@@ -75,9 +76,11 @@ const Footer = () => {
                     py: 1,
                 }}
             >
-                <Container>
-                    <Copyright sx={{ mt: 1, mb: 1 }} />
-                </Container>
+                <Grid container>
+                    <Grid item xs={12}>
+                        <Copyright sx={{ mt: 1, mb: 1 }} />
+                    </Grid>
+                </Grid>
             </Box>
         </ThemeProvider>
     );
