@@ -2,12 +2,14 @@
 .slick-next{
     right: -20px;
     /* background-color: blue; */
+    color: #255773;
 }
 
 .slick-prev{
     left: -20px;
     height: '100px';
     width: '100px';
+    color: #255773;
     /* background-color: blue; */
 }
 
