@@ -33,7 +33,7 @@ const TermsOfUse = () => {
                         </Typography>
 
                         <Typography variant="body1" paragraph>
-                            As a seller on our platform, you are responsible for accurately describing your item and its condition, as well as ensuring that you have the right to sell the item. You are also responsible for ensuring accurate shipping information and location collection. You are responsible to ensure the item is collected within agreed timeframes of the buyer through an agreed delivery method as agreed with the buyer. When receiving payment from the buyer this will be listed as 'Mamo pay' on your bank statement. 
+                            As a seller on our platform, you are responsible for accurately describing your item and its condition, as well as ensuring that you have the right to sell the item. You are also responsible for ensuring accurate shipping information and location collection. You are responsible to ensure the item is collected within agreed timeframes of the buyer through an agreed delivery method as agreed with the buyer. When receiving payment from the buyer this will be listed as ‘mamo pay’ on your bank statement. 
                         </Typography>
 
                         <Typography variant="body1" paragraph>
@@ -81,7 +81,7 @@ const TermsOfUse = () => {
                         </Typography>
 
                         <Typography variant="body1" paragraph>
-                            Our platform facilitates the buying and selling of used items between individuals. When a buyer purchases an item, they will pay the seller directly through our platform. We will charge the buyer a 20% commission fee for the item they sell through our platform. This fee will be included in the check-out process of the purchase. The commission percentage may be subject to change. 
+                            Our platform facilitates the buying and selling of used items between individuals. When a buyer purchases an item, they will pay the seller directly through our platform. We will charge the buyer a 20% commission fee for the item they buy through our platform. This fee will be included in the check-out process of the purchase.The commission percentage may be subject to change.  
                         </Typography>
 
                         <Typography variant="body1" paragraph>
@@ -138,28 +138,50 @@ const TermsOfUse = () => {
                         <Typography variant="body1" paragraph component='span'>
                             As a user of the Platform, you agree not to:
                             <ul>
-                                <li>Systematically retrieve data or other content from the Platform to create or compile, directly or indirectly, a collection, compilation, database, or directory without written permission from us.</li>
-                                <li>Trick, defraud, or mislead us and other users, especially in any attempt to learn sensitive account information such as user passwords.</li>
-                                <li>Circumvent, disable, or otherwise interfere with security-related features of the Platform, including features that prevent or restrict the use or copying of any Content or enforce limitations on the use of the Platform and/or the Content contained therein.</li>
-                                <li>Disparage, tarnish, or otherwise harm, in our opinion, us and/or the Platform.</li>
-                                <li>Use any information obtained from the Platform in order to harass, abuse, or harm another person.</li>
-                                <li>Make improper use of our support services or submit false reports of abuse or misconduct.</li>
-                                <li>Use the Platform in a manner inconsistent with any applicable laws or regulations.</li>
-                                <li>Engage in unauthorized framing of or linking to the Platform.</li>
-                                <li>Upload or transmit (or attempt to upload or to transmit) viruses, Trojan horses, or other material, including excessive use of capital letters and spamming (continuous posting of repetitive text), that interferes with any party’s uninterrupted use and enjoyment of the Platform or modifies, impairs, disrupts, alters, or interferes with the use, features, functions, operation, or maintenance of the Platform.</li>
-                                <li>Engage in any automated use of the system, such as using scripts to send comments or messages, or using any data mining, robots, or similar data gathering and extraction tools.</li>
-                                <li>Delete the copyright or other proprietary rights notice from any Content.</li>
-                                <li>Attempt to impersonate another user or person or use the username of another user.</li>
-                                <li>Upload or transmit (or attempt to upload or to transmit) any material that acts as a passive or active information collection or transmission mechanism, including without limitation, clear graphics interchange formats (“gifs”), 1×1 pixels, web bugs, cookies, or other similar devices (sometimes referred to as “spyware” or “passive collection mechanisms” or “pcms”).</li>
-                                <li>Interfere with, disrupt, or create an undue burden on the Platform or the networks or services connected to the Platform.</li>
-                                <li>Harass, annoy, intimidate, or threaten any of our employees or agents engaged in providing any portion of the Platform to you.</li>
-                                <li>Attempt to bypass any measures of the Platform designed to prevent or restrict access to the Platform, or any portion of the Platform.</li>
-                                <li>Copy or adapt the Platform’s software.</li>
-                                <li>Except as permitted by applicable law, decipher, decompile, disassemble, or reverse engineer any of the software comprising or in any way making up a part of the Platform.</li>
-                                <li>Except as may be the result of standard search engine or Internet browser usage, use, launch, develop, or distribute any automated system, including without limitation, any spider, robot, cheat utility, scraper, or offline reader that accesses the Platform, or using or launching any unauthorized script or other software.</li>
-                                <li>Use a buying agent or purchasing agent to make purchases on the Platform.</li>
-                                <li>Make any unauthorized use of the Platform, including collecting usernames and/or email addresses of users by electronic or other means for the purpose of sending unsolicited email, or creating user accounts by automated means or under false pretenses.</li>
-                                <li>Use the Platform as part of any effort to compete with us or otherwise use the Platform and/or the Content for any revenue-generating endeavor or commercial enterprise.</li>
+
+                                <li>1. Systematically retrieve data or other content from the Platform to create or compile, directly or indirectly, a collection, compilation, database, or directory without written permission from us.</li>
+
+                                <li>2. Trick, defraud, or mislead us and other users, especially in any attempt to learn sensitive account information such as user passwords.</li>
+
+                                <li>3. Circumvent, disable, or otherwise interfere with security-related features of the Platform, including features that prevent or restrict the use or copying of any Content or enforce limitations on the use of the Platform and/or the Content contained therein.</li>
+
+                                <li>4. Disparage, tarnish, or otherwise harm, in our opinion, us and/or the Platform.</li>
+
+                                <li>5. Use any information obtained from the Platform in order to harass, abuse, or harm another person.</li>
+
+                                <li>6. Make improper use of our support services or submit false reports of abuse or misconduct.</li>
+
+                                <li>7. Use the Platform in a manner inconsistent with any applicable laws or regulations.</li>
+
+                                <li>8. Engage in unauthorized framing of or linking to the Platform.</li>
+
+                                <li>9. Upload or transmit (or attempt to upload or to transmit) viruses, Trojan horses, or other material, including excessive use of capital letters and spamming (continuous posting of repetitive text), that interferes with any party’s uninterrupted use and enjoyment of the Platform or modifies, impairs, disrupts, alters, or interferes with the use, features, functions, operation, or maintenance of the Platform.</li>
+
+                                <li>10. Engage in any automated use of the system, such as using scripts to send comments or messages, or using any data mining, robots, or similar data gathering and extraction tools.</li>
+
+                                <li>11. Delete the copyright or other proprietary rights notice from any Content.</li>
+
+                                <li>12. Attempt to impersonate another user or person or use the username of another user.</li>
+
+                                <li>13. Upload or transmit (or attempt to upload or to transmit) any material that acts as a passive or active information collection or transmission mechanism, including without limitation, clear graphics interchange formats (“gifs”), 1×1 pixels, web bugs, cookies, or other similar devices (sometimes referred to as “spyware” or “passive collection mechanisms” or “pcms”).</li>
+
+                                <li>14. Interfere with, disrupt, or create an undue burden on the Platform or the networks or services connected to the Platform.</li>
+
+                                <li>15. Harass, annoy, intimidate, or threaten any of our employees or agents engaged in providing any portion of the Platform to you.</li>
+
+                                <li>16. Attempt to bypass any measures of the Platform designed to prevent or restrict access to the Platform, or any portion of the Platform.</li>
+
+                                <li>17. Copy or adapt the Platform’s software.</li>
+
+                                <li>18. Except as permitted by applicable law, decipher, decompile, disassemble, or reverse engineer any of the software comprising or in any way making up a part of the Platform.</li>
+
+                                <li>19. Except as may be the result of standard search engine or Internet browser usage, use, launch, develop, or distribute any automated system, including without limitation, any spider, robot, cheat utility, scraper, or offline reader that accesses the Platform, or using or launching any unauthorized script or other software.</li>
+
+                                <li>20. Use a buying agent or purchasing agent to make purchases on the Platform.</li>
+
+                                <li>21. Make any unauthorized use of the Platform, including collecting usernames and/or email addresses of users by electronic or other means for the purpose of sending unsolicited email, or creating user accounts by automated means or under false pretenses.</li>
+
+                                <li>22. Use the Platform as part of any effort to compete with us or otherwise use the Platform and/or the Content for any revenue-generating endeavor or commercial enterprise.</li>
                             </ul>
                         </Typography>
 
@@ -170,19 +192,31 @@ const TermsOfUse = () => {
                             We may provide you with the opportunity to create, submit, post, display, transmit, perform, publish, distribute, or broadcast content and materials to us or on the Platform, including but not limited to text, writings, video, audio, photographs, graphics, comments, suggestions, or personal information or other material (collectively, "Contributions"). Contributions may be viewable by other users of the Platform and through third-party webapps. As such, any Contributions you transmit may be treated in accordance with the Platform Privacy Policy. When you create or make available any Contributions, you thereby represent and warrant that:
                         </Typography>
                         <Typography variant="body1" component="ul" gutterBottom>
-                            <li>The creation, distribution, transmission, public display, or performance, and the accessing, downloading, or copying of your Contributions do not and will not infringe the proprietary rights, including but not limited to the copyright, patent, trademark, trade secret, or moral rights of any third party.</li>
-                            <li>You are the creator and owner of or have the necessary licenses, rights, consents, releases, and permissions to use and to authorize us, the Platform, and other users of the Platform to use your Contributions in any manner contemplated by the Platform and these Terms of Use.</li>
-                            <li>You have the written consent, release, and/or permission of each and every identifiable individual person in your Contributions to use the name or likeness of each and every such identifiable individual person to enable inclusion and use of your Contributions in any manner contemplated by the Platform and these Terms of Use.</li>
-                            <li>Your Contributions are not false, inaccurate, or misleading.</li>
-                            <li>Your Contributions are not unsolicited or unauthorized advertising, promotional materials, pyramid schemes, chain letters, spam, mass mailings, or other forms of solicitation.</li>
-                            <li>Your Contributions are not obscene, lewd, lascivious, filthy, violent, harassing, libelous, slanderous, or otherwise objectionable (as determined by us).</li>
-                            <li>Your Contributions do not ridicule, mock, disparage, intimidate, or abuse anyone.</li>
+                            <li>1. The creation, distribution, transmission, public display, or performance, and the accessing, downloading, or copying of your Contributions do not and will not infringe the proprietary rights, including but not limited to the copyright, patent, trademark, trade secret, or moral rights of any third party.</li>
+
+                            <li>2. You are the creator and owner of or have the necessary licenses, rights, consents, releases, and permissions to use and to authorize us, the Platform, and other users of the Platform to use your Contributions in any manner contemplated by the Platform and these Terms of Use.</li>
+
+                            <li>3. You have the written consent, release, and/or permission of each and every identifiable individual person in your Contributions to use the name or likeness of each and every such identifiable individual person to enable inclusion and use of your Contributions in any manner contemplated by the Platform and these Terms of Use.</li>
+
+                            <li>4. Your Contributions are not false, inaccurate, or misleading.</li>
+
+                            <li>5. Your Contributions are not unsolicited or unauthorized advertising, promotional materials, pyramid schemes, chain letters, spam, mass mailings, or other forms of solicitation.</li>
+
+                            <li>6. Your Contributions are not obscene, lewd, lascivious, filthy, violent, harassing, libelous, slanderous, or otherwise objectionable (as determined by us).</li>
+
+                            <li>7. Your Contributions do not ridicule, mock, disparage, intimidate, or abuse anyone.</li>
+
                             <li>Your Contributions are not used to harass or threaten (in the legal sense of those terms) any other person and to promote violence against a specific person or class of people.</li>
-                            <li>Your Contributions do not violate any applicable law, regulation, or rule.</li>
-                            <li>Your Contributions do not violate the privacy or publicity rights of any third party.</li>
-                            <li>Your Contributions do not violate any applicable law concerning child pornography, or otherwise intended to protect the health or well-being of minors.</li>
-                            <li>Your Contributions do not include any offensive comments that are connected to race, national origin, gender, sexual preference, or physical handicap.</li>
-                            <li>Your Contributions do not otherwise violate, or link to material that violates, any provision of these Terms of Use, or any applicable law or regulation.</li>
+
+                            <li>9. Your Contributions do not violate any applicable law, regulation, or rule.</li>
+
+                            <li>10. Your Contributions do not violate the privacy or publicity rights of any third party.</li>
+
+                            <li>11. Your Contributions do not violate any applicable law concerning child pornography, or otherwise intended to protect the health or well-being of minors.</li>
+
+                            <li>12. Your Contributions do not include any offensive comments that are connected to race, national origin, gender, sexual preference, or physical handicap.</li>
+
+                            <li>13. Your Contributions do not otherwise violate, or link to material that violates, any provision of these Terms of Use, or any applicable law or regulation.</li>
                         </Typography>
                         <Typography variant="h6" gutterBottom>
                             Any use of the Platform in violation of the foregoing violates these Terms of Use and may result in, among other things, termination or suspension of your rights to use the Platform.
@@ -195,7 +229,7 @@ const TermsOfUse = () => {
                             You and the Platform agree that we may access, store, process, and use any information and personal data that you provide following the terms of the Privacy Policy and your choices (including settings).
                         </Typography>
                         <Typography variant="body1" gutterBottom>
-                            By submitting suggestions or other feedback regarding the Platform, you agree that we can use and share such feedback for any purpose without compensation to you.
+                            By submitting suggestions or other feedback regarding the Platform, you agree that we can use and share such feedback for any purpose without compensation to you. 
                         </Typography>
                         <Typography variant="body1" gutterBottom>
                             We do not assert any ownership over your Contributions. You retain full ownership of all of your Contributions and any intellectual property rights or other proprietary rights associated with your Contributions. We are not liable for any statements or representations in your Contributions provided by you in any area on the Platform. You are solely responsible for your Contributions to the Platform and you expressly agree to exonerate us from any and all responsibility and to refrain from any legal action against us regarding your Contributions.
@@ -225,7 +259,7 @@ const TermsOfUse = () => {
                             Privacy Policy
                         </Typography>
                         <Typography variant="body1" paragraph>
-                            We care about data privacy and security. By using the Platform, you agree to be bound by our Privacy Policy, which is incorporated into these Terms of Use.
+                            We care about data privacy and security. By using the Platform, you agree to be bound by our Privacy Policy, which is incorporated into these Terms of Use. 
                         </Typography>
 
                         <Typography variant="h6" gutterBottom>
@@ -242,7 +276,7 @@ const TermsOfUse = () => {
                             Modifications and Interruptions
                         </Typography>
                         <Typography variant="body1" paragraph>
-                            We reserve the right to change, modify, or remove the contents of the Platform at any time or for any reason at our sole discretion without notice. However, we have no obligation to update any information on our Platform. We also reserve the right to modify or discontinue all or part of the Platform without notice at any time. We will not be liable to you or any third party for any modification, price change, suspension, or discontinuance of the Platform.
+                            We reserve the right to change, modify, or remove the contents of the Platform at any time or for any reason at our sole discretion without notice. However, we have no obligation to update any information on our Platform. We also reserve the right to modify or discontinue all or part of the Platform without notice at any time. We will not be liable to you or any third party for any modification, price change, suspension, or discontinuance of the Platform.  
                         </Typography>
                         <Typography variant="body1" paragraph>
                             We cannot guarantee the Platform will be available at all times. We may experience hardware, software, or other problems or need to perform maintenance related to the Platform, resulting in interruptions, delays, or errors. We reserve the right to change, revise, update, suspend, discontinue, or otherwise modify the Platform at any time or for any reason without notice to you. You agree that we have no liability whatsoever for any loss, damage, or inconvenience caused by your inability to access or use the Platform during any downtime or discontinuance of the Platform. Nothing in these Terms of Use will be construed to obligate us to maintain and support the Platform or to supply any corrections, updates, or releases in connection therewith.
@@ -301,7 +335,7 @@ const TermsOfUse = () => {
                             Electronic Communications, Transactions, and Signatures
                         </Typography>
                         <Typography variant="body1" paragraph>
-                            Visiting the Platform, sending us emails, and completing online forms constitute electronic communications. You consent to receive electronic communications, and you agree that all agreements, notices, disclosures, and other communications we provide to you electronically, via email and on the Platform, satisfy any legal requirement that such communication be in writing. YOU HEREBY AGREE TO THE USE OF ELECTRONIC SIGNATURES, CONTRACTS, ORDERS, AND OTHER RECORDS, AND TO ELECTRONIC DELIVERY OF NOTICES, POLICIES, AND RECORDS OF TRANSACTIONS INITIATED OR COMPLETED BY US OR VIA THE PLATFORM. You hereby waive any rights or requirements under any statutes, regulations, rules, ordinances, or other laws in any jurisdiction which require an original signature or delivery or retention of non-electronic records, or to payments or the granting of credits by any means other than electronic means.
+                            Visiting the Platform, sending us emails, and completing online forms constitute electronic communications. You consent to receive electronic communications, and you agree that all agreements, notices, disclosures, and other communications we provide to you electronically, via email and on the Platform, satisfy any legal requirement that such communication be in writing. YOU HEREBY AGREE TO THE USE OF ELECTRONIC SIGNATURES, CONTRACTS, ORDERS, AND OTHER RECORDS, AND TO ELECTRONIC DELIVERY OF NOTICES, POLICIES, AND RECORDS OF TRANSACTIONS INITIATED OR COMPLETED BY US OR VIA THE PLATFORM. You hereby waive any rights or requirements under any statutes, regulations, rules, ordinances, or other laws in any jurisdiction which require an original signature or delivery or retention of non-electronic records, or to payments or the granting of credits by any means other than electronic means. 
                         </Typography>
 
                         <Typography variant="h6" gutterBottom>
