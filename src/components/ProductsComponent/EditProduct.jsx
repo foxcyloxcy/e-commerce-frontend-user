@@ -65,32 +65,9 @@ const EditProduct = ({ userToken }) => {
     }
   }, [state]);
 
-  const handleImageUpload = (files) => {
-    setImages((prevImages) => [...prevImages, ...files].slice(0, 10));
-  };
-
-  const handleRemoveImage = (index) => {
-    setImages((prevImages) => prevImages.filter((_, i) => i !== index));
-  };
-
-  const handleImageClick = (imageUrl) => {
-    setModalImageUrl(imageUrl);
-    setOpenModal(true);
-  };
 
   const handleCloseModal = () => {
     setOpenModal(false);
-  };
-
-  const getFilenameFromUrl = (url) => {
-    // Use split to get the last part of the URL after the last '/'
-    const parts = url.split('/');
-    return parts.pop(); // pop removes and returns the last element
-  }
-
-  const handleBidChange = (event) => {
-    const { checked } = event.target;
-    setAcceptOffers(checked ? 1 : 0);
   };
 
   const handleCategoryChange = async (categoryId, subCategoryId) => {
@@ -109,7 +86,6 @@ const EditProduct = ({ userToken }) => {
     try {
       const response = await api.get(`api/global/sub-category/properties?sub_category_id=${subCategoryId}`);
 
-      //global/sub-category/properties?sub_category_id=2
       if (response.status === 200) {
         setSelectedSubCategories(response.data.data);
       }
@@ -131,41 +107,6 @@ const EditProduct = ({ userToken }) => {
     }
   }, []);
 
-  const handleSubCategoryChange = (event) => {
-    const subCategory = event.target.value;
-    setSelectedSubCategories(subCategory);
-    setSelectedSubCategoryId(subCategory.id);
-  };
-
-  const handlePriceChange = (e) => {
-    const value = e.target.value;
-    setPrice(value);
-    if (value < 50 || value > 50000) {
-      setPriceError('Price must be between AED 50 and AED 50,000');
-    } else {
-      setPriceError('');
-    }
-  };
-
-  const handleCheckboxChange = (propertyId, valueId) => (event) => {
-    const { checked } = event.target;
-    setSelectedPropertyValues((prevValues) => {
-      const updatedValues = { ...prevValues };
-      if (checked) {
-        if (!updatedValues[propertyId]) {
-          updatedValues[propertyId] = [];
-        }
-        updatedValues[propertyId].push(valueId);
-      } else {
-        updatedValues[propertyId] = updatedValues[propertyId].filter((id) => id !== valueId);
-        if (updatedValues[propertyId].length === 0) {
-          delete updatedValues[propertyId];
-        }
-      }
-      return updatedValues;
-    });
-  };
-
   const handleAddressData = async (addressDataFromProduct) => {
     setAddress(addressDataFromProduct)
   };
@@ -178,24 +119,13 @@ const EditProduct = ({ userToken }) => {
     formData.append('item_name', productName);
     formData.append('item_description', description);
     formData.append('address', address);
-    // formData.append('price', price);
-    // formData.append('is_bid', acceptOffers);
-    // formData.append('sub_category_id', selectedSubCategoryId);
-
-    // let index = 0;
-    // Object.keys(selectedPropertyValues).forEach((propertyId) => {
-    //   selectedPropertyValues[propertyId].forEach((valueId) => {
-    //     formData.append(`properties[${index}]`, valueId);
-    //     index++;
-    //   });
-    // });
 
     images.forEach((image, index) => {
       formData.append(`imgs[${index}]`, image);
     });
 
     try {
-      const res = await api.put("/api/auth/items", formData, {
+      const res = await api.put(`/api/auth/items/${uuid}`, formData, {
         headers: {
           Authorization: `Bearer ${userToken}`,
           'Content-Type': 'multipart/form-data',
@@ -254,38 +184,6 @@ const EditProduct = ({ userToken }) => {
         </Typography>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            {/* <Grid item xs={12}>
-              <FormControl fullWidth size="small" disabled>
-                <InputLabel>Select Category</InputLabel>
-                <Select
-                  value={selectedCategory || ""}
-                  onChange={handleCategoryChange}
-                  label="Select Category"
-                >
-                  {categories.map((category) => (
-                    <MenuItem key={category.id} value={category.id || ""}>
-                      {category.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth size="small" disabled>
-                <InputLabel>Select Subcategory</InputLabel>
-                <Select
-                  value={selectedSubCategoriesId || ""}
-                  onChange={handleSubCategoryChange}
-                  label="Select Subcategory"
-                >
-                  {subCategories.map((subCategory) => (
-                    <MenuItem key={subCategory.id} value={subCategory.id || ""}>
-                      {subCategory.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid> */}
             {selectedSubCategories && (
               <>
                 <Grid item xs={12} sm={6}>
@@ -298,19 +196,7 @@ const EditProduct = ({ userToken }) => {
                     required
                   />
                 </Grid>
-                {/* <Grid item xs={12} sm={6}>
-                  <TextField
-                    size="small"
-                    fullWidth
-                    label="Price"
-                    type="number"
-                    value={price}
-                    onChange={handlePriceChange}
-                    error={priceError.length > 0}
-                    helperText={priceError}
-                    required
-                  />
-                </Grid> */}
+
                 <Grid item xs={12}>
                   <TextField
                     size="small"
@@ -323,41 +209,7 @@ const EditProduct = ({ userToken }) => {
                     required
                   />
                 </Grid>
-                {/* <Grid item xs={12}>
-                  <FormGroup>
-                    <FormControlLabel
-                      control={<Checkbox checked={acceptOffers === 1} onChange={handleBidChange} />}
-                      label="Accept offers"
-                    />
-                  </FormGroup>
-                </Grid> */}
-                <Grid item xs={12}>
-                  <FileInput
-                    onChange={handleImageUpload}
-                    multiple
-                    maxFiles={10}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  {images.map((image, index) => (
-                    <Grid container alignItems="center" spacing={1} key={index}>
-                      <Grid item xs={10}>
-                        <Typography
-                          noWrap
-                          variant="body1"
-                          sx={{ cursor: 'pointer', textDecoration: 'underline' }}
-                          onClick={() => handleImageClick(image.image_url)}
-                        >
-                          {getFilenameFromUrl(image.image_url)}</Typography>
-                      </Grid>
-                      <Grid item xs={2}>
-                        <IconButton onClick={() => handleRemoveImage(index)} size="small" color="primary">
-                          <CloseIcon fontSize="small" />
-                        </IconButton>
-                      </Grid>
-                    </Grid>
-                  ))}
-                </Grid>
+
                 <Grid item xs={12}>
                   <Divider sx={{ my: 2 }} />
                   <CustomMap
@@ -366,31 +218,6 @@ const EditProduct = ({ userToken }) => {
                     Editing={true}
                   />
                 </Grid>
-
-                {/* {selectedSubCategories[0].sub_category_property &&
-                  selectedSubCategories[0].sub_category_property.map((property) => (
-                    <Grid item xs={12} key={property.id}>
-                      <Typography variant="h6" gutterBottom>
-                        {property.name}
-                      </Typography>
-                      <FormGroup row>
-                        {property.sub_category_property_value.map((value) => (
-                          <FormControlLabel
-                            key={value.id}
-                            control={
-                              <Checkbox
-                                checked={
-                                  selectedPropertyValues[property.id]?.includes(value.id) || false
-                                }
-                                onChange={handleCheckboxChange(property.id, value.id)}
-                              />
-                            }
-                            label={value.name}
-                          />
-                        ))}
-                      </FormGroup>
-                    </Grid>
-                  ))} */}
 
                 <Grid item xs={12}>
                   <Button type="submit" variant="contained" color="primary" fullWidth>
