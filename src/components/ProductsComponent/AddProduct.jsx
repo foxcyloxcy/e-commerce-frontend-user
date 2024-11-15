@@ -225,7 +225,7 @@ const AddProduct = (props) => {
         console.log(error);
         Swal.fire({
             title: 'Error!',
-            text: error.response.data.message ? error.response.data.message : error.response,
+            text: error.response.data.message ? error.response.data.message : error.response.data,
             icon: 'error',
             showCancelButton: true,
             confirmButtonText: 'Go to My Profile',
