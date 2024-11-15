@@ -1,8 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { TextField, Button, Checkbox, FormControlLabel, FormGroup, Grid, Typography, Container, ThemeProvider, MenuItem, Select, InputLabel, FormControl, Divider, IconButton } from '@mui/material';
+import {
+  TextField,
+  Button,
+  Grid,
+  Typography,
+  Container,
+  ThemeProvider,
+  Divider,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import CustomMap from './CustomMapComponent/CustomMap';
-import CloseIcon from '@mui/icons-material/Close';
 import FileInput from './FileInput'; // Import your custom FileInput component
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
@@ -11,26 +18,27 @@ import { useLocation } from 'react-router-dom';
 import ImageViewModal from '../ReusableComponents/ModalComponent/ImageViewModal';
 
 const EditProduct = ({ userToken }) => {
-  const [productName, setProductName] = useState('');
-  const [description, setDescription] = useState('');
-  const [images, setImages] = useState([]);
-  const [price, setPrice] = useState('');
-  const [priceError, setPriceError] = useState('');
-  const [address, setAddress] = useState(null);
+  const [currentProductName, setCurrentProductName] = useState('');
+  const [editedProductName, setEditedProductName] = useState('');
+  const [currentDescription, setCurrentDescription] = useState('');
+  const [editedDescription, setEditedDescription] = useState('');
+  const [currentImages, setCurrentImages] = useState([]);
+  const [editedImages, setEditedImages] = useState([]);
+  const [currentPrice, setCurrentPrice] = useState('');
+  const [editedPrice, setEditedPrice] = useState('');
+  const [currentAddress, setCurrentAddress] = useState(null);
+  const [editedAddress, setEditedAddress] = useState(null);
   const [acceptOffers, setAcceptOffers] = useState(0);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [subCategories, setSubCategories] = useState([]);
-  const [selectedSubCategories, setSelectedSubCategories] = useState('');
-  const [selectedSubCategoriesId, setSelectedSubCategoriesId] = useState('');
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState('');
   const [selectedPropertyValues, setSelectedPropertyValues] = useState({});
   const [openModal, setOpenModal] = useState(false); // State to manage modal visibility
   const [modalImageUrl, setModalImageUrl] = useState('');
 
   const { state } = useLocation();
-
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (state && state.product) {
@@ -43,89 +51,73 @@ const EditProduct = ({ userToken }) => {
         is_bid,
         sub_category,
         sub_category_id,
-        propertyValues = {},
-        uuid
+        uuid,
       } = state.product;
 
-      setProductName(item_name || '');
-      setDescription(item_description || '');
-      setImages(item_image || []);
-      setPrice(price || '');
-      setAddress(JSON.parse(address) || null);
+      // Set current (existing) values
+      setCurrentProductName(item_name || '');
+      setEditedProductName(item_name || ''); // Initialize edited with current
+      setCurrentDescription(item_description || '');
+      setEditedDescription(item_description || '');
+      setCurrentImages(item_image || []);
+      setEditedImages(item_image || []);
+      setCurrentPrice(price || '');
+      setEditedPrice(price || '');
+      setCurrentAddress(JSON.parse(address) || null);
+      setEditedAddress(JSON.parse(address) || null);
       setAcceptOffers(is_bid || 0);
       setSelectedCategory(sub_category?.category_id || '');
-      setSelectedSubCategoriesId(sub_category_id || '');
       setSelectedSubCategoryId(sub_category_id || '');
 
       loadCategories();
       loadSubCategory(sub_category_id);
-      loadProductDetail(uuid)
-      handleCategoryChange(sub_category?.category_id, sub_category_id);
-      handleAddressData(JSON.parse(address))
+      loadProductDetail(uuid);
     }
   }, [state]);
 
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
-
-  const handleCategoryChange = async (categoryId, subCategoryId) => {
+  const loadCategories = useCallback(async () => {
     try {
-      const response = await api.get(`api/global/sub-category?category_id=${categoryId}`);
-
-      if (response.status === 200) {
-        setSubCategories(response.data.data);
+      const res = await api.get('api/global/category');
+      if (res.status === 200) {
+        setCategories(res.data.data);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
-  };
+  }, []);
 
   const loadSubCategory = async (subCategoryId) => {
     try {
       const response = await api.get(`api/global/sub-category/properties?sub_category_id=${subCategoryId}`);
-
       if (response.status === 200) {
-        setSelectedSubCategories(response.data.data);
+        setSubCategories(response.data.data);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
   const loadProductDetail = useCallback(async (productUuid) => {
     try {
-        let query = `api/global/items/${productUuid}`;
-        const res = await api.get(query);
-        if (res.status === 200) {
-            // console.log(res.data)
-            setSelectedPropertyValues(res.data.item_property_details);
-        }
+      const res = await api.get(`api/global/items/${productUuid}`);
+      if (res.status === 200) {
+        setSelectedPropertyValues(res.data.item_property_details);
+      }
     } catch (error) {
-        console.log(error);
+      console.error(error);
     }
   }, []);
 
-  const handleAddressData = async (addressDataFromProduct) => {
-    setAddress(addressDataFromProduct)
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (priceError) return;
-
     const formData = new FormData();
-    formData.append('item_name', productName);
-    formData.append('item_description', description);
-    formData.append('address', address);
+    formData.append('item_name', editedProductName);
+    formData.append('item_description', editedDescription);
+    formData.append('address', JSON.stringify(editedAddress));
 
-    images.forEach((image, index) => {
-      formData.append(`imgs[${index}]`, image);
-    });
 
     try {
-      const res = await api.put(`/api/auth/items/${uuid}`, formData, {
+      const res = await api.put(`/api/auth/items/${state.product.uuid}`, formData, {
         headers: {
           Authorization: `Bearer ${userToken}`,
           'Content-Type': 'multipart/form-data',
@@ -133,108 +125,70 @@ const EditProduct = ({ userToken }) => {
       });
 
       if (res.status === 200) {
-        const successMessage = res.data.message;
-
         Swal.fire({
-          title: successMessage,
+          title: 'Success!',
           text: 'Your item has been updated.',
           icon: 'success',
           confirmButtonText: 'OK',
           confirmButtonColor: ModTheme.palette.primary.main,
         }).then(() => {
-          history("/shop");
+          navigate('/shop');
         });
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       Swal.fire({
         title: 'Error!',
-        text: 'Something went wrong. Please try again later.',
+        text: error.response.data.message,
         icon: 'error',
         confirmButtonColor: ModTheme.palette.primary.main,
       });
     }
   };
 
-  const loadCategories = useCallback(async () => {
-    try {
-      const res = await api.get("api/global/category");
-      if (res.status === 200) {
-        setCategories(res.data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
   return (
     <ThemeProvider theme={ModTheme}>
-      <Container sx={{
-        padding: 3,
-        marginTop: 10,
-        marginBottom: 5,
-        maxWidth: { xs: '100%', sm: '80%', md: '60%', lg: '50%', xl: '40%' },
-        boxSizing: 'border-box',
-        minHeight: '60vh'
-      }}>
-        <Typography variant="h4" component="h1" gutterBottom sx={{
-          marginBottom: 3
-        }}>
-          Edit your reloved item
-        </Typography>
+      <Container sx={{ padding: 3, marginTop: 10, marginBottom: 5, maxWidth: '60%' }}>
+        <Typography variant="h4" gutterBottom>Edit your reloved item</Typography>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            {selectedSubCategories && (
-              <>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    size="small"
-                    fullWidth
-                    label="Product Name"
-                    value={productName}
-                    onChange={(e) => setProductName(e.target.value)}
-                    required
-                  />
-                </Grid>
+            <Grid item xs={12}>
+              <TextField
+                label="Product Name"
+                fullWidth
+                value={editedProductName}
+                onChange={(e) => setEditedProductName(e.target.value)}
+              />
+            </Grid>
+            
+            <Grid item xs={12}>
+              <TextField
+                label="Description"
+                fullWidth
+                multiline
+                rows={4}
+                value={editedDescription}
+                onChange={(e) => setEditedDescription(e.target.value)}
+              />
 
-                <Grid item xs={12}>
-                  <TextField
-                    size="small"
-                    fullWidth
-                    label="Description"
-                    multiline
-                    rows={4}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                  />
-                </Grid>
 
-                <Grid item xs={12}>
-                  <Divider sx={{ my: 2 }} />
-                  <CustomMap
-                    addressData={handleAddressData}
-                    mapDataValue={address}
-                    Editing={true}
-                  />
-                </Grid>
-
-                <Grid item xs={12}>
-                  <Button type="submit" variant="contained" color="primary" fullWidth>
-                    Save
-                  </Button>
-                </Grid>
-              </>
-            )}
+            </Grid>
+            <Grid item xs={12}>
+              <Divider sx={{ my: 2 }} />
+              <CustomMap
+                addressData={setEditedAddress}
+                mapDataValue={editedAddress}
+                Editing={true}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button type="submit" variant="contained" color="primary" fullWidth>
+                Save
+              </Button>
+            </Grid>
           </Grid>
         </form>
       </Container>
-
-      <ImageViewModal
-        openModal={openModal}
-        handleCloseModal={handleCloseModal}
-        modalImageUrl={modalImageUrl}
-      />
     </ThemeProvider>
   );
 };
