@@ -24,6 +24,8 @@ const MyProductDetails = () => {
     const [openPriceBreakdownModal, setOpenPriceBreakdownModal] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [comment, setComment] = useState('');  // New state for comment
+    const [loading, setLoading] = useState(false);  // Loading state for offers
     const storageKey = secure.storageKey;
     const storagePrefix = secure.storagePrefix;
 
@@ -133,6 +135,79 @@ const MyProductDetails = () => {
     const handleCloseMap = () => {
         setOpenMap(false);
         setSelectedAddress(null);
+    };
+
+    const dateParser = (dateInput) => {
+        const months = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+        ];
+
+        const date = new Date(dateInput);
+
+        // Extract values
+        const month = months[date.getMonth()];
+        const day = String(date.getDate()).padStart(2, '0'); // Ensures 2-digit day
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0'); // Ensures 2-digit hours
+        const minutes = String(date.getMinutes()).padStart(2, '0'); // Ensures 2-digit minutes
+
+        // Format date as "Oct-dd-yyyy hh:mm"
+        return `${month}-${day}-${year} ${hours}:${minutes}`;
+    };
+
+    const handleCommentSubmit = async () => {
+        if (!parsedUserData && !isLoggedIn) {
+            Swal.fire({
+                title: 'Oops!',
+                text: 'You need to login first before you can ask/answer questions.',
+                icon: 'error',
+                showCancelButton: false,
+                confirmButtonText: "Ok, I'll login.",
+                confirmButtonColor: ModTheme.palette.primary.main,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login');
+                }
+            });
+        }
+
+
+        if (!comment) {
+            Swal.fire('Error', 'Please enter a comment', 'error');
+            Swal.fire({
+                title: 'Oops!',
+                text: 'Please enter a comment',
+                icon: 'error',
+                confirmButtonText: "Ok",
+                confirmButtonColor: ModTheme.palette.primary.main,
+            })
+        }
+        setLoading(true);
+        const formData = new FormData();
+        formData.append('item_id', productsData.item_details.id);
+        formData.append('owner_id', productsData.item_details.user.id);
+        formData.append('user_id', parsedUserData.id);
+        formData.append('comments', comment);
+
+        try {
+            const res = await api.post("/api/auth/item-comment", formData, {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+
+            if (res.status === 200) {
+
+                setComment('');  // Clear the input field after submission
+                loadProducts()
+            }
+        } catch (error) {
+            Swal.fire('Error', 'Failed to submit comment', 'error');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const parseAddress = (address) => {
@@ -284,6 +359,94 @@ const MyProductDetails = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                </Paper>
+
+                <Paper sx={{ mt: 4, p: 2 }}>
+                    <Typography variant="h6" gutterBottom>
+                        Item questions and answers
+                    </Typography>
+                    <Divider />
+                    <Box sx={{ mt: 2 }}>
+                        {productsData.item_comments && productsData.item_comments.length > 0 ? (
+                            productsData.item_comments.map((comment, index) => (
+                                <Box key={index} sx={{ mb: 2 }}>
+                                    {
+                                        parsedUserData ? (
+                                            <Typography variant="body1" fontWeight="bold">
+                                                {
+                                                    parsedUserData.id === comment.user.id ? 'You' : comment.user.id === productsData.item_details.user.id ? 'Item Owner' : comment.user.vendor.name}
+                                            </Typography>
+                                        ) : (
+                                            <Typography variant="body1" fontWeight="bold">
+                                                {comment.user.id === productsData.item_details.user.id ? 'Item Owner' : comment.user.vendor.name}
+                                            </Typography>
+                                        )
+
+                                    }
+                                    <Typography variant="body1">
+                                        {comment.comments}
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary">
+                                        {dateParser(comment.created_at)}
+                                    </Typography>
+                                    <Divider sx={{ mt: 1 }} />
+                                </Box>
+                            ))
+                        ) : (
+                            <Typography variant="body2" color="textSecondary">
+                                No question available.
+                            </Typography>
+                        )}
+                        {
+                            parsedUserData ? (
+                                <>
+                                    <TextField
+                                        label={parsedUserData.id === productsData.item_details.user.id ? 'Add an answer' : 'Add a question'}
+                                        multiline
+                                        rows={4}
+                                        value={comment}
+                                        onChange={(e) => setComment(e.target.value)}
+                                        fullWidth
+                                        variant="outlined"
+                                        sx={{ mt: 2 }}
+                                    />
+                                    <ButtonComponent
+                                        label={parsedUserData.id === productsData.item_details.user.id ? 'Submit answer' : 'Submit question'}
+                                        size="small"
+                                        buttonVariant="contained"
+                                        textColor="primary.contrastText"
+                                        hoverTextColor="secondary.main"
+                                        sx={{ mt: 1 }}
+                                        onClick={handleCommentSubmit}
+                                    />
+                                </>
+                            )
+                                :
+                                (
+                                    <>
+                                        <TextField
+                                            label='Add a question'
+                                            multiline
+                                            rows={4}
+                                            value={comment}
+                                            onChange={(e) => setComment(e.target.value)}
+                                            fullWidth
+                                            variant="outlined"
+                                            sx={{ mt: 2 }}
+                                        />
+                                        <ButtonComponent
+                                            label='Submit question'
+                                            size="small"
+                                            buttonVariant="contained"
+                                            textColor="primary.contrastText"
+                                            hoverTextColor="secondary.main"
+                                            sx={{ mt: 1 }}
+                                            onClick={handleCommentSubmit}
+                                        />
+                                    </>
+                                )
+                        }
+                    </Box>
                 </Paper>
 
                 {selectedProduct && (
