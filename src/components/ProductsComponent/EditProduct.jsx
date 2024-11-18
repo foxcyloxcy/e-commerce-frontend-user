@@ -110,14 +110,9 @@ const EditProduct = ({ userToken }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('item_name', editedProductName);
-    formData.append('item_description', editedDescription);
-    formData.append('address', JSON.stringify(editedAddress));
-
 
     try {
-      const res = await api.put(`/api/auth/items/${state.product.uuid}`, formData, {
+      const res = await api.put(`/api/auth/items/${state.product.uuid}?item_name=${editedProductName}&item_description=${editedDescription}&address=${editedAddress}`, null, {
         headers: {
           Authorization: `Bearer ${userToken}`,
           'Content-Type': 'multipart/form-data',
@@ -132,7 +127,7 @@ const EditProduct = ({ userToken }) => {
           confirmButtonText: 'OK',
           confirmButtonColor: ModTheme.palette.primary.main,
         }).then(() => {
-          navigate('/shop');
+          navigate('/my-profile');
         });
       }
     } catch (error) {
