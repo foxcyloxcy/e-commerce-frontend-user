@@ -204,10 +204,16 @@ const MyProducts = (props) => {
 
                                 <CardContent sx={{ position: 'absolute', width: '100%', top: '70%' }}>
                                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                                        <IconButton color="primary" onClick={() => handleEditClick(product)}>
+                                        <IconButton 
+                                            color="primary" 
+                                            onClick={() => handleEditClick(product)} 
+                                            disabled={product.status !== 1 && product.status !== 0}>
                                             <EditIcon />
                                         </IconButton>
-                                        <IconButton color="error" onClick={() => handleDeleteClick(product.uuid)}>
+                                        <IconButton 
+                                            color="error" 
+                                            onClick={() => handleDeleteClick(product.uuid)}
+                                            disabled={product.status !== 1 && product.status !== 0}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </Box>
