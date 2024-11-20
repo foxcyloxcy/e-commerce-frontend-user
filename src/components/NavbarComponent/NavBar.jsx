@@ -9,7 +9,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, Box, useMediaQuery, Drawer, List, ListItem, ListItemText, Divider, Backdrop } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
 import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
 import secureLocalStorage from "react-secure-storage";
 import secure from '../../assets/baseURL/secure';
@@ -18,17 +17,12 @@ const NavBar = (props) => {
 
   const { parentIsLoggedIn, refreshParent } = props;
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [elevate, setElevate] = useState(false);
   const linkPathName = useLocation(Link);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const storageKey = secure.storageKey;
   const storagePrefix = secure.storagePrefix;
 
-  const trigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: 10,
-  });
 
   const handleMenu = useCallback(() => {
     setDrawerOpen(true);
@@ -60,13 +54,7 @@ const NavBar = (props) => {
       setIsLoggedIn(false)
     }
 
-    if (isLoggedIn === true) {
-      setElevate(trigger);
-    } else {
-      setElevate(false)
-    }
-
-  }, [parentIsLoggedIn, trigger]);
+  }, [parentIsLoggedIn]);
 
   const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('sm'));
   const isMediumScreen = useMediaQuery(ModTheme.breakpoints.down('md')) && !isSmallScreen;
@@ -78,28 +66,28 @@ const NavBar = (props) => {
         <AppBar
           position={isLoggedIn ? 'fixed' : 'absolute'}
           color="transparent"
-          elevation={elevate ? 4 : 0}
+          elevation={isLoggedIn ? 4 : 0}
           sx={{
             display: 'flex',
             justifyContent: 'center',
             height: '60px',
             transform: 'translate(0, 0)',
-            backgroundColor: elevate ? ModTheme.palette.primary.dark : 'transparent',
+            backgroundColor: isLoggedIn ? ModTheme.palette.primary.dark : 'transparent',
             transition: linkPathName.pathname !== '/shop' ? 'background-color 0.75s, box-shadow 0.75s' : 'none',
-            boxShadow: elevate && linkPathName.pathname !== '/shop' ? '0px 4px 20px rgba(0, 0, 0, 0.3)' : 'none',
+            boxShadow: isLoggedIn && linkPathName.pathname !== '/shop' ? '0px 4px 20px rgba(0, 0, 0, 0.3)' : 'none',
           }}
         >
           <Toolbar>
 
             {isSmallScreen || isMediumScreen ? (
               <a href="/" style={{ height: '80px', width: '100%' }}>
-                {/* <img src={elevate || linkPathName.pathname !== '/' ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> */}
+                {/* <img src={isLoggedIn ? 'reloved_header_logo.png' : 'reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '100%', height: '100%', objectFit: 'contain' }} /> */}
                 <img src={'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png'} alt='reloved_header_logo' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </a>
             ) : (
               <Typography component="div" sx={{ flexGrow: 1 }}>
                 <a href="/">
-                  <img src={elevate || linkPathName.pathname !== '/' ? 'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png' : 'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '150px', height: 'auto', objectFit: 'contain' }} />
+                  <img src={isLoggedIn ? 'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png' : 'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo_white.png'} alt='reloved_header_logo' style={{ width: '150px', height: 'auto', objectFit: 'contain' }} />
                 </a>
               </Typography>
             )}
@@ -123,22 +111,22 @@ const NavBar = (props) => {
                   component={Link}
                   to="/"
                   label="Home"
-                  textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
-                  hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
+                  textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
+                  hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
                 />
                 <ButtonComponent
                   component={Link}
                   to="/our-story"
                   label="about"
-                  textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
-                  hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
+                  textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
+                  hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
                 />
                 <ButtonComponent
                   component={Link}
                   to="/shop"
                   label="Shop"
-                  textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
-                  hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
+                  textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
+                  hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
                 />
                 {isLoggedIn === true ? (
                   <>
@@ -146,15 +134,15 @@ const NavBar = (props) => {
                       component={Link}
                       to="/add-product"
                       label="Sell"
-                      textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
-                      hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
+                      textColor={isLoggedIn ? 'primary.main' : 'primary.contrastText'}
+                      hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
                     />
                     <ButtonComponent
                       component={Link}
                       to="/my-profile"
                       label="Profile"
-                      textColor={elevate || linkPathName.pathname !== '/' ? 'primary.main' : 'primary.contrastText'}
-                      hoverTextColor={elevate ? 'primary.main' : 'primary.light'}
+                      textColor={isLoggedIn ? 'primary.main' : 'primary.contrastText'}
+                      hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
                     />
                     <ButtonComponent
                       label="Logout"
