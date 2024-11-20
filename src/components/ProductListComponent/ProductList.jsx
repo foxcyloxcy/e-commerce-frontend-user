@@ -37,13 +37,13 @@ const ProductList = (props) => {
     const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [productsData, setProductsData] = useState([]);
-    const [listView, setListView] = useState('list');
     const location = useLocation();
     const [priceRange, setPriceRange] = useState(['', '']);
     const [propertiesFilter, setPropertiesFilter] = useState("");
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [totalProductsCount, setTotalProductsCount] = useState(1);
     const [itemsPerPage] = useState(8);
     const MemoizedDrawerContent = memo(DrawerContent);
     const MemoizedProductListGridView = memo(ProductListGridView);
@@ -104,6 +104,7 @@ const ProductList = (props) => {
             if (res.status === 200) {
 
                 const fetchedProducts = res.data.data.data;
+                setTotalProductsCount(res.data.data.total)
                 setProductsData(fetchedProducts);
                 setTotalPages(res.data.data.last_page);
             }
@@ -235,7 +236,7 @@ const ProductList = (props) => {
                                 display: 'flex',
                                 justifyContent: {xs:'flex-end', sm:'flex-end', md:'flex-end'},
                                 flexDirection: 'row'
-                            }}>{productsData.length} Items found</Typography>
+                            }}>{totalProductsCount} Items found</Typography>
                         </Grid>
                         {/* <Grid item xs={4} sm={4} md={4}>
                             <FormControl variant="outlined" sx={{ minWidth: '100%' }}>
