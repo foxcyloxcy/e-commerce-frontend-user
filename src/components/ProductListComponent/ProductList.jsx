@@ -20,7 +20,6 @@ import {
 } from '@mui/material';
 import { Search as SearchIcon, Menu as MenuIcon, ExpandLess, ExpandMore } from '@mui/icons-material';
 import ModTheme from '../ThemeComponent/ModTheme';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
 import api from '../../assets/baseURL/api';
 import DrawerContent from './DrawerContent';
 import ProductListGridView from './ProductViewComponent/ProductListGridView';
@@ -36,7 +35,6 @@ const ProductList = (props) => {
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
     const [keyword, setKeyword] = useState('');
     const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
-    const [elevate, setElevate] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [productsData, setProductsData] = useState([]);
     const [listView, setListView] = useState('list');
@@ -46,7 +44,7 @@ const ProductList = (props) => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [itemsPerPage] = useState(8);
+    const [itemsPerPage] = useState(12);
     const MemoizedDrawerContent = memo(DrawerContent);
     const MemoizedProductListGridView = memo(ProductListGridView);
 
@@ -114,12 +112,6 @@ const ProductList = (props) => {
         }
     }, [priceRange, keyword, userToken, propertiesFilter]);
 
-
-    const trigger = useScrollTrigger({
-        disableHysteresis: true,
-        threshold: 10,
-    });
-
     useEffect(() => {
         loadCategories();
 
@@ -134,15 +126,6 @@ const ProductList = (props) => {
 
 
     }, [loadCategories, loadProducts, parentIsLoggedIn, currentPage]);
-
-    useEffect(() => {
-
-        if (isLoggedIn === true) {
-            setElevate(trigger);
-        } else {
-            setElevate(false)
-        }
-    }, [parentIsLoggedIn, trigger])
 
 
     const toggleDrawer = () => {
@@ -190,7 +173,7 @@ const ProductList = (props) => {
         <ThemeProvider theme={ModTheme}>
             <Container sx={{
                 minHeight: '60vh',
-                marginTop: 18,
+                marginTop: 20,
                 marginBottom: 5,
                 maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
                 zIndex: 2, // To make sure the container is above the overlay
@@ -201,11 +184,11 @@ const ProductList = (props) => {
                     sx={{
                         top: 59,
                         transform: 'translate(0, 0)',
-                        backgroundColor: elevate ? ModTheme.palette.primary.dark : 'transparent',
+                        backgroundColor: isLoggedIn ? ModTheme.palette.primary.dark : 'transparent',
                         transition: 'background-color 0.30s, box-shadow 0.30s',
-                        boxShadow: elevate ? '4px 4px 0px 2px rgba(0, 0, 0, 0.3)' : 'none',
-                        borderBottom: elevate ? 'none' : `2px #606060 solid`,
-                        borderTop: elevate ? `2px #606060 solid` : 'none',
+                        boxShadow: isLoggedIn ? '4px 4px 0px 2px rgba(0, 0, 0, 0.3)' : 'none',
+                        borderBottom: isLoggedIn ? 'none' : `2px #606060 solid`,
+                        borderTop: isLoggedIn ? `2px #606060 solid` : 'none',
                         zIndex: 3, // To make sure the AppBar is above the overlay
                     }}
                 >
