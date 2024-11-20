@@ -35,7 +35,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
           position: 'relative',
           width: '100%',
           overflow: 'hidden',
-          mt: {xs: 8, md: 0}
+          mt: {xs: 8, md: 8}
         }}
       >
         {/* Background Image as Banner */}
