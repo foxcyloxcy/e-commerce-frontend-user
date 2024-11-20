@@ -555,32 +555,12 @@ const ProductDetails = () => {
                                     <>
                                         <Grid item width="100%">
                                             <FormControlLabel
-                                                sx={{
-                                                    '& .MuiTypography-root': {
-                                                        fontSize: {
-                                                            xs: '0.65rem', // Smallest screen size
-                                                            sm: '0.75rem', // Small screen size
-                                                            md: '0.8rem',  // Medium screen size
-                                                            lg: '1rem',     // Large screen size
-                                                        },
-                                                    },
-                                                }}
                                                 control={<Checkbox checked={confirmCollection} onChange={(e) => setConfirmCollection(e.target.checked)} />}
                                                 label="I can confirm it’s the buyer's responsibility to collect the item"
                                             />
                                         </Grid>
                                         <Grid item width="100%">
                                             <FormControlLabel
-                                                sx={{
-                                                    '& .MuiTypography-root': {
-                                                        fontSize: {
-                                                            xs: '0.6rem', // Smallest screen size
-                                                            sm: '0.7rem', // Small screen size
-                                                            md: '0.8rem',  // Medium screen size
-                                                            lg: '1rem',     // Large screen size
-                                                        },
-                                                    },
-                                                }}
                                                 control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
                                                 label={
                                                     <div>
