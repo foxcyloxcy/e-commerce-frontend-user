@@ -223,19 +223,35 @@ const AddProduct = (props) => {
         }
     } catch (error) {
         console.log(error);
-        Swal.fire({
-            title: 'Error!',
-            text: error.response.data.message ? error.response.data.message : error.response.data,
-            icon: 'error',
-            showCancelButton: true,
-            confirmButtonText: 'Go to My Profile',
-            confirmButtonColor: ModTheme.palette.primary.main,
-            cancelButtonText: 'Cancel'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                history("/my-profile");
-            }
-        });
+        if(error.response.status === 500){
+            Swal.fire({
+              title: 'Ooops!',
+              text: "Something went wrong. Please contact the admin regarding this problem.",
+              icon: 'error',
+              showCancelButton: false,
+              confirmButtonText: 'Home',
+              confirmButtonColor: ModTheme.palette.primary.main,
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  history("/");
+              }
+          });
+        }else{
+            Swal.fire({
+              title: 'Error!',
+              text: error.response.data.message ? error.response.data.message : error.response.data,
+              icon: 'error',
+              showCancelButton: true,
+              confirmButtonText: 'Go to My Profile',
+              confirmButtonColor: ModTheme.palette.primary.main,
+              cancelButtonText: 'Cancel'
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  history("/my-profile");
+              }
+          });
+        }
+
     } finally {
         setLoading(false);
     }
