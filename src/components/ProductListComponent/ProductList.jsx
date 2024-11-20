@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -23,7 +23,6 @@ import ModTheme from '../ThemeComponent/ModTheme';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import api from '../../assets/baseURL/api';
 import DrawerContent from './DrawerContent';
-import ProductListListView from './ProductViewComponent/ProductListListView';
 import ProductListGridView from './ProductViewComponent/ProductListGridView';
 import { useLocation } from 'react-router-dom';
 
@@ -47,7 +46,9 @@ const ProductList = (props) => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [itemsPerPage] = useState(12);
+    const [itemsPerPage] = useState(8);
+    const MemoizedDrawerContent = memo(DrawerContent);
+    const MemoizedProductListGridView = memo(ProductListGridView);
 
     const handleApplyPriceRange = (minPrice, maxPrice) => {
         setPriceRange([minPrice, maxPrice]);
@@ -284,7 +285,7 @@ const ProductList = (props) => {
                     </Popper>
                 )}
                 <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
-                    <DrawerContent
+                    <MemoizedDrawerContent 
                         categories={categories}
                         openCategory={openCategory}
                         handleToggleCategory={handleToggleCategory}
@@ -292,14 +293,14 @@ const ProductList = (props) => {
                         handleSubCategoryClick={handleSubCategoryClick}
                         onApplyPriceRange={handleApplyPriceRange}
                         onApplyPropertiesFilter={handleApplyPropertiesFilter}
-                        subCategoryFromParent={selectedSubCategory}
+                        subCategoryFromParent={selectedSubCategory} 
                     />
                 </Drawer>
 
                 <Grid container spacing={1}>
                     {!isSmallScreen && (
                         <Grid item xs={12} md={4} lg={3} className='filter-grid'>
-                            <DrawerContent
+                            <MemoizedDrawerContent 
                                 categories={categories}
                                 openCategory={openCategory}
                                 handleToggleCategory={handleToggleCategory}
@@ -307,13 +308,13 @@ const ProductList = (props) => {
                                 handleSubCategoryClick={handleSubCategoryClick}
                                 onApplyPriceRange={handleApplyPriceRange}
                                 onApplyPropertiesFilter={handleApplyPropertiesFilter}
-                                subCategoryFromParent={selectedSubCategory}
+                                subCategoryFromParent={selectedSubCategory} 
                             />
                         </Grid>
                     )}
 
                     <Grid item xs={12} md={8} lg={9}>
-                        <ProductListGridView productsData={productsData} handleProductView={handleProductView} userToken={userToken} userData={userData} />
+                    <MemoizedProductListGridView productsData={productsData} handleProductView={handleProductView}   userToken={userToken} userData={userData} />
                     </Grid>
 
                     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
