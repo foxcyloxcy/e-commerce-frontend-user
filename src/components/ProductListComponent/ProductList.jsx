@@ -60,6 +60,7 @@ const ProductList = (props) => {
         try {
             const res = await api.get("api/global/category");
             if (res.status === 200) {
+                console.log(res.data)
                 setCategories(res.data.data);
             }
         } catch (error) {
@@ -142,10 +143,6 @@ const ProductList = (props) => {
             ...prevOpenCategory,
             [categoryId]: !prevOpenCategory[categoryId],
         }));
-    };
-
-    const handleProductView = (view) => {
-        setListView(view)
     };
 
     const handleSubCategoryClick = (subCategory) => {
@@ -298,7 +295,7 @@ const ProductList = (props) => {
                     )}
 
                     <Grid item xs={12} md={8} lg={9}>
-                    <MemoizedProductListGridView productsData={productsData} handleProductView={handleProductView}   userToken={userToken} userData={userData} />
+                    <MemoizedProductListGridView productsData={productsData} />
                     </Grid>
 
                     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
