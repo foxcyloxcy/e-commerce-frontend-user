@@ -18,7 +18,7 @@ import {
     Typography,
     TextField
 } from '@mui/material';
-import { Search as SearchIcon, Menu as MenuIcon, ExpandLess, ExpandMore } from '@mui/icons-material';
+import { Search as SearchIcon, FilterList as Filter, ExpandLess, ExpandMore } from '@mui/icons-material';
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 import DrawerContent from './DrawerContent';
@@ -113,7 +113,7 @@ const ProductList = (props) => {
         } catch (error) {
             console.log(error);
         }
-    }, [priceRange, keyword, userToken, propertiesFilter]);
+    }, []);
 
     useEffect(() => {
         loadCategories();
@@ -128,7 +128,7 @@ const ProductList = (props) => {
         }
 
 
-    }, [loadCategories, loadProducts, parentIsLoggedIn, currentPage]);
+    }, [priceRange, keyword, userToken, propertiesFilter, parentIsLoggedIn, currentPage]);
 
 
     const toggleDrawer = () => {
@@ -199,7 +199,7 @@ const ProductList = (props) => {
                             onClick={toggleDrawer}
                             sx={{ mr: 2 }}
                         >
-                            <MenuIcon />
+                            <Filter />
                         </IconButton>
                         {/* {!isSmallScreen && categories.map((category) => (
                             <Button
@@ -238,9 +238,9 @@ const ProductList = (props) => {
                         </Grid>
                         {/* <Grid item xs={4} sm={4} md={4}>
                             <FormControl variant="outlined" sx={{ minWidth: '100%' }}>
-                            <Select defaultValue="latest">
-                                <MenuItem value="latest">Latest items</MenuItem>
-                                <MenuItem value="cheapest">Cheapest</MenuItem>
+                            <Select defaultValue="1">
+                                <MenuItem value="1">Latest items</MenuItem>
+                                <MenuItem value="2">Cheapest</MenuItem>
                             </Select>
                         </FormControl>
                         </Grid> */}
