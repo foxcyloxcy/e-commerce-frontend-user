@@ -40,11 +40,12 @@ const ProductList = (props) => {
     const location = useLocation();
     const [priceRange, setPriceRange] = useState(['', '']);
     const [propertiesFilter, setPropertiesFilter] = useState("");
+    const [newItems, setNewItems] = useState(1)
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [totalProductsCount, setTotalProductsCount] = useState(1);
-    const [itemsPerPage] = useState(8);
+    const [itemsPerPage] = useState(10);
     const MemoizedDrawerContent = memo(DrawerContent);
     const MemoizedProductListGridView = memo(ProductListGridView);
 
@@ -75,7 +76,7 @@ const ProductList = (props) => {
 
         try {
             let dynamicApi = userToken ? 'auth' : 'global';
-            let query = `api/${dynamicApi}/items?page=${page}&size=${itemsPerPage}&`;
+            let query = `api/${dynamicApi}/items?page=${page}&size=${itemsPerPage}&sort=${newItems}&`;
 
             if (subCategoryId) {
                 query += `sub_category_id=${subCategoryId}&`;
@@ -196,11 +197,11 @@ const ProductList = (props) => {
                             aria-label="open drawer"
                             edge="start"
                             onClick={toggleDrawer}
-                            sx={{ mr: 2, display: { md: 'none' } }}
+                            sx={{ mr: 2 }}
                         >
                             <MenuIcon />
                         </IconButton>
-                        {!isSmallScreen && categories.map((category) => (
+                        {/* {!isSmallScreen && categories.map((category) => (
                             <Button
                                 key={category.id}
                                 onMouseEnter={(event) => handleMouseEnter(category.id, event)}
@@ -211,7 +212,7 @@ const ProductList = (props) => {
                                 {category.name}
                                 {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
                             </Button>
-                        ))}
+                        ))} */}
                     </Toolbar>
                 </AppBar>
                 <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
@@ -245,26 +246,7 @@ const ProductList = (props) => {
                         </Grid> */}
                     </Grid>
                 </header>
-                {hoveredCategory && (
-                    <Popper
-                        open={Boolean(hoveredCategory)}
-                        anchorEl={anchorEl}
-                        placement="bottom-start"
-                        disablePortal={false}
-                        onMouseLeave={handleMouseLeave}
-                        style={{ zIndex: 4 }} // To make sure the Popper is above the overlay
-                    >
-                        <Paper>
-                            <List>
-                                {categories.find(cat => cat.id === hoveredCategory)?.sub_category.map((subCategory) => (
-                                    <ListItem button key={subCategory.id} onClick={() => handleSubCategoryClick(subCategory)}>
-                                        <ListItemText primary={subCategory.name} />
-                                    </ListItem>
-                                ))}
-                            </List>
-                        </Paper>
-                    </Popper>
-                )}
+                
                 <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
                     <MemoizedDrawerContent 
                         categories={categories}
@@ -279,22 +261,9 @@ const ProductList = (props) => {
                 </Drawer>
 
                 <Grid container spacing={1}>
-                    {!isSmallScreen && (
-                        <Grid item xs={12} md={4} lg={3} className='filter-grid'>
-                            <MemoizedDrawerContent 
-                                categories={categories}
-                                openCategory={openCategory}
-                                handleToggleCategory={handleToggleCategory}
-                                isSmallScreen={isSmallScreen}
-                                handleSubCategoryClick={handleSubCategoryClick}
-                                onApplyPriceRange={handleApplyPriceRange}
-                                onApplyPropertiesFilter={handleApplyPropertiesFilter}
-                                subCategoryFromParent={selectedSubCategory} 
-                            />
-                        </Grid>
-                    )}
 
-                    <Grid item xs={12} md={8} lg={9}>
+
+                    <Grid item xs={12}>
                     <MemoizedProductListGridView productsData={productsData} />
                     </Grid>
 
