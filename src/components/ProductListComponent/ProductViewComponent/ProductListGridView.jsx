@@ -66,13 +66,21 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
     };
 
     const parseAddress = (address) => {
-        const objectAddress = JSON.parse(address)
-        // console.log(objectAddress)
-        let addressName = ""
-
-        if (objectAddress[1]) {
-            addressName = objectAddress[1].name
+        let addressName = "";
+    
+        try {
+            // Attempt to parse the address
+            const objectAddress = JSON.parse(address);
+    
+            // If objectAddress[1] exists, extract the name
+            if (objectAddress[1]) {
+                addressName = objectAddress[1].name || ""; // Ensure name exists
+            }
+        } catch (error) {
+            console.error("Invalid JSON address:", error);
         }
+    
+        // Return formatted addressName with commas or an empty string
         return addressName.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
 
