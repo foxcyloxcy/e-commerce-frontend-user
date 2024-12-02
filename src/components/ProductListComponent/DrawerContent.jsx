@@ -143,7 +143,6 @@ const DrawerContent = ({
                 Apply
             </Button>
             <Divider sx={{ marginTop: '10px' }} />
-            {isSmallScreen && (
                 <>
                     <Typography variant="h6" gutterBottom sx={{ padding: 2 }}>Categories</Typography>
                     <List>
@@ -172,7 +171,6 @@ const DrawerContent = ({
                     </List>
                     <Divider sx={{ marginY: '20px' }} />
                 </>
-            )}
 
             {selectedSubCategory && (
                 <div>
