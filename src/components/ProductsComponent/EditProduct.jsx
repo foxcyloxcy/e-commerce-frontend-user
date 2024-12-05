@@ -28,6 +28,7 @@ const EditProduct = ({ userToken }) => {
   const [editedPrice, setEditedPrice] = useState('');
   const [currentAddress, setCurrentAddress] = useState(null);
   const [editedAddress, setEditedAddress] = useState(null);
+  const [address, setAddress] = useState(null);
   const [acceptOffers, setAcceptOffers] = useState(0);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -40,6 +41,15 @@ const EditProduct = ({ userToken }) => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
+  const isValidJSON = (str) => {
+    try {
+      JSON.parse(str);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+  
   useEffect(() => {
     if (state && state.product) {
       const {
@@ -53,7 +63,7 @@ const EditProduct = ({ userToken }) => {
         sub_category_id,
         uuid,
       } = state.product;
-
+  
       // Set current (existing) values
       setCurrentProductName(item_name || '');
       setEditedProductName(item_name || ''); // Initialize edited with current
@@ -63,12 +73,16 @@ const EditProduct = ({ userToken }) => {
       setEditedImages(item_image || []);
       setCurrentPrice(price || '');
       setEditedPrice(price || '');
-      setCurrentAddress(JSON.parse(address) || null);
-      setEditedAddress(JSON.parse(address) || null);
+  
+      // Parse address if valid JSON, otherwise use null
+      const parsedAddress = isValidJSON(address) ? JSON.parse(address) : null;
+      setCurrentAddress(parsedAddress);
+      setEditedAddress(parsedAddress);
+  
       setAcceptOffers(is_bid || 0);
       setSelectedCategory(sub_category?.category_id || '');
       setSelectedSubCategoryId(sub_category_id || '');
-
+  
       loadCategories();
       loadSubCategory(sub_category_id);
       loadProductDetail(uuid);
@@ -108,11 +122,16 @@ const EditProduct = ({ userToken }) => {
     }
   }, []);
 
+  const handleAddressData = async (addressData) => {
+    const addressDetails = JSON.stringify(addressData)
+    setAddress(addressDetails)
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await api.put(`/api/auth/items/${state.product.uuid}?item_name=${editedProductName}&item_description=${editedDescription}&address=${editedAddress}`, null, {
+      const res = await api.put(`/api/auth/items/${state.product.uuid}?item_name=${editedProductName}&item_description=${editedDescription}&address=${address}&price=${editedPrice}`, null, {
         headers: {
           Authorization: `Bearer ${userToken}`,
           'Content-Type': 'multipart/form-data',
@@ -147,12 +166,25 @@ const EditProduct = ({ userToken }) => {
         <Typography variant="h4" gutterBottom>Edit your reloved item</Typography>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <TextField
                 label="Product Name"
                 fullWidth
                 value={editedProductName}
                 onChange={(e) => setEditedProductName(e.target.value)}
+              />
+            </Grid>
+
+            <Grid item xs={6}>
+              <TextField
+                label="Price"
+                type="number"
+                fullWidth
+                value={editedPrice}
+                onChange={(e) => setEditedPrice(e.target.value)}
+                inputProps={{
+                  min: 0,
+                }}
               />
             </Grid>
             
@@ -171,7 +203,7 @@ const EditProduct = ({ userToken }) => {
             <Grid item xs={12}>
               <Divider sx={{ my: 2 }} />
               <CustomMap
-                addressData={setEditedAddress}
+                addressData={handleAddressData}
                 mapDataValue={editedAddress}
                 Editing={true}
               />
