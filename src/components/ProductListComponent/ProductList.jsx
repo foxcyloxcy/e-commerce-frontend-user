@@ -232,11 +232,14 @@ const ProductList = (props) => {
                         </Grid>
                         <Grid item xs={6} sm={6} md={5}>
                             <FormControl variant="outlined" sx={{ minWidth: '100%' }}>
-                            <Select defaultValue="1">
-                                <MenuItem value="1">Newest</MenuItem>
-                                <MenuItem value="2">Oldest</MenuItem>
-                            </Select>
-                        </FormControl>
+                                <Select 
+                                    value={newItems} 
+                                    onChange={(e) => setNewItems(e.target.value)} // Update newItems state
+                                >
+                                    <MenuItem value={1}>Newest</MenuItem>
+                                    <MenuItem value={2}>Oldest</MenuItem>
+                                </Select>
+                            </FormControl>
                         </Grid>
                         <Grid item xs={12} sm={12} md={2}>
                             <Typography variant="body1" sx={{
