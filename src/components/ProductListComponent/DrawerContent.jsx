@@ -28,6 +28,7 @@ const DrawerContent = ({
 }) => {
     const [priceRange, setPriceRange] = useState({ minPrice: '', maxPrice: '' });
     const [propCategories, setPropCategories] = useState([]);
+    const [selectedFilters, setSelectedFilters] = useState({});
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
     const [errors, setErrors] = useState({});
 
