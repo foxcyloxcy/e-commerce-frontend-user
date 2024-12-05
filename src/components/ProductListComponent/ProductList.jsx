@@ -6,6 +6,8 @@ import {
     Container,
     Grid,
     Button,
+    FormControl,
+    Select,
     Drawer,
     useMediaQuery,
     ThemeProvider,
@@ -14,6 +16,7 @@ import {
     List,
     ListItem,
     ListItemText,
+    MenuItem,
     Pagination,
     Typography,
     TextField
@@ -27,11 +30,10 @@ import { useLocation } from 'react-router-dom';
 
 const ProductList = (props) => {
     const { parentIsLoggedIn, userToken, userData } = props;
-    const [anchorEl, setAnchorEl] = useState(null);
     const [categories, setCategories] = useState([]);
+    const [subCategoryIdFromDrawer, setSubCategoryIdFromDrawer] = useState("");
     const [openCategory, setOpenCategory] = useState({});
     const [drawerOpen, setDrawerOpen] = useState(false);
-    const [hoveredCategory, setHoveredCategory] = useState(null);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
     const [keyword, setKeyword] = useState('');
     const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
@@ -41,6 +43,7 @@ const ProductList = (props) => {
     const [priceRange, setPriceRange] = useState(['', '']);
     const [propertiesFilter, setPropertiesFilter] = useState("");
     const [newItems, setNewItems] = useState(1)
+    const [lastSubCategoryId, setLastSubCategoryId] = useState(null);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
@@ -53,15 +56,22 @@ const ProductList = (props) => {
         setPriceRange([minPrice, maxPrice]);
     };
 
-    const handleApplyPropertiesFilter = (properties) => {
-        setPropertiesFilter(properties);
+    const handleApplyPropertiesFilter = () => {
+        // Retrieve the selected values from localStorage
+        const selectedValues = localStorage.getItem('selectedValues') || '';
+    
+        // Convert the comma-delimited string to an array
+        const valuesArray = selectedValues ? selectedValues.split(',') : [];
+    
+        // Apply the properties filter
+        setPropertiesFilter(valuesArray);
     };
 
     const loadCategories = useCallback(async () => {
         try {
             const res = await api.get("api/global/category");
             if (res.status === 200) {
-                console.log(res.data)
+                // console.log(res.data)
                 setCategories(res.data.data);
             }
         } catch (error) {
@@ -69,66 +79,78 @@ const ProductList = (props) => {
         }
     }, []);
 
-    const loadProducts = useCallback(async (subCategoryId, page) => {
-        if (!page) {
-            page = 1;
+
+    const loadProducts = useCallback(
+        async (subCategoryId, page = 1) => {
+            const currentSubCategoryId = subCategoryId || subCategoryIdFromDrawer;
+    
+            // Reset propertiesFilter if subCategoryId has changed
+            if (currentSubCategoryId !== lastSubCategoryId) {
+                setPropertiesFilter("");
+                setLastSubCategoryId(currentSubCategoryId); // Update the last used subCategoryId
+                localStorage.removeItem('selectedValues')
+            }
+    
+            try {
+                let dynamicApi = userToken ? "auth" : "global";
+                let query = `api/${dynamicApi}/items?page=${page}&size=${itemsPerPage}&sort=${newItems}&`;
+    
+                // Append filters if they exist
+                if (currentSubCategoryId) query += `sub_category_id=${currentSubCategoryId}&`;
+                if (priceRange[0] !== "" && priceRange[1] !== "")
+                    query += `filter[min_price]=${priceRange[0]}&filter[max_price]=${priceRange[1]}&`;
+                if (keyword) query += `filter[keyword]=${keyword}&`;
+                if (propertiesFilter) query += `filter[properties]=${propertiesFilter}&`;
+    
+                const res = userToken
+                    ? await api.get(query, {
+                          headers: {
+                              Authorization: `Bearer ${userToken}`,
+                              "Content-Type": "application/json",
+                          },
+                      })
+                    : await api.get(query);
+    
+                if (res.status === 200) {
+                    const fetchedProducts = res.data.data.data;
+                    setTotalProductsCount(res.data.data.total);
+                    setProductsData(fetchedProducts);
+                    setTotalPages(res.data.data.last_page);
+                }
+            } catch (error) {
+                console.error("Error loading products:", error);
+            }
+        },
+        [
+            userToken,
+            itemsPerPage,
+            newItems,
+            priceRange,
+            keyword,
+            propertiesFilter,
+            subCategoryIdFromDrawer,
+            lastSubCategoryId, // Include as a dependency
+        ]
+    );
+    
+    
+
+    useEffect(() => {
+
+        const subCategoryIdFromRoute = location.state?.subCategoryId;
+        if (subCategoryIdFromRoute) {
+            loadProducts(subCategoryIdFromRoute, currentPage);
+        } else {
+            loadProducts(null, currentPage);
         }
-
-        try {
-            let dynamicApi = userToken ? 'auth' : 'global';
-            let query = `api/${dynamicApi}/items?page=${page}&size=${itemsPerPage}&sort=${newItems}&`;
-
-            if (subCategoryId) {
-                query += `sub_category_id=${subCategoryId}&`;
-            }
-
-            if (priceRange[0] !== '' && priceRange[1] !== '') {
-                query += `filter[min_price]=${priceRange[0]}&filter[max_price]=${priceRange[1]}&`;
-            }
-
-            if (keyword) {
-                query += `filter[keyword]=${keyword}&`; // Added keyword to the query
-            }
-
-            if (propertiesFilter) {
-                query += `filter[properties]=${propertiesFilter}&`; // Added keyword to the query
-            }
-
-            const res = userToken
-                ? await api.get(query, {
-                    headers: {
-                        Authorization: `Bearer ${userToken}`,
-                        'Content-Type': 'multipart/form-data',
-                    },
-                })
-                : await api.get(query);
-
-            if (res.status === 200) {
-
-                const fetchedProducts = res.data.data.data;
-                setTotalProductsCount(res.data.data.total)
-                setProductsData(fetchedProducts);
-                setTotalPages(res.data.data.last_page);
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }, []);
+    
+        setIsLoggedIn(parentIsLoggedIn || false);
+    }, [loadProducts, parentIsLoggedIn, currentPage]);
 
     useEffect(() => {
         loadCategories();
+    }, []);
 
-        const subCategoryIdFromRoute = location.state?.subCategoryId;
-        loadProducts(subCategoryIdFromRoute, currentPage);
-
-        if (parentIsLoggedIn === true) {
-            setIsLoggedIn(parentIsLoggedIn);
-        } else {
-            setIsLoggedIn(false)
-        }
-
-
-    }, [priceRange, keyword, userToken, propertiesFilter, parentIsLoggedIn, currentPage]);
 
 
     const toggleDrawer = () => {
@@ -137,6 +159,7 @@ const ProductList = (props) => {
 
     const handlePageChange = (event, value) => {
         setCurrentPage(value);
+        loadProducts(selectedSubCategory?.id, value);
     };
 
     const handleToggleCategory = (categoryId) => {
@@ -147,25 +170,15 @@ const ProductList = (props) => {
     };
 
     const handleSubCategoryClick = (subCategory) => {
-        loadProducts(subCategory.id);
         setSelectedSubCategory(subCategory)
-    };
-
-    const handleMouseEnter = (categoryId, event) => {
-        setHoveredCategory(categoryId);
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMouseLeave = (event) => {
-        // Ensure that mouse leave only triggers when the mouse actually leaves the Popper
-        if (!event.currentTarget.contains(event.relatedTarget)) {
-            setHoveredCategory(null);
-            setAnchorEl(null);
-        }
+        setSubCategoryIdFromDrawer(subCategory.id)
+        loadProducts(subCategory.id);
     };
 
     const handleSearchChange = (event) => {
-        setKeyword(event.target.value); // Updates the keyword on input change
+        const searchValue = event.target.value;
+        setKeyword(searchValue);
+        loadProducts(selectedSubCategory?.id, 1); // Reset page to 1 on search change
     };
 
     return (
@@ -201,23 +214,11 @@ const ProductList = (props) => {
                         >
                             <Filter />
                         </IconButton>
-                        {/* {!isSmallScreen && categories.map((category) => (
-                            <Button
-                                key={category.id}
-                                onMouseEnter={(event) => handleMouseEnter(category.id, event)}
-                                sx={{
-                                    fontSize: '1rem',
-                                }}
-                            >
-                                {category.name}
-                                {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
-                            </Button>
-                        ))} */}
                     </Toolbar>
                 </AppBar>
                 <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
                     <Grid container display="flex" justifyContent="space-between" alignItems="center">
-                    <Grid item xs={6} sm={6} md={4} lg={4}>
+                    <Grid item xs={6} sm={6} md={5}>
                             <TextField
                                 fullWidth
                                 variant="outlined"
@@ -229,21 +230,22 @@ const ProductList = (props) => {
                                 }}
                             />
                         </Grid>
-                        <Grid item xs={6} sm={6} md={8} lg={8}>
-                            <Typography variant="body1" sx={{
-                                display: 'flex',
-                                justifyContent: {xs:'flex-end', sm:'flex-end', md:'flex-end'},
-                                flexDirection: 'row'
-                            }}>{totalProductsCount} Items found</Typography>
-                        </Grid>
-                        {/* <Grid item xs={4} sm={4} md={4}>
+                        <Grid item xs={6} sm={6} md={5}>
                             <FormControl variant="outlined" sx={{ minWidth: '100%' }}>
                             <Select defaultValue="1">
-                                <MenuItem value="1">Latest items</MenuItem>
-                                <MenuItem value="2">Cheapest</MenuItem>
+                                <MenuItem value="1">Newest</MenuItem>
+                                <MenuItem value="2">Oldest</MenuItem>
                             </Select>
                         </FormControl>
-                        </Grid> */}
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={2}>
+                            <Typography variant="body1" sx={{
+                                display: 'flex',
+                                justifyContent: {xs:'center', sm:'center', md:'flex-end'},
+                                flexDirection: 'row',
+                                mt: {xs: 1, sm: 1, md: 0}
+                            }}>{totalProductsCount} Items found</Typography>
+                        </Grid>
                     </Grid>
                 </header>
                 
@@ -252,7 +254,6 @@ const ProductList = (props) => {
                         categories={categories}
                         openCategory={openCategory}
                         handleToggleCategory={handleToggleCategory}
-                        isSmallScreen={isSmallScreen}
                         handleSubCategoryClick={handleSubCategoryClick}
                         onApplyPriceRange={handleApplyPriceRange}
                         onApplyPropertiesFilter={handleApplyPropertiesFilter}
