@@ -27,7 +27,7 @@ const DrawerContent = ({
     onApplyPropertiesFilter
 }) => {
     const [priceRange, setPriceRange] = useState({ minPrice: '', maxPrice: '' });
-    const [selectedFilters, setSelectedFilters] = useState({});
+    const [propCategories, setPropCategories] = useState([]);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
     const [errors, setErrors] = useState({});
 
@@ -38,7 +38,7 @@ const DrawerContent = ({
 
     const validatePriceRange = () => {
         const { minPrice, maxPrice } = priceRange;
-        let validationErrors = {};
+        const validationErrors = {};
 
         if (minPrice && maxPrice && Number(minPrice) > Number(maxPrice)) {
             validationErrors.minPrice = 'Minimum price cannot exceed maximum price';
@@ -60,30 +60,29 @@ const DrawerContent = ({
         }
     };
 
-    const handleFilterChange = (propertyId, valueId) => {
-        setSelectedFilters((prevFilters) => ({
-            ...prevFilters,
-            [propertyId]: prevFilters[propertyId]?.includes(valueId)
-                ? prevFilters[propertyId].filter((id) => id !== valueId)
-                : [...(prevFilters[propertyId] || []), valueId],
-        }));
-    };
-
-    const handleApplyPropertiesFilter = (valueId) => {
-        // Apply the filter logic as before
-
-        onApplyPropertiesFilter(valueId);
-    };
-
-    const handleCheckboxChange = (propertyId, valueId) => {
-        // Update the filter state first
-        handleFilterChange(propertyId, valueId);
+    const handleCheckboxChange = (valueId) => {
+        // Get existing values from localStorage or initialize as an empty string
+        let storedValues = localStorage.getItem('selectedValues') || '';
+    
+        // Split the stored values into an array for validation
+        let valuesArray = storedValues ? storedValues.split(',') : [];
+    
+        // Check if the valueId already exists in the array
+        if (!valuesArray.includes(valueId)) {
+            // Add the new valueId to the array
+            valuesArray.push(valueId);
+    
+            // Update localStorage with the updated array as a comma-delimited string
+            localStorage.setItem('selectedValues', valuesArray.join(','));
+        }
+    
         // Apply the properties filter
-        handleApplyPropertiesFilter(valueId);
+        // onApplyPropertiesFilter();
     };
 
     const handleSubCategorySelect = (subCategory) => {
         setSelectedSubCategory(subCategory);
+        setSelectedFilters({});
         handleSubCategoryClick(subCategory);
     };
 
@@ -92,10 +91,18 @@ const DrawerContent = ({
     };
 
     useEffect(() => {
+
         if (subCategoryFromParent) {
             handleSubCategorySelectFromParent(subCategoryFromParent);
         }
     }, [subCategoryFromParent]);
+
+    useEffect(() => {
+
+        if(categories !== propCategories){
+            setPropCategories(categories)
+        }
+    }, []);
 
     return (
         <Container sx={{ width: 300 }}>
@@ -110,7 +117,7 @@ const DrawerContent = ({
                         placeholder="AED 50"
                         name="minPrice"
                         type="number"
-                        size='small'
+                        size="small"
                         value={priceRange.minPrice}
                         onChange={handlePriceChange}
                         error={!!errors.minPrice}
@@ -124,7 +131,7 @@ const DrawerContent = ({
                         placeholder="AED 50,000"
                         name="maxPrice"
                         type="number"
-                        size='small'
+                        size="small"
                         value={priceRange.maxPrice}
                         onChange={handlePriceChange}
                         error={!!errors.maxPrice}
@@ -143,59 +150,54 @@ const DrawerContent = ({
                 Apply
             </Button>
             <Divider sx={{ marginTop: '10px' }} />
-                <>
-                    <Typography variant="h6" gutterBottom sx={{ padding: 2 }}>Categories</Typography>
-                    <List>
-                        {categories.map((category) => (
-                            <React.Fragment key={category.id}>
-                                <ListItem button onClick={() => handleToggleCategory(category.id)}>
-                                    <ListItemText primary={category.name} />
-                                    {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
-                                </ListItem>
-                                <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
-                                    <List component="div" disablePadding>
-                                        {category.sub_category.map((subCategory) => (
-                                            <ListItem
-                                                button
-                                                key={subCategory.id}
-                                                sx={{ pl: 4 }}
-                                                onClick={() => handleSubCategorySelect(subCategory)}
-                                            >
-                                                <ListItemText primary={subCategory.name} />
-                                            </ListItem>
-                                        ))}
-                                    </List>
-                                </Collapse>
-                            </React.Fragment>
-                        ))}
-                    </List>
-                    <Divider sx={{ marginY: '20px' }} />
-                </>
 
-            {selectedSubCategory && (
-                <div>
-                    {selectedSubCategory.sub_category_property.map((property) => (
-                        <React.Fragment key={property.id}>
-                            <Typography variant="h6" gutterBottom>{property.name}</Typography>
-                            <FormGroup>
-                                {property.sub_category_property_value.map((value) => (
-                                    <FormControlLabel
-                                        key={value.id}
-                                        control={
-                                            <Checkbox
-                                                onChange={() => handleCheckboxChange(property.id, value.id)}
-                                                checked={selectedFilters[property.id]?.includes(value.id) || false}
-                                            />
-                                        }
-                                        label={value.name}
-                                    />
+            <Typography variant="h6" gutterBottom sx={{ padding: 2 }}>Categories</Typography>
+            <List>
+                {propCategories.map((category) => (
+                    <React.Fragment key={category.id}>
+                        <ListItem button onClick={() => handleToggleCategory(category.id)}>
+                            <ListItemText primary={category.name} />
+                            {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
+                        </ListItem>
+                        <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                {category.sub_category.map((subCategory) => (
+                                    <ListItem
+                                        button
+                                        key={subCategory.id}
+                                        sx={{ pl: 4 }}
+                                        onClick={() => handleSubCategorySelect(subCategory)}
+                                    >
+                                        <ListItemText primary={subCategory.name} />
+                                    </ListItem>
                                 ))}
-                            </FormGroup>
-                            <Divider sx={{ marginY: '20px' }} />
-                        </React.Fragment>
-                    ))}
-                </div>
-            )}
+                            </List>
+                        </Collapse>
+                    </React.Fragment>
+                ))}
+            </List>
+            <Divider sx={{ marginY: '20px' }} />
+
+            {selectedSubCategory &&
+                selectedSubCategory.sub_category_property.map((property) => (
+                    <React.Fragment key={property.id}>
+                        <Typography variant="h6" gutterBottom>{property.name}</Typography>
+                        <FormGroup>
+                            {property.sub_category_property_value.map((value) => (
+                                <FormControlLabel
+                                    key={value.id}
+                                    control={
+                                        <Checkbox
+                                            onChange={() => handleCheckboxChange(value.id)}
+                                        />
+                                    }
+                                    label={value.name}
+                                />
+                            ))}
+                        </FormGroup>
+                        <Divider sx={{ marginY: '20px' }} />
+                    </React.Fragment>
+                ))}
         </Container>
     );
 };
