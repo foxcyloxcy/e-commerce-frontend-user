@@ -119,7 +119,6 @@ const ProductDetails = () => {
     }, [loadProducts]);
 
     const handleMamoCheckout = async (uuid) => {
-
         if (!isLoggedIn) {
             Swal.fire({
                 title: 'Oops!',
@@ -128,7 +127,7 @@ const ProductDetails = () => {
                 showCancelButton: true,
                 confirmButtonText: "Ok, I'll login.",
                 confirmButtonColor: ModTheme.palette.primary.main,
-                cancelButtonText: 'Cancel'
+                cancelButtonText: 'Cancel',
             }).then((result) => {
                 if (result.isConfirmed) {
                     navigate('/login');
@@ -136,38 +135,49 @@ const ProductDetails = () => {
             });
             return;
         }
-
+    
         if (!confirmCollection) {
             Swal.fire('Error', 'You need to confirm collecting the item', 'error');
             return;
         }
-
+    
         if (!agreeRefund) {
             Swal.fire('Error', 'You need to agree to the refund policy', 'error');
             return;
         }
-
+    
         setLoading(true);
         try {
-            const res = await api.post(`/api/auth/payment/mamopay/checkout/${uuid}`, {
-                discount: discountCode //discount_code ito
-            }, {
-                headers: {
-                    Authorization: `Bearer ${userToken}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-
+            const res = await api.post(
+                `/api/auth/payment/mamopay/checkout/${uuid}`,
+                { discount: discountCode }, // discount_code field
+                {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+    
             if (res.status === 200) {
-                const mamopayUrl = res.data.data.payment_url
-                window.location.href = mamopayUrl
+                const mamopayUrl = res.data.data.payment_url;
+                window.location.href = mamopayUrl;
             }
         } catch (error) {
-            console.log("Error:", error);
+            console.error("Error:", error);
+    
+            Swal.fire({
+                title: 'Payment Error',
+                text: 'An error occurred while processing your payment. Please try again later.',
+                icon: 'error',
+                confirmButtonText: 'OK',
+                confirmButtonColor: ModTheme.palette.primary.main,
+            });
         } finally {
             setLoading(false);
         }
     };
+    
 
     const handleApplyDiscountCode = async (itemId) => {
 
@@ -576,13 +586,14 @@ const ProductDetails = () => {
 
                             <Grid item width="100%">
                                 <ButtonComponent
-                                    label="Buy Item"
+                                    label={loading ? "Processing..." : "Buy Item"}
                                     size="small"
                                     buttonVariant="contained"
                                     textColor="primary.contrastText"
                                     hoverTextColor="secondary.main"
-                                    startIcon={<AddShoppingCartIcon />}
+                                    startIcon={!loading && <AddShoppingCartIcon />}
                                     onClick={() => handleMamoCheckout(productUuid)}
+                                    disabled={loading} // Disable button while loading
                                 />
                             </Grid>
                         </Grid>
