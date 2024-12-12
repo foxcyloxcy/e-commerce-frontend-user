@@ -203,6 +203,7 @@ const EditProduct = ({ userToken }) => {
             <Grid item xs={12}>
               <Divider sx={{ my: 2 }} />
               <CustomMap
+                required
                 addressData={handleAddressData}
                 mapDataValue={editedAddress}
                 Editing={true}
