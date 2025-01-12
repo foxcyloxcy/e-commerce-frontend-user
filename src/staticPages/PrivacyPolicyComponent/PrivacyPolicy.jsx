@@ -37,12 +37,12 @@ const PrivacyPolicy = () => {
                     <ListItem>4. DO WE USE COOKIES AND OTHER TRACKING TECHNOLOGIES?</ListItem>
                     <ListItem>5. HOW LONG DO WE KEEP YOUR INFORMATION?</ListItem>
                     <ListItem>6. HOW DO WE KEEP YOUR INFORMATION SAFE?</ListItem>
-                    <ListItem>7. DO WE COLLECT INFORMATION FROM MINORS?</ListItem>
-                    <ListItem>8. WHAT ARE YOUR PRIVACY RIGHTS?</ListItem>
-                    <ListItem>9. CONTROLS FOR DO-NOT-TRACK FEATURES</ListItem>
-                    <ListItem>10. DO CALIFORNIA RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?</ListItem>
-                    <ListItem>11. DO WE MAKE UPDATES TO THIS NOTICE?</ListItem>
-                    <ListItem>12. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?</ListItem>
+                    {/* <ListItem>7. DO WE COLLECT INFORMATION FROM MINORS?</ListItem> */}
+                    <ListItem>7. WHAT ARE YOUR PRIVACY RIGHTS?</ListItem>
+                    <ListItem>8. CONTROLS FOR DO-NOT-TRACK FEATURES</ListItem>
+                    <ListItem>9. DO CALIFORNIA RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?</ListItem>
+                    <ListItem>10. DO WE MAKE UPDATES TO THIS NOTICE?</ListItem>
+                    <ListItem>11. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?</ListItem>
                 </List>
 
                 <Divider style={{ margin: '20px 0' }} />
@@ -56,7 +56,8 @@ const PrivacyPolicy = () => {
                 </Typography>
 
                 <Typography variant="body1" paragraph>
-                    <strong>In Short:</strong> We collect personal information that you provide to us.
+                    <strong>In Short:</strong>
+                        <i>We collect personal information that you provide to us.</i> 
                 </Typography>
 
                 <Typography variant="body1" paragraph>
@@ -68,7 +69,7 @@ const PrivacyPolicy = () => {
                 </Typography>
 
                 <Typography variant="body1" paragraph>
-                    <strong>Personal Information Provided by You:</strong> We collect names; phone numbers; email addresses; contact preferences; and other similar information.
+                    <strong>Personal Information Provided by You:</strong> We collect names; phone numbers; email addresses; contact preferences; bank details; and other similar information.
                 </Typography>
 
                 <Typography variant="body1" paragraph>
@@ -76,11 +77,14 @@ const PrivacyPolicy = () => {
                 </Typography>
 
                 <Typography variant="h4">
-                    Information automatically collected
+                    <strong>Information automatically collected</strong>
                 </Typography>
 
                 <Typography variant="body1" paragraph>
-                    <strong>In Short:</strong> Some information — such as your Internet Protocol (IP) address and/or browser and device characteristics — is collected automatically when you visit our App and/or Website.
+                    <strong>In Short:</strong>
+                        <i>
+                        Some information — such as your Internet Protocol (IP) address and/or browser and device characteristics — is collected automatically when you visit our App and/or Website.
+                        </i>
                 </Typography>
 
                 <Typography variant="body1" paragraph>
@@ -112,7 +116,10 @@ const PrivacyPolicy = () => {
                 </Typography>
 
                 <Typography variant="body1" paragraph>
-                    <strong>In Short:</strong> We process your information for purposes based on legitimate business interests, the fulfillment of our contract with you, compliance with our legal obligations, and/or your consent.
+                    <strong>In Short:</strong>
+                    <i>
+                    We process your information for purposes based on legitimate business interests, the fulfillment of our contract with you, compliance with our legal obligations, and/or your consent.
+                        </i>
                 </Typography>
 
                 <Typography variant="body1" paragraph>
@@ -129,7 +136,7 @@ const PrivacyPolicy = () => {
                     <ListItem>To protect our Services. We may use your information as part of our efforts to keep our App and/or Website safe and secure (for example, for fraud monitoring and prevention).</ListItem>
                     <ListItem>To enforce our terms, conditions and policies for business purposes, to comply with legal and regulatory requirements or in connection with our contract.</ListItem>
                     <ListItem>To respond to legal requests and prevent harm. If we receive a subpoena or other legal request, we may need to inspect the data we hold to determine how to respond.</ListItem>
-                    <ListItem>Fulfill and manage your orders. We may use your information to fulfill and manage your orders, payments, returns, and exchanges made through the App and/or Website.</ListItem>
+                    <ListItem>Fulfill and manage your orders. We may use your information to fulfill and manage your orders, payments, returns, and exchanges made through the App and/or Website. We will pass your bank and personal information through to Mamo Pay / Business to process any payments that you make or receive, this element of your data will also be subject to mamo business’ data and privacy policies. </ListItem>
                     <ListItem>Administer prize draws and competitions. We may use your information to administer prize draws and competitions when you elect to participate in our competitions.</ListItem>
                     <ListItem>To send you marketing and promotional communications. We and/or our third-party marketing partners may use the personal information you send to us for our marketing purposes, if this is in accordance with your marketing preferences. For example, when expressing an interest in obtaining information about us or our App and/or Website, subscribing to marketing or otherwise contacting us, we will collect personal information from you. You can opt-out of our marketing emails at any time (see the "WHAT ARE YOUR PRIVACY RIGHTS?" below).</ListItem>
                     <ListItem>Deliver targeted advertising to you. We may use your information to develop and display personalized content and advertising (and work with third parties who do so) tailored to your interests and/or location and to measure its effectiveness.</ListItem>
@@ -143,7 +150,9 @@ const PrivacyPolicy = () => {
                 </Typography>
 
                 <Typography variant="body1" paragraph>
-                    <strong>In Short:</strong> We only share information with your consent, to comply with laws, to provide you with services, to protect your rights, or to fulfill business obligations.
+                    <strong>In Short:</strong> <i>
+                    We share information with mamo business for payment processes and with your consent, to comply with laws, to provide you with services, to protect your rights, or to fulfill business obligations.
+                        </i>
                 </Typography>
 
                 <Typography variant="body1" paragraph>
@@ -173,7 +182,10 @@ const PrivacyPolicy = () => {
                 </Typography>
 
                 <Typography variant="body1" paragraph>
-                    <strong>In Short:</strong> We may use cookies and other tracking technologies to collect and store your information.
+                    <strong>In Short:</strong>
+                        <i>
+                         We may use cookies and other tracking technologies to collect and store your information.
+                        </i>
                 </Typography>
 
                 <Divider style={{ margin: '2rem 0' }} />
@@ -183,7 +195,9 @@ const PrivacyPolicy = () => {
                 </Typography>
 
                 <Typography variant="body1" paragraph>
-                    <strong>In Short:</strong> We keep your information for as long as necessary to fulfill the purposes outlined in this privacy notice unless otherwise required by law.
+                    <strong>In Short:</strong>
+                    <i>
+                    We keep your information for as long as necessary to fulfill the purposes outlined in this privacy notice unless otherwise required by law.</i> 
                 </Typography>
 
                 <Typography variant="body1" paragraph>
@@ -201,14 +215,17 @@ const PrivacyPolicy = () => {
                 </Typography>
 
                 <Typography variant="body1" paragraph>
-                    <strong>In Short:</strong> We aim to protect your personal information through a system of organizational and technical security measures.
+                    <strong>In Short:</strong>
+                    <i>
+                    We aim to protect your personal information through a system of organizational and technical security measures.
+                        </i> 
                 </Typography>
 
                 <Typography variant="body1" paragraph>
                     We have implemented appropriate technical and organizational security measures designed to protect the security of any personal information we process. However, despite our safeguards and efforts to secure your information, no electronic transmission over the Internet or information storage technology can be guaranteed to be 100% secure, so we cannot promise or guarantee that hackers, cybercriminals, or other unauthorized third parties will not be able to defeat our security, and improperly collect, access, steal, or modify your information. Although we will do our best to protect your personal information, transmission of personal information to and from our App and/or Website is at your own risk. You should only access the App and/or Website within a secure environment.
                 </Typography>
 
-                <Typography variant="h5" gutterBottom>
+                {/* <Typography variant="h5" gutterBottom>
                     7. DO WE COLLECT INFORMATION FROM MINORS?
                 </Typography>
 
@@ -218,16 +235,17 @@ const PrivacyPolicy = () => {
 
                 <Typography variant="body1" paragraph>
                     We do not knowingly solicit data from or market to children under 18 years of age. By using the App and/or Website, you represent that you are at least 18 or that you are the parent or guardian of such a minor and consent to such minor dependent’s use of the App and/or Website. If we learn that personal information from users less than 18 years of age has been collected, we will deactivate the account and take reasonable measures to promptly delete such data from our records. If you become aware of any data we may have collected from children under age 18, please contact us at EMAIL.
-                </Typography>
+                </Typography> */}
 
                 <Divider style={{ margin: '2rem 0' }} />
 
                 <Typography variant="h5" gutterBottom>
-                    8. WHAT ARE YOUR PRIVACY RIGHTS?
+                    7. WHAT ARE YOUR PRIVACY RIGHTS?
                 </Typography>
 
                 <Typography variant="body1" paragraph>
-                    <strong>In Short:</strong> In some regions, such as the European Economic Area (EEA) and United Kingdom (UK), you have rights that allow you greater access to and control over your personal information. You may review, change, or terminate your account at any time.
+                    <strong>In Short:</strong>
+                    <i>In some regions, such as the European Economic Area (EEA) and United Kingdom (UK), you have rights that allow you greater access to and control over your personal information. You may review, change, or terminate your account at any time.</i>
                 </Typography>
 
                 <Typography variant="body1" paragraph>
@@ -378,7 +396,7 @@ const PrivacyPolicy = () => {
                 <Divider style={{ margin: '2rem 0' }} />
 
                 <Typography variant="h5" gutterBottom>
-                    9. CONTROLS FOR DO-NOT-TRACK FEATURES
+                    8. CONTROLS FOR DO-NOT-TRACK FEATURES
                 </Typography>
 
                 <Typography variant="body1" paragraph>
@@ -388,11 +406,12 @@ const PrivacyPolicy = () => {
                 <Divider style={{ margin: '2rem 0' }} />
 
                 <Typography variant="h5" gutterBottom>
-                    10. DO CALIFORNIA RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?
+                    9. DO CALIFORNIA RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?
                 </Typography>
 
                 <Typography variant="body1" paragraph>
-                    <strong>In Short:</strong> Yes, if you are a resident of California, you are granted specific rights regarding access to your personal information.
+                    <strong>In Short:</strong>
+                    <i>Yes, if you are a resident of California, you are granted specific rights regarding access to your personal information.</i>
                 </Typography>
 
                 <Typography variant="body1" paragraph>
@@ -470,7 +489,7 @@ const PrivacyPolicy = () => {
                 </Typography>
 
                 <Typography variant="body1" paragraph>
-                    You may contact us at <a href="mailto:EMAIL">EMAIL</a>.
+                    You may contact us at <a href="mailto:hello@therelovedmarketplace.com">hello@therelovedmarketplace.com</a>.
                 </Typography>
 
                 <Typography variant="body1" paragraph>
@@ -495,13 +514,13 @@ const PrivacyPolicy = () => {
                     Your Rights with Respect to Your Personal Data
                 </Typography>
 
-                <Typography variant="body1" paragraph>
+                {/* <Typography variant="body1" paragraph>
                     <strong>Right to Request Deletion of the Data - Request to Delete:</strong>
                 </Typography>
 
                 <Typography variant="body1" paragraph>
                     You can ask for the deletion of your personal information. If you ask us to delete your personal information, we will respect your request and delete your personal information, subject to certain exceptions provided by law, such as (but not limited to) the exercise by another consumer of his or her right to free speech, our compliance requirements resulting from a legal obligation, or any processing that may be required to protect against illegal activities.
-                </Typography>
+                </Typography> */}
 
                 <Typography variant="body1" paragraph>
                     <strong>Right to Be Informed - Request to Know:</strong>
@@ -597,17 +616,19 @@ const PrivacyPolicy = () => {
                 </List>
 
                 <Typography variant="body1" paragraph>
-                    To exercise these rights, you can contact us at <a href="mailto:EMAIL">EMAIL</a>. If you have a complaint about how we handle your data, we would like to hear from you.
+                    To exercise these rights, you can contact us at <a href="mailto:hello@therelovedmarketplace.com">hello@therelovedmarketplace.com</a>. If you have a complaint about how we handle your data, we would like to hear from you.
                 </Typography>
 
                 <Divider style={{ margin: '2rem 0' }} />
 
                 <Typography variant="h5" gutterBottom>
-                    11. Do We Make Updates to This Notice?
+                    10. Do We Make Updates to This Notice?
                 </Typography>
 
                 <Typography variant="body1" paragraph>
-                    <strong>In Short:</strong> Yes, we will update this notice as necessary to stay compliant with relevant laws.
+                    <strong>In Short:</strong>
+                    <i>
+                    Yes, we will update this notice as necessary to stay compliant with relevant laws.</i>
                 </Typography>
 
                 <Typography variant="body1" paragraph>
@@ -617,11 +638,11 @@ const PrivacyPolicy = () => {
                 <Divider style={{ margin: '2rem 0' }} />
 
                 <Typography variant="h5" gutterBottom>
-                    12. How Can You Contact Us About This Notice?
+                    11. How Can You Contact Us About This Notice?
                 </Typography>
 
                 <Typography variant="body1" paragraph>
-                    If you have questions or comments about this notice, you may email us at <a href="mailto:EMAIL">EMAIL</a>.
+                    If you have questions or comments about this notice, you may email us at <a href="mailto:hello@therelovedmarketplace.com">hello@therelovedmarketplace.com</a>.
                 </Typography>
                 </Paper>
             </Container>
