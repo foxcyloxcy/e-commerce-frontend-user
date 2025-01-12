@@ -45,7 +45,7 @@ const DataProcessingAgreement = () => {
               <ListItemText primary="1.2 This DPA applies where and only to the extent that Reloved processes Personal Data on behalf of the User in the course of providing the Services, and such Personal Data is subject to Data Protection Laws of the appropriate jurisdiction, including United Arab Emirates, the State of California, the European Union, the European Economic Area, and/or its member states, Switzerland, and/or the United Kingdom. The parties agree to comply with the terms and conditions in this DPA in connection with such Personal Data." />
             </ListItem>
             <ListItem>
-              <ListItemText primary="          1.3 The duration of the Processing covered by this DPA shall be in accordance with the duration of the Agreement." />
+              <ListItemText primary="1.3 The duration of the Processing covered by this DPA shall be in accordance with the duration of the Agreement." />
             </ListItem>
           </List>
 
@@ -176,14 +176,15 @@ const DataProcessingAgreement = () => {
           </Typography>
           <List>
             <ListItem>
-              <ListItemText primary="7.1 Reloved will have the obligations set forth in this Section 7 if it Processes Personal Data in its capacity as User’s Processor or Service Provider; for clarity, these obligations do not apply to Reloved in its capacity as a Controller, Business, or Third party." />
+              <ListItemText primary="7.1 Reloved will have the obligations set forth in this Section 7 if it Processes Personal Data in its capacity as User’s Processor or Service Provider; for clarity, these obligations do not apply to Reloved in its capacity as a Controller, Business, or Third party. Reloved will provide personal and bank account information to Mamo Business as part of the payment cycle process for the buyer to pay for goods from the seller and the buyers platform fee is processed to reloved. The privacy and data processing terms for these details passed to mamo business / pay will be subject to their policy" />
             </ListItem>
             <ListItem>
               <ListItemText primary="7.2 Scope of Processing." />
             </ListItem>
             <List sx={{ ml: 5 }}>
               <ListItem>
-                <ListItemText primary="7.2.1 Reloved will Process Personal Data to provide Services to User under the Agreement, and comply with applicable law. Reloved will notify User if the law changes and those changes cause Reloved not to be able to comply with the Agreement." />
+                <ListItemText primary="7.2.1 Reloved will Process Personal Data to provide Services to User under the Agreement, and comply with applicable law. Reloved will notify User if the law changes and those changes cause Reloved not to be able to comply with the Agreement.
+                Reloved will provide personal and bank account information to Mamo Business as part of the payment cycle process for the buyer to pay for goods from the seller and the buyers platform fee is processed to reloved." />
               </ListItem>
             </List>
             <ListItem>
@@ -194,7 +195,7 @@ const DataProcessingAgreement = () => {
             </ListItem>
             <List sx={{ ml: 5 }}>
               <ListItem>
-                <ListItemText primary="7.4.1 Existing Subprocessors. User agrees that Reloved may use the Subprocessors listed at Schedule 3." />
+                <ListItemText primary="7.4.1 Existing Subprocessors. User agrees that Reloved may use the Subprocessors listed at Schedule 1 and 2." />
               </ListItem>
               <ListItem>
                 <ListItemText primary="7.4.2 Use of Subprocessors. User grants Reloved general authorization to engage Subprocessors if Reloved and a Subprocessor enter into an agreement that requires the Subprocessor to meet obligations that are no less protective than this DPA." />
@@ -212,14 +213,14 @@ const DataProcessingAgreement = () => {
             <ListItem>
               <ListItemText primary="7.6 Deletion and Return of Personal Data. Upon deactivation of the Services, all Personal Data shall be deleted, save that this requirement shall not apply to the extent Reloved is required by applicable law to retain some or all of the Personal Data, or to Personal Data it has archived on back-up systems, which such Personal Data Reloved shall securely isolate and protect from any further processing, except to the extent required by applicable law." />
             </ListItem>
-            <ListItem>
+            {/* <ListItem>
               <ListItemText primary="7.7 Audits." />
             </ListItem>
             <List sx={{ ml: 5 }}>
               <ListItem>
                 <ListItemText primary="7.7.1 Reloved shall maintain records of its security standards. Upon User’s written request, Reloved shall provide (on a confidential basis) copies of relevant external ISMS certifications, audit report summaries and/or other documentation reasonably required by User to verify Reloved’s compliance with this DPA. Reloved shall further provide written responses (on a confidential basis) to all reasonable requests for information made by User, including responses to information security and audit questionnaires, that User (acting reasonably) considers necessary to confirm Reloved’s compliance with this DPA, provided that User shall not exercise this right more than once per year." />
               </ListItem>
-            </List>
+            </List> */}
           </List>
 
           <Divider sx={{ marginY: 2 }} />
@@ -274,10 +275,12 @@ const DataProcessingAgreement = () => {
                   </TableCell>
                   <TableCell>
                     User is a Controller.<br />
-                    Reloved is a Controller.
+                    Reloved is a Controller. <br />
+                    Mamo business is a Controller.
                   </TableCell>
                   <TableCell>
-                    Account registration, payment information, user content, communications, usage of Services, and third-party accounts.
+                    Account registration, payment information, user content, communications, usage of Services, and third-party accounts.<br/>
+                    Mamo business manages and holds the users bank details which the user provides as part of their profile set-up which is then used to receive payments from the buyer. 
                   </TableCell>
                   <TableCell>None</TableCell>
                   <TableCell>Continuous</TableCell>
@@ -325,7 +328,7 @@ const DataProcessingAgreement = () => {
                     Measures for ensuring ongoing confidentiality, integrity, availability and resilience of processing systems and services
                   </TableCell>
                   <TableCell>
-                    eloved has policies and procedures in place to ensure confidentiality, integrity and resilience of processing systems and services. These include an Access Control Policy, Business Continuity and Disaster Recovery Policy, and a Secure Development Policy. eloved will maintain and provide policies upon request.
+                    Reloved has policies and procedures in place to ensure confidentiality, integrity and resilience of processing systems and services. These include an Access Control Policy, Business Continuity and Disaster Recovery Policy, and a Secure Development Policy. Reloved will maintain and provide policies upon request.
                   </TableCell>
                 </TableRow>
 
@@ -343,7 +346,7 @@ const DataProcessingAgreement = () => {
                     Processes for regularly testing, assessing and evaluating the effectiveness of technical and organizational measures in order to ensure the security of the processing
                   </TableCell>
                   <TableCell>
-                    eloved regularly monitors and tests controls to ensure they are operating as intended and updated as needed. eloved leadership monitors these controls regularly, and is notified immediately when a control is at risk so that prompt action can be taken.
+                    Reloved regularly monitors and tests controls to ensure they are operating as intended and updated as needed. Reloved leadership monitors these controls regularly, and is notified immediately when a control is at risk so that prompt action can be taken.
                   </TableCell>
                 </TableRow>
 
@@ -352,7 +355,7 @@ const DataProcessingAgreement = () => {
                     Measures for user identification and authorization
                   </TableCell>
                   <TableCell>
-                    eloved maintains an Access Control Policy, which can be provided upon request. Measures for access control and authorization include formally documented roles and permissions, encrypted connection to production systems and networks, strong passwords stored within a password manager, and single-sign on or 2FA where available. eloved Access Control Policy applies to all eloved employees and to all external parties with access to eloved engineering networks and system resources.
+                    Reloved maintains an Access Control Policy, which can be provided upon request. Measures for access control and authorization include formally documented roles and permissions, encrypted connection to production systems and networks, strong passwords stored within a password manager, and single-sign on or 2FA where available. Reloved Access Control Policy applies to all Reloved employees and to all external parties with access to Reloved engineering networks and system resources.
                   </TableCell>
                 </TableRow>
 
@@ -361,7 +364,7 @@ const DataProcessingAgreement = () => {
                     Measures for the protection of data during transmission
                   </TableCell>
                   <TableCell>
-                    All data outside the eloved's private network is encrypted with HTTPS/SSL. All measures are outlined in the eloved's Data Management Policy, which can be provided upon request.
+                    All data outside the Reloved's private network is encrypted with HTTPS/SSL. All measures are outlined in the Reloved's Data Management Policy, which can be provided upon request.
                   </TableCell>
                 </TableRow>
 
@@ -379,7 +382,7 @@ const DataProcessingAgreement = () => {
                     Measures for ensuring physical security of locations at which personal data are processed
                   </TableCell>
                   <TableCell>
-                    eloved does not operate physical servers or other infrastructure. For employer-provided computers: All eloved employees are required to complete physical security training, and all employees and contractors are required to enable a screen lock when the work computer is left unattended.
+                    Reloved does not operate physical servers or other infrastructure. For employer-provided computers: All Reloved employees are required to complete physical security training, and all employees and contractors are required to enable a screen lock when the work computer is left unattended.
                   </TableCell>
                 </TableRow>
 
@@ -388,7 +391,7 @@ const DataProcessingAgreement = () => {
                     Measures for ensuring events logging
                   </TableCell>
                   <TableCell>
-                    eloved has detailed event logging with automated alerts in case no events are tracked.
+                    Reloved has detailed event logging with automated alerts in case no events are tracked.
                   </TableCell>
                 </TableRow>
 
@@ -397,7 +400,7 @@ const DataProcessingAgreement = () => {
                     Measures for ensuring system configuration, including default configuration
                   </TableCell>
                   <TableCell>
-                    Security governance and management is outlined in eloved security policies, including the Information Security Roles and Responsibilities Policy, which all employees must review and agree to prior to joining eloved. Policy can be provided upon request. Roles are required within the organization to provide clearly defined responsibilities and an understanding of how the protection of information is to be accomplished. Their purpose is to clarify, coordinate activity, and actions necessary to disseminate security policy, standards, and implementation.
+                    Security governance and management is outlined in Reloved security policies, including the Information Security Roles and Responsibilities Policy, which all employees must review and agree to prior to joining Reloved. Policy can be provided upon request. Roles are required within the organization to provide clearly defined responsibilities and an understanding of how the protection of information is to be accomplished. Their purpose is to clarify, coordinate activity, and actions necessary to disseminate security policy, standards, and implementation.
                   </TableCell>
                 </TableRow>
 
@@ -406,7 +409,7 @@ const DataProcessingAgreement = () => {
                     Measures for certification/assurance of processes and products
                   </TableCell>
                   <TableCell>
-                    eloved has completed its SOC2 Type II certification. Please reach out to EMAIL for a copy of the report.
+                    Reloved has completed its SOC2 Type II certification. Please reach out to EMAIL for a copy of the report.
                   </TableCell>
                 </TableRow>
 
@@ -415,7 +418,7 @@ const DataProcessingAgreement = () => {
                     Measures for ensuring data minimisation
                   </TableCell>
                   <TableCell>
-                    As noted in the Privacy Policy with the Agreement, data is collected to serve commercial or business purposes, such as providing, customizing and improving Services, marketing and selling the Services, corresponding with customers about Services, and meeting legal requirements. eloved will not collect additional categories of Personal Data or use the Personal Data we collected for materially different, unrelated or incompatible purposes without providing customer notice. More information about the data  eloved collects and opting-out is in the Privacy Policy of the Agreement.
+                    As noted in the Privacy Policy with the Agreement, data is collected to serve commercial or business purposes, such as providing, customizing and improving Services, marketing and selling the Services, corresponding with customers about Services, and meeting legal requirements. Reloved will not collect additional categories of Personal Data or use the Personal Data we collected for materially different, unrelated or incompatible purposes without providing customer notice. More information about the data  Reloved collects and opting-out is in the Privacy Policy of the Agreement.
                   </TableCell>
                 </TableRow>
 
@@ -433,7 +436,7 @@ const DataProcessingAgreement = () => {
                     Measures for ensuring limited data retention
                   </TableCell>
                   <TableCell>
-                    eloved retains data as long as the eloved has a need for its use, or to meet regulatory or contractual requirements. Once data is no longer needed, it is securely disposed of or archived. eloved, in consultation with legal counsel, may determine retention periods for data. Retention periods shall be documented in the eloved Data Management Policy, which can be provided upon request.
+                    Reloved retains data as long as the Reloved has a need for its use, or to meet regulatory or contractual requirements. Once data is no longer needed, it is securely disposed of or archived. Reloved, in consultation with legal counsel, may determine retention periods for data. Retention periods shall be documented in the Reloved Data Management Policy, which can be provided upon request.
                   </TableCell>
                 </TableRow>
 
@@ -442,7 +445,7 @@ const DataProcessingAgreement = () => {
                     Measures for ensuring accountability
                   </TableCell>
                   <TableCell>
-                    eloved employees are required to review and acknowledge eloved security practices and policies, complete security training, and go through a security walkthrough with a senior member of the engineering organization. eloved conducts background checks on all new employees and requires all employees to sign a non-disclosure agreement before gaining access to eloved information.
+                    Reloved employees are required to review and acknowledge Reloved security practices and policies, complete security training, and go through a security walkthrough with a senior member of the engineering organization. Reloved conducts background checks on all new employees and requires all employees to sign a non-disclosure agreement before gaining access to Reloved information.
                   </TableCell>
                 </TableRow>
 
@@ -451,7 +454,7 @@ const DataProcessingAgreement = () => {
                     Measures for allowing data portability and ensuring erasure
                   </TableCell>
                   <TableCell>
-                    Customer can ask for a copy of its Personal Data in a machine-readable format. Customer can also request that eloved transmit the data to another controller where technically feasible. The Service allows ability to export relevant application data in a standard CSV format. Additional export capabilities for all the customer data is available through an API. In the case that a customer wishes to exercise portability or erasure rights, the eloved has measures of retrieving securely stored data and has a process in place to ensure access is restricted only to those who have a business justification for accessing data during the copy, transfer, or erasure.
+                    Customer can ask for a copy of its Personal Data in a machine-readable format. Customer can also request that Reloved transmit the data to another controller where technically feasible. The Service allows ability to export relevant application data in a standard CSV format. Additional export capabilities for all the customer data is available through an API. In the case that a customer wishes to exercise portability or erasure rights, the Reloved has measures of retrieving securely stored data and has a process in place to ensure access is restricted only to those who have a business justification for accessing data during the copy, transfer, or erasure.
                   </TableCell>
                 </TableRow>
 
@@ -460,7 +463,7 @@ const DataProcessingAgreement = () => {
                     Technical and organizational measures of sub-processors
                   </TableCell>
                   <TableCell>
-                    eloved collects and reviews the most security assessments from sub-processors on an annual basis.
+                    Reloved collects and reviews the most security assessments from sub-processors on an annual basis.
                   </TableCell>
                 </TableRow>
 
