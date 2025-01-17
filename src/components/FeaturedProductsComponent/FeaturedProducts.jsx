@@ -218,7 +218,7 @@ const FeaturedProducts = () => {
                                     effect="blur"
                                     src={product.default_image ? product.default_image.image_url : product.default_image}
                                     alt={product.name}
-                                    style={{ objectFit: 'cover', maxHeight: 200, width: '100%' }}
+                                    style={{ objectFit: 'contain', maxHeight: 200, width: '100%' }}
                                 />
                                 <Divider />
                                 <CardContent sx={{ flexGrow: 1, marginBottom: 2 }}>
