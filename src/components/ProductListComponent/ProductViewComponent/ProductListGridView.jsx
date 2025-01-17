@@ -112,7 +112,7 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
                                 alt={product.item_name}
                                 height={200}
                                 width="100%"
-                                style={{ objectFit: 'cover' }}
+                                style={{ objectFit: 'contain' }}
                                 effect="blur"
                             />
 
