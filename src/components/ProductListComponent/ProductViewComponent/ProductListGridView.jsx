@@ -32,7 +32,8 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
     };
 
     const handleDetailsClick = (productUuid) => {
-        navigate('/product-details', { state: { productUuid } });
+        // navigate('/product-details/:id', { state: { productUuid } });
+        navigate('/product-details/'+productUuid);
     };
 
     const handleOpenPriceBreakdown = (product) => {
