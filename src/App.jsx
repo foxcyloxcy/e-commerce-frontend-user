@@ -119,7 +119,7 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Home parentIsLoggedIn={isLoggedIn} userData={userData} userToken={userToken} refreshParent={handleClick}/>} />
-        <Route path="/product-details" element={<ProductDetails userToken={userToken} />} />
+        <Route path="/product-details/:productUuid" element={<ProductDetails userToken={userToken} />} />
         <Route path="/my-product-details" element={<MyProductDetails userToken={userToken} />} />
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn} userToken={userToken} userData={userData} />} />
         <Route path="/our-story" element={<OurStoryPage parentIsLoggedIn={isLoggedIn} />} />
