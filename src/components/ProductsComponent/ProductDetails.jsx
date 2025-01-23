@@ -13,12 +13,13 @@ import secureLocalStorage from 'react-secure-storage';
 import secure from '../../assets/baseURL/secure';
 import MapViewModal from '../ReusableComponents/ModalComponent/MapViewModal';
 import PriceBreakdownModal from '../ReusableComponents/ModalComponent/PriceBreakDownModal';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import { CommentsDisabled } from '@mui/icons-material';
+import { useParams } from 'react-router-dom';
+
 
 const ProductDetails = () => {
     const { state } = useLocation();
-    const { productUuid } = state;
+    // const { productUuid } = state;
+    const { productUuid } = useParams(); 
     const [productsData, setProductsData] = useState(null);
     const [offerPrice, setOfferPrice] = useState('');
     const [discountCode, setDiscountCode] = useState('');
