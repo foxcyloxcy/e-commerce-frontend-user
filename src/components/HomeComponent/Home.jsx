@@ -15,7 +15,7 @@ export default function Home(props) {
     useEffect(() => {
         if (userData && userToken) {
             const parsedUserData = JSON.parse(userData)
-            if (parsedUserData.has_bank_details === "No") {
+            if (parsedUserData.has_bank_details !== "Yes") {
                 Swal.fire({
                     title: 'Read me',
                     text: "Please visit your My Profile page and create your bank details. You are required to add bank details before you can post an item.",
@@ -34,6 +34,7 @@ export default function Home(props) {
         }
 
     }, [userData, userToken])
+
     return (
         <Grid container>
             <FeaturedHero parentIsLoggedIn={parentIsLoggedIn} />
