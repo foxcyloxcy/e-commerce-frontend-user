@@ -15,7 +15,9 @@ export default function Home(props) {
     useEffect(() => {
         if (userData && userToken) {
             const parsedUserData = JSON.parse(userData)
-            if (parsedUserData.has_bank_details !== "Yes") {
+            if (parsedUserData.has_bank_details !== "Yes" || 
+                parsedUserData.has_bank_details === "No") 
+                {
                 Swal.fire({
                     title: 'Read me',
                     text: "Please visit your My Profile page and create your bank details. You are required to add bank details before you can post an item.",
