@@ -145,7 +145,7 @@ const ProductList = (props) => {
         }
     
         setIsLoggedIn(parentIsLoggedIn || false);
-    }, [loadProducts, parentIsLoggedIn, currentPage]);
+    }, [loadProducts, parentIsLoggedIn]);
 
     useEffect(() => {
         loadCategories();
