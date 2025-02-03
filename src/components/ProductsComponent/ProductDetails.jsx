@@ -19,7 +19,7 @@ import { useParams } from 'react-router-dom';
 const ProductDetails = () => {
     const { state } = useLocation();
     // const { productUuid } = state;
-    const { productUuid } = useParams(); 
+    const { productUuid } = useParams();
     const [productsData, setProductsData] = useState(null);
     const [offerPrice, setOfferPrice] = useState('');
     const [discountCode, setDiscountCode] = useState('');
@@ -39,11 +39,12 @@ const ProductDetails = () => {
     const [comment, setComment] = useState('');  // New state for comment
     const navigate = useNavigate();
 
-    const loadProducts = useCallback(async () => {
+    const loadProducts = useCallback(async (storedUserToken) => {
+        console.log('stored', storedUserToken)
         try {
 
             let dynamicApi;
-            if (userToken) {
+            if (storedUserToken) {
 
                 dynamicApi = 'auth'
 
@@ -55,10 +56,10 @@ const ProductDetails = () => {
 
             let query = `api/${dynamicApi}/items/${productUuid}`;
 
-            if (userToken) {
+            if (storedUserToken) {
                 const res = await api.get(query, {
                     headers: {
-                        Authorization: `Bearer ${userToken}`,
+                        Authorization: `Bearer ${storedUserToken}`,
                         'Content-Type': 'application/json',
                     },
                 });
@@ -77,7 +78,7 @@ const ProductDetails = () => {
         } catch (error) {
             console.log(error);
         }
-    }, [productUuid, userToken]);
+    }, [productUuid]);
 
     useEffect(() => {
         Swal.fire({
@@ -136,17 +137,17 @@ const ProductDetails = () => {
             });
             return;
         }
-    
+
         if (!confirmCollection) {
             Swal.fire('Error', 'You need to confirm collecting the item', 'error');
             return;
         }
-    
+
         if (!agreeRefund) {
             Swal.fire('Error', 'You need to agree to the refund policy', 'error');
             return;
         }
-    
+
         setLoading(true);
         try {
             const res = await api.post(
@@ -159,14 +160,14 @@ const ProductDetails = () => {
                     },
                 }
             );
-    
+
             if (res.status === 200) {
                 const mamopayUrl = res.data.data.payment_url;
                 window.location.href = mamopayUrl;
             }
         } catch (error) {
             console.error("Error:", error);
-    
+
             Swal.fire({
                 title: 'Payment Error',
                 text: 'An error occurred while processing your payment. Please try again later.',
@@ -178,7 +179,7 @@ const ProductDetails = () => {
             setLoading(false);
         }
     };
-    
+
 
     const handleApplyDiscountCode = async (itemId) => {
 
@@ -538,32 +539,33 @@ const ProductDetails = () => {
                                     </>
                                 )
                             }
-                            <Grid item width="60%"
-                                sx={{ marginTop: 0 }}>
-                                <TextField
-                                    size="small"
-                                    label="ENTER DISCOUNT CODE"
-                                    variant="outlined"
-                                    value={discountCode}
-                                    onChange={(e) => setDiscountCode(e.target.value)}
-                                    sx={{ marginRight: 2, marginTop: 0 }}
-                                />
-                            </Grid>
-                            <Grid item width="40%"
-                                sx={{ marginTop: 0 }}>
-                                <ButtonComponent
-                                    label="aPPLY DISCOUNT"
-                                    size="small"
-                                    buttonVariant="contained"
-                                    textColor="primary.contrastText"
-                                    hoverTextColor="secondary.main"
-                                    onClick={() => handleApplyDiscountCode(productsData.item_details.id)}
-                                    disabled={loading}
-                                />
-                            </Grid>
                             {
                                 parsedUserData && (
                                     <>
+
+                                        <Grid item width="60%"
+                                            sx={{ marginTop: 0 }}>
+                                            <TextField
+                                                size="small"
+                                                label="ENTER DISCOUNT CODE"
+                                                variant="outlined"
+                                                value={discountCode}
+                                                onChange={(e) => setDiscountCode(e.target.value)}
+                                                sx={{ marginRight: 2, marginTop: 0 }}
+                                            />
+                                        </Grid>
+                                        <Grid item width="40%"
+                                            sx={{ marginTop: 0 }}>
+                                            <ButtonComponent
+                                                label="aPPLY DISCOUNT"
+                                                size="small"
+                                                buttonVariant="contained"
+                                                textColor="primary.contrastText"
+                                                hoverTextColor="secondary.main"
+                                                onClick={() => handleApplyDiscountCode(productsData.item_details.id)}
+                                                disabled={loading}
+                                            />
+                                        </Grid>
                                         <Grid item width="100%">
                                             <FormControlLabel
                                                 control={<Checkbox checked={confirmCollection} onChange={(e) => setConfirmCollection(e.target.checked)} />}
@@ -575,10 +577,10 @@ const ProductDetails = () => {
                                                 control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
                                                 label={
                                                     <div>
-                                                       <span>I agree to all </span>
-                                                       <Link href={'/terms-and-conditions'} target="_blank">terms and conditions</Link>
+                                                        <span>I agree to all </span>
+                                                        <Link href={'/terms-and-conditions'} target="_blank">terms and conditions</Link>
                                                     </div>
-                                                    }
+                                                }
                                             />
                                         </Grid>
                                     </>
