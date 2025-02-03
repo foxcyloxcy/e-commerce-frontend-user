@@ -28,7 +28,7 @@ const EditProduct = ({ userToken }) => {
   const [editedPrice, setEditedPrice] = useState('');
   const [currentAddress, setCurrentAddress] = useState(null);
   const [editedAddress, setEditedAddress] = useState(null);
-  const [address, setAddress] = useState(null);
+  const [newAddress, setNewAddress] = useState(null);
   const [acceptOffers, setAcceptOffers] = useState(0);
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -76,6 +76,7 @@ const EditProduct = ({ userToken }) => {
   
       // Parse address if valid JSON, otherwise use null
       const parsedAddress = isValidJSON(address) ? JSON.parse(address) : null;
+      handleAddressData(parsedAddress)
       setCurrentAddress(parsedAddress);
       setEditedAddress(parsedAddress);
   
@@ -123,15 +124,27 @@ const EditProduct = ({ userToken }) => {
   }, []);
 
   const handleAddressData = async (addressData) => {
+    console.log('from handle Address',addressData)
     const addressDetails = JSON.stringify(addressData)
-    setAddress(addressDetails)
+    setNewAddress(addressDetails)
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
+    if (!newAddress) {
+      console.log(newAddress)
+      Swal.fire({
+          title: 'Error',
+          text: 'Location is required.',
+          icon: 'error',
+          confirmButtonColor: ModTheme.palette.primary.main,
+      });
+      return;
+    }
     try {
-      const res = await api.put(`/api/auth/items/${state.product.uuid}?item_name=${editedProductName}&item_description=${editedDescription}&address=${address}&price=${editedPrice}`, null, {
+      const res = await api.put(`/api/auth/items/${state.product.uuid}?item_name=${editedProductName}&item_description=${editedDescription}&address=${newAddress}&price=${editedPrice}`, null, {
         headers: {
           Authorization: `Bearer ${userToken}`,
           'Content-Type': 'multipart/form-data',
@@ -203,7 +216,6 @@ const EditProduct = ({ userToken }) => {
             <Grid item xs={12}>
               <Divider sx={{ my: 2 }} />
               <CustomMap
-                required
                 addressData={handleAddressData}
                 mapDataValue={editedAddress}
                 Editing={true}
