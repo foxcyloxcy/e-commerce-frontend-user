@@ -57,7 +57,8 @@ const MyOffers = (props) => {
     }, [loadMyOffers]);
 
     const handleDetailsClick = (productUuid) => {
-        navigate('/product-details', { state: { productUuid, userToken, userData } });
+        // navigate('/product-details', { state: { productUuid, userToken, userData } });
+        navigate('/product-details/'+productUuid);
     };
 
     const handleOpenPriceBreakdown = (product) => {
