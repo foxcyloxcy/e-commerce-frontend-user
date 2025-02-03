@@ -122,7 +122,6 @@ const CustomMap = (props) => {
         <input 
           type="text" 
           ref={inputRef} 
-          required 
           style={{ 
             height: "40px", 
             width: "100%", 
