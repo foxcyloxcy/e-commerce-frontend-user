@@ -15,7 +15,7 @@ import MapViewModal from '../../ReusableComponents/ModalComponent/MapViewModal';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-const ProductListGridView = ({ productsData, userToken, userData }) => {
+const ProductListGridView = ({ productsData }) => {
     // console.log(productsData)
     const navigate = useNavigate();
 
@@ -87,7 +87,6 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
 
 
     return (
-        <Grid md={12} lg={12}>
             <Grid container spacing={2}>
                 {productsData.map((product) => (
                     <Grid item xs={6} sm={6} md={4} lg={3} key={product.id}>
@@ -159,10 +158,7 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
                         </Card>
                     </Grid>
                 ))}
-            </Grid>
-
-
-            {/* Reuse PriceBreakdownModal */}
+                            {/* Reuse PriceBreakdownModal */}
             {selectedProduct && (
                 <PriceBreakdownModal
                     open={openPriceBreakdownModal}
@@ -178,7 +174,7 @@ const ProductListGridView = ({ productsData, userToken, userData }) => {
                     address={selectedAddress}
                 />
             )}
-        </Grid>
+            </Grid>
     );
 };
 
