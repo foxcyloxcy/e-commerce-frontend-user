@@ -175,10 +175,10 @@ const ProductList = (props) => {
         loadProducts(subCategory.id);
     };
 
-    const handleSearchChange = (event) => {
-        const searchValue = event.target.value;
-        setKeyword(searchValue);
-        loadProducts(selectedSubCategory?.id, 1); // Reset page to 1 on search change
+    const handleSearchKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            setKeyword(event.target.value)
+        }
     };
 
     return (
@@ -223,8 +223,8 @@ const ProductList = (props) => {
                                 fullWidth
                                 variant="outlined"
                                 placeholder="Search..."
-                                value={keyword}
-                                onChange={handleSearchChange} // Update keyword on typing
+                                // value={keyword} // Update keyword on typing
+                                onKeyDown={handleSearchKeyDown}
                                 InputProps={{
                                     startAdornment: <SearchIcon sx={{mr: 1}}/>
                                 }}
