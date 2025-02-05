@@ -12,6 +12,16 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BM8WYSTTWJ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-BM8WYSTTWJ');
+    </script>
+
     <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDj4-7bqHT3whZmtisSxlx6Ism25INMQU0&loading=async&libraries=places,marker&callback=initMap&v=weekly"></script>
   </body>
 </html>
