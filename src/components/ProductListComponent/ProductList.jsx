@@ -5,21 +5,16 @@ import {
     IconButton,
     Container,
     Grid,
-    Button,
     FormControl,
     Select,
     Drawer,
     useMediaQuery,
     ThemeProvider,
-    Popper,
-    Paper,
-    List,
-    ListItem,
-    ListItemText,
     MenuItem,
     Pagination,
     Typography,
-    TextField
+    TextField,
+    CircularProgress
 } from '@mui/material';
 import { Search as SearchIcon, FilterList as Filter, ExpandLess, ExpandMore } from '@mui/icons-material';
 import ModTheme from '../ThemeComponent/ModTheme';
@@ -44,7 +39,7 @@ const ProductList = (props) => {
     const [propertiesFilter, setPropertiesFilter] = useState("");
     const [newItems, setNewItems] = useState(1)
     const [lastSubCategoryId, setLastSubCategoryId] = useState(null);
-
+    const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [totalProductsCount, setTotalProductsCount] = useState(1);
@@ -82,6 +77,7 @@ const ProductList = (props) => {
 
     const loadProducts = useCallback(
         async (subCategoryId, page = 1) => {
+            setLoading(true)
             const currentSubCategoryId = subCategoryId || subCategoryIdFromDrawer;
     
             // Reset propertiesFilter if subCategoryId has changed
@@ -116,6 +112,7 @@ const ProductList = (props) => {
                     setTotalProductsCount(res.data.data.total);
                     setProductsData(fetchedProducts);
                     setTotalPages(res.data.data.last_page);
+                    setLoading(false)
                 }
             } catch (error) {
                 console.error("Error loading products:", error);
@@ -267,8 +264,9 @@ const ProductList = (props) => {
                 <Grid container spacing={1}>
 
 
-                    <Grid item xs={12}>
-                    <MemoizedProductListGridView productsData={productsData} />
+                    <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                    {loading ? <CircularProgress size={36} /> : <MemoizedProductListGridView productsData={productsData} />}
+                    
                     </Grid>
 
                     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
