@@ -53,15 +53,12 @@ const OffersToMe = (props) => {
         navigate('/view-offers', { state: { productUuid, userToken } });
     };
 
-    if (!productsData) {
+    if (!productsData || productsData.length <= 0) {
         return (
-            <Grid container spacing={2} sx={{
-                minHeight: "70vh",
-                mt: 5,
-            }}>
+            <Grid container spacing={2} >
                 <Grid item>
                 <Typography>
-                    No offers available.
+                    No bids received.
                 </Typography>
                 </Grid>
             </Grid>
