@@ -153,9 +153,13 @@ const MyProducts = (props) => {
 
     if (!productsData || productsData.length <= 0) {
         return (
-            <Grid container spacing={2} marginLeft={5}>
-                You have no posted items.
+        <Grid container spacing={2}>
+            <Grid item>
+            <Typography>
+                No posted items.
+            </Typography>
             </Grid>
+        </Grid>
         );
     }
 
