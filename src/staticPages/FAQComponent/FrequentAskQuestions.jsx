@@ -55,14 +55,6 @@ const FrequentlyAskQuestions = () => {
       answer: 'If the seller accepts offers, this will be shown before purchase. Sellers can accept or reject offers.',
     },
     // {
-    //   question: 'What condition are the pre-loved luxury items in?',
-    //   answer: 'All conditions are stated in the item description.',
-    // },
-    // {
-    //   question: `Can I return an item if it doesn't fit me or if I'm not satisfied?`,
-    //   answer: `Liaise with the seller to arrange a refund. Reloved is not liable for returns or refunds.`,
-    // },
-    // {
     //   question: 'Can I request a specific pick-up or delivery time for furniture items?',
     //   answer: 'You can liaise with the seller, or use our delivery partners for collection.',
     // },
@@ -85,6 +77,14 @@ const FrequentlyAskQuestions = () => {
     {
       question: 'How can I feature an item on the home page?',
       answer: 'Once you have posted your item you can click on your profile, my items and then you can feature your item here. The price is AED 100 for 7 days.',
+    },
+    {
+      question: 'Where can I give my items I no longer need?',
+      answer: 'Thrift for Good will accept wearable clothes, accessories and books. You can visit https://www.thriftforgood.org/ for more information.',
+    },
+    {
+      question: `I have bought an item on the website and the seller has told me that it is no longer available, what do I do?`,
+      answer: `The seller will be able to refund you the amount but the platform fee is non-refundable. You can contact the seller to arrange this, as per our refund policy the platform is not liable for refunding this. `,
     },
   ];
 
