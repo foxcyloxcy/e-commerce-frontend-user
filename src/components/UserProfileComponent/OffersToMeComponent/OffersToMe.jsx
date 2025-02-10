@@ -55,7 +55,7 @@ const OffersToMe = (props) => {
 
     if (!productsData || productsData.length <= 0) {
         return (
-            <Grid container spacing={2} >
+            <Grid container spacing={2}>
                 <Grid item>
                 <Typography>
                     No bids received.
