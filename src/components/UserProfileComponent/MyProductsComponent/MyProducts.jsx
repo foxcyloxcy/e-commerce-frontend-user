@@ -44,7 +44,7 @@ const MyProducts = (props) => {
     const [productsData, setProductsData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [itemsPerPage] = useState(8);
+    const [itemsPerPage] = useState(100);
     const navigate = useNavigate();
     const userData = JSON.parse(fromParentUserData);
 
