@@ -81,12 +81,6 @@ const ProductDetails = () => {
     }, [productUuid]);
 
     useEffect(() => {
-        Swal.fire({
-            text: "You may explore additional details and ask any questions about the item below. After completing your purchase, the chat button will become available, allowing you to coordinate collection.",
-            icon: 'info',
-            confirmButtonColor: ModTheme.palette.primary.main,
-            confirmButtonText: 'OK, I got it.'
-        });
 
         const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
             hash: storageKey,
@@ -119,6 +113,26 @@ const ProductDetails = () => {
 
         loadProducts(storedUserToken);
     }, [loadProducts]);
+
+    useEffect(()=>{
+        const productDetailsPrompt = localStorage.getItem(`product_details_prompt`);
+
+        if(productDetailsPrompt || productDetailsPrompt !== null){
+            if(productDetailsPrompt === "Yes"){
+                Swal.fire({
+                    text: "You may explore additional details and ask any questions about the item below. After completing your purchase, the chat button will become available, allowing you to coordinate collection.",
+                    icon: 'info',
+                    confirmButtonColor: ModTheme.palette.primary.main,
+                    confirmButtonText: 'OK, I got it.'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        localStorage.setItem(`product_details_prompt`, 'No');
+                    }
+                });
+            }
+        }
+
+    },[])
 
     const handleMamoCheckout = async (uuid) => {
         if (!isLoggedIn) {
