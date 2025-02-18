@@ -73,6 +73,14 @@ function App() {
     }
   }, [userData, userToken]);
 
+  useEffect(() => {
+    const productDetailsPrompt = localStorage.getItem("product_details_prompt");
+  
+    if (productDetailsPrompt === null) {
+      localStorage.setItem("product_details_prompt", "Yes");
+    }
+  }, []);
+
   const handleClick = async () => {
     const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
       hash: storageKey,
