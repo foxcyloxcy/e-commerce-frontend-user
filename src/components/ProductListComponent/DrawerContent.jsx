@@ -183,7 +183,7 @@ const DrawerContent = ({
                 selectedSubCategory.sub_category_property.map((property) => (
                     <React.Fragment key={property.id}>
                         <Typography variant="h6" gutterBottom>{property.name}</Typography>
-                        <FormGroup>
+                        <FormGroup row>
                             {property.sub_category_property_value.map((value) => (
                                 <FormControlLabel
                                     key={value.id}
