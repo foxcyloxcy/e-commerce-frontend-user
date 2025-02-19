@@ -33,7 +33,7 @@ const HomeCategories = () => {
   };
 
   const routeToProductList = (subCategoryId) => {
-    history("/shop", { state: { subCategoryId: subCategoryId } });
+    history(`/shop?page=&size=&sort=&sub_category_id=${subCategoryId}&filter[min_price]=&filter[max_price]=&filter[keyword]=&filter[properties]=&`);
   };
 
 
