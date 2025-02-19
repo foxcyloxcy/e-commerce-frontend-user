@@ -122,7 +122,7 @@ const NavBar = (props) => {
                 />
                 <ButtonComponent
                   component={Link}
-                  to="/shop"
+                  to="/shop?page=&size=&sort=&sub_category_id=&filter[min_price]=&filter[max_price]=&filter[keyword]=&filter[properties]="
                   label="Shop"
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
                   hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
@@ -251,7 +251,7 @@ const NavBar = (props) => {
                   <ListItem button component={Link} to="/our-story" onClick={handleClose}>
                     <ListItemText primary="About" />
                   </ListItem>
-                  <ListItem button component={Link} to="/shop" onClick={handleClose}>
+                  <ListItem button component={Link} to="/shop?page=&size=&sort=&sub_category_id=&filter[min_price]=&filter[max_price]=&filter[keyword]=&filter[properties]=" onClick={handleClose}>
                     <ListItemText primary="Shop" />
                   </ListItem>
                   {isLoggedIn && (
