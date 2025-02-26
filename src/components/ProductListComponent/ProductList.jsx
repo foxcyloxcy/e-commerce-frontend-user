@@ -14,41 +14,106 @@ import {
     Pagination,
     Typography,
     TextField,
-    CircularProgress
+    CircularProgress,
+    Divider,
+    Button,
+    List,
+    ListItem,
+    ListItemText,
+    Collapse,
+    FormGroup,
+    FormControlLabel,
+    Checkbox,
 } from '@mui/material';
 import { Search as SearchIcon, FilterList as Filter, ExpandLess, ExpandMore } from '@mui/icons-material';
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 import DrawerContent from './DrawerContent';
 import ProductListGridView from './ProductViewComponent/ProductListGridView';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 const ProductList = (props) => {
+    const [searchParams, setSearchParams] = useSearchParams();
     const { parentIsLoggedIn, userToken, userData } = props;
     const [categories, setCategories] = useState([]);
     const [subCategoryIdFromDrawer, setSubCategoryIdFromDrawer] = useState("");
     const [openCategory, setOpenCategory] = useState({});
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
-    const [keyword, setKeyword] = useState('');
+    // const [keyword, setKeyword] = useState('');
     const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [productsData, setProductsData] = useState([]);
-    const location = useLocation();
-    const [priceRange, setPriceRange] = useState(['', '']);
     const [propertiesFilter, setPropertiesFilter] = useState("");
-    const [newItems, setNewItems] = useState(1)
     const [lastSubCategoryId, setLastSubCategoryId] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [totalProductsCount, setTotalProductsCount] = useState(1);
-    const [itemsPerPage] = useState(100);
     const MemoizedDrawerContent = memo(DrawerContent);
     const MemoizedProductListGridView = memo(ProductListGridView);
 
-    const handleApplyPriceRange = (minPrice, maxPrice) => {
-        setPriceRange([minPrice, maxPrice]);
+    const [priceRange, setPriceRange] = useState({
+        minPrice: searchParams.get("filter_min_price") || "",
+        maxPrice: searchParams.get("filter_max_price") || "",
+      });
+    
+    const [errors, setErrors] = useState({ minPrice: "", maxPrice: "" });
+
+    const page = Number(searchParams.get("page")) || 1;
+    const size = 10;
+    const sort = searchParams.get("sort");
+    const subCategoryId = searchParams.get("sub_category_id");
+    const keyword = searchParams.get("filter_keyword") || "";
+    const properties = searchParams.get("filter_properties") || "";
+
+    const updateSearchParams = (newParams) => {
+
+    const updatedParams = new URLSearchParams(searchParams);
+
+    Object.entries(newParams).forEach(([key, value]) => {
+      if (value) {
+        updatedParams.set(key, value);
+      } else {
+        updatedParams.delete(key); // Remove parameter if value is empty
+      }
+    });
+
+    setSearchParams(updatedParams);
+  };
+
+  const validatePriceRange = () => {
+    const { minPrice, maxPrice } = priceRange;
+    const validationErrors = {};
+
+    if (minPrice && maxPrice && Number(minPrice) > Number(maxPrice)) {
+      validationErrors.minPrice = "Minimum price cannot exceed maximum price";
+    }
+    if (minPrice && Number(minPrice) < 50) {
+      validationErrors.minPrice = "Minimum price must be at least AED 50";
+    }
+    if (maxPrice && Number(maxPrice) > 50000) {
+      validationErrors.maxPrice = "Maximum price cannot exceed AED 50,000";
+    }
+
+    setErrors(validationErrors);
+    return Object.keys(validationErrors).length === 0;
+  };
+
+const handleApplyPriceRange = () => {
+
+    if (!validatePriceRange()) return;
+    const updatedParams = new URLSearchParams(searchParams);
+
+    updatedParams.set("filter_min_price", priceRange.minPrice);
+    updatedParams.set("filter_max_price", priceRange.maxPrice);
+    updatedParams.set("page", 1);
+
+    setSearchParams(updatedParams); // ✅ Correct way to update URL search params
+  };
+
+    const handleSortChange = (event) => {
+        const value = event.target.value;
+        updateSearchParams({ "sort": value }); // Trigger API call
     };
 
     const handleApplyPropertiesFilter = () => {
@@ -76,7 +141,8 @@ const ProductList = (props) => {
 
 
     const loadProducts = useCallback(
-        async (subCategoryId, page = 1) => {
+        async () => {
+
             setLoading(true)
             const currentSubCategoryId = subCategoryId || subCategoryIdFromDrawer;
     
@@ -89,14 +155,10 @@ const ProductList = (props) => {
     
             try {
                 let dynamicApi = userToken ? "auth" : "global";
-                let query = `api/${dynamicApi}/items?page=${page}&size=${itemsPerPage}&sort=${newItems}&`;
-    
-                // Append filters if they exist
-                if (currentSubCategoryId) query += `sub_category_id=${currentSubCategoryId}&`;
-                if (priceRange[0] !== "" && priceRange[1] !== "")
-                    query += `filter[min_price]=${priceRange[0]}&filter[max_price]=${priceRange[1]}&`;
-                if (keyword) query += `filter[keyword]=${keyword}&`;
-                if (propertiesFilter) query += `filter[properties]=${propertiesFilter}&`;
+
+                let query = `api/${dynamicApi}/items?page=${page}&size=${size}&sort=${sort}&sub_category_id=${currentSubCategoryId}&filter[min_price]=${priceRange.minPrice}&filter[max_price]=${priceRange.maxPrice}&filter[keyword]=${keyword}&filter[properties]=${properties}&`;
+
+                console.log(query)
     
                 const res = userToken
                     ? await api.get(query, {
@@ -120,11 +182,7 @@ const ProductList = (props) => {
         },
         [
             userToken,
-            itemsPerPage,
-            newItems,
-            priceRange,
-            keyword,
-            propertiesFilter,
+            searchParams,
             subCategoryIdFromDrawer,
             lastSubCategoryId, // Include as a dependency
         ]
@@ -133,16 +191,8 @@ const ProductList = (props) => {
     
 
     useEffect(() => {
-
-        const subCategoryIdFromRoute = location.state?.subCategoryId;
-        if (subCategoryIdFromRoute) {
-            loadProducts(subCategoryIdFromRoute, currentPage);
-        } else {
-            loadProducts(null, currentPage);
-        }
-    
-        setIsLoggedIn(parentIsLoggedIn || false);
-    }, [loadProducts, parentIsLoggedIn]);
+        loadProducts()
+    }, [searchParams]);
 
     useEffect(() => {
         loadCategories();
@@ -155,8 +205,12 @@ const ProductList = (props) => {
     };
 
     const handlePageChange = (event, value) => {
-        setCurrentPage(value);
-        loadProducts(selectedSubCategory?.id, value);
+        const updatedParams = new URLSearchParams(searchParams);
+    
+        // Directly set the page value (no need to add +1)
+        updatedParams.set("page", value);
+    
+        setSearchParams(updatedParams); // ✅ Correctly update the URL params
     };
 
     const handleToggleCategory = (categoryId) => {
@@ -169,14 +223,72 @@ const ProductList = (props) => {
     const handleSubCategoryClick = (subCategory) => {
         setSelectedSubCategory(subCategory)
         setSubCategoryIdFromDrawer(subCategory.id)
-        loadProducts(subCategory.id);
+        setSearchParams((prevParams) => {
+            const updatedParams = new URLSearchParams(prevParams);
+    
+                if (subCategory){
+                    updatedParams.set('sub_category_id', subCategory.id);
+                    updatedParams.set("page", 1);
+                } else {
+                    updatedParams.delete('sub_category_id');
+                } 
+    
+    
+            return updatedParams;
+        });
     };
 
     const handleSearchKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            setKeyword(event.target.value)
+        if (event.key === "Enter") {
+          const keyword = event.target.value;
+          const updatedParams = new URLSearchParams(searchParams);
+
+          if (keyword) {
+            updatedParams.set("filter_keyword", keyword);
+            updatedParams.set("page", 1);
+          } else {
+            updatedParams.delete("filter_keyword");
+          }
+    
+          setSearchParams(updatedParams); // ✅ Correct way to update search params
         }
-    };
+      };
+
+      const handlePriceChange = (event) => {
+        const { name, value } = event.target;
+        setPriceRange((prev) => ({
+          ...prev,
+          [name]: value,
+        }));
+      };
+
+      const handleCheckboxChange = (valueId) => {
+        const updatedParams = new URLSearchParams(searchParams);
+    
+        // Ensure `filter_properties` is always a valid string before splitting
+        let valuesArray = updatedParams.get('filter_properties') ? updatedParams.get('filter_properties').split(',') : [];
+    
+        // Toggle the value: add if not present, remove if already exists
+        if (valuesArray.includes(valueId.toString())) {
+          valuesArray = valuesArray.filter(id => id !== valueId.toString());
+        } else {
+          valuesArray.push(valueId.toString());
+        }
+    
+        // Update or remove `filter_properties`
+        if (valuesArray.length === 0) {
+          updatedParams.delete('filter_properties');
+        } else {
+          updatedParams.set('filter_properties', valuesArray.join(','));
+        }
+    
+        setSearchParams(updatedParams); // ✅ Correct way to update search params without removing other params
+      };
+    
+      const isChecked = (valueId) => {
+        let valuesArray = searchParams.get('filter_properties') ? searchParams.get('filter_properties').split(',') : [];
+        return valuesArray.includes(valueId.toString());
+      };
 
     return (
         <ThemeProvider theme={ModTheme}>
@@ -230,8 +342,8 @@ const ProductList = (props) => {
                         <Grid item xs={6} sm={6} md={5}>
                             <FormControl variant="outlined" sx={{ minWidth: '100%' }}>
                                 <Select 
-                                    value={newItems} 
-                                    onChange={(e) => setNewItems(e.target.value)} // Update newItems state
+                                    value={sort}
+                                    onChange={handleSortChange}// Update newItems state
                                 >
                                     <MenuItem value={1}>Newest</MenuItem>
                                     <MenuItem value={2}>Oldest</MenuItem>
@@ -248,23 +360,124 @@ const ProductList = (props) => {
                         </Grid>
                     </Grid>
                 </header>
-                
-                <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
-                    <MemoizedDrawerContent 
-                        categories={categories}
-                        openCategory={openCategory}
-                        handleToggleCategory={handleToggleCategory}
-                        handleSubCategoryClick={handleSubCategoryClick}
-                        onApplyPriceRange={handleApplyPriceRange}
-                        onApplyPropertiesFilter={handleApplyPropertiesFilter}
-                        subCategoryFromParent={selectedSubCategory} 
-                    />
-                </Drawer>
+                <Grid container spacing={3}>
+                {
+                    isSmallScreen === false? (
+                        <Grid item md={3}>
+                            <Typography variant="h6" sx={{ paddingBottom: 2 }}>Filters</Typography>
+                            <Divider />
+        
+                            <Typography variant="h6" gutterBottom>Price range</Typography>
+                            <Grid container spacing={2}>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        label="AED 50"
+                                        placeholder="AED 50"
+                                        name="minPrice"
+                                        type="number"
+                                        size="small"
+                                        value={priceRange.minPrice}
+                                        onChange={handlePriceChange}
+                                        error={!!errors.minPrice}
+                                        helperText={errors.minPrice || ''}
+                                        fullWidth
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <TextField
+                                        label="AED 50,000"
+                                        placeholder="AED 50,000"
+                                        name="maxPrice"
+                                        type="number"
+                                        size="small"
+                                        value={priceRange.maxPrice}
+                                        onChange={handlePriceChange}
+                                        error={!!errors.maxPrice}
+                                        helperText={errors.maxPrice || ''}
+                                        fullWidth
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                fullWidth
+                                sx={{ marginTop: '10px' }}
+                                onClick={handleApplyPriceRange}
+                            >
+                                Apply
+                            </Button>
+                            <Divider sx={{ marginTop: '10px' }} />
+        
+                            <Typography variant="h6" gutterBottom sx={{ padding: 2 }}>Categories</Typography>
+                            <List>
+                                {categories.map((category) => (
+                                    <React.Fragment key={category.id}>
+                                        <ListItem button onClick={() => handleToggleCategory(category.id)}>
+                                            <ListItemText primary={category.name} />
+                                            {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
+                                        </ListItem>
+                                        <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
+                                            <List component="div" disablePadding>
+                                                {category.sub_category.map((subCategory) => (
+                                                    <ListItem
+                                                        button
+                                                        key={subCategory.id}
+                                                        sx={{ pl: 4 }}
+                                                        onClick={() => handleSubCategoryClick(subCategory)}
+                                                    >
+                                                        <ListItemText primary={subCategory.name} />
+                                                    </ListItem>
+                                                ))}
+                                            </List>
+                                        </Collapse>
+                                    </React.Fragment>
+                                ))} 
+                            </List>
+                            <Divider sx={{ marginY: '20px' }} />
+        
+                            {selectedSubCategory &&
+                                selectedSubCategory.sub_category_property.map((property) => (
+                                    <React.Fragment key={property.id}>
+                                        <Typography variant="h6" gutterBottom>{property.name}</Typography>
+                                        <FormGroup row>
+                                            {property.sub_category_property_value.map((value) => (
+                                                <FormControlLabel
+                                                value={searchParams.get('filter_properties') ? searchParams.get('filter_properties').split(',') : []}
+                                                    key={value.id}
+                                                    control={
+                                                        <Checkbox
+                                                            onChange={() => handleCheckboxChange(value.id)}
+                                                            checked={isChecked(value.id)}
+                                                        />
+                                                    }
+                                                    label={value.name}
+                                                />
+                                            ))}
+                                        </FormGroup>
+                                        <Divider sx={{ marginY: '20px' }} />
+                                    </React.Fragment>
+                                ))}
+                        </Grid> 
+                    )
+                    :
 
-                <Grid container spacing={1}>
+                        (<Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
+                            <MemoizedDrawerContent 
+                                categories={categories}
+                                openCategory={openCategory}
+                                handleToggleCategory={handleToggleCategory}
+                                handleSubCategoryClick={handleSubCategoryClick}
+                                onApplyPriceRange={handleApplyPriceRange}
+                                onApplyPropertiesFilter={handleApplyPropertiesFilter}
+                                subCategoryFromParent={selectedSubCategory} 
+                            />
+                        </Drawer>)
+                }
 
 
-                    <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+
+                    <Grid item xs={12} sm={12} md={9} lg={9} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                     {loading ? <CircularProgress size={36} /> : <MemoizedProductListGridView productsData={productsData} />}
                     
                     </Grid>
@@ -272,10 +485,12 @@ const ProductList = (props) => {
                     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                         <Pagination
                             count={totalPages}
-                            page={currentPage}
+                            page={page}
                             onChange={handlePageChange}
                             color="primary"
                             shape="rounded"
+                            hidePrevButton
+                            hideNextButton
                         />
                     </Grid>
 
