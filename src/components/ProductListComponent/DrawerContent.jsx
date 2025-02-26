@@ -15,26 +15,28 @@ import {
     Grid
 } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
+import { useSearchParams } from 'react-router-dom';
 
 const DrawerContent = ({
     categories,
     openCategory,
     handleToggleCategory,
-    isSmallScreen,
     handleSubCategoryClick,
-    onApplyPriceRange,
     subCategoryFromParent,
-    onApplyPropertiesFilter
+    searchParams,
+    setSearchParams,
 }) => {
     const [priceRange, setPriceRange] = useState({ minPrice: '', maxPrice: '' });
     const [propCategories, setPropCategories] = useState([]);
-    const [selectedFilters, setSelectedFilters] = useState({});
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
     const [errors, setErrors] = useState({});
 
-    const handlePriceChange = (e) => {
-        const { name, value } = e.target;
-        setPriceRange((prev) => ({ ...prev, [name]: value }));
+    const handlePriceChange = (event) => {
+        const { name, value } = event.target;
+        setPriceRange((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
     };
 
     const validatePriceRange = () => {
@@ -42,13 +44,13 @@ const DrawerContent = ({
         const validationErrors = {};
 
         if (minPrice && maxPrice && Number(minPrice) > Number(maxPrice)) {
-            validationErrors.minPrice = 'Minimum price cannot exceed maximum price';
+            validationErrors.minPrice = "Minimum price cannot exceed maximum price";
         }
-        if (minPrice && minPrice < 50) {
-            validationErrors.minPrice = 'Minimum price must be at least AED 50';
+        if (minPrice && Number(minPrice) < 50) {
+            validationErrors.minPrice = "Minimum price must be at least AED 50";
         }
-        if (maxPrice && maxPrice > 50000) {
-            validationErrors.maxPrice = 'Maximum price cannot exceed AED 50,000';
+        if (maxPrice && Number(maxPrice) > 50000) {
+            validationErrors.maxPrice = "Maximum price cannot exceed AED 50,000";
         }
 
         setErrors(validationErrors);
@@ -56,35 +58,43 @@ const DrawerContent = ({
     };
 
     const handleApplyPriceRange = () => {
-        if (validatePriceRange()) {
-            onApplyPriceRange(priceRange.minPrice, priceRange.maxPrice);
-        }
+        if (!validatePriceRange()) return;
+        const updatedParams = new URLSearchParams(searchParams);
+
+        updatedParams.set("filter_min_price", priceRange.minPrice);
+        updatedParams.set("filter_max_price", priceRange.maxPrice);
+        updatedParams.set("page", 1);
+
+        setSearchParams(updatedParams); // ✅ Correct way to update URL search params
     };
 
     const handleCheckboxChange = (valueId) => {
-        // Get existing values from localStorage or initialize as an empty string
-        let storedValues = localStorage.getItem('selectedValues') || '';
-    
-        // Split the stored values into an array for validation
-        let valuesArray = storedValues ? storedValues.split(',') : [];
-    
-        // Check if the valueId already exists in the array
-        if (!valuesArray.includes(valueId)) {
-            // Add the new valueId to the array
-            valuesArray.push(valueId);
-    
-            // Update localStorage with the updated array as a comma-delimited string
-            localStorage.setItem('selectedValues', valuesArray.join(','));
+        const updatedParams = new URLSearchParams(searchParams);
+
+        // Ensure `filter_properties` is always a valid string before splitting
+        let valuesArray = updatedParams.get('filter_properties') ? updatedParams.get('filter_properties').split(',') : [];
+
+        // Toggle the value: add if not present, remove if already exists
+        if (valuesArray.includes(valueId.toString())) {
+            valuesArray = valuesArray.filter(id => id !== valueId.toString());
+        } else {
+            valuesArray.push(valueId.toString());
         }
-    
-        // Apply the properties filter
-        // onApplyPropertiesFilter();
+
+        // Update or remove `filter_properties`
+        if (valuesArray.length === 0) {
+            updatedParams.delete('filter_properties');
+        } else {
+            updatedParams.set('filter_properties', valuesArray.join(','));
+            updatedParams.set('page', 1)
+        }
+
+        setSearchParams(updatedParams); // ✅ Correct way to update search params without removing other params
     };
 
-    const handleSubCategorySelect = (subCategory) => {
-        setSelectedSubCategory(subCategory);
-        setSelectedFilters({});
-        handleSubCategoryClick(subCategory);
+    const isChecked = (valueId) => {
+        let valuesArray = searchParams.get('filter_properties') ? searchParams.get('filter_properties').split(',') : [];
+        return valuesArray.includes(valueId.toString());
     };
 
     const handleSubCategorySelectFromParent = (subCategory) => {
@@ -100,7 +110,7 @@ const DrawerContent = ({
 
     useEffect(() => {
 
-        if(categories !== propCategories){
+        if (categories !== propCategories) {
             setPropCategories(categories)
         }
     }, []);
@@ -154,7 +164,7 @@ const DrawerContent = ({
 
             <Typography variant="h6" gutterBottom sx={{ padding: 2 }}>Categories</Typography>
             <List>
-                {propCategories.map((category) => (
+                {categories.map((category) => (
                     <React.Fragment key={category.id}>
                         <ListItem button onClick={() => handleToggleCategory(category.id)}>
                             <ListItemText primary={category.name} />
@@ -167,7 +177,7 @@ const DrawerContent = ({
                                         button
                                         key={subCategory.id}
                                         sx={{ pl: 4 }}
-                                        onClick={() => handleSubCategorySelect(subCategory)}
+                                        onClick={() => handleSubCategoryClick(subCategory)}
                                     >
                                         <ListItemText primary={subCategory.name} />
                                     </ListItem>
@@ -186,10 +196,12 @@ const DrawerContent = ({
                         <FormGroup row>
                             {property.sub_category_property_value.map((value) => (
                                 <FormControlLabel
+                                    value={searchParams.get('filter_properties') ? searchParams.get('filter_properties').split(',') : []}
                                     key={value.id}
                                     control={
                                         <Checkbox
                                             onChange={() => handleCheckboxChange(value.id)}
+                                            checked={isChecked(value.id)}
                                         />
                                     }
                                     label={value.name}
