@@ -180,6 +180,25 @@ const FeaturedProducts = () => {
         ],
     };
 
+    if (!products || products.length <= 0) {
+        return (
+            <Box
+                sx={{
+                    padding: ModTheme.spacing(3),
+                    marginTop: 2,
+                    marginBottom: 10,
+                    WebkitOverflowScrolling: 'touch'
+                }}
+            >
+                <Typography variant="h4" align="center" gutterBottom marginBottom={1}>
+                    Featured Products
+                </Typography>
+
+                No featured products available.
+            </Box>
+        );
+    }
+
     return (
         <ThemeProvider theme={ModTheme}>
             <Box
