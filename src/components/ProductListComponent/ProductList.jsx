@@ -302,7 +302,8 @@ const ProductList = (props) => {
                                     onClick={toggleDrawer}
                                     sx={{ mr: 2 }}
                                 >
-                                    <Filter /> Filters
+                                    <Filter />
+                                    <Typography variant="body1">Filter</Typography>
                                 </IconButton>
                             </Toolbar>
                         </AppBar>
