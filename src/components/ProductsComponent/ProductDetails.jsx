@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControlLabel, Checkbox, Link } from '@mui/material';
+import { Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControlLabel, Checkbox, Link, CircularProgress, } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -423,7 +423,21 @@ const ProductDetails = () => {
 
     // Handle rendering after data is loaded
     if (!productsData || !productsData.item_details) {
-        return <Typography>Loading...</Typography>;
+        return <Container sx={{
+            backgroundColor: 'secondary.background',
+            padding: 2,
+            mt: 15,
+            mb: 10,
+            boxShadow: 10,
+            minHeight: '60vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}> 
+                <Typography>Loading item details...</Typography>
+                 <CircularProgress size={54} />
+        </Container>
     }
 
     return (
