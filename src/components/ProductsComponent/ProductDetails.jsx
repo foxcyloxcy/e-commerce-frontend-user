@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControlLabel, Checkbox, Link, CircularProgress, } from '@mui/material';
+import { Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControlLabel, Checkbox, Link, CircularProgress, Button } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';  // Make sure you have SweetAlert2 installed
 import ModTheme from '../ThemeComponent/ModTheme';
 import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
@@ -13,12 +14,9 @@ import secureLocalStorage from 'react-secure-storage';
 import secure from '../../assets/baseURL/secure';
 import MapViewModal from '../ReusableComponents/ModalComponent/MapViewModal';
 import PriceBreakdownModal from '../ReusableComponents/ModalComponent/PriceBreakDownModal';
-import { useParams } from 'react-router-dom';
 
 
 const ProductDetails = () => {
-    const { state } = useLocation();
-    // const { productUuid } = state;
     const { productUuid } = useParams();
     const [productsData, setProductsData] = useState(null);
     const [offerPrice, setOfferPrice] = useState('');
@@ -452,8 +450,24 @@ const ProductDetails = () => {
                     maxWidth: { xs: 'xs', sm: 'sm', md: 'md', lg: 'lg', xl: 'xl' },
                 }}
             >
-                <Grid container spacing={4}>
-                    <Grid item xs={12} md={6}>
+            <Grid container xs={12}>
+              <Button
+                variant="text"
+                color="primary"
+                disabled={loading}
+                sx={{
+                    mb: 1
+                }}
+                onClick={() => navigate(-1)}
+              >
+                <ArrowBackIcon />Go back
+              </Button>
+                </Grid>
+                <Grid container spacing={4} sx={{
+                    pt:0
+                }}>
+                    <Grid item xs={12} md={6}
+                    >
                         <Carousel showArrows={false} infiniteLoop={true} autoPlay>
                             {productsData.item_details.images.map((image, index) => (
                                 <Box
