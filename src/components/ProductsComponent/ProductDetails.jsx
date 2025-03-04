@@ -38,7 +38,7 @@ const ProductDetails = () => {
     const navigate = useNavigate();
 
     const loadProducts = useCallback(async (storedUserToken) => {
-        console.log('stored', storedUserToken)
+
         try {
 
             let dynamicApi;
