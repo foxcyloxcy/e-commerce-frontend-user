@@ -90,6 +90,7 @@ const ProductList = (props) => {
 
         updatedParams.set("filter_min_price", priceRange.minPrice);
         updatedParams.set("filter_max_price", priceRange.maxPrice);
+        updatedParams.set("page_scroll", 0);
         updatedParams.set("page", 1);
 
         setSearchParams(updatedParams); // ✅ Correct way to update URL search params
@@ -100,6 +101,7 @@ const ProductList = (props) => {
         const value = event.target.value;
         updatedParams.set("sort", value)
         updatedParams.set("page", 1);
+        updatedParams.set("page_scroll", 0);
         setSearchParams(updatedParams);
     };
 
@@ -206,6 +208,7 @@ const ProductList = (props) => {
             if (subCategory) {
                 updatedParams.set('sub_category_id', subCategory.id);
                 updatedParams.set("page", 1);
+                updatedParams.set("page_scroll", 0);
                 updatedParams.delete('filter_properties');
             } else {
                 updatedParams.delete('sub_category_id');
