@@ -36,7 +36,7 @@ const ContactUs = () => {
           <WhatsAppIcon/> Send us a message at 
             <Link sx={{
               paddingLeft: 0.8
-            }} href="https://wa.me/+971561748641" target="_blank" rel="noopener noreferrer"> WhatsApp
+            }} href="https://wa.me/+971521026110" target="_blank" rel="noopener noreferrer"> WhatsApp
             </Link>
           </Typography>
           
