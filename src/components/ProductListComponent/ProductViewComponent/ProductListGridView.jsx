@@ -15,7 +15,7 @@ import MapViewModal from '../../ReusableComponents/ModalComponent/MapViewModal';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-const ProductListGridView = ({ productsData }) => {
+const ProductListGridView = ({ productsData, setSearchParams, searchParams }) => {
     // console.log(productsData)
     const navigate = useNavigate();
 
@@ -33,6 +33,14 @@ const ProductListGridView = ({ productsData }) => {
 
     const handleDetailsClick = (productUuid) => {
         // navigate('/product-details/:id', { state: { productUuid } });
+        const updatedParams = new URLSearchParams(searchParams);
+        const currentScroll = window.scrollY;
+
+        updatedParams.set("page_scroll", currentScroll);
+
+
+        setSearchParams(updatedParams); // ✅ Correct way to update search params
+
         navigate('/product-details/'+productUuid);
     };
 
@@ -87,7 +95,10 @@ const ProductListGridView = ({ productsData }) => {
 
 
     return (
-            <Grid container spacing={2}>
+            <Grid container spacing={2}
+            sx={{
+                minHeight: '30vh'
+            }}>
                 {productsData.map((product) => (
                     <Grid item xs={6} sm={6} md={4} lg={4} key={product.id}>
                         <Box sx={{ display: 'flex', alignItems: 'center', padding: 1 }}>
