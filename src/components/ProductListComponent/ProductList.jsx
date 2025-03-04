@@ -136,7 +136,6 @@ const ProductList = (props) => {
 
                 let query = `api/${dynamicApi}/items?page=${page}&size=${size}&sort=${sort}&sub_category_id=${currentSubCategoryId}&filter[min_price]=${priceMinPrice}&filter[max_price]=${priceMaxPrice}&filter[keyword]=${keyword}&filter[properties]=${properties}&`;
 
-                console.log(query)
 
                 const res = userToken
                     ? await api.get(query, {
