@@ -274,26 +274,9 @@ const ProductList = (props) => {
 
     return (
         <ThemeProvider theme={ModTheme}>
-            {
-                loading ? (
+
                     <Container sx={{
-                                backgroundColor: 'secondary.background',
-                                padding: 2,
-                                mt: 15,
-                                mb: 10,
-                                boxShadow: 10,
-                                minHeight: '2500vh',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}> 
-                                    <Typography>Loading items...</Typography>
-                                     <CircularProgress size={54} />
-                            </Container>
-                ):(
-                    <Container sx={{
-                        minHeight: '60vh',
+                        minHeight: loading ? '2500vh' : 'auto',
                         marginTop: { xs: 18, sm: 18, md: 10, },
                         marginBottom: 5,
                         maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
@@ -502,8 +485,7 @@ const ProductList = (props) => {
 
                         </Grid>
                     </Container>
-                )
-            }
+
             
         </ThemeProvider>
     );
