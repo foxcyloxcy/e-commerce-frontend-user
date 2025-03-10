@@ -12,10 +12,10 @@ import {
     Checkbox,
     TextField,
     Button,
-    Grid
+    Grid,
+    Box
 } from '@mui/material';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { useSearchParams } from 'react-router-dom';
 
 const DrawerContent = ({
     categories,
@@ -30,6 +30,11 @@ const DrawerContent = ({
     const [propCategories, setPropCategories] = useState([]);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
     const [errors, setErrors] = useState({});
+
+    const urlCategoryId = searchParams.get("category_id");
+    const urlCategoryName = searchParams.get("category_name");
+    const subCategoryId = searchParams.get("sub_category_id");
+    const subCategoryName = searchParams.get("sub_category_name");
 
     const handlePriceChange = (event) => {
         const { name, value } = event.target;
@@ -162,31 +167,49 @@ const DrawerContent = ({
             </Button>
             <Divider sx={{ marginTop: '10px' }} />
 
-            <Typography variant="h6" gutterBottom sx={{ padding: 2 }}>Categories</Typography>
-            <List>
-                {categories.map((category) => (
-                    <React.Fragment key={category.id}>
-                        <ListItem button onClick={() => handleToggleCategory(category.id)}>
-                            <ListItemText primary={category.name} />
-                            {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
-                        </ListItem>
-                        <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding>
-                                {category.sub_category.map((subCategory) => (
-                                    <ListItem
-                                        button
-                                        key={subCategory.id}
-                                        sx={{ pl: 4 }}
-                                        onClick={() => handleSubCategoryClick(subCategory)}
-                                    >
-                                        <ListItemText primary={subCategory.name} />
-                                    </ListItem>
-                                ))}
-                            </List>
-                        </Collapse>
-                    </React.Fragment>
-                ))}
-            </List>
+            <Typography variant="h6" gutterBottom sx={{ pt: 2 }}>Categories</Typography>
+            {subCategoryId ? (
+                <Grid container display="flex" alignItems="center" justifyContent="space-between" p={2} bgcolor="grey.100">
+                    <Grid item xs={12}>
+                        <Typography variant="body1" fontWeight="bold" sx={{
+                            textAlign:"center"
+                        }}>
+                            {urlCategoryName} : {subCategoryName}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button variant="text" color="primary" fullWidth>
+                            Reset Category
+                        </Button>
+                    </Grid>
+
+                </Grid>
+            ) : (
+                <List>
+                    {categories.map((category) => (
+                        <React.Fragment key={category.id}>
+                            <ListItem button onClick={() => handleToggleCategory(category.id)}>
+                                <ListItemText primary={category.name} />
+                                {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
+                            </ListItem>
+                            <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding>
+                                    {category.sub_category.map((subCategory) => (
+                                        <ListItem
+                                            button
+                                            key={subCategory.id}
+                                            sx={{ pl: 4 }}
+                                            onClick={() => handleSubCategoryClick(subCategory, category.id, category.name)}
+                                        >
+                                            <ListItemText primary={subCategory.name} />
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            </Collapse>
+                        </React.Fragment>
+                    ))}
+                </List>
+            )}
             <Divider sx={{ marginY: '20px' }} />
 
             {selectedSubCategory &&
