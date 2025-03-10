@@ -25,12 +25,12 @@ const DrawerContent = ({
     subCategoryFromParent,
     searchParams,
     setSearchParams,
+    resetCategory
 }) => {
     const [priceRange, setPriceRange] = useState({ minPrice: '', maxPrice: '' });
     const [propCategories, setPropCategories] = useState([]);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
     const [errors, setErrors] = useState({});
-
     const urlCategoryId = searchParams.get("category_id");
     const urlCategoryName = searchParams.get("category_name");
     const subCategoryId = searchParams.get("sub_category_id");
@@ -178,7 +178,7 @@ const DrawerContent = ({
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <Button variant="text" color="primary" fullWidth>
+                        <Button variant="text" color="primary" fullWidth onClick={resetCategory}>
                             Reset Category
                         </Button>
                     </Grid>
