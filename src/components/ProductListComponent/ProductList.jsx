@@ -228,6 +228,25 @@ const ProductList = (props) => {
         });
     };
 
+    const resetCategory = async () => {
+        setSearchParams((prevParams) => {
+            const updatedParams = new URLSearchParams(prevParams);
+
+            updatedParams.set('sub_category_id', "");
+            updatedParams.set("category_id", "");
+            updatedParams.set("category_name", "");
+            updatedParams.set("sub_category_name", "");
+            updatedParams.set("page", 1);
+            updatedParams.set("page_scroll", 0);
+            updatedParams.delete('filter_properties');
+            setSelectedSubCategory(null)
+            setSubCategoryIdFromDrawer("")
+
+
+            return updatedParams;
+        });
+    }
+
     const checkExistingSubcategoryId = async (categoryData) => {
         if (!urlCategoryId || !subCategoryId) return null;
         const parentCategory = categoryData.find(category =>
@@ -423,21 +442,20 @@ const ProductList = (props) => {
 
                                         <Typography variant="h6" gutterBottom sx={{ pt: 2 }}>Categories</Typography>
                                     {subCategoryId ? (
-                <Grid container display="flex" alignItems="center" justifyContent="space-between" p={2} bgcolor="grey.100">
-                    <Grid item xs={12}>
-                        <Typography variant="body1" fontWeight="bold" sx={{
-                            textAlign:"center"
-                        }}>
-                            {urlCategoryName} : {subCategoryName}
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button variant="text" color="primary" fullWidth>
-                            Reset Category
-                        </Button>
-                    </Grid>
-
-                </Grid>
+                                    <Grid container display="flex" alignItems="center" justifyContent="space-between" p={2} bgcolor="grey.100">
+                                        <Grid item xs={12}>
+                                            <Typography variant="body1" fontWeight="bold" sx={{
+                                                textAlign:"center"
+                                            }}>
+                                                {urlCategoryName} : {subCategoryName}
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Button variant="text" color="primary" fullWidth onClick={resetCategory}>
+                                                Reset Category
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
                                         ) : (
                                             <List>
                                                 {categories.map(category => (
@@ -501,6 +519,7 @@ const ProductList = (props) => {
                                             searchParams={searchParams}
                                             setSearchParams={setSearchParams}
                                             subCategoryFromParent={selectedSubCategory}
+                                            resetCategory={resetCategory}
                                         />
                                     </Drawer>)
                             }
