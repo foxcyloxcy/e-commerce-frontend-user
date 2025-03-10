@@ -119,7 +119,7 @@ const FeaturedProducts = () => {
     };
 
     const handleDetailsClick = (productUuid) => {
-        navigate('/product-details', { state: { productUuid } });
+        navigate('/product-details/'+productUuid);
     };
 
     const handleOpenMap = (address) => {
