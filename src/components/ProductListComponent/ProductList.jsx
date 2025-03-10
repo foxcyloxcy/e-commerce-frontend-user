@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import React, { useState, useEffect, useCallback, memo, useMemo } from 'react';
 import {
     AppBar,
     Toolbar,
@@ -24,6 +24,7 @@ import {
     FormGroup,
     FormControlLabel,
     Checkbox,
+    Box
 } from '@mui/material';
 import { Search as SearchIcon, FilterList as Filter, ExpandLess, ExpandMore } from '@mui/icons-material';
 import ModTheme from '../ThemeComponent/ModTheme';
@@ -56,8 +57,9 @@ const ProductList = (props) => {
     const [errors, setErrors] = useState({ minPrice: "", maxPrice: "" });
 
     const page = Number(searchParams.get("page")) || 1;
-    const size = 100;
+    const size = 70;
     const sort = searchParams.get("sort") || 1;
+    const urlCategoryId = searchParams.get("category_id");
     const subCategoryId = searchParams.get("sub_category_id");
     const keyword = searchParams.get("filter_keyword") || "";
     const properties = searchParams.get("filter_properties") || "";
@@ -109,8 +111,11 @@ const ProductList = (props) => {
         try {
             const res = await api.get("api/global/category");
             if (res.status === 200) {
-                // console.log(res.data)
+                // console.log(res.data.data)
                 setCategories(res.data.data);
+                if(subCategoryId !== "" || subCategoryId !== null || subCategoryId !== undefined){
+                    checkExistingSubcategoryId(res.data.data)
+                }
             }
         } catch (error) {
             console.log(error);
@@ -198,7 +203,7 @@ const ProductList = (props) => {
         }));
     };
 
-    const handleSubCategoryClick = (subCategory) => {
+    const handleSubCategoryClick = (subCategory, categoryId) => {
         setSelectedSubCategory(subCategory)
         setSubCategoryIdFromDrawer(subCategory.id)
         setSearchParams((prevParams) => {
@@ -206,6 +211,7 @@ const ProductList = (props) => {
 
             if (subCategory) {
                 updatedParams.set('sub_category_id', subCategory.id);
+                updatedParams.set("category_id", categoryId);
                 updatedParams.set("page", 1);
                 updatedParams.set("page_scroll", 0);
                 updatedParams.delete('filter_properties');
@@ -216,6 +222,19 @@ const ProductList = (props) => {
 
             return updatedParams;
         });
+    };
+
+    const checkExistingSubcategoryId = async (categoryData) => {
+        if (!urlCategoryId || !subCategoryId) return null;
+        const parentCategory = categoryData.find(category =>
+            category.id === parseInt(urlCategoryId)
+        );
+            
+            const selectedSubCategory = parentCategory.sub_category.find(sub => sub.id === parseInt(subCategoryId));
+        
+            if (selectedSubCategory) {
+                setSelectedSubCategory(selectedSubCategory); // Set sub_category_property
+            }
     };
 
     const handleSearchKeyDown = (event) => {
@@ -398,31 +417,42 @@ const ProductList = (props) => {
                                         </Button>
                                         <Divider sx={{ marginTop: '10px' }} />
 
-                                        <Typography variant="h6" gutterBottom sx={{ padding: 2 }}>Categories</Typography>
-                                        <List>
-                                            {categories.map((category) => (
-                                                <React.Fragment key={category.id}>
-                                                    <ListItem button onClick={() => handleToggleCategory(category.id)}>
-                                                        <ListItemText primary={category.name} />
-                                                        {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
-                                                    </ListItem>
-                                                    <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
-                                                        <List component="div" disablePadding>
-                                                            {category.sub_category.map((subCategory) => (
-                                                                <ListItem
-                                                                    button
-                                                                    key={subCategory.id}
-                                                                    sx={{ pl: 4 }}
-                                                                    onClick={() => handleSubCategoryClick(subCategory)}
-                                                                >
-                                                                    <ListItemText primary={subCategory.name} />
-                                                                </ListItem>
-                                                            ))}
-                                                        </List>
-                                                    </Collapse>
-                                                </React.Fragment>
-                                            ))}
-                                        </List>
+                                        <Typography variant="h6" gutterBottom sx={{ pt: 2 }}>Categories</Typography>
+                                    {subCategoryId ? (
+                                    <Box display="flex" alignItems="center" justifyContent="space-between" p={2} bgcolor="grey.100">
+                                                <Typography variant="body1" fontWeight="bold">
+                                                    
+                                                </Typography>
+                                                <Button variant="text" color="primary">
+                                                    Reset Category
+                                                </Button>
+                                            </Box>
+                                        ) : (
+                                            <List>
+                                                {categories.map(category => (
+                                                    <React.Fragment key={category.id}>
+                                                        <ListItem button onClick={() => handleToggleCategory(category.id)}>
+                                                            <ListItemText primary={category.name} />
+                                                            {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
+                                                        </ListItem>
+                                                        <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
+                                                            <List component="div" disablePadding>
+                                                                {category.sub_category.map(subCategory => (
+                                                                    <ListItem
+                                                                        button
+                                                                        key={subCategory.id}
+                                                                        sx={{ pl: 4 }}
+                                                                        onClick={() => handleSubCategoryClick(subCategory, category.id)}
+                                                                    >
+                                                                        <ListItemText primary={subCategory.name} />
+                                                                    </ListItem>
+                                                                ))}
+                                                            </List>
+                                                        </Collapse>
+                                                    </React.Fragment>
+                                                ))}
+                                            </List>
+                                        )}
                                         <Divider sx={{ marginY: '20px' }} />
 
                                         {selectedSubCategory &&
