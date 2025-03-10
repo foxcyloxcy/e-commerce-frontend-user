@@ -60,7 +60,9 @@ const ProductList = (props) => {
     const size = 70;
     const sort = searchParams.get("sort") || 1;
     const urlCategoryId = searchParams.get("category_id");
+    const urlCategoryName = searchParams.get("category_name");
     const subCategoryId = searchParams.get("sub_category_id");
+    const subCategoryName = searchParams.get("sub_category_name");
     const keyword = searchParams.get("filter_keyword") || "";
     const properties = searchParams.get("filter_properties") || "";
     const priceMinPrice = searchParams.get("filter_min_price");
@@ -203,7 +205,7 @@ const ProductList = (props) => {
         }));
     };
 
-    const handleSubCategoryClick = (subCategory, categoryId) => {
+    const handleSubCategoryClick = (subCategory, categoryId, categoryName) => {
         setSelectedSubCategory(subCategory)
         setSubCategoryIdFromDrawer(subCategory.id)
         setSearchParams((prevParams) => {
@@ -212,6 +214,8 @@ const ProductList = (props) => {
             if (subCategory) {
                 updatedParams.set('sub_category_id', subCategory.id);
                 updatedParams.set("category_id", categoryId);
+                updatedParams.set("category_name", categoryName);
+                updatedParams.set("sub_category_name", subCategory.name);
                 updatedParams.set("page", 1);
                 updatedParams.set("page_scroll", 0);
                 updatedParams.delete('filter_properties');
@@ -419,14 +423,21 @@ const ProductList = (props) => {
 
                                         <Typography variant="h6" gutterBottom sx={{ pt: 2 }}>Categories</Typography>
                                     {subCategoryId ? (
-                                    <Box display="flex" alignItems="center" justifyContent="space-between" p={2} bgcolor="grey.100">
-                                                <Typography variant="body1" fontWeight="bold">
-                                                    
-                                                </Typography>
-                                                <Button variant="text" color="primary">
-                                                    Reset Category
-                                                </Button>
-                                            </Box>
+                <Grid container display="flex" alignItems="center" justifyContent="space-between" p={2} bgcolor="grey.100">
+                    <Grid item xs={12}>
+                        <Typography variant="body1" fontWeight="bold" sx={{
+                            textAlign:"center"
+                        }}>
+                            {urlCategoryName} : {subCategoryName}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button variant="text" color="primary" fullWidth>
+                            Reset Category
+                        </Button>
+                    </Grid>
+
+                </Grid>
                                         ) : (
                                             <List>
                                                 {categories.map(category => (
@@ -442,7 +453,7 @@ const ProductList = (props) => {
                                                                         button
                                                                         key={subCategory.id}
                                                                         sx={{ pl: 4 }}
-                                                                        onClick={() => handleSubCategoryClick(subCategory, category.id)}
+                                                                        onClick={() => handleSubCategoryClick(subCategory, category.id, category.name)}
                                                                     >
                                                                         <ListItemText primary={subCategory.name} />
                                                                     </ListItem>
