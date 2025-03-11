@@ -64,6 +64,7 @@ const ProductDetails = () => {
                 if (res.status === 200) {
 
                     setProductsData(res.data);
+                    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                 }
             } else {
                 const res = await api.get(query);
@@ -71,6 +72,7 @@ const ProductDetails = () => {
                 if (res.status === 200) {
 
                     setProductsData(res.data);
+                    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                 }
             }
         } catch (error) {
