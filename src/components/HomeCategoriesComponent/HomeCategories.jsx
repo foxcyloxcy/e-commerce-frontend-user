@@ -33,7 +33,7 @@ const HomeCategories = () => {
   };
 
   const routeToProductList = (subCategoryId) => {
-    history(`/shop?page=1&sort=1&sub_category_id=${subCategoryId}&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties=&`);
+    history(`/shop?page=1&sort=1&category_id=&category_name=&sub_category_id${subCategoryId}=&sub_category_name=&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties=`);
   };
 
 
