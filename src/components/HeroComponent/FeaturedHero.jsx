@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 const FeaturedHero = ({ parentIsLoggedIn }) => {
   const navigate = useNavigate();
-  const isSmallScreen = useMediaQuery(ModTheme.breakpoints.down('md'));
-  // const imageRoute = isSmallScreen ? 'featuredHeroMobile.jpg': 'featuredHero.jpg'
   const imageRoute = 'featuredHeroMobile.png'
 
   const handlePostItemRoute = () => {
