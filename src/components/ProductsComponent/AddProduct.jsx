@@ -55,13 +55,13 @@ const AddProduct = (props) => {
   const handlePriceChange = (e) => {
     const value = e.target.value;
     setPrice(value);
-    if (value < 50 || value > 50000) {
-      setPriceError('Price must be between AED 50 and AED 50,000');
+    if (value < 20 || value > 50000) {
+      setPriceError('Price must be between AED 20 and AED 50,000');
     } else {
       setPriceError('');
     }
 
-    if (value === '50') {
+    if (value === 20) {
       setAcceptOffers(0); // Uncheck the "Accept Offers" checkbox
     }
   };
@@ -368,7 +368,7 @@ const AddProduct = (props) => {
                       control={<Checkbox 
                         checked={acceptOffers} 
                         onChange={handleBidChange}
-                        disabled={price === '50'} // Disable if price is 50
+                        disabled={price === 20} // Disable if price is 50
                        />}
                       label="Accept Offers"
                     />
