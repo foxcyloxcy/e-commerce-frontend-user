@@ -51,8 +51,8 @@ const DrawerContent = ({
         if (minPrice && maxPrice && Number(minPrice) > Number(maxPrice)) {
             validationErrors.minPrice = "Minimum price cannot exceed maximum price";
         }
-        if (minPrice && Number(minPrice) < 50) {
-            validationErrors.minPrice = "Minimum price must be at least AED 50";
+        if (minPrice && Number(minPrice) < 20) {
+            validationErrors.minPrice = "Minimum price must be at least AED 20";
         }
         if (maxPrice && Number(maxPrice) > 50000) {
             validationErrors.maxPrice = "Maximum price cannot exceed AED 50,000";
@@ -129,8 +129,8 @@ const DrawerContent = ({
             <Grid container spacing={2}>
                 <Grid item xs={6}>
                     <TextField
-                        label="AED 50"
-                        placeholder="AED 50"
+                        label="AED 20"
+                        placeholder="AED 20"
                         name="minPrice"
                         type="number"
                         size="small"
