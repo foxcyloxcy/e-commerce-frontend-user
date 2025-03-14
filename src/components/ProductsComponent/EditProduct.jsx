@@ -37,6 +37,7 @@ const EditProduct = ({ userToken }) => {
   const [selectedPropertyValues, setSelectedPropertyValues] = useState({});
   const [openModal, setOpenModal] = useState(false); // State to manage modal visibility
   const [modalImageUrl, setModalImageUrl] = useState('');
+  const [priceError, setPriceError] = useState('');
 
   const { state } = useLocation();
   const navigate = useNavigate();
@@ -124,9 +125,20 @@ const EditProduct = ({ userToken }) => {
   }, []);
 
   const handleAddressData = async (addressData) => {
-    console.log('from handle Address',addressData)
     const addressDetails = JSON.stringify(addressData)
     setNewAddress(addressDetails)
+  };
+
+  const handlePriceChange = (e) => {
+    const value = e;
+    if (value < 20 || value > 50000) {
+      setPriceError('Price must be between AED 20 and AED 50,000');
+      setEditedPrice(value)
+    } else {
+      setEditedPrice(value);
+      setPriceError('');
+    }
+
   };
 
   const handleSubmit = async (e) => {
@@ -194,7 +206,9 @@ const EditProduct = ({ userToken }) => {
                 type="number"
                 fullWidth
                 value={editedPrice}
-                onChange={(e) => setEditedPrice(e.target.value)}
+                error={priceError.length > 0}
+                helperText={priceError}
+                onChange={(e) => handlePriceChange(e.target.value)}
                 inputProps={{
                   min: 0,
                 }}
