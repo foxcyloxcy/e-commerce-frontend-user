@@ -217,7 +217,7 @@ const AddProduct = (props) => {
                       behavior: 'smooth'
                     });
                 } else {
-                    history("/shop");
+                    history(`/shop?page=1&sort=1&category_id=&category_name=&sub_category_id=&sub_category_name=&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties=`);
                 }
             });
         }
