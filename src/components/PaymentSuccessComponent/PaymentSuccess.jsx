@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, } from 'react';
 import { Box, Typography, Button, Container, ThemeProvider } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -33,25 +33,17 @@ const PaymentSuccess = (props) => {
           });
             
 
-            if (res.status === 200) {
-              const successMessage = res.data.message;
-      
-              Swal.fire({
-                title: successMessage,
-                text: 'You will receive an email after your item gets approved. This can take up to 72hrs max.',
-                icon: 'success',
-                showCancelButton: true,
-                confirmButtonText: 'Add Another',
-                confirmButtonColor: ModTheme.palette.primary.main,
-                cancelButtonText: 'Go to Shop'
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  resetForm();
-                } else {
-                  history("/shop");
-                }
-              });
-            }
+          if (res.status === 200) {
+            const successMessage = res.data.message;
+    
+            Swal.fire({
+              title: successMessage,
+              // text: 'You will receive an email after your item gets approved. This can take up to 72hrs max.',
+              icon: 'success',
+              confirmButtonText: 'Ok',
+              confirmButtonColor: ModTheme.palette.primary.main,
+            })
+          }
           } catch (error) {
             console.log(error);
             Swal.fire({
