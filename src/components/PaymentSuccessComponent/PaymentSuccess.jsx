@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
+import Swal from 'sweetalert2';
 
 const PaymentSuccess = (props) => {
     const { userToken } = props
