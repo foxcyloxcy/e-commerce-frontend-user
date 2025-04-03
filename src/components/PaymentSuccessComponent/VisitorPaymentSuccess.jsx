@@ -5,6 +5,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 import Swal from 'sweetalert2';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 const PaymentSuccess = (props) => {
     const { userToken } = props
@@ -12,7 +13,12 @@ const PaymentSuccess = (props) => {
     
     const toRegisterComponent = () => {
         window.open('/register','_blank')
+    };
 
+    const handleChatSeller = (userMobileNo) => {
+        const filteredMobileNo = userMobileNo.replace(/[+ ]/g, '');
+        const userWhatsApp = `https://wa.me/${filteredMobileNo}`;
+        window.open(userWhatsApp, '_blank');
     };
 
     const loadTransaction = async (transId, paymentId) =>{
@@ -26,7 +32,6 @@ const PaymentSuccess = (props) => {
 
           const res = await api.post("/api/global/payment/mamopay/transaction/success", formData, {
             headers: {
-              Authorization: `Bearer ${userToken}`,
               'Content-Type': 'multipart/form-data',
             },
           });
@@ -91,7 +96,8 @@ const PaymentSuccess = (props) => {
                     <Button
                         variant="contained"
                         color="primary"
-                        onClick={toRegisterComponent}
+                        startIcon={<WhatsAppIcon />}
+                        onClick={handleChatSeller}
                         sx={{ mt: 4 }}
                     >
                         Chat seller
