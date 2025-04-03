@@ -35,6 +35,7 @@ import MyItemPurchaseDetails from './components/UserProfileComponent/MyItemPurch
 import ContactUs from './staticPages/ContactUsComponent/ContactUs';
 import MyProductDetails from './components/UserProfileComponent/MyProductsComponent/MyProductDetails';
 import FeatureItemSuccess from './components/PaymentSuccessComponent/FeatureItemSuccess';
+import VisitorPaymentSuccess from './components/PaymentSuccessComponent/VisitorPaymentSuccess'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -140,6 +141,7 @@ function App() {
         <Route path="/contact-us" element={<ContactUs parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/data-processing" element={<DataProcessingAgreement parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/payment-success" element={<PaymentSuccess parentIsLoggedIn={isLoggedIn} userToken={userToken} />} />
+        <Route path="/visitor-payment-success" element={<VisitorPaymentSuccess parentIsLoggedIn={isLoggedIn} userToken={userToken} />} />
         <Route path="/featured-payment-success" element={<FeatureItemSuccess parentIsLoggedIn={isLoggedIn} userToken={userToken} />} />
         <Route path="/our-delivery-partners" element={<DeliveryPartners parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/terms-of-use" element={<TermsOfUse parentIsLoggedIn={isLoggedIn} />} />
