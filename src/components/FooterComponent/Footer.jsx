@@ -58,7 +58,7 @@ const Footer = () => {
                         <Grid item xs={12} sm={6} md={3}>
                             <Typography variant="h6">Follow Us</Typography>
                             <Link href="https://www.instagram.com/reloveduae/" color="inherit" underline="hover" variant="body2">Instagram</Link><br />
-                            <Link href="https://www.facebook.com/people/Reloved-Marketplace/61564862618552/" color="inherit" underline="hover" variant="body2">Facebook</Link><br />
+                            {/* <Link href="https://www.facebook.com/people/Reloved-Marketplace/61564862618552/" color="inherit" underline="hover" variant="body2">Facebook</Link><br /> */}
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
                             <Typography variant="h6">Policies</Typography>
