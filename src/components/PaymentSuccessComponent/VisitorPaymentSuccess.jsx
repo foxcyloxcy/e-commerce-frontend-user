@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState} from 'react';
 import { Box, Typography, Button, Container, ThemeProvider } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -10,13 +10,14 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 const PaymentSuccess = (props) => {
     const { userToken } = props
     const location = useLocation();
+    const [mobileNo, setMobileNo] = useState("")
     
     const toRegisterComponent = () => {
         window.open('/register','_blank')
     };
 
-    const handleChatSeller = (userMobileNo) => {
-        const filteredMobileNo = userMobileNo.replace(/[+ ]/g, '');
+    const handleChatSeller = () => {
+        const filteredMobileNo = mobileNo.replace(/[+ ]/g, '');
         const userWhatsApp = `https://wa.me/${filteredMobileNo}`;
         window.open(userWhatsApp, '_blank');
     };
@@ -39,7 +40,9 @@ const PaymentSuccess = (props) => {
 
             if (res.status === 200) {
               const successMessage = res.data.message;
-      
+
+              setMobileNo(res.data.data.seller.mobile_number)
+              
               Swal.fire({
                 title: successMessage,
                 // text: 'You will receive an email after your item gets approved. This can take up to 72hrs max.',
@@ -82,8 +85,11 @@ const PaymentSuccess = (props) => {
                     <Typography variant="h4" color="primary" gutterBottom>
                         Payment Successful!
                     </Typography>
-                    <Typography variant="body1" gutterBottom>
-                    Thanks for purchasing please contact the seller to collect the item or reach out to Reloved directly for their delivery partners.
+                      <Typography variant="body1" gutterBottom>
+                        Thank you for your purchase, use the link below to contact the seller to arrange delivery. 
+                      </Typography>
+                      <Typography>
+                        Alternatively, you can reach out to a member of the team at reloved and we can help coordinate with our team.
                     </Typography>
                     <Button
                         variant="contained"
@@ -91,7 +97,7 @@ const PaymentSuccess = (props) => {
                         onClick={toRegisterComponent}
                         sx={{ mt: 4 }}
                     >
-                        Set up your reloved account here
+                        Create a reloved account
                     </Button>
                     <Button
                         variant="contained"
@@ -100,7 +106,7 @@ const PaymentSuccess = (props) => {
                         onClick={handleChatSeller}
                         sx={{ mt: 4 }}
                     >
-                        Chat seller
+                        Contact seller
                     </Button>
                 </Box>
             </Container>
