@@ -135,22 +135,6 @@ const ProductDetails = () => {
     },[])
 
     const handleMamoCheckout = async (uuid) => {
-        if (!isLoggedIn) {
-            Swal.fire({
-                title: 'Oops!',
-                text: 'You need to login first before you can buy an item.',
-                icon: 'error',
-                showCancelButton: true,
-                confirmButtonText: "Ok, I'll login.",
-                confirmButtonColor: ModTheme.palette.primary.main,
-                cancelButtonText: 'Cancel',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    navigate('/login');
-                }
-            });
-            return;
-        }
 
         if (!confirmCollection) {
             Swal.fire('Error', 'You need to confirm collecting the item', 'error');
@@ -160,6 +144,38 @@ const ProductDetails = () => {
         if (!agreeRefund) {
             Swal.fire('Error', 'You need to agree to the refund policy', 'error');
             return;
+        }
+
+        if (!isLoggedIn) {
+            setLoading(true);
+            try {
+                const res = await api.post(
+                    `/api/global/payment/mamopay/checkout/${uuid}`,
+                    { discount: discountCode },
+                    {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
+    
+                if (res.status === 200) {
+                    const mamopayUrl = res.data.data.payment_url;
+                    window.location.href = mamopayUrl;
+                }
+            } catch (error) {
+                console.error("Error:", error);
+    
+                Swal.fire({
+                    title: 'Payment Error',
+                    text: 'An error occurred while processing your payment. Please try again later.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: ModTheme.palette.primary.main,
+                });
+            } finally {
+                setLoading(false);
+            }
         }
 
         setLoading(true);
@@ -610,26 +626,27 @@ const ProductDetails = () => {
                                                 disabled={loading}
                                             />
                                         </Grid>
-                                        <Grid item width="100%">
-                                            <FormControlLabel
-                                                control={<Checkbox checked={confirmCollection} onChange={(e) => setConfirmCollection(e.target.checked)} />}
-                                                label="I can confirm it’s the buyer's responsibility to collect the item"
-                                            />
-                                        </Grid>
-                                        <Grid item width="100%">
-                                            <FormControlLabel
-                                                control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
-                                                label={
-                                                    <div>
-                                                        <span>I agree to all </span>
-                                                        <Link href={'/terms-and-conditions'} target="_blank">terms and conditions</Link>
-                                                    </div>
-                                                }
-                                            />
-                                        </Grid>
                                     </>
                                 )
                             }
+
+                            <Grid item width="100%">
+                                <FormControlLabel
+                                    control={<Checkbox checked={confirmCollection} onChange={(e) => setConfirmCollection(e.target.checked)} />}
+                                    label="I can confirm it’s the buyer's responsibility to collect the item"
+                                />
+                            </Grid>
+                            <Grid item width="100%">
+                                <FormControlLabel
+                                    control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
+                                    label={
+                                        <div>
+                                            <span>I agree to all </span>
+                                            <Link href={'/terms-and-conditions'} target="_blank">terms and conditions</Link>
+                                        </div>
+                                    }
+                                />
+                            </Grid>
 
                             <Grid item width="100%">
                                 <ButtonComponent
