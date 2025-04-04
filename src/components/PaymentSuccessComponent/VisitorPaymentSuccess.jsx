@@ -89,7 +89,10 @@ const PaymentSuccess = (props) => {
                         Thank you for your purchase, use the link below to contact the seller to arrange delivery. 
                       </Typography>
                       <Typography>
-                        Alternatively, you can reach out to a member of the team at reloved and we can help coordinate with our team.
+                      Alternatively, you can reach out to a member of the team at reloved and we can help 
+                        <strong>
+                             &nbsp; coordinate collection with our delivery team.
+                        </strong>
                     </Typography>
                     <Button
                         variant="contained"
