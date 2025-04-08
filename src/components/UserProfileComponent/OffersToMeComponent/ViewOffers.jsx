@@ -28,7 +28,7 @@ const ViewOffers = () => {
             });
 
             if (res.status === 200) {
-
+                console.log(res.data.offers)
                 setProductsData(res.data.offers);
             }
         } catch (error) {
@@ -84,9 +84,48 @@ const ViewOffers = () => {
         }
     };
 
-    const handleRejectOffer = (productId) => {
-        // Reject offer functionality
-        navigate('/view-offers', { state: { productId } });
+    const handleRejectOffer = async (productId) => {
+        try {
+            const result = await Swal.fire({
+                title: 'Wait!',
+                text: 'Are you sure you want to reject this offer?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes',
+                confirmButtonColor: ModTheme.palette.primary.main,
+                cancelButtonText: 'Cancel',
+            });
+    
+            if (result.isConfirmed) {
+                const res = await api.put(`/api/auth/me/offers-to-me/reject/${productId}`, '', {
+                    headers: {
+                        Authorization: `Bearer ${userToken}`,
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+    
+                if (res.status === 200) {
+                    const successMessage = res.data.message;
+                    await Swal.fire({
+                        title: 'Great!',
+                        text: successMessage,
+                        icon: 'success',
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: ModTheme.palette.primary.main,
+                    });
+    
+                    navigate('/my-profile');
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            await Swal.fire({
+                title: 'Error!',
+                text: error.message,
+                icon: 'error',
+                confirmButtonColor: ModTheme.palette.primary.main,
+            });
+        }
     };
 
     if (!productsData || productsData.length <= 0) {
