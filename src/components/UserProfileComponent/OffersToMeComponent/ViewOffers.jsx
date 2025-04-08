@@ -107,7 +107,7 @@ const ViewOffers = () => {
                 if (res.status === 200) {
                     const successMessage = res.data.message;
                     await Swal.fire({
-                        title: 'Great!',
+                        title: 'Offer rejected',
                         text: successMessage,
                         icon: 'success',
                         confirmButtonText: 'Ok',
