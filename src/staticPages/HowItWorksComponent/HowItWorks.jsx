@@ -39,7 +39,7 @@ const HowItWorks = () => {
                   image={
                     isMediumScreen
                       ? "https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/how-it-works-imgs/desktop_images/user_friendly_purchase2.png"
-                      : "https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/how-it-works-imgs/user_friendly_purchase2.png"
+                      : "https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/how-it-works-imgs/user_friendly_purchase2.png.jpg"
                   }
                   alt="Buying process"
                   sx={{ height: 'auto', objectFit: 'contain' }}
