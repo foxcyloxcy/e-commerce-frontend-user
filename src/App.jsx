@@ -36,6 +36,7 @@ import ContactUs from './staticPages/ContactUsComponent/ContactUs';
 import MyProductDetails from './components/UserProfileComponent/MyProductsComponent/MyProductDetails';
 import FeatureItemSuccess from './components/PaymentSuccessComponent/FeatureItemSuccess';
 import VisitorPaymentSuccess from './components/PaymentSuccessComponent/VisitorPaymentSuccess'
+import useHotjar from './hooks/useHotJar'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -119,6 +120,8 @@ function App() {
 
     location.replace('/login');
   };
+
+  useHotjar();
 
   return (
     <>
