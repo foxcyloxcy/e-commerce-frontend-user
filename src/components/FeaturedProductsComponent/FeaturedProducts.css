@@ -13,6 +13,12 @@
     /* background-color: blue; */
 }
 
+.slick-prev, .slick-next {
+    left: -20px;
+    right: -20px;
+    color: #255773;
+}
+
 .slick-prev:before, .slick-next:before{
     color: #255773;
 }
