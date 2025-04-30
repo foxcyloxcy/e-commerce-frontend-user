@@ -165,6 +165,7 @@ const FeaturedProducts = () => {
             {
                 breakpoint: 600,
                 settings: {
+                    dots: false,
                     slidesToShow: 2,
                     slidesToScroll: 1,
                     initialSlide: 2,
@@ -173,6 +174,7 @@ const FeaturedProducts = () => {
             {
                 breakpoint: 480,
                 settings: {
+                    dots: false,
                     slidesToShow: 1,
                     slidesToScroll: 1,
                 },
