@@ -1,18 +1,16 @@
 
-.slick-next:after{
-    right: -20px;
+.slick-next{
+    right: -20px !important;
     /* background-color: blue; */
-    color: #255773;
+    color: #255773 !important;
 }
 
-.slick-prev:after{
-    left: -20px;
-    height: '100px';
-    width: '100px';
-    color: #255773;
+.slick-prev{
+    left: -20px !important;
+    color: #255773 !important;
     /* background-color: blue; */
 }
 
 .slick-prev:before, .slick-next:before{
-    color: #255773;
+    color: #255773 !important;
 }
