@@ -36,6 +36,7 @@ import ContactUs from './staticPages/ContactUsComponent/ContactUs';
 import MyProductDetails from './components/UserProfileComponent/MyProductsComponent/MyProductDetails';
 import FeatureItemSuccess from './components/PaymentSuccessComponent/FeatureItemSuccess';
 import VisitorPaymentSuccess from './components/PaymentSuccessComponent/VisitorPaymentSuccess'
+import CookiesPolicy from './staticPages/CookiePolicyComponent/CookiesPolicy';
 import useHotjar from './hooks/useHotJar'
 
 function App() {
@@ -150,6 +151,7 @@ function App() {
         <Route path="/terms-of-use" element={<TermsOfUse parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/cookies-policy" element={<CookiesPolicy parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/buyer-and-seller-terms" element={<BuyerAndSellerTerms parentIsLoggedIn={isLoggedIn} />} />
 
         <Route
