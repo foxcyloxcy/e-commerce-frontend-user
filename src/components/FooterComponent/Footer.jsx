@@ -66,6 +66,7 @@ const Footer = () => {
                             <Link href="/buyer-and-seller-terms" color="inherit" underline="hover" variant="body2">Seller and Buyer Terms</Link><br />
                             <Link href="/refund-policy" color="inherit" underline="hover" variant="body2">Return/Refund</Link><br />
                             <Link href="/privacy-policy" color="inherit" underline="hover" variant="body2">Privacy Policy</Link><br />
+                            <Link href="/cookies-policy" color="inherit" underline="hover" variant="body2">Cookies Policy</Link><br />
                         </Grid>
                     </Grid>
             </Box>
