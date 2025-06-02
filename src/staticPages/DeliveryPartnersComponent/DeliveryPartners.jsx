@@ -19,7 +19,7 @@ const DeliveryPartners = () => {
                             Small Items
                         </Typography>
                         <Typography variant="body1" gutterBottom>
-                            You can arrange for collection of the item by selecting the ‘box’ service on your Careem app.
+                            Contact reloved via whatsapp or send us a DM and we will help arrange collection and delivery of your item.
                         </Typography>
 
                         <Typography variant="h5" gutterBottom>
