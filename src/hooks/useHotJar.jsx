@@ -20,8 +20,6 @@ const useHotjar = () => {
 
   useEffect(() => {
     // Notify Hotjar of route changes in SPA
-    console.log(window.hj)
-    console.log(window.hj('stateChange', location.pathname))
     if (window.hj) {
       window.hj('stateChange', location.pathname);
     }
