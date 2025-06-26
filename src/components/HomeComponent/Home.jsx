@@ -15,8 +15,7 @@ export default function Home(props) {
     useEffect(() => {
         if (userData && userToken) {
             const parsedUserData = JSON.parse(userData)
-            if (parsedUserData.has_bank_details !== "Yes" || 
-                parsedUserData.has_bank_details === "No") 
+            if (parsedUserData.has_bank_details === "No" || parsedUserData.vendor_bank === null) 
                 {
                 Swal.fire({
                     title: 'Read me',
