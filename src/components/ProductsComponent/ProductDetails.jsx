@@ -189,10 +189,10 @@ const ProductDetails = () => {
             } finally {
                 setLoading(false);
             }
-        }
-
-        setLoading(true);
-        try {
+        }else{
+            
+            try {
+                setLoading(true);
                 const res = await api.post(
                     `/api/auth/payment/mamopay/checkout/${uuid}`,
                     { discount: discountCode }, // discount_code field
@@ -234,6 +234,7 @@ const ProductDetails = () => {
                 } finally {
             setLoading(false);
             }
+        }
     };
 
 
