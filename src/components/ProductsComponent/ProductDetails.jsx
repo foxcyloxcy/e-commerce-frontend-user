@@ -168,7 +168,7 @@ const ProductDetails = () => {
     
                 Swal.fire({
                     title: 'Payment Error',
-                    text: 'An error occurred while processing your payment. Please try again later.',
+                    text: 'An error occurred while processing your payment. Error code:' + error,
                     icon: 'error',
                     confirmButtonText: 'OK',
                     confirmButtonColor: ModTheme.palette.primary.main,
@@ -200,7 +200,7 @@ const ProductDetails = () => {
 
             Swal.fire({
                 title: 'Payment Error',
-                text: 'An error occurred while processing your payment. Please try again later.',
+                text: 'An error occurred while processing your payment. Error code:' + error,
                 icon: 'error',
                 confirmButtonText: 'OK',
                 confirmButtonColor: ModTheme.palette.primary.main,
