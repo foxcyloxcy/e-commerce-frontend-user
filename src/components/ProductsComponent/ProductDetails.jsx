@@ -165,10 +165,23 @@ const ProductDetails = () => {
                 }
             } catch (error) {
                 console.error("Error:", error);
-    
+
+                let errorCode = 'Unknown';
+
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    errorCode = error.response.status; // e.g., 400, 401, 500
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    errorCode = 'No response from server';
+                } else if (error.code) {
+                    // Some network or client-side error
+                    errorCode = error.code; // e.g., ECONNABORTED, ENOTFOUND
+                }
+
                 Swal.fire({
                     title: 'Payment Error',
-                    text: 'An error occurred while processing your payment. Error code:' + error,
+                    text: `An error occurred while processing your payment. Error code: ${errorCode}`,
                     icon: 'error',
                     confirmButtonText: 'OK',
                     confirmButtonColor: ModTheme.palette.primary.main,
@@ -180,34 +193,47 @@ const ProductDetails = () => {
 
         setLoading(true);
         try {
-            const res = await api.post(
-                `/api/auth/payment/mamopay/checkout/${uuid}`,
-                { discount: discountCode }, // discount_code field
-                {
-                    headers: {
-                        Authorization: `Bearer ${userToken}`,
-                        'Content-Type': 'application/json',
-                    },
-                }
-            );
+                const res = await api.post(
+                    `/api/auth/payment/mamopay/checkout/${uuid}`,
+                    { discount: discountCode }, // discount_code field
+                    {
+                        headers: {
+                            Authorization: `Bearer ${userToken}`,
+                            'Content-Type': 'application/json',
+                        },
+                    }
+                );
 
-            if (res.status === 200) {
-                const mamopayUrl = res.data.data.payment_url;
-                window.location.href = mamopayUrl;
-            }
-        } catch (error) {
-            console.error("Error:", error);
+                    if (res.status === 200) {
+                        const mamopayUrl = res.data.data.payment_url;
+                        window.location.href = mamopayUrl;
+                    }
+                } catch (error) {
+                    console.error("Error:", error);
 
-            Swal.fire({
-                title: 'Payment Error',
-                text: 'An error occurred while processing your payment. Error code:' + error,
-                icon: 'error',
-                confirmButtonText: 'OK',
-                confirmButtonColor: ModTheme.palette.primary.main,
-            });
-        } finally {
+                    let errorCode = 'Unknown';
+
+                    if (error.response) {
+                        // The request was made and the server responded with a status code
+                        errorCode = error.response.status; // e.g., 400, 401, 500
+                    } else if (error.request) {
+                        // The request was made but no response was received
+                        errorCode = 'No response from server';
+                    } else if (error.code) {
+                        // Some network or client-side error
+                        errorCode = error.code; // e.g., ECONNABORTED, ENOTFOUND
+                    }
+
+                    Swal.fire({
+                        title: 'Payment Error',
+                        text: `An error occurred while processing your payment. Error code: ${errorCode}`,
+                        icon: 'error',
+                        confirmButtonText: 'OK',
+                        confirmButtonColor: ModTheme.palette.primary.main,
+                    });
+                } finally {
             setLoading(false);
-        }
+            }
     };
 
 
