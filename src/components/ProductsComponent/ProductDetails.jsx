@@ -142,7 +142,7 @@ const ProductDetails = () => {
         }
 
         if (!agreeRefund) {
-            Swal.fire('Error', 'You need to agree to the refund policy', 'error');
+            Swal.fire('Error', 'You need to agree to all terms and conditions', 'error');
             return;
         }
 
