@@ -29,11 +29,11 @@ const TermsOfUse = () => {
                         </Typography>
 
                         <Typography variant="body1" paragraph>
-                            Our platform facilitates the buying and selling of items between individuals. While we make every effort to ensure the accuracy and reliability of our platform, we cannot guarantee the quality or authenticity of the items listed for sale. Therefore, it is important that buyers exercise due diligence and thoroughly review the item description and seller feedback before making a purchase.
+                            Our platform facilitates the buying and selling of items between individuals, albeit Reloved receives payment and then will process it to the seller. While we make every effort to ensure the accuracy and reliability of our platform, we cannot guarantee the quality or authenticity of the items listed for sale. Therefore, it is important that buyers exercise due diligence and thoroughly review the item description and seller feedback before making a purchase.
                         </Typography>
 
                         <Typography variant="body1" paragraph>
-                            As a seller on our platform, you are responsible for accurately describing your item and its condition, as well as ensuring that you have the right to sell the item. You are also responsible for ensuring accurate shipping information and location collection. You are responsible to ensure the item is collected within agreed timeframes of the buyer through an agreed delivery method as agreed with the buyer. When receiving payment from the buyer this will be listed as ‘mamo pay’ on your bank statement. 
+                            As a seller on our platform, you are responsible for accurately describing your item and its condition, as well as ensuring that you have the right to sell the item. You are also responsible for ensuring accurate shipping information and location collection. You are responsible to ensure the item is collected within agreed timeframes of the buyer through an agreed delivery method as agreed with the buyer. When receiving payment from the buyer this will be listed as ‘mamo pay’ on your bank statement as this was processed through reloved rather than directly from the buyer. 
                         </Typography>
 
                         <Typography variant="body1" paragraph>
