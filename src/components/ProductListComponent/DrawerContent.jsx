@@ -172,7 +172,7 @@ const DrawerContent = ({
                 <Grid container display="flex" alignItems="center" justifyContent="space-between" p={2} bgcolor="grey.100">
                     <Grid item xs={12}>
                         <Typography variant="body1" fontWeight="bold" sx={{
-                            textAlign:"center"
+                            textAlign: "center"
                         }}>
                             {urlCategoryName} : {subCategoryName}
                         </Typography>
@@ -217,19 +217,24 @@ const DrawerContent = ({
                     <React.Fragment key={property.id}>
                         <Typography variant="h6" gutterBottom>{property.name}</Typography>
                         <FormGroup row>
-                            {property.sub_category_property_value.map((value) => (
-                                <FormControlLabel
-                                    value={searchParams.get('filter_properties') ? searchParams.get('filter_properties').split(',') : []}
-                                    key={value.id}
-                                    control={
-                                        <Checkbox
-                                            onChange={() => handleCheckboxChange(value.id)}
-                                            checked={isChecked(value.id)}
-                                        />
-                                    }
-                                    label={value.name}
-                                />
-                            ))}
+                            {[...property.sub_category_property_value] // make a copy before sorting
+                                .sort((a, b) => {
+                                    if (a.name === 'Other') return 1;
+                                    if (b.name === 'Other') return -1;
+                                    return a.name.localeCompare(b.name);
+                                }).map((value) => (
+                                    <FormControlLabel
+                                        value={searchParams.get('filter_properties') ? searchParams.get('filter_properties').split(',') : []}
+                                        key={value.id}
+                                        control={
+                                            <Checkbox
+                                                onChange={() => handleCheckboxChange(value.id)}
+                                                checked={isChecked(value.id)}
+                                            />
+                                        }
+                                        label={value.name}
+                                    />
+                                ))}
                         </FormGroup>
                         <Divider sx={{ marginY: '20px' }} />
                     </React.Fragment>
