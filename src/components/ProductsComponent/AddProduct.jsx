@@ -28,6 +28,31 @@ const AddProduct = (props) => {
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState('');
   const [selectedPropertyValues, setSelectedPropertyValues] = useState({});
 
+  const customOrder = [
+        // Baby sizes
+        "Premature", "Tiny baby", "Newborn", "Up to 3 months", "3 - 6 months",
+        "6 - 9 months", "9 - 12 months", "12 - 18 months",
+        "2 years", "3 years", "4 years",
+
+        // Children sizes
+        "5 years", "6 years", "7 years", "8 years", "9 years", "10 years",
+        "11 years", "12 years",
+
+        // Teen sizes
+        "13 years", "14 years", "15 years", "16 years", "17 years",
+
+        // Clothing
+        "XS", "S", "M", "L", "XL", "XXL", "XXXL",
+        "UK 4", "UK 6", "UK 8", "UK 10", "UK 12", "UK 14", "UK 16", "UK 18", "UK 20", "UK 22",
+
+        // Shoe sizes
+        "EU 36", "EU 36.5", "EU 37", "EU 37.5", "EU 38", "EU 38.5", "EU 39", "EU 39.5",
+        "EU 40", "EU 40.5", "EU 41", "EU 41.5",
+
+        // Always at the end
+        "Other"
+    ];
+
 
   const history = useNavigate();
 
@@ -128,46 +153,46 @@ const AddProduct = (props) => {
     setLoading(true);
     e.preventDefault();
     if (priceError) {
-        setLoading(false);
-        return;
+      setLoading(false);
+      return;
     }
 
     if (!images.length) {
-        Swal.fire({
-            title: 'Error',
-            text: 'Upload at least one image.',
-            icon: 'error',
-            confirmButtonColor: ModTheme.palette.primary.main,
-        });
-        setLoading(false);
-        return;
+      Swal.fire({
+        title: 'Error',
+        text: 'Upload at least one image.',
+        icon: 'error',
+        confirmButtonColor: ModTheme.palette.primary.main,
+      });
+      setLoading(false);
+      return;
     }
 
     if (!address) {
-        Swal.fire({
-            title: 'Error',
-            text: 'Location is required.',
-            icon: 'error',
-            confirmButtonColor: ModTheme.palette.primary.main,
-        });
-        setLoading(false);
-        return;
+      Swal.fire({
+        title: 'Error',
+        text: 'Location is required.',
+        icon: 'error',
+        confirmButtonColor: ModTheme.palette.primary.main,
+      });
+      setLoading(false);
+      return;
     }
 
     // Validation to check if at least one property value is selected per property
-    const missingProperties = selectedSubCategories.sub_category_property.filter(property => 
-        !selectedPropertyValues[property.id] || selectedPropertyValues[property.id].length === 0
+    const missingProperties = selectedSubCategories.sub_category_property.filter(property =>
+      !selectedPropertyValues[property.id] || selectedPropertyValues[property.id].length === 0
     );
 
     if (missingProperties.length > 0) {
-        Swal.fire({
-            title: 'Error',
-            text: `Please select at least one option for each property: ${missingProperties.map(prop => prop.name).join(', ')}`,
-            icon: 'error',
-            confirmButtonColor: ModTheme.palette.primary.main,
-        });
-        setLoading(false);
-        return;
+      Swal.fire({
+        title: 'Error',
+        text: `Please select at least one option for each property: ${missingProperties.map(prop => prop.name).join(', ')}`,
+        icon: 'error',
+        confirmButtonColor: ModTheme.palette.primary.main,
+      });
+      setLoading(false);
+      return;
     }
 
     const formData = new FormData();
@@ -181,81 +206,81 @@ const AddProduct = (props) => {
     let index = 0;
     // Append selected property values
     Object.keys(selectedPropertyValues).forEach((propertyId) => {
-        selectedPropertyValues[propertyId].forEach((valueId) => {
-            formData.append(`properties[${index}]`, valueId);
-            index++;
-        });
+      selectedPropertyValues[propertyId].forEach((valueId) => {
+        formData.append(`properties[${index}]`, valueId);
+        index++;
+      });
     });
 
     images.forEach((image, index) => {
-        formData.append(`imgs[${index}]`, image);
+      formData.append(`imgs[${index}]`, image);
     });
 
     try {
-        const res = await api.post("/api/auth/items", formData, {
-            headers: {
-                Authorization: `Bearer ${userToken}`,
-                'Content-Type': 'multipart/form-data',
-            },
-        });
+      const res = await api.post("/api/auth/items", formData, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
-        if (res.status === 200) {
-            const successMessage = res.data.message;
-            Swal.fire({
-                title: successMessage,
-                text: 'You will receive an email after your item gets approved. This can take up to 72hrs max.',
-                icon: 'success',
-                showCancelButton: true,
-                confirmButtonText: 'Add Another',
-                confirmButtonColor: ModTheme.palette.primary.main,
-                cancelButtonText: 'Go to Shop'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    resetForm();
-                    window.scrollTo({
-                      top: 0,
-                      behavior: 'smooth'
-                    });
-                } else {
-                    history(`/shop?page=1&sort=1&category_id=&category_name=&sub_category_id=&sub_category_name=&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties=`);
-                }
+      if (res.status === 200) {
+        const successMessage = res.data.message;
+        Swal.fire({
+          title: successMessage,
+          text: 'You will receive an email after your item gets approved. This can take up to 72hrs max.',
+          icon: 'success',
+          showCancelButton: true,
+          confirmButtonText: 'Add Another',
+          confirmButtonColor: ModTheme.palette.primary.main,
+          cancelButtonText: 'Go to Shop'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            resetForm();
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
             });
-        }
+          } else {
+            history(`/shop?page=1&sort=1&category_id=&category_name=&sub_category_id=&sub_category_name=&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties=`);
+          }
+        });
+      }
     } catch (error) {
-        console.log(error);
-        if(error.response.status === 500){
-            Swal.fire({
-              title: 'Ooops!',
-              text: "Something went wrong. Please contact the admin regarding this problem.",
-              icon: 'error',
-              showCancelButton: false,
-              confirmButtonText: 'Home',
-              confirmButtonColor: ModTheme.palette.primary.main,
-          }).then((result) => {
-              if (result.isConfirmed) {
-                  history("/");
-              }
-          });
-        }else{
-            Swal.fire({
-              title: 'Error!',
-              text: error.response.data.message ? error.response.data.message : error.response.data,
-              icon: 'error',
-              showCancelButton: true,
-              confirmButtonText: 'Go to My Profile',
-              confirmButtonColor: ModTheme.palette.primary.main,
-              cancelButtonText: 'Cancel'
-          }).then((result) => {
-              if (result.isConfirmed) {
-                  history("/my-profile");
-              }
-          });
-        }
+      console.log(error);
+      if (error.response.status === 500) {
+        Swal.fire({
+          title: 'Ooops!',
+          text: "Something went wrong. Please contact the admin regarding this problem.",
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonText: 'Home',
+          confirmButtonColor: ModTheme.palette.primary.main,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            history("/");
+          }
+        });
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: error.response.data.message ? error.response.data.message : error.response.data,
+          icon: 'error',
+          showCancelButton: true,
+          confirmButtonText: 'Go to My Profile',
+          confirmButtonColor: ModTheme.palette.primary.main,
+          cancelButtonText: 'Cancel'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            history("/my-profile");
+          }
+        });
+      }
 
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-};
+  };
 
 
 
@@ -365,11 +390,11 @@ const AddProduct = (props) => {
                 <Grid item xs={12}>
                   <FormGroup>
                     <FormControlLabel
-                      control={<Checkbox 
-                        checked={acceptOffers} 
+                      control={<Checkbox
+                        checked={acceptOffers}
                         onChange={handleBidChange}
                         disabled={price === 20} // Disable if price is 50
-                       />}
+                      />}
                       label="Accept Offers"
                     />
                   </FormGroup>
@@ -412,25 +437,35 @@ const AddProduct = (props) => {
                     <React.Fragment key={property.id}>
                       <Typography variant="h6" gutterBottom>{property.name}</Typography>
                       <FormGroup row>
-                        {[...property.sub_category_property_value] // make a copy before sorting
-                                .sort((a, b) => {
-                                    if (a.name === 'Other') return 1;
-                                    if (b.name === 'Other') return -1;
-                                    return a.name.localeCompare(b.name);
-                                }).map((value) => (
-                          <FormControlLabel
-                            key={value.id}
-                            control={
-                              <Checkbox
-                                checked={
-                                  selectedPropertyValues[property.id]?.includes(value.id) || false
-                                }
-                                onChange={handleCheckboxChange(property.id, value.id)}
-                              />
+                        {[...property.sub_category_property_value]
+                          .sort((a, b) => {
+
+                            if (a.name === 'Other') return 1;
+                            if (b.name === 'Other') return -1;
+                            const indexA = customOrder.indexOf(a.name);
+                            const indexB = customOrder.indexOf(b.name);
+
+                            if (indexA === -1 && indexB === -1) {
+                              return a.name.localeCompare(b.name);
                             }
-                            label={value.name}
-                          />
-                        ))}
+                            if (indexA === -1) return 1;
+                            if (indexB === -1) return -1;
+
+                            return indexA - indexB;
+                          }).map((value) => (
+                            <FormControlLabel
+                              key={value.id}
+                              control={
+                                <Checkbox
+                                  checked={
+                                    selectedPropertyValues[property.id]?.includes(value.id) || false
+                                  }
+                                  onChange={handleCheckboxChange(property.id, value.id)}
+                                />
+                              }
+                              label={value.name}
+                            />
+                          ))}
                       </FormGroup>
                       <Divider sx={{ marginY: '20px' }} />
                     </React.Fragment>
