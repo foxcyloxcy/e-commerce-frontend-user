@@ -49,7 +49,7 @@ const ProductList = (props) => {
     const [totalProductsCount, setTotalProductsCount] = useState(1);
     const MemoizedDrawerContent = memo(DrawerContent);
     const MemoizedProductListGridView = memo(ProductListGridView);
-    
+
     const [priceRange, setPriceRange] = useState({
         minPrice: "",
         maxPrice: "",
@@ -67,7 +67,7 @@ const ProductList = (props) => {
     const properties = searchParams.get("filter_properties") || "";
     const priceMinPrice = searchParams.get("filter_min_price");
     const priceMaxPrice = searchParams.get("filter_max_price");
-    const pageScroll = searchParams.get("page_scroll")|| 0
+    const pageScroll = searchParams.get("page_scroll") || 0
 
     const validatePriceRange = () => {
         const { minPrice, maxPrice } = priceRange;
@@ -115,7 +115,7 @@ const ProductList = (props) => {
             if (res.status === 200) {
                 // console.log(res.data.data)
                 setCategories(res.data.data);
-                if(subCategoryId !== "" || subCategoryId !== null || subCategoryId !== undefined){
+                if (subCategoryId !== "" || subCategoryId !== null || subCategoryId !== undefined) {
                     checkExistingSubcategoryId(res.data.data)
                 }
             }
@@ -252,12 +252,12 @@ const ProductList = (props) => {
         const parentCategory = categoryData.find(category =>
             category.id === parseInt(urlCategoryId)
         );
-            
-            const selectedSubCategory = parentCategory.sub_category.find(sub => sub.id === parseInt(subCategoryId));
-        
-            if (selectedSubCategory) {
-                setSelectedSubCategory(selectedSubCategory); // Set sub_category_property
-            }
+
+        const selectedSubCategory = parentCategory.sub_category.find(sub => sub.id === parseInt(subCategoryId));
+
+        if (selectedSubCategory) {
+            setSelectedSubCategory(selectedSubCategory); // Set sub_category_property
+        }
     };
 
     const handleSearchKeyDown = (event) => {
@@ -317,135 +317,135 @@ const ProductList = (props) => {
     return (
         <ThemeProvider theme={ModTheme}>
 
-                    <Container sx={{
-                        minHeight: loading ? '2500vh' : 'auto',
-                        marginTop: { xs: 18, sm: 18, md: 10, },
-                        marginBottom: 5,
-                        maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
-                        zIndex: 2, // To make sure the container is above the overlay
-                        WebkitOverflowScrolling: 'touch'
-                    }}>
-                        {
-                            isSmallScreen === true && (
-                                <AppBar
-                                    position={parentIsLoggedIn ? 'fixed' : 'absolute'}
-                                    sx={{
-                                        top: 59,
-                                        transform: 'translate(0, 0)',
-                                        backgroundColor: parentIsLoggedIn ? ModTheme.palette.primary.dark : 'transparent',
-                                        transition: 'background-color 0.30s, box-shadow 0.30s',
-                                        boxShadow: parentIsLoggedIn ? '4px 4px 0px 2px rgba(0, 0, 0, 0.3)' : 'none',
-                                        borderBottom: parentIsLoggedIn ? 'none' : `2px #606060 solid`,
-                                        borderTop: parentIsLoggedIn ? `2px #606060 solid` : 'none',
-                                        zIndex: 3, // To make sure the AppBar is above the overlay
-                                    }}
+            <Container sx={{
+                minHeight: loading ? '2500vh' : 'auto',
+                marginTop: { xs: 18, sm: 18, md: 10, },
+                marginBottom: 5,
+                maxWidth: { xs: 'sm', sm: 'md', md: 'xl', lg: 'xl', xl: 'xl' },
+                zIndex: 2, // To make sure the container is above the overlay
+                WebkitOverflowScrolling: 'touch'
+            }}>
+                {
+                    isSmallScreen === true && (
+                        <AppBar
+                            position={parentIsLoggedIn ? 'fixed' : 'absolute'}
+                            sx={{
+                                top: 59,
+                                transform: 'translate(0, 0)',
+                                backgroundColor: parentIsLoggedIn ? ModTheme.palette.primary.dark : 'transparent',
+                                transition: 'background-color 0.30s, box-shadow 0.30s',
+                                boxShadow: parentIsLoggedIn ? '4px 4px 0px 2px rgba(0, 0, 0, 0.3)' : 'none',
+                                borderBottom: parentIsLoggedIn ? 'none' : `2px #606060 solid`,
+                                borderTop: parentIsLoggedIn ? `2px #606060 solid` : 'none',
+                                zIndex: 3, // To make sure the AppBar is above the overlay
+                            }}
+                        >
+
+                            <Toolbar>
+                                <IconButton
+                                    color='secondary'
+                                    aria-label="open drawer"
+                                    edge="start"
+                                    onClick={toggleDrawer}
+                                    sx={{ mr: 2 }}
                                 >
+                                    <Filter />
+                                    <Typography variant="body1">Filter</Typography>
+                                </IconButton>
+                            </Toolbar>
+                        </AppBar>
+                    )
+                }
+                <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
+                    <Grid container display="flex" justifyContent="space-between" alignItems="center">
+                        <Grid item xs={6} sm={6} md={5}>
+                            <TextField
+                                fullWidth
+                                variant="outlined"
+                                placeholder="Search..."
+                                // value={keyword} // Update keyword on typing
+                                onKeyDown={handleSearchKeyDown}
+                                InputProps={{
+                                    startAdornment: <SearchIcon sx={{ mr: 1 }} />
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={6} sm={6} md={5}>
+                            <FormControl variant="outlined" sx={{ minWidth: '100%' }}>
+                                <Select
+                                    value={sort}
+                                    onChange={handleSortChange}// Update newItems state
+                                >
+                                    <MenuItem value={1}>Newest</MenuItem>
+                                    <MenuItem value={2}>Oldest</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={2}>
+                            <Typography variant="body1" sx={{
+                                display: 'flex',
+                                justifyContent: { xs: 'center', sm: 'center', md: 'flex-end' },
+                                flexDirection: 'row',
+                                mt: { xs: 1, sm: 1, md: 0 }
+                            }}>{totalProductsCount} Items found</Typography>
+                        </Grid>
+                    </Grid>
+                </header>
+                <Grid container spacing={3}>
+                    {
+                        isSmallScreen === false ? (
+                            <Grid item md={3}>
+                                <Typography variant="h6" sx={{ paddingBottom: 2 }}>Filters</Typography>
+                                <Divider />
 
-                                    <Toolbar>
-                                        <IconButton
-                                            color='secondary'
-                                            aria-label="open drawer"
-                                            edge="start"
-                                            onClick={toggleDrawer}
-                                            sx={{ mr: 2 }}
-                                        >
-                                            <Filter />
-                                            <Typography variant="body1">Filter</Typography>
-                                        </IconButton>
-                                    </Toolbar>
-                                </AppBar>
-                            )
-                        }
-                        <header style={{ marginBottom: '20px', paddingBottom: '10px', borderBottom: '1px solid #e0e0e0' }}>
-                            <Grid container display="flex" justifyContent="space-between" alignItems="center">
-                                <Grid item xs={6} sm={6} md={5}>
-                                    <TextField
-                                        fullWidth
-                                        variant="outlined"
-                                        placeholder="Search..."
-                                        // value={keyword} // Update keyword on typing
-                                        onKeyDown={handleSearchKeyDown}
-                                        InputProps={{
-                                            startAdornment: <SearchIcon sx={{ mr: 1 }} />
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid item xs={6} sm={6} md={5}>
-                                    <FormControl variant="outlined" sx={{ minWidth: '100%' }}>
-                                        <Select
-                                            value={sort}
-                                            onChange={handleSortChange}// Update newItems state
-                                        >
-                                            <MenuItem value={1}>Newest</MenuItem>
-                                            <MenuItem value={2}>Oldest</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12} sm={12} md={2}>
-                                    <Typography variant="body1" sx={{
-                                        display: 'flex',
-                                        justifyContent: { xs: 'center', sm: 'center', md: 'flex-end' },
-                                        flexDirection: 'row',
-                                        mt: { xs: 1, sm: 1, md: 0 }
-                                    }}>{totalProductsCount} Items found</Typography>
-                                </Grid>
-                            </Grid>
-                        </header>
-                        <Grid container spacing={3}>
-                            {
-                                isSmallScreen === false ? (
-                                    <Grid item md={3}>
-                                        <Typography variant="h6" sx={{ paddingBottom: 2 }}>Filters</Typography>
-                                        <Divider />
-
-                                        <Typography variant="h6" gutterBottom>Price range</Typography>
-                                        <Grid container spacing={2}>
-                                            <Grid item xs={6}>
-                                                <TextField
-                                                    label="AED 20"
-                                                    placeholder="AED 20"
-                                                    name="minPrice"
-                                                    type="number"
-                                                    size="small"
-                                                    value={priceRange.minPrice}
-                                                    onChange={handlePriceChange}
-                                                    error={!!errors.minPrice}
-                                                    helperText={errors.minPrice || ''}
-                                                    fullWidth
-                                                />
-                                            </Grid>
-                                            <Grid item xs={6}>
-                                                <TextField
-                                                    label="AED 50,000"
-                                                    placeholder="AED 50,000"
-                                                    name="maxPrice"
-                                                    type="number"
-                                                    size="small"
-                                                    value={priceRange.maxPrice}
-                                                    onChange={handlePriceChange}
-                                                    error={!!errors.maxPrice}
-                                                    helperText={errors.maxPrice || ''}
-                                                    fullWidth
-                                                />
-                                            </Grid>
-                                        </Grid>
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
+                                <Typography variant="h6" gutterBottom>Price range</Typography>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={6}>
+                                        <TextField
+                                            label="AED 20"
+                                            placeholder="AED 20"
+                                            name="minPrice"
+                                            type="number"
+                                            size="small"
+                                            value={priceRange.minPrice}
+                                            onChange={handlePriceChange}
+                                            error={!!errors.minPrice}
+                                            helperText={errors.minPrice || ''}
                                             fullWidth
-                                            sx={{ marginTop: '10px' }}
-                                            onClick={handleApplyPriceRange}
-                                        >
-                                            Apply
-                                        </Button>
-                                        <Divider sx={{ marginTop: '10px' }} />
+                                        />
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <TextField
+                                            label="AED 50,000"
+                                            placeholder="AED 50,000"
+                                            name="maxPrice"
+                                            type="number"
+                                            size="small"
+                                            value={priceRange.maxPrice}
+                                            onChange={handlePriceChange}
+                                            error={!!errors.maxPrice}
+                                            helperText={errors.maxPrice || ''}
+                                            fullWidth
+                                        />
+                                    </Grid>
+                                </Grid>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    sx={{ marginTop: '10px' }}
+                                    onClick={handleApplyPriceRange}
+                                >
+                                    Apply
+                                </Button>
+                                <Divider sx={{ marginTop: '10px' }} />
 
-                                        <Typography variant="h6" gutterBottom sx={{ pt: 2 }}>Categories</Typography>
-                                    {subCategoryId ? (
+                                <Typography variant="h6" gutterBottom sx={{ pt: 2 }}>Categories</Typography>
+                                {subCategoryId ? (
                                     <Grid container display="flex" alignItems="center" justifyContent="space-between" p={2} bgcolor="grey.100">
                                         <Grid item xs={12}>
                                             <Typography variant="body1" fontWeight="bold" sx={{
-                                                textAlign:"center"
+                                                textAlign: "center"
                                             }}>
                                                 {urlCategoryName} : {subCategoryName}
                                             </Typography>
@@ -456,97 +456,103 @@ const ProductList = (props) => {
                                             </Button>
                                         </Grid>
                                     </Grid>
-                                        ) : (
-                                            <List>
-                                                {categories.map(category => (
-                                                    <React.Fragment key={category.id}>
-                                                        <ListItem button onClick={() => handleToggleCategory(category.id)}>
-                                                            <ListItemText primary={category.name} />
-                                                            {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
-                                                        </ListItem>
-                                                        <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
-                                                            <List component="div" disablePadding>
-                                                                {category.sub_category.map(subCategory => (
-                                                                    <ListItem
-                                                                        button
-                                                                        key={subCategory.id}
-                                                                        sx={{ pl: 4 }}
-                                                                        onClick={() => handleSubCategoryClick(subCategory, category.id, category.name)}
-                                                                    >
-                                                                        <ListItemText primary={subCategory.name} />
-                                                                    </ListItem>
-                                                                ))}
-                                                            </List>
-                                                        </Collapse>
-                                                    </React.Fragment>
-                                                ))}
-                                            </List>
-                                        )}
-                                        <Divider sx={{ marginY: '20px' }} />
-
-                                        {selectedSubCategory &&
-                                            selectedSubCategory.sub_category_property.map((property) => (
-                                                <React.Fragment key={property.id}>
-                                                    <Typography variant="h6" gutterBottom>{property.name}</Typography>
-                                                    <FormGroup row>
-                                                        {property.sub_category_property_value.map((value) => (
-                                                            <FormControlLabel
-                                                                value={searchParams.get('filter_properties') ? searchParams.get('filter_properties').split(',') : []}
-                                                                key={value.id}
-                                                                control={
-                                                                    <Checkbox
-                                                                        onChange={() => handleCheckboxChange(value.id)}
-                                                                        checked={isChecked(value.id)}
-                                                                    />
-                                                                }
-                                                                label={value.name}
-                                                            />
+                                ) : (
+                                    <List>
+                                        {categories.map(category => (
+                                            <React.Fragment key={category.id}>
+                                                <ListItem button onClick={() => handleToggleCategory(category.id)}>
+                                                    <ListItemText primary={category.name} />
+                                                    {openCategory[category.id] ? <ExpandLess /> : <ExpandMore />}
+                                                </ListItem>
+                                                <Collapse in={openCategory[category.id]} timeout="auto" unmountOnExit>
+                                                    <List component="div" disablePadding>
+                                                        {category.sub_category.map(subCategory => (
+                                                            <ListItem
+                                                                button
+                                                                key={subCategory.id}
+                                                                sx={{ pl: 4 }}
+                                                                onClick={() => handleSubCategoryClick(subCategory, category.id, category.name)}
+                                                            >
+                                                                <ListItemText primary={subCategory.name} />
+                                                            </ListItem>
                                                         ))}
-                                                    </FormGroup>
-                                                    <Divider sx={{ marginY: '20px' }} />
-                                                </React.Fragment>
-                                            ))}
-                                    </Grid>
-                                )
-                                    :
+                                                    </List>
+                                                </Collapse>
+                                            </React.Fragment>
+                                        ))}
+                                    </List>
+                                )}
+                                <Divider sx={{ marginY: '20px' }} />
 
-                                    (<Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
-                                        <MemoizedDrawerContent
-                                            categories={categories}
-                                            openCategory={openCategory}
-                                            handleToggleCategory={handleToggleCategory}
-                                            handleSubCategoryClick={handleSubCategoryClick}
-                                            searchParams={searchParams}
-                                            setSearchParams={setSearchParams}
-                                            subCategoryFromParent={selectedSubCategory}
-                                            resetCategory={resetCategory}
-                                        />
-                                    </Drawer>)
-                            }
-
-
-
-                            <Grid item xs={12} sm={12} md={9} lg={9} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                                {loading ? <CircularProgress size={36} /> : <MemoizedProductListGridView productsData={productsData} searchParams={searchParams} setSearchParams={setSearchParams} />}
-
+                                {selectedSubCategory &&
+                                    selectedSubCategory.sub_category_property.map((property) => (
+                                        <React.Fragment key={property.id}>
+                                            <Typography variant="h6" gutterBottom>{property.name}</Typography>
+                                            <FormGroup row>
+                                                {[...property.sub_category_property_value] // make a copy before sorting
+                                                    .sort((a, b) => {
+                                                        if (a.name === 'Other') return 1;
+                                                        if (b.name === 'Other') return -1;
+                                                        return a.name.localeCompare(b.name);
+                                                    })
+                                                    .map((value) => (
+                                                        <FormControlLabel
+                                                            value={searchParams.get('filter_properties') ? searchParams.get('filter_properties').split(',') : []}
+                                                            key={value.id}
+                                                            control={
+                                                                <Checkbox
+                                                                    onChange={() => handleCheckboxChange(value.id)}
+                                                                    checked={isChecked(value.id)}
+                                                                />
+                                                            }
+                                                            label={value.name}
+                                                        />
+                                                    ))}
+                                            </FormGroup>
+                                            <Divider sx={{ marginY: '20px' }} />
+                                        </React.Fragment>
+                                    ))}
                             </Grid>
+                        )
+                            :
 
-                            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                                <Pagination
-                                    count={totalPages}
-                                    page={page}
-                                    onChange={handlePageChange}
-                                    color="primary"
-                                    shape="rounded"
-                                    hidePrevButton
-                                    hideNextButton
+                            (<Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer}>
+                                <MemoizedDrawerContent
+                                    categories={categories}
+                                    openCategory={openCategory}
+                                    handleToggleCategory={handleToggleCategory}
+                                    handleSubCategoryClick={handleSubCategoryClick}
+                                    searchParams={searchParams}
+                                    setSearchParams={setSearchParams}
+                                    subCategoryFromParent={selectedSubCategory}
+                                    resetCategory={resetCategory}
                                 />
-                            </Grid>
+                            </Drawer>)
+                    }
 
-                        </Grid>
-                    </Container>
 
-            
+
+                    <Grid item xs={12} sm={12} md={9} lg={9} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                        {loading ? <CircularProgress size={36} /> : <MemoizedProductListGridView productsData={productsData} searchParams={searchParams} setSearchParams={setSearchParams} />}
+
+                    </Grid>
+
+                    <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                        <Pagination
+                            count={totalPages}
+                            page={page}
+                            onChange={handlePageChange}
+                            color="primary"
+                            shape="rounded"
+                            hidePrevButton
+                            hideNextButton
+                        />
+                    </Grid>
+
+                </Grid>
+            </Container>
+
+
         </ThemeProvider>
     );
 };
