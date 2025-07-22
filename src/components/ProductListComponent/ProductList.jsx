@@ -69,6 +69,31 @@ const ProductList = (props) => {
     const priceMaxPrice = searchParams.get("filter_max_price");
     const pageScroll = searchParams.get("page_scroll") || 0
 
+    const customOrder = [
+        // Baby sizes
+        "Premature", "Tiny baby", "Newborn", "Up to 3 months", "3 - 6 months",
+        "6 - 9 months", "9 - 12 months", "12 - 18 months",
+        "2 years", "3 years", "4 years",
+
+        // Children sizes
+        "5 years", "6 years", "7 years", "8 years", "9 years", "10 years",
+        "11 years", "12 years",
+
+        // Teen sizes
+        "13 years", "14 years", "15 years", "16 years", "17 years",
+
+        // Clothing
+        "XS", "S", "M", "L", "XL", "XXL", "XXXL",
+        "UK 4", "UK 6", "UK 8", "UK 10", "UK 12", "UK 14", "UK 16", "UK 18", "UK 20", "UK 22",
+
+        // Shoe sizes
+        "EU 36", "EU 36.5", "EU 37", "EU 37.5", "EU 38", "EU 38.5", "EU 39", "EU 39.5",
+        "EU 40", "EU 40.5", "EU 41", "EU 41.5",
+
+        // Always at the end
+        "Other"
+    ];
+
     const validatePriceRange = () => {
         const { minPrice, maxPrice } = priceRange;
         const validationErrors = {};
@@ -489,11 +514,21 @@ const ProductList = (props) => {
                                         <React.Fragment key={property.id}>
                                             <Typography variant="h6" gutterBottom>{property.name}</Typography>
                                             <FormGroup row>
-                                                {[...property.sub_category_property_value] // make a copy before sorting
+                                                {[...property.sub_category_property_value]
                                                     .sort((a, b) => {
+
                                                         if (a.name === 'Other') return 1;
                                                         if (b.name === 'Other') return -1;
-                                                        return a.name.localeCompare(b.name);
+                                                        const indexA = customOrder.indexOf(a.name);
+                                                        const indexB = customOrder.indexOf(b.name);
+
+                                                        if (indexA === -1 && indexB === -1) {
+                                                            return a.name.localeCompare(b.name);
+                                                        }
+                                                        if (indexA === -1) return 1;
+                                                        if (indexB === -1) return -1;
+
+                                                        return indexA - indexB;
                                                     })
                                                     .map((value) => (
                                                         <FormControlLabel
