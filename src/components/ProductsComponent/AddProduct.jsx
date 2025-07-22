@@ -412,7 +412,12 @@ const AddProduct = (props) => {
                     <React.Fragment key={property.id}>
                       <Typography variant="h6" gutterBottom>{property.name}</Typography>
                       <FormGroup row>
-                        {property.sub_category_property_value.map((value) => (
+                        {[...property.sub_category_property_value] // make a copy before sorting
+                                .sort((a, b) => {
+                                    if (a.name === 'Other') return 1;
+                                    if (b.name === 'Other') return -1;
+                                    return a.name.localeCompare(b.name);
+                                }).map((value) => (
                           <FormControlLabel
                             key={value.id}
                             control={
