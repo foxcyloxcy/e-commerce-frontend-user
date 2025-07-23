@@ -25,7 +25,7 @@ const ProductDetails = () => {
     const [loading, setLoading] = useState(false);  // Loading state for offers
     const [parsedUserData, setParsedUserData] = useState(null)
     const [userToken, setUserToken] = useState(null)
-    const [confirmCollection, setConfirmCollection] = useState(false);
+    // const [confirmCollection, setConfirmCollection] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [agreeRefund, setAgreeRefund] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
@@ -136,10 +136,10 @@ const ProductDetails = () => {
 
     const handleMamoCheckout = async (uuid) => {
 
-        if (!confirmCollection) {
-            Swal.fire('Error', 'You need to confirm collecting the item', 'error');
-            return;
-        }
+        // if (!confirmCollection) {
+        //     Swal.fire('Error', 'You need to confirm collecting the item', 'error');
+        //     return;
+        // }
 
         if (!agreeRefund) {
             Swal.fire('Error', 'You need to agree to all terms and conditions', 'error');
@@ -487,12 +487,12 @@ const ProductDetails = () => {
         <ThemeProvider theme={ModTheme}>
             <Container
                 sx={{
-                    backgroundColor: 'secondary.background',
-                    padding: 2,
-                    mt: 15,
+                    backgroundColor: 'background.paper',
+                    // padding: 2,
+                    mt: 8,
                     mb: 10,
-                    boxShadow: 10,
-                    maxWidth: { xs: 'xs', sm: 'sm', md: 'md', lg: 'lg', xl: 'xl' },
+                    // boxShadow: 10,
+                    // maxWidth: { xs: 'xs', sm: 'sm', md: 'md', lg: 'lg', xl: 'xl' },
                 }}
             >
             <Grid container xs={12}>
@@ -500,18 +500,13 @@ const ProductDetails = () => {
                 variant="text"
                 color="primary"
                 disabled={loading}
-                sx={{
-                    mb: 1
-                }}
                 onClick={() => navigate(-1)}
               >
                 <ArrowBackIcon />Go back
               </Button>
                 </Grid>
-                <Grid container spacing={4} sx={{
-                    pt:0
-                }}>
-                    <Grid item xs={12} md={6}
+                <Grid container spacing={4}>
+                    <Grid item xs={6} sm={6}
                     >
                         <Carousel showArrows={false} infiniteLoop={true} autoPlay>
                             {productsData.item_details.images.map((image, index) => (
@@ -521,14 +516,13 @@ const ProductDetails = () => {
                                         display: 'flex',
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        height: '400px',
+                                        height: { xs: '180px', md: '250px', lg: '400px'},
                                     }}
                                 >
                                     <img
                                         src={image.image_url}
                                         style={{
                                             maxHeight: '100%',
-                                            maxWidth: '100%',
                                             objectFit: 'contain',
                                         }}
                                     />
@@ -536,7 +530,7 @@ const ProductDetails = () => {
                             ))}
                         </Carousel>
                     </Grid>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={6} sm={6} sx={{pl: 0}}>
                         <Typography variant="h6" gutterBottom>
                             {productsData.item_details.item_name}
                         </Typography>
@@ -602,48 +596,47 @@ const ProductDetails = () => {
                             {productsData.item_details.is_bid === 1 &&
                                 (productsData.item_details.my_offer === null || productsData.item_details.my_offer === "") && (
                                     <>
-                                        <Grid item width="60%">
-                                            <TextField
-                                                size="small"
-                                                label="ENTER OFFER"
-                                                variant="outlined"
-                                                value={offerPrice}
-                                                onChange={(e) => setOfferPrice(e.target.value)}
-                                                sx={{ marginRight: 2 }}
-                                            />
-                                        </Grid>
-                                        <Grid item width="40%">
-                                            <ButtonComponent
-                                                label="Offer"
-                                                size="small"
-                                                buttonVariant="contained"
-                                                textColor="primary.contrastText"
-                                                hoverTextColor="secondary.main"
-                                                onClick={() => handleOffers(productsData)}
-                                                disabled={loading || !offerPrice}
-                                            />
-                                        </Grid>
+                                    <Grid item xs={12} sm={7}>
+                                        <TextField
+                                        fullWidth
+                                        size="small"
+                                        label="ENTER OFFER"
+                                        variant="outlined"
+                                        value={offerPrice}
+                                        onChange={(e) => setOfferPrice(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={5}>
+                                        <ButtonComponent
+                                        fullWidth
+                                        label="Offer"
+                                        size="small"
+                                        buttonVariant="contained"
+                                        textColor="primary.contrastText"
+                                        hoverTextColor="secondary.main"
+                                        onClick={() => handleOffers(productsData)}
+                                        disabled={loading || !offerPrice}
+                                        />
+                                    </Grid>
                                     </>
                                 )
                             }
                             {
                                 parsedUserData && (
                                     <>
-
-                                        <Grid item width="60%"
-                                            sx={{ marginTop: 0 }}>
+                                    <Grid item xs={12} sm={7}>
                                             <TextField
+                                                fullWidth
                                                 size="small"
                                                 label="ENTER DISCOUNT CODE"
                                                 variant="outlined"
                                                 value={discountCode}
                                                 onChange={(e) => setDiscountCode(e.target.value)}
-                                                sx={{ marginRight: 2, marginTop: 0 }}
                                             />
                                         </Grid>
-                                        <Grid item width="40%"
-                                            sx={{ marginTop: 0 }}>
+                                    <Grid item xs={12} sm={5}>
                                             <ButtonComponent
+                                                fullWidth
                                                 label="aPPLY DISCOUNT"
                                                 size="small"
                                                 buttonVariant="contained"
@@ -657,19 +650,20 @@ const ProductDetails = () => {
                                 )
                             }
 
-                            <Grid item width="100%">
+                            {/* <Grid item xs={6} md={6}>
                                 <FormControlLabel
                                     control={<Checkbox checked={confirmCollection} onChange={(e) => setConfirmCollection(e.target.checked)} />}
                                     label="I can confirm it’s the buyer's responsibility to collect the item"
                                 />
-                            </Grid>
-                            <Grid item width="100%">
+                            </Grid> */}
+                            <Grid item xs={12} md={12}>
                                 <FormControlLabel
                                     control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
                                     label={
                                         <div>
                                             <span>I agree to all </span>
                                             <Link href={'/terms-and-conditions'} target="_blank">terms and conditions</Link>
+                                            <span> and it is the buyers responsibility to arrange collection of the item</span>
                                         </div>
                                     }
                                 />
