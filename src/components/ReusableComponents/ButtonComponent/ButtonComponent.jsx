@@ -21,15 +21,13 @@ export default function ButtonComponent(props) {
                 size={size}
                 startIcon={startIcon}
                 sx={{
-                    mt: 2,
-                    mb: 2,
                     color: textColor,
                     '&:hover': {
                         color: hoverTextColor,
                     },
                     height: height || 'auto',
                     width: width || '100%',
-                    fontSize: '1rem',
+                    fontSize: 'clamp(12px, 1.1vw, 1rem)',
                     // '@media (min-width:200px)': {
                     //     fontSize: '0.6rem',
                     // },
