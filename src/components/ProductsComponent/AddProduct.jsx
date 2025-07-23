@@ -42,15 +42,16 @@ const AddProduct = (props) => {
         "13 years", "14 years", "15 years", "16 years", "17 years",
 
         // Clothing
-        "XS", "S", "M", "L", "XL", "XXL", "XXXL",
+        "XXS", "XS", "S", "M", "L", "XL", "XXL", "XXXL",
         "UK 4", "UK 6", "UK 8", "UK 10", "UK 12", "UK 14", "UK 16", "UK 18", "UK 20", "UK 22",
 
         // Shoe sizes
         "EU 36", "EU 36.5", "EU 37", "EU 37.5", "EU 38", "EU 38.5", "EU 39", "EU 39.5",
-        "EU 40", "EU 40.5", "EU 41", "EU 41.5",
+        "EU 40", "EU 40.5", "EU 41", "EU 41.5", "42", "EU 42.5", "EU 43", "EU 43.5", "EU 44",
+        "EU 44.5", "EU 45", "EU 45.5", "EU 46", "EU 46.5",
 
         // Always at the end
-        "Other"
+        "Other",
     ];
 
 
