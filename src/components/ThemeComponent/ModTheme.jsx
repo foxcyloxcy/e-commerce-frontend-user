@@ -44,12 +44,13 @@ const ModTheme = createTheme({
         },
         h6: {
             fontFamily: 'Playfair Display, serif',
+            fontSize: 'clamp(16px, 1.1vw, 1.5rem)'
         },
         body1: {
-            fontSize: '1rem', // 16px for all screen sizes
+            fontSize: 'clamp(12px, 1.1vw, 1rem)', // 16px for all screen sizes
         },
         body2: {
-            fontSize: '1rem', // 16px for all screen sizes
+            fontSize: 'clamp(12px, 1.1vw, 1rem)', // 16px for all screen sizes
         },
     },
     components: {
