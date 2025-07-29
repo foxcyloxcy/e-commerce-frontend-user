@@ -24,8 +24,6 @@ const OnYourBehalf = () => {
         hoverTextColor="secondary.main"
       />
 
-
-
       <Typography variant="h5" fontWeight="bold" gutterBottom color="#1a2d5a">
         How It Works
       </Typography>
