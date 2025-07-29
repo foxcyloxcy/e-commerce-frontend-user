@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, Typography, Grid, Paper, Stack } from '@mui/material';
-import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
+import { Box, Typography, Grid, Paper, Stack, Button } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
@@ -8,44 +7,40 @@ import CheckIcon from '@mui/icons-material/Check';
 
 const OnYourBehalf = () => {
   return (
-    <Box sx={{ backgroundColor: '#fdfaf6', py: 8, px: 2, textAlign: 'center' }}>
-      <Typography variant="h4" fontWeight="bold" gutterBottom color="#1a2d5a">
+    <Box sx={{ backgroundColor: '#F5F5F2', py: 8, px: 2, textAlign: 'center' }}>
+      <Typography variant="h4" fontWeight="bold" gutterBottom color="#255773">
         Let Us Sell For You
       </Typography>
       <Typography variant="subtitle1" color="text.secondary" mb={4}>
         No time to list? We’ll do it all — photos, uploads, pricing, and selling.
       </Typography>
 
-      <ButtonComponent
-        label="book Now"
-        size="small"
-        buttonVariant="contained"
-        textColor="primary.contrastText"
-        hoverTextColor="secondary.main"
-      />
+      <Button variant="contained" sx={{ bgcolor: '#255773', mb: 6 }}>
+        Book Now
+      </Button>
 
-      <Typography variant="h5" fontWeight="bold" gutterBottom color="#1a2d5a">
+      <Typography variant="h5" fontWeight="bold" gutterBottom color="#255773">
         How It Works
       </Typography>
 
       <Grid container spacing={4} justifyContent="center" mb={6}>
         <Grid item xs={12} sm={4}>
           <Stack spacing={1} alignItems="center">
-            <CalendarMonthIcon sx={{ fontSize: 40, color: '#1a2d5a' }} />
+            <CalendarMonthIcon sx={{ fontSize: 40, color: '#255773' }} />
             <Typography variant="h6" fontWeight="bold">Book</Typography>
             <Typography variant="body2">Choose a date & fill out the quick form</Typography>
           </Stack>
         </Grid>
         <Grid item xs={12} sm={4}>
           <Stack spacing={1} alignItems="center">
-            <ShoppingBagIcon sx={{ fontSize: 40, color: '#1a2d5a' }} />
+            <ShoppingBagIcon sx={{ fontSize: 40, color: '#255773' }} />
             <Typography variant="h6" fontWeight="bold">Hand Over</Typography>
             <Typography variant="body2">We’ll collect or receive your items</Typography>
           </Stack>
         </Grid>
         <Grid item xs={12} sm={4}>
           <Stack spacing={1} alignItems="center">
-            <AttachMoneyIcon sx={{ fontSize: 40, color: '#1a2d5a' }} />
+            <AttachMoneyIcon sx={{ fontSize: 40, color: '#255773' }} />
             <Typography variant="h6" fontWeight="bold">We Sell</Typography>
             <Typography variant="body2">You get paid when it sells</Typography>
           </Stack>
@@ -67,14 +62,9 @@ const OnYourBehalf = () => {
         Emma, Dubai Marina
       </Typography>
 
-      <ButtonComponent
-        label="Book Your Concierge Service"
-        size="small"
-        buttonVariant="contained"
-        textColor="primary.contrastText"
-        hoverTextColor="secondary.main"
-
-      />
+      <Button variant="contained" sx={{ bgcolor: '#255773'}}>
+        Book Your Concierge Service
+      </Button>
     </Box>
   );
 };
