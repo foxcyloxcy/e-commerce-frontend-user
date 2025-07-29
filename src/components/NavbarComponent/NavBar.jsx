@@ -122,6 +122,13 @@ const NavBar = (props) => {
                 />
                 <ButtonComponent
                   component={Link}
+                  to="/on-your-behalf"
+                  label="concierge"
+                  textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
+                  hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                />
+                <ButtonComponent
+                  component={Link}
                   to="/shop?page=1&sort=1&category_id=&category_name=&sub_category_id=&sub_category_name=&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties="
                   label="Shop"
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
