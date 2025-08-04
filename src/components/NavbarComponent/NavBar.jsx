@@ -258,6 +258,9 @@ const NavBar = (props) => {
                   <ListItem button component={Link} to="/our-story" onClick={handleClose}>
                     <ListItemText primary="About" />
                   </ListItem>
+                  <ListItem button component={Link} to="/on-your-behalf" onClick={handleClose}>
+                    <ListItemText primary="Concierge" />
+                  </ListItem>
                   <ListItem button component={Link} to="/shop?page=1&sort=1&category_id=&category_name=&sub_category_id=&sub_category_name=&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties=" onClick={handleClose}>
                     <ListItemText primary="Shop" />
                   </ListItem>
