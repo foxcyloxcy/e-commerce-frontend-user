@@ -7,7 +7,7 @@ import CheckIcon from '@mui/icons-material/Check';
 
 const OnYourBehalf = () => {
   return (
-    <Box sx={{ backgroundColor: '#F5F5F2', py: 8, px: 2, textAlign: 'center' }}>
+    <Box sx={{ backgroundColor: '#F5F5F2', py: 10, px: 2, textAlign: 'center' }}>
       <Typography variant="h4" fontWeight="bold" gutterBottom color="#255773">
         Let Us Sell For You
       </Typography>
@@ -15,9 +15,15 @@ const OnYourBehalf = () => {
         No time to list? We will come to your house, take the photos and upload on your behalf.
       </Typography>
 
-      <Button variant="contained" sx={{ bgcolor: '#255773', mb: 6 }}>
-        Book Now
-      </Button>
+      <a
+        href="https://calendly.com/hello-therelovedmarketplace/onyourbehalf?text_color=255773&primary_color=5e97c3"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Button variant="contained" sx={{ bgcolor: '#1a2d5a', borderRadius: 6, mb: 6 }}>
+          Book Now
+        </Button>
+      </a>
 
       <Typography variant="h5" fontWeight="bold" gutterBottom color="#255773">
         How It Works
@@ -62,9 +68,15 @@ const OnYourBehalf = () => {
         Emma, Dubai Marina
       </Typography>
 
-      <Button variant="contained" sx={{ bgcolor: '#255773'}}>
-        Book Your Concierge Service
-      </Button>
+      <a
+        href="https://calendly.com/hello-therelovedmarketplace/onyourbehalf?text_color=255773&primary_color=5e97c3"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Button variant="contained" sx={{ bgcolor: '#1a2d5a', borderRadius: 6 }}>
+          Book Your Concierge Service
+        </Button>
+      </a>
     </Box>
   );
 };
