@@ -27,19 +27,19 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
     description: 'Sell now and make space for something new!',
   };
 
-      const features = [
+  const features = [
     {
-      icon: <Sell fontSize="large" />,
+      icon: <Sell sx={{ fontSize: 30, color: '#1a2d5a', alignSelf: 'center' }} />,
       title: 'BUY EASILY',
       desc: 'Filter to search, checkout without creating an account',
     },
     {
-      icon: <VerifiedUser fontSize="large" />,
+      icon: <VerifiedUser sx={{ fontSize: 30, color: '#1a2d5a', alignSelf: 'center' }} />,
       title: 'SELL EASILY',
       desc: 'Upload your items or use our concierge service',
     },
     {
-      icon: <LocalShipping fontSize="large" />,
+      icon: <LocalShipping sx={{ fontSize: 30, color: '#1a2d5a', alignSelf: 'center' }} />,
       title: 'DELIVERY OPTIONS',
       desc: 'Collection & delivery within 4 hours, large items assemble included international options.'
     },
@@ -52,7 +52,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
           position: 'relative',
           width: '100%',
           overflow: 'hidden',
-          mt: {xs: 8, md: 8}
+          mt: { xs: 8, md: 8 }
         }}
       >
         {/* Background Image as Banner */}
@@ -63,26 +63,37 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
           sx={{
             width: '100%',
             height: { md: '200px' }, // Adjust height for banner size
-            objectFit: {xs: 'contain', md: 'cover'},
+            objectFit: { xs: 'contain', md: 'cover' },
           }}
         />
 
 
-              <Container sx={{ py: 6 }}>
-                <Grid container spacing={4} justifyContent="center">
-                  {features.map((feature, i) => (
-                    <Grid item xs={12} sm={4} key={i} textAlign="center">
-                      <Box>{feature.icon}</Box>
-                      <Typography variant="subtitle1" fontWeight="bold" mt={2}>
-                        {feature.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.primary" mt={1}>
-                        {feature.desc}
-                      </Typography>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Container>
+        <Container sx={{ py: 2}}>
+          <Grid container spacing={4} justifyContent="center">
+            {features.map((feature, i) => (
+              <Grid item xs={12} sm={4} key={i} textAlign="center">
+                <Box
+                  sx={{
+                    width: 70,
+                    height: 70,
+                    border: '2px solid #1a2d5a',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    mx: 'auto',
+                  }}
+                >{feature.icon}</Box>
+                <Typography variant="subtitle1" fontWeight="bold" mt={2}>
+                  {feature.title}
+                </Typography>
+                <Typography variant="body2" color="text.primary" mt={1}>
+                  {feature.desc}
+                </Typography>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
 
         {/* Overlay Box */}
         {/* <Box
