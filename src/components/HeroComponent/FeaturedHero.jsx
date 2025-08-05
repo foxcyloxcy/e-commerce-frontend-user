@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Typography, Button, ThemeProvider, useMediaQuery, } from '@mui/material';
+import { Box, Typography, Button, ThemeProvider, Container, Grid } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
 import { useNavigate } from 'react-router-dom';
+import { LocalShipping, VerifiedUser, Sell } from '@mui/icons-material';
 
 
 const FeaturedHero = ({ parentIsLoggedIn }) => {
@@ -26,6 +27,24 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
     description: 'Sell now and make space for something new!',
   };
 
+      const features = [
+    {
+      icon: <Sell fontSize="large" />,
+      title: 'BUY EASILY',
+      desc: 'Filter to search, checkout without creating an account',
+    },
+    {
+      icon: <VerifiedUser fontSize="large" />,
+      title: 'SELL EASILY',
+      desc: 'Upload your items or use our concierge service',
+    },
+    {
+      icon: <LocalShipping fontSize="large" />,
+      title: 'DELIVERY OPTIONS',
+      desc: 'Collection & delivery within 4 hours, large items assemble included international options.'
+    },
+  ];
+
   return (
     <ThemeProvider theme={ModTheme}>
       <Box
@@ -43,13 +62,30 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
           alt={item.title}
           sx={{
             width: '100%',
-            height: { md: '450px' }, // Adjust height for banner size
+            height: { md: '200px' }, // Adjust height for banner size
             objectFit: {xs: 'contain', md: 'cover'},
           }}
         />
 
+
+              <Container sx={{ py: 6 }}>
+                <Grid container spacing={4} justifyContent="center">
+                  {features.map((feature, i) => (
+                    <Grid item xs={12} sm={4} key={i} textAlign="center">
+                      <Box>{feature.icon}</Box>
+                      <Typography variant="subtitle1" fontWeight="bold" mt={2}>
+                        {feature.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.primary" mt={1}>
+                        {feature.desc}
+                      </Typography>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Container>
+
         {/* Overlay Box */}
-        <Box
+        {/* <Box
           sx={{
             position: { xs: 'static', md: 'absolute' },
             top: { md: '50%' },
@@ -93,7 +129,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
               Learn how it works
             </Box>
           </Typography>
-        </Box>
+        </Box> */}
       </Box>
     </ThemeProvider>
   );
