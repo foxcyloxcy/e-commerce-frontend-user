@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Grid } from '@mui/material';
 import FeaturedProducts from '../FeaturedProductsComponent/FeaturedProducts';
 import FeaturedHero from '../HeroComponent/FeaturedHero';
-import HomeCategories from '../HomeCategoriesComponent/HomeCategories';
 import Swal from 'sweetalert2';
 import ModTheme from '../ThemeComponent/ModTheme';
 
@@ -43,9 +42,6 @@ export default function Home(props) {
     return (
         <Grid container>
             <FeaturedHero parentIsLoggedIn={parentIsLoggedIn} />
-            <Grid item xs={12}>
-                <HomeCategories />
-            </Grid>
             <Grid item xs={12}>
                 <FeaturedProducts />
             </Grid>
