@@ -122,15 +122,11 @@ const OnYourBehalf = () => {
         Emma, Dubai Marina
       </Typography>
 
-      <a
-        href="https://calendly.com/hello-therelovedmarketplace/onyourbehalf?text_color=255773&primary_color=5e97c3"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      {!showCalendly && (
         <Button variant="contained" sx={{ bgcolor: '#1a2d5a', borderRadius: 6 }}>
           Book Your Concierge Service
         </Button>
-      </a>
+      )}
     </Box>
   );
 };
