@@ -1,66 +1,123 @@
 import React from 'react';
-import { Typography, Box, Card, CardContent, Link, CardMedia, ThemeProvider } from '@mui/material';
-import ModTheme from '../../components/ThemeComponent/ModTheme';
+import {
+    Box,
+    Typography,
+    Button,
+    Grid,
+    Divider,
+    useTheme,
+    useMediaQuery,
+} from '@mui/material';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import GroupIcon from '@mui/icons-material/Group';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const DeliveryPartners = () => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
     return (
-        <ThemeProvider theme={ModTheme}>
-            <Box sx={{ maxWidth: 900, margin: 'auto', marginTop: 10, marginBottom: 5, padding: 2 }}>
-                <Card>
-                    <CardContent>
-                        <Typography variant="h4" gutterBottom>
-                            Our Delivery Partners
-                        </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            Whether you’re wanting to get a sofa, wardrobe, or a dress delivered, no item is too small or too big with our delivery partners.
-                        </Typography>
+        <Box sx={{ px: 2, py: 10, maxWidth: '1200px', mx: 'auto' }}>
+            <Typography
+                variant={isMobile ? 'h5' : 'h4'}
+                fontWeight="bold"
+                textAlign="center"
+                sx={{ color: '#1a2d5a', mb: 1 }}
+            >
+                Our Delivery Partners
+            </Typography>
+            <Typography
+                variant="body1"
+                textAlign="center"
+                sx={{ mb: 4, color: 'text.secondary' }}
+            >
+                Learn about the shipping options available for your Reloved purchases.
+            </Typography>
 
-                        <Typography variant="h5" gutterBottom>
-                            Small Items
-                        </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            Contact reloved via whatsapp or send us a DM and we will help arrange collection and delivery of your item.
-                        </Typography>
+            <Grid container spacing={4} alignItems="center" mb={4}>
+                <Grid item xs={12} sm={2} md={2}>
+                    <Box
+                        sx={{
+                            width: 70,
+                            height: 70,
+                            border: '2px solid #1a2d5a',
+                            borderRadius: '50%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            mx: 'auto',
+                        }}
+                    >
+                        <LocalShippingIcon sx={{ fontSize: 30, color: '#1a2d5a', alignSelf: 'center' }} />
+                    </Box>
 
-                        <Typography variant="h5" gutterBottom>
-                            Furniture
-                        </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            All large furniture items can be arranged by WhatsApping or emailing Mirza at Shah Movers. Quote ‘reloved’ to ensure you obtain a discounted price.
-                        </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            Contact details:
-                        </Typography>
-                        <Typography variant="body2" gutterBottom>
-                            Phone: <Link href="tel:0508579207">0508579207</Link><br />
-                            Email: <Link href="mailto:mirza@shahmovers.com">mirza@shahmovers.com</Link>
-                        </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6} md={7}>
+                    <Typography variant="h6" fontWeight="bold" color="#1a2d5a">
+                        Delivery Service
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        We partner with trusted couriers to offer door-to-door delivery.
+                        Items are typically delivered within 2 to 5 business days.
+                    </Typography>
+                </Grid>
+                <Grid item xs={12} sm={4} md={3}>
 
-                        <Typography variant="body1" gutterBottom>
-                            The team can also disassemble or reassemble your items.
-                        </Typography>
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            p: 0
+                        }}
+                    >
+                        <Button variant="contained" sx={{ backgroundColor: '#5e97c3' }}>
+                            Learn More
+                        </Button>
+                    </Box>
+                </Grid>
+            </Grid>
 
-                        <Typography variant="h6" gutterBottom>
-                            Top Tip:
-                        </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            Ensure you have spoken with the seller prior to using our delivery partners to check they are available to hand over your item.
-                        </Typography>
+            <Divider sx={{ my: 3 }} />
 
-                        <CardMedia
-                            component="img"
-                            image="/delivery-partners-image.jpg" // Update the path if needed
-                            alt="Delivery Partners"
-                            sx={{ height: 300, objectFit: 'contain', marginBottom: 2 }}
+            <Grid container spacing={4} alignItems="center">
+                <Grid item xs={12} sm={2}>
+                    <Box
+                        sx={{
+                            width: 140,
+                            height: 140,
+                            border: '2px solid #1a2d5a',
+                            borderRadius: '50%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            mx: 'auto',
+                            overflow: 'hidden', // Ensures circular crop
+                        }}
+                    >
+                        <img
+                            src="/reloved_delivery.png" // Replace with your actual image path
+                            alt="icon"
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                            }}
                         />
-
-                        <Typography variant="body1" color="textSecondary">
-                            Reloved is not responsible for any of the delivery options you choose, and delivery is an additional payment from the buyer.
-                        </Typography>
-                    </CardContent>
-                </Card>
-            </Box>
-        </ThemeProvider>
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sm={10}>
+                    <Typography variant="h6" fontWeight="bold" color="#1a2d5a" gutterBottom>
+                        How It Works
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        When you purchase an item, you can select our delivery service at checkout.
+                        Once your order is placed, we’ll handle the rest, ensuring your item is
+                        delivered to your chosen address.
+                    </Typography>
+                </Grid>
+            </Grid>
+        </Box>
     );
 };
 
