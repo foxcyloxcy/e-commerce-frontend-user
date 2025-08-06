@@ -516,7 +516,8 @@ const ProductDetails = () => {
                                     alt="Main product"
                                     sx={{
                                         borderRadius: 2,
-                                        maxHeight: { xs: 300, md: 500},
+                                        minHeight: { xs: 300, md: 450 },
+                                        maxHeight: { xs: 300, md: 450 },
                                         maxWidth: '100%',
                                         objectFit: 'contain',
                                     }}
@@ -547,9 +548,9 @@ const ProductDetails = () => {
                                 {productsData?.item_details.item_name || 'Product Name'}
                             </Typography>
 
-                            <Box mt={2}>
+                            <Box mt={0.5}>
                                 {productsData?.item_property_details?.map((propertyGroup, index) => (
-                                    <Box key={index} mt={index === 0 ? 0 : 1}>
+                                    <Box key={index} mt={index === 0 ? 0 : 0.5}>
                                         <Typography variant="body2" fontWeight="bold">
                                             {propertyGroup.properties}
                                         </Typography>
@@ -560,12 +561,16 @@ const ProductDetails = () => {
                                 ))}
                             </Box>
 
-                            <Box mt={3}>
+                            <Box 
+                                mt={0.5}
+                                sx={{
+                                    maxWidth: '30%',
+                                }}>
                                 {/* Price and Discount */}
-                                {discountBreakDown?.total_discount_breakdown?.total ? (
+                                {discountBreakDown && discountBreakDown.total_discount_breakdown.total ? (
                                     <>
                                         <Typography component="div" color="primary" sx={{ textDecoration: 'line-through' }}>
-                                            AED
+                                            AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
                                         </Typography>
                                         <Typography
                                             component="div"
@@ -573,34 +578,48 @@ const ProductDetails = () => {
                                             onClick={() => handleOpenPriceBreakdown(discountBreakDown)}
                                             sx={{ cursor: 'pointer', textDecoration: 'underline' }}
                                         >
-                                            AED
-                                        </Typography>
-                                    </>
-                                ) : productsData?.item_details?.my_offer ? (
-                                    <>
-                                        <Typography component="div" color="primary" sx={{ textDecoration: 'line-through' }}>
-                                            AED
-                                        </Typography>
-                                        <Typography
-                                            component="div"
-                                            color="primary"
-                                            onClick={() => handleOpenPriceBreakdown(productsData.my_offer)}
-                                            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                        >
-                                            AED {formatPrice(productsData.my_offer?.total_fee_breakdown.total)}
+                                            AED {formatPrice(discountBreakDown.total_discount_breakdown.total)}
                                         </Typography>
                                     </>
                                 ) : (
-                                    <Typography
-                                        variant="body1"
-                                        color="primary"
-                                        onClick={() => handleOpenPriceBreakdown(item)}
-                                        sx={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                    >
-                                        AED
-                                    </Typography>
+                                    // Only render this block if discountBreakDown is not true
+                                    productsData.item_details.my_offer === null || productsData.item_details.my_offer === "" ? (
+                                        <Typography
+                                            variant="body1"
+                                            color="primary"
+                                            onClick={() => handleOpenPriceBreakdown(productsData.item_details)}
+                                            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                        >
+                                            AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
+                                        </Typography>
+                                    ) : (
+                                        <>
+                                            <Typography component="div" color="primary" sx={{ textDecoration: 'line-through' }}>
+                                                AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
+                                            </Typography>
+                                            <Typography
+                                                component="div"
+                                                color="primary"
+                                                onClick={() => handleOpenPriceBreakdown(productsData.item_details.my_offer)}
+                                                sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                            >
+                                                AED {formatPrice(productsData.item_details.my_offer.total_fee_breakdown.total)}
+                                            </Typography>
+                                        </>
+                                    )
                                 )}
                             </Box>
+
+                            {/* Address */}
+                            {productsData?.item_details?.address && (
+                                <Typography
+                                    variant="body2"
+                                    sx={{ mt: 0, cursor: 'pointer', textDecoration: 'underline' }}
+                                    onClick={() => handleOpenMap(productsData?.item_details?.address)}
+                                >
+                                    Collection: {parseAddress(productsData?.item_details?.address)}
+                                </Typography>
+                            )}
 
                             {/* Add to Cart (or Confirm) */}
                             <Button
@@ -608,8 +627,7 @@ const ProductDetails = () => {
                                 disabled={!agreeRefund}
                                 sx={{
                                     backgroundColor: '#1a2d5a',
-                                    borderRadius: 2,
-                                    mt: 2,
+                                    mt: 1,
                                     width: '100%',
                                 }}
                             >
@@ -683,17 +701,6 @@ const ProductDetails = () => {
                                     }
                                 />
                             </Box>
-
-                            {/* Address */}
-                            {productsData?.item_details?.address && (
-                                <Typography
-                                    variant="body2"
-                                    sx={{ mt: 2, cursor: 'pointer', textDecoration: 'underline' }}
-                                    onClick={() => handleOpenMap(productsData?.item_details?.address)}
-                                >
-                                    Collection: {parseAddress(productsData?.item_details?.address)}
-                                </Typography>
-                            )}
 
                             {/* Chat Info */}
                             <Typography variant="body2" color="text.secondary" fontStyle="italic" mt={2}>
