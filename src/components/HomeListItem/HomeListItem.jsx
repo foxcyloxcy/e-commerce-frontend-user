@@ -7,7 +7,7 @@ import ModTheme from '../ThemeComponent/ModTheme'; // Make sure ModTheme is impo
 const HomeListItem = () => {
     return (
         <ThemeProvider theme={ModTheme}>
-            <Box sx={{ textAlign: 'center', py: 6, bgcolor: '#f7f7f7' }}>
+            <Box sx={{ textAlign: 'center', py: 4, bgcolor: '#f7f7f7' }}>
                 <Typography variant="h5" fontWeight="bold" gutterBottom>
                     understand how it works
                 </Typography>
