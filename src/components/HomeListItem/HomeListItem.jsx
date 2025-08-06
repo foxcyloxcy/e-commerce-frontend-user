@@ -9,11 +9,14 @@ const HomeListItem = () => {
         <ThemeProvider theme={ModTheme}>
             <Box sx={{ textAlign: 'center', py: 6, bgcolor: '#f7f7f7' }}>
                 <Typography variant="h5" fontWeight="bold" gutterBottom>
-                    Have something to sell?
+                    understand how it works
                 </Typography>
-                <Button variant="contained" sx={{ bgcolor: '#002a4e' }}>
-                    List an item
-                </Button>
+                <a href="/how-it-works" target="_blank"
+                    rel="noopener noreferrer">
+                    <Button variant="contained" sx={{ bgcolor: '#002a4e' }}>
+                        How it works
+                    </Button>
+                </a>
             </Box>
         </ThemeProvider>
     );
