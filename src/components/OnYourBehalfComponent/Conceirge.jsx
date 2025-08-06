@@ -49,7 +49,7 @@ const OnYourBehalf = () => {
       {!showCalendly && (
         <Button
           variant="contained"
-          sx={{ bgcolor: '#1a2d5a', borderRadius: 6, mb: 6 }}
+          sx={{ bgcolor: '#1a2d5a', mb: 6 }}
           onClick={() => setShowCalendly(true)}
         >
           Book Now
@@ -123,7 +123,12 @@ const OnYourBehalf = () => {
       </Typography>
 
       {!showCalendly && (
-        <Button variant="contained" sx={{ bgcolor: '#1a2d5a', borderRadius: 6 }}>
+        <Button variant="contained" sx={{ bgcolor: '#1a2d5a' }} onClick={() => {
+          setTimeout(() => {
+            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+          }, 600);
+          setShowCalendly(true);
+        }}>
           Book Your Concierge Service
         </Button>
       )}
