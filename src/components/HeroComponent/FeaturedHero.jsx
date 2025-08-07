@@ -29,17 +29,17 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
 
   const features = [
     {
-      icon: <Sell sx={{ fontSize: 30, color: '#1a2d5a', alignSelf: 'center' }} />,
+      icon: <Sell sx={{ fontSize: 30,}} />,   
       title: 'BUY EASILY',
       desc: 'Filter to search, checkout without creating an account',
     },
     {
-      icon: <VerifiedUser sx={{ fontSize: 30, color: '#1a2d5a', alignSelf: 'center' }} />,
+      icon: <VerifiedUser sx={{ fontSize: 30,}} />,   
       title: 'SELL EASILY',
       desc: 'Upload your items or use our concierge service',
     },
     {
-      icon: <LocalShipping sx={{ fontSize: 30, color: '#1a2d5a', alignSelf: 'center' }} />,
+      icon: <LocalShipping sx={{ fontSize: 30,}} />,   
       title: 'DELIVERY OPTIONS',
       desc: 'Collection & delivery within 4 hours, large items assemble included international options.'
     },
@@ -62,8 +62,8 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
           alt={item.title}
           sx={{
             width: '100%',
-            height: { md: '200px' }, // Adjust height for banner size
-            objectFit: { xs: 'contain', md: 'cover' },
+            height: { xs:'200px', md: '250px' }, // Adjust height for banner size
+            objectFit: { xs: 'cover' },
           }}
         />
 
@@ -82,6 +82,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     mx: 'auto',
+                    backgroundColor: '#E3F2F7'
                   }}
                 >{feature.icon}</Box>
                 <Typography variant="subtitle1" fontWeight="bold" mt={2}>
