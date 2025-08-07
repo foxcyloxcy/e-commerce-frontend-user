@@ -30,7 +30,7 @@ const ProductDetails = () => {
     const [userToken, setUserToken] = useState(null)
     // const [confirmCollection, setConfirmCollection] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [agreeRefund, setAgreeRefund] = useState(false);
+    const [agreeRefund, setAgreeRefund] = useState(true);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [openMap, setOpenMap] = useState(false);
     const [openPriceBreakdownModal, setOpenPriceBreakdownModal] = useState(false);
@@ -663,7 +663,6 @@ const ProductDetails = () => {
                             )}
 
                             {/* Discount Code Input */}
-                            {parsedUserData && (
                                 <Grid container spacing={1} mt={0.5}>
                                     <Grid item xs={12} sm={7}>
                                         <TextField
@@ -687,7 +686,7 @@ const ProductDetails = () => {
                                         </Button>
                                     </Grid>
                                 </Grid>
-                            )}
+                                
                             {/* Add to Cart (or Confirm) */}
                             <Button
                                 variant="contained"
