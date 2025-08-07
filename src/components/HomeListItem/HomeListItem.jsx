@@ -8,7 +8,7 @@ const HomeListItem = () => {
     return (
         <ThemeProvider theme={ModTheme}>
             <Box sx={{ textAlign: 'center', py: 4, bgcolor: '#f7f7f7' }}>
-                <Typography variant="h5" fontWeight="bold" gutterBottom>
+                <Typography variant="h5" gutterBottom>
                     understand how it works
                 </Typography>
                 <a href="/how-it-works" target="_blank"
