@@ -7,17 +7,20 @@ import {
     Divider,
     useTheme,
     useMediaQuery,
+    ThemeProvider
 } from '@mui/material';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import GroupIcon from '@mui/icons-material/Group';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import ModTheme from '../../components/ThemeComponent/ModTheme';
 
 const DeliveryPartners = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     return (
-        <Box sx={{ px: 2, py: 10, maxWidth: '1200px', mx: 'auto' }}>
+        <ThemeProvider theme={ModTheme}>
+                    <Box sx={{ px: 2, py: 10, maxWidth: '1200px', mx: 'auto' }}>
             <Typography
                 variant={isMobile ? 'h5' : 'h4'}
                 fontWeight="bold"
@@ -118,6 +121,7 @@ const DeliveryPartners = () => {
                 </Grid>
             </Grid>
         </Box>
+        </ThemeProvider>
     );
 };
 
