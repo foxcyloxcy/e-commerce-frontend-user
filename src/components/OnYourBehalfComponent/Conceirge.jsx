@@ -7,11 +7,13 @@ import {
   Stack,
   Button,
   CircularProgress,
+  ThemeProvider
 } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import CheckIcon from '@mui/icons-material/Check';
+import ModTheme from '../ThemeComponent/ModTheme';
 
 const OnYourBehalf = () => {
   const [showCalendly, setShowCalendly] = useState(false);
@@ -38,7 +40,8 @@ const OnYourBehalf = () => {
   }, [showCalendly]);
 
   return (
-    <Box sx={{ backgroundColor: '#F5F5F2', py: 10, px: 2, textAlign: 'center' }}>
+    <ThemeProvider theme={ModTheme}>
+          <Box sx={{ backgroundColor: '#F5F5F2', py: 10, px: 2, textAlign: 'center' }}>
       <Typography variant="h4" fontWeight="bold" gutterBottom color="#255773">
         Let Us Sell For You
       </Typography>
@@ -133,6 +136,7 @@ const OnYourBehalf = () => {
         </Button>
       )}
     </Box>
+    </ThemeProvider>
   );
 };
 
