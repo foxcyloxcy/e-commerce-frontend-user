@@ -29,18 +29,18 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
 
   const features = [
     {
-      icon: <Sell sx={{ fontSize: 30,}} />,   
-      title: 'BUY EASILY',
+      icon: <Sell sx={{ fontSize: {xs:25, sm: 30}, color: '#255773' }} />,
+      title: 'Shop Secondhand',
       desc: 'Filter to search, checkout without creating an account',
     },
     {
-      icon: <VerifiedUser sx={{ fontSize: 30,}} />,   
-      title: 'SELL EASILY',
+      icon: <VerifiedUser sx={{ fontSize: {xs:25, sm: 30}, color: '#255773' }} />,
+      title: 'Sell your items',
       desc: 'Upload your items or use our concierge service',
     },
     {
-      icon: <LocalShipping sx={{ fontSize: 30,}} />,   
-      title: 'DELIVERY OPTIONS',
+      icon: <LocalShipping sx={{ fontSize: {xs:25, sm: 30}, color: '#255773' }} />,
+      title: 'Delivery & Collection',
       desc: 'Collection & delivery within 4 hours, large items assemble included international options.'
     },
   ];
@@ -62,20 +62,20 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
           alt={item.title}
           sx={{
             width: '100%',
-            height: { xs:'200px', md: '250px' }, // Adjust height for banner size
+            height: { xs: '200px', md: '250px' }, // Adjust height for banner size
             objectFit: { xs: 'cover' },
           }}
         />
 
 
-        <Container sx={{ py: 2}}>
+        <Container sx={{ py: 2 }}>
           <Grid container spacing={4} justifyContent="center">
             {features.map((feature, i) => (
-              <Grid item xs={12} sm={4} key={i} textAlign="center">
+              <Grid item xs={4} key={i} textAlign="center">
                 <Box
                   sx={{
-                    width: 70,
-                    height: 70,
+                    width: {xs: 60, sm: 70},
+                    height: {xs: 60, sm: 70},
                     border: '2px solid #1a2d5a',
                     borderRadius: '50%',
                     display: 'flex',
@@ -85,10 +85,12 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
                     backgroundColor: '#E3F2F7'
                   }}
                 >{feature.icon}</Box>
-                <Typography variant="subtitle1" fontWeight="bold" mt={2}>
+                <Typography variant="subtitle1" fontWeight="bold" mt={1}>
                   {feature.title}
                 </Typography>
-                <Typography variant="body2" color="text.primary" mt={1}>
+                <Typography variant="body2" color="text.primary" mt={1} sx={{
+                  display: { xs: "none", sm: "block" }, // hide on xs, show on sm and up
+                }}>
                   {feature.desc}
                 </Typography>
               </Grid>
