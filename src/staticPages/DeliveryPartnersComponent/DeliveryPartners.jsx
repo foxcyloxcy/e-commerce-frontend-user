@@ -23,12 +23,12 @@ const DeliveryPartners = () => {
                     {/* Image Section */}
                     <Box
                         component="img"
-                        src="/images/get-item-collected.jpg" // Replace with your image path
+                        src="/delivery-partners-image.jpg" // Replace with your image path
                         alt="Get your item collected"
                         sx={{
                             width: { xs: "100%", md: "50%" },
-                            height: { xs: 200, sm: 250, md: "auto" },
-                            objectFit: "cover",
+                            height: { xs: 300, sm: 550, },
+                            objectFit: {xs: "cover", sm:"contain"},
                         }}
                     />
 
