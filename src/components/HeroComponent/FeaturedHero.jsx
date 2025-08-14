@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Button, ThemeProvider, Container, Grid } from '@mui/material';
+import { Box, Typography, Button, ThemeProvider, Container, Grid, useMediaQuery } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
 import { useNavigate } from 'react-router-dom';
 import { LocalShipping, VerifiedUser, Sell } from '@mui/icons-material';
@@ -7,8 +7,10 @@ import Swal from "sweetalert2";
 
 
 const FeaturedHero = ({ parentIsLoggedIn }) => {
+  const isMobile = useMediaQuery(ModTheme.breakpoints.down("sm"));
   const navigate = useNavigate();
-  const imageRoute = 'featuredHeroMobile.png'
+  const imageRouteMobile = 'featuredHeroMobile.jpg'
+  const imageRoute = 'featuredHero.png'
 
 
   const handleSearchRoute = () => {
@@ -16,7 +18,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
   };
 
   const item = {
-    image: imageRoute, // Replace with your image URL
+    image: isMobile ? imageRouteMobile : imageRoute, // Replace with your image URL
     title: 'Shop and Sell Secondhand',
     description: 'Sell now and make space for something new!',
   };
@@ -86,8 +88,8 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
           alt={item.title}
           sx={{
             width: '100%',
-            height: { xs: '200px', md: '250px' }, // Adjust height for banner size
-            objectFit: { xs: 'cover' },
+            height: { xs: '200px', sm: '250px' }, // Adjust height for banner size
+            objectFit: { xs: 'cover', },
           }}
         />
 
