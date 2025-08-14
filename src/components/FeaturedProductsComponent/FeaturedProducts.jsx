@@ -208,7 +208,7 @@ const FeaturedProducts = () => {
                 sx={{
                     px: ModTheme.spacing(4),
                     marginTop: 1,
-                    marginBottom: 2,
+                    marginBottom: 1,
                     WebkitOverflowScrolling: 'touch'
                 }}
             >
