@@ -22,51 +22,53 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
   };
 
   const handleFeatureClick = (feature) => {
-  if (feature.title === "Sell your items") {
-    if (parentIsLoggedIn) {
-      navigate("/add-product");
+    if (feature.title === "Sell your items") {
+      if (parentIsLoggedIn) {
+        navigate("/add-product");
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "Login or Register Required",
+          text: "You need to login or register first before you can sell.",
+          showCancelButton: true,
+          confirmButtonText: "Login",
+          cancelButtonText: "Register",
+          reverseButtons: true,
+          confirmButtonColor: ModTheme.palette.primary.main,
+          cancelButtonColor: ModTheme.palette.primary.main,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login");
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            navigate("/register");
+          }
+        });
+      }
     } else {
-      Swal.fire({
-        icon: "warning",
-        title: "Login or Register Required",
-        text: "You need to login or register first before you can sell.",
-        showCancelButton: true,
-        confirmButtonText: "Login",
-        cancelButtonText: "Register",
-        reverseButtons: true,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          navigate("/login");
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          navigate("/register");
-        }
-      });
+      navigate(feature.route);
     }
-  } else {
-    navigate(feature.route);
-  }
-};
+  };
 
-const features = [
-  {
-    icon: <Sell sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
-    title: "Shop Secondhand",
-    desc: "Filter to search, checkout without creating an account",
-    route: "/shop?page=1&sort=1&category_id=&category_name=&sub_category_id=&sub_category_name=&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties=",
-  },
-  {
-    icon: <VerifiedUser sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
-    title: "Sell your items",
-    desc: "Upload your items or use our concierge service",
-    route: "/add-product",
-  },
-  {
-    icon: <LocalShipping sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
-    title: "Delivery & Collection",
-    desc: "Collection & delivery within 4 hours, large items assemble included international options.",
-    route: "/our-delivery-partners",
-  },
-];
+  const features = [
+    {
+      icon: <Sell sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
+      title: "Shop Secondhand",
+      desc: "Filter to search, checkout without creating an account",
+      route: "/shop?page=1&sort=1&category_id=&category_name=&sub_category_id=&sub_category_name=&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties=",
+    },
+    {
+      icon: <VerifiedUser sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
+      title: "Sell your items",
+      desc: "Upload your items or use our concierge service",
+      route: "/add-product",
+    },
+    {
+      icon: <LocalShipping sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
+      title: "Delivery & Collection",
+      desc: "Collection & delivery within 4 hours, large items assemble included international options.",
+      route: "/our-delivery-partners",
+    },
+  ];
   return (
     <ThemeProvider theme={ModTheme}>
       <Box
@@ -96,8 +98,8 @@ const features = [
               <Grid item xs={4} key={i} textAlign="center">
                 <Box
                   sx={{
-                    width: {xs: 60, sm: 70},
-                    height: {xs: 60, sm: 70},
+                    width: { xs: 60, sm: 70 },
+                    height: { xs: 60, sm: 70 },
                     border: '2px solid #1a2d5a',
                     borderRadius: '50%',
                     display: 'flex',
@@ -107,7 +109,7 @@ const features = [
                     backgroundColor: '#E3F2F7',
                     cursor: 'pointer'
                   }}
-                              onClick={() => handleFeatureClick(feature)}
+                  onClick={() => handleFeatureClick(feature)}
                 >{feature.icon}</Box>
                 <Typography variant="subtitle1" fontWeight="bold" mt={1}>
                   {feature.title}
