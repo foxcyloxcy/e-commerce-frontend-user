@@ -67,14 +67,24 @@ const DeliveryPartners = () => {
                             just AED 40.
                         </Typography>
 
-                        <LocalShippingIcon
-                            sx={{
-                                fontSize: { xs: 40, md: 50 },
-                                color: "#1a2d5a",
-                                mb: 1,
-                                alignSelf: { xs: "center", md: "flex-start" },
-                            }}
-                        />
+                        <Box sx={{
+                            width: 70,
+                            height: 70,
+                            border: '2px solid #1a2d5a',
+                            borderRadius: '50%',
+                            display: "flex",
+                            alignSelf: { xs: "center", md: "flex-start" },
+                            justifyContent: "center",
+                            alignItems:"center",
+                            mb: 1,
+                            backgroundColor: '#E3F2F7'
+                        }}>
+                            <LocalShippingIcon
+                                sx={{
+                                    fontSize: { xs: 40, md: 50 },
+                                    color: "#1a2d5a",
+                                }}
+                            /></Box>
 
                         <Typography
                             variant="body1"
@@ -113,16 +123,12 @@ const DeliveryPartners = () => {
                             options and costs with you.
                         </Typography>
 
-                        
+
                         <a
                             href="https://wa.me/+971521026110" target="_blank" rel="noopener noreferrer">
                             <Button
                                 variant="contained"
                                 sx={{
-                                    bgcolor: "#b6d0ff",
-                                    color: "#333",
-                                    fontWeight: "bold",
-                                    textTransform: "none",
                                     px: 3,
                                     py: 1,
                                     alignSelf: { xs: "center", md: "flex-start" },
