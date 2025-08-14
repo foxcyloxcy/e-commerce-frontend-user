@@ -3,19 +3,13 @@ import { Box, Typography, Button, ThemeProvider, Container, Grid } from '@mui/ma
 import ModTheme from '../ThemeComponent/ModTheme';
 import { useNavigate } from 'react-router-dom';
 import { LocalShipping, VerifiedUser, Sell } from '@mui/icons-material';
+import Swal from "sweetalert2";
 
 
 const FeaturedHero = ({ parentIsLoggedIn }) => {
   const navigate = useNavigate();
   const imageRoute = 'featuredHeroMobile.png'
 
-  const handlePostItemRoute = () => {
-    if (parentIsLoggedIn) {
-      navigate('/add-product');
-    } else {
-      navigate('/login');
-    }
-  };
 
   const handleSearchRoute = () => {
     navigate('/shop?page=1&sort=1&category_id=&category_name=&sub_category_id=&sub_category_name=&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties=');
@@ -27,24 +21,52 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
     description: 'Sell now and make space for something new!',
   };
 
-  const features = [
-    {
-      icon: <Sell sx={{ fontSize: {xs:25, sm: 30}, color: '#255773' }} />,
-      title: 'Shop Secondhand',
-      desc: 'Filter to search, checkout without creating an account',
-    },
-    {
-      icon: <VerifiedUser sx={{ fontSize: {xs:25, sm: 30}, color: '#255773' }} />,
-      title: 'Sell your items',
-      desc: 'Upload your items or use our concierge service',
-    },
-    {
-      icon: <LocalShipping sx={{ fontSize: {xs:25, sm: 30}, color: '#255773' }} />,
-      title: 'Delivery & Collection',
-      desc: 'Collection & delivery within 4 hours, large items assemble included international options.'
-    },
-  ];
+  const handleFeatureClick = (feature) => {
+  if (feature.title === "Sell your items") {
+    if (parentIsLoggedIn) {
+      navigate("/add-product");
+    } else {
+      Swal.fire({
+        icon: "warning",
+        title: "Login or Register Required",
+        text: "You need to login or register first before you can sell.",
+        showCancelButton: true,
+        confirmButtonText: "Login",
+        cancelButtonText: "Register",
+        reverseButtons: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          navigate("/register");
+        }
+      });
+    }
+  } else {
+    navigate(feature.route);
+  }
+};
 
+const features = [
+  {
+    icon: <Sell sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
+    title: "Shop Secondhand",
+    desc: "Filter to search, checkout without creating an account",
+    route: "/shop?page=1&sort=1&category_id=&category_name=&sub_category_id=&sub_category_name=&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties=",
+  },
+  {
+    icon: <VerifiedUser sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
+    title: "Sell your items",
+    desc: "Upload your items or use our concierge service",
+    route: "/add-product",
+  },
+  {
+    icon: <LocalShipping sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
+    title: "Delivery & Collection",
+    desc: "Collection & delivery within 4 hours, large items assemble included international options.",
+    route: "/our-delivery-partners",
+  },
+];
   return (
     <ThemeProvider theme={ModTheme}>
       <Box
@@ -82,8 +104,10 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     mx: 'auto',
-                    backgroundColor: '#E3F2F7'
+                    backgroundColor: '#E3F2F7',
+                    cursor: 'pointer'
                   }}
+                              onClick={() => handleFeatureClick(feature)}
                 >{feature.icon}</Box>
                 <Typography variant="subtitle1" fontWeight="bold" mt={1}>
                   {feature.title}
