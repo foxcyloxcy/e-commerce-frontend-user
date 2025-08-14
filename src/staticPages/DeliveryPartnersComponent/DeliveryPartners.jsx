@@ -113,21 +113,25 @@ const DeliveryPartners = () => {
                             options and costs with you.
                         </Typography>
 
-                        <Button
-                            variant="contained"
-                            sx={{
-                                bgcolor: "#b6d0ff",
-                                color: "#333",
-                                fontWeight: "bold",
-                                textTransform: "none",
-                                px: 3,
-                                py: 1,
-                                alignSelf: { xs: "center", md: "flex-start" },
-                                "&:hover": { bgcolor: "#a0c2ff" },
-                            }}
-                        >
-                            Learn More
-                        </Button>
+                        
+                        <a
+                            href="https://wa.me/+971521026110" target="_blank" rel="noopener noreferrer">
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    bgcolor: "#b6d0ff",
+                                    color: "#333",
+                                    fontWeight: "bold",
+                                    textTransform: "none",
+                                    px: 3,
+                                    py: 1,
+                                    alignSelf: { xs: "center", md: "flex-start" },
+                                    "&:hover": { bgcolor: "#a0c2ff" },
+                                }}
+                            >
+                                Learn More
+                            </Button>
+                        </a>
                     </Box>
                 </Box>
             </Container>
