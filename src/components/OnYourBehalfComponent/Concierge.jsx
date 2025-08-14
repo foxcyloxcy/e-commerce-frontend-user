@@ -81,15 +81,15 @@ const OnYourBehalf = () => {
           <Grid item xs={12} sm={4}>
             <Stack spacing={0.5} alignItems="center">
               <ShoppingBagIcon sx={{ fontSize: 40, color: '#255773' }} />
-              <Typography variant="h6" fontWeight="bold">Hand Over</Typography>
-              <Typography variant="body2">We will upload on your behalf</Typography>
+              <Typography variant="h6" fontWeight="bold">Handover your items</Typography>
+              <Typography variant="body2">We create an account on your behalf and upload your items</Typography>
             </Stack>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Stack spacing={0.5} alignItems="center">
               <AttachMoneyIcon sx={{ fontSize: 40, color: '#255773' }} />
-              <Typography variant="h6" fontWeight="bold">We Sell</Typography>
-              <Typography variant="body2">You get paid when it sells</Typography>
+              <Typography variant="h6" fontWeight="bold">Wait for the sale</Typography>
+              <Typography variant="body2">You will receive 100% of the product value item when it sells.</Typography>
             </Stack>
           </Grid>
         </Grid>
