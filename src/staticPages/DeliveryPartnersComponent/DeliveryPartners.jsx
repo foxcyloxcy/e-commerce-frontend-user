@@ -1,128 +1,137 @@
-import React from 'react';
+import React from "react";
 import {
-    Box,
-    Typography,
-    Button,
-    Grid,
-    Divider,
-    useTheme,
-    useMediaQuery,
-    ThemeProvider
-} from '@mui/material';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import GroupIcon from '@mui/icons-material/Group';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ModTheme from '../../components/ThemeComponent/ModTheme';
+  Box,
+  Typography,
+  Button,
+  Container,
+  ThemeProvider
+} from "@mui/material";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import ModTheme from "../../components/ThemeComponent/ModTheme";
 
 const DeliveryPartners = () => {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  return (
 
-    return (
-        <ThemeProvider theme={ModTheme}>
-                    <Box sx={{ px: 2, py: 10, maxWidth: '1200px', mx: 'auto' }}>
-            <Typography
-                variant={isMobile ? 'h5' : 'h4'}
-                fontWeight="bold"
-                textAlign="center"
-                sx={{ color: '#1a2d5a', mb: 1 }}
-            >
-                Our Delivery Partners
-            </Typography>
-            <Typography
-                variant="body1"
-                textAlign="center"
-                sx={{ mb: 4, color: 'text.secondary' }}
-            >
-                Learn about the shipping options available for your Reloved purchases.
-            </Typography>
+    <Container maxWidth="lg" sx={{ my: { xs: 8, md: 10 } }}>
+      <Box
+        sx={{
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" }, // side-by-side on web
+        }}
+      >
+        {/* Image Section */}
+        <Box
+          component="img"
+          src="/images/get-item-collected.jpg" // Replace with your image path
+          alt="Get your item collected"
+          sx={{
+            width: { xs: "100%", md: "50%" },
+            height: { xs: 200, sm: 250, md: "auto" },
+            objectFit: "cover",
+          }}
+        />
 
-            <Grid container spacing={4} alignItems="center" mb={4}>
-                <Grid item xs={12} sm={2} md={2}>
-                    <Box
-                        sx={{
-                            width: 70,
-                            height: 70,
-                            border: '2px solid #1a2d5a',
-                            borderRadius: '50%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            mx: 'auto',
-                        }}
-                    >
-                        <LocalShippingIcon sx={{ fontSize: 30, color: '#1a2d5a', alignSelf: 'center' }} />
-                    </Box>
+        {/* Content Section */}
+        <Box
+          sx={{
+            textAlign: { xs: "center", md: "left" },
+            p: { xs: 3, md: 5 },
+            width: { md: "50%" },
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: "bold",
+              mb: 1,
+              color: "#333",
+              fontSize: { xs: "1.1rem", sm: "1.3rem", md: "1.5rem" },
+            }}
+          >
+            Get your item collected
+          </Typography>
 
-                </Grid>
-                <Grid item xs={12} sm={6} md={7}>
-                    <Typography variant="h6" fontWeight="bold" color="#1a2d5a">
-                        Delivery Service
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        We partner with trusted couriers to offer door-to-door delivery.
-                        Items are typically delivered within 2 to 5 business days.
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} sm={4} md={3}>
+          <Typography
+            variant="body1"
+            sx={{
+              color: "text.secondary",
+              mb: 2,
+              fontSize: { xs: "0.85rem", md: "1rem" },
+            }}
+          >
+            Use our delivery partners to collect on your behalf, starting from
+            just AED 40.
+          </Typography>
 
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            p: 0
-                        }}
-                    >
-                        <Button variant="contained" sx={{ backgroundColor: '#5e97c3' }}>
-                            Learn More
-                        </Button>
-                    </Box>
-                </Grid>
-            </Grid>
+          <LocalShippingIcon
+            sx={{
+              fontSize: { xs: 40, md: 50 },
+              color: "#1a2d5a",
+              mb: 1,
+              alignSelf: { xs: "center", md: "flex-start" },
+            }}
+          />
 
-            <Divider sx={{ my: 3 }} />
+          <Typography
+            variant="body1"
+            sx={{
+              color: "text.secondary",
+              mb: 3,
+              fontSize: { xs: "0.85rem", md: "1rem" },
+            }}
+          >
+            For larger pieces we can disassemble from the seller and assemble on
+            arrival, so you can shop secondhand furniture with convenience.
+          </Typography>
 
-            <Grid container spacing={4} alignItems="center">
-                <Grid item xs={12} sm={2}>
-                    <Box
-                        sx={{
-                            width: 140,
-                            height: 140,
-                            border: '2px solid #1a2d5a',
-                            borderRadius: '50%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            mx: 'auto',
-                            overflow: 'hidden', // Ensures circular crop
-                        }}
-                    >
-                        <img
-                            src="/reloved_delivery.png" // Replace with your actual image path
-                            alt="icon"
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover',
-                            }}
-                        />
-                    </Box>
-                </Grid>
-                <Grid item xs={12} sm={10}>
-                    <Typography variant="h6" fontWeight="bold" color="#1a2d5a" gutterBottom>
-                        How It Works
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        When you purchase an item, you can select our delivery service at checkout.
-                        Once your order is placed, we’ll handle the rest, ensuring your item is
-                        delivered to your chosen address.
-                    </Typography>
-                </Grid>
-            </Grid>
+          <Typography
+            variant="subtitle1"
+            sx={{
+              fontWeight: "bold",
+              color: "#333",
+              mb: 1,
+              fontSize: { xs: "1rem", md: "1.1rem" },
+            }}
+          >
+            International Delivery
+          </Typography>
+
+          <Typography
+            variant="body1"
+            sx={{
+              color: "text.secondary",
+              mb: 3,
+              fontSize: { xs: "0.85rem", md: "1rem" },
+            }}
+          >
+            Shopping from outside the UAE? We also offer international shipping.
+            Just drop us a message before purchasing and we’ll confirm the
+            options and costs with you.
+          </Typography>
+
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: "#b6d0ff",
+              color: "#333",
+              fontWeight: "bold",
+              textTransform: "none",
+              px: 3,
+              py: 1,
+              alignSelf: { xs: "center", md: "flex-start" },
+              "&:hover": { bgcolor: "#a0c2ff" },
+            }}
+          >
+            Learn More
+          </Button>
         </Box>
-        </ThemeProvider>
-    );
+      </Box>
+    </Container>
+  );
 };
 
 export default DeliveryPartners;
