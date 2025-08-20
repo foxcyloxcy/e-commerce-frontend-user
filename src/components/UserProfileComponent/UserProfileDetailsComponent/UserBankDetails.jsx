@@ -46,7 +46,6 @@ const UserBankDetails = ({ userToken }) => {
                 },
             });
             if (res.status === 200) {
-
                 setUserData(res.data.data);
                 setFormData({
                     iban: res.data.data.vendor_bank?.iban || '',
@@ -116,6 +115,27 @@ const UserBankDetails = ({ userToken }) => {
             }
         } catch (error) {
             console.log("Error updating bank details:", error);
+            const rawMessage = error.response.data.message;
+            const errorMessage = rawMessage.substring(rawMessage.indexOf('{')) 
+            const parsedErrorMessage = JSON.parse(errorMessage);
+            
+            if(rawMessage){
+                Swal.fire({
+                    title: parsedErrorMessage.error_code,
+                    text: parsedErrorMessage.errors[0],
+                    icon: 'error',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: ModTheme.palette.primary.main,
+                });
+            }else{
+                Swal.fire({
+                    title: parsedErrorMessage.error_code,
+                    text: errorMessage,
+                    icon: 'error',
+                    confirmButtonText: 'Ok',
+                    confirmButtonColor: ModTheme.palette.primary.main,
+                });
+            }
         }
     };
     
