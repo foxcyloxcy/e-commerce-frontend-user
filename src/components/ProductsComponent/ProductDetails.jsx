@@ -1,6 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
-import { Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControlLabel, Checkbox, Link, CircularProgress, Button } from '@mui/material';
+import {
+    Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControlLabel, Checkbox, Link, CircularProgress, Button, Card, CardMedia, Stack
+
+} from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -27,7 +30,7 @@ const ProductDetails = () => {
     const [userToken, setUserToken] = useState(null)
     // const [confirmCollection, setConfirmCollection] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [agreeRefund, setAgreeRefund] = useState(false);
+    const [agreeRefund, setAgreeRefund] = useState(true);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [openMap, setOpenMap] = useState(false);
     const [openPriceBreakdownModal, setOpenPriceBreakdownModal] = useState(false);
@@ -36,6 +39,7 @@ const ProductDetails = () => {
     const storagePrefix = secure.storagePrefix;
     const [comment, setComment] = useState('');  // New state for comment
     const navigate = useNavigate();
+    const [selectedImage, setSelectedImage] = useState("");
 
     const loadProducts = useCallback(async (storedUserToken) => {
 
@@ -62,16 +66,18 @@ const ProductDetails = () => {
                     },
                 });
                 if (res.status === 200) {
-
+                    console.log(res.data)
                     setProductsData(res.data);
+                    setSelectedImage(res.data.item_details.images[0].image_url)
                     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                 }
             } else {
                 const res = await api.get(query);
 
                 if (res.status === 200) {
-
+                    console.log(res.data)
                     setProductsData(res.data);
+                    setSelectedImage(res.data.item_details.images[0].image_url)
                     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                 }
             }
@@ -114,11 +120,11 @@ const ProductDetails = () => {
         loadProducts(storedUserToken);
     }, [loadProducts]);
 
-    useEffect(()=>{
+    useEffect(() => {
         const productDetailsPrompt = localStorage.getItem(`product_details_prompt`);
 
-        if(productDetailsPrompt || productDetailsPrompt !== null){
-            if(productDetailsPrompt === "Yes"){
+        if (productDetailsPrompt || productDetailsPrompt !== null) {
+            if (productDetailsPrompt === "Yes") {
                 Swal.fire({
                     text: "You may explore additional details and ask any questions about the item below. After completing your purchase, the chat button will become available, allowing you to coordinate collection.",
                     icon: 'info',
@@ -132,7 +138,7 @@ const ProductDetails = () => {
             }
         }
 
-    },[])
+    }, [])
 
     const handleMamoCheckout = async (uuid) => {
 
@@ -158,7 +164,7 @@ const ProductDetails = () => {
                         },
                     }
                 );
-    
+
                 if (res.status === 200) {
                     const mamopayUrl = res.data.data.payment_url;
                     window.location.href = mamopayUrl;
@@ -189,8 +195,8 @@ const ProductDetails = () => {
             } finally {
                 setLoading(false);
             }
-        }else{
-            
+        } else {
+
             try {
                 setLoading(true);
                 const res = await api.post(
@@ -204,35 +210,35 @@ const ProductDetails = () => {
                     }
                 );
 
-                    if (res.status === 200) {
-                        const mamopayUrl = res.data.data.payment_url;
-                        window.location.href = mamopayUrl;
-                    }
-                } catch (error) {
-                    console.error("Error:", error);
+                if (res.status === 200) {
+                    const mamopayUrl = res.data.data.payment_url;
+                    window.location.href = mamopayUrl;
+                }
+            } catch (error) {
+                console.error("Error:", error);
 
-                    let errorCode = 'Unknown';
+                let errorCode = 'Unknown';
 
-                    if (error.response) {
-                        // The request was made and the server responded with a status code
-                        errorCode = error.response.status; // e.g., 400, 401, 500
-                    } else if (error.request) {
-                        // The request was made but no response was received
-                        errorCode = 'No response from server';
-                    } else if (error.code) {
-                        // Some network or client-side error
-                        errorCode = error.code; // e.g., ECONNABORTED, ENOTFOUND
-                    }
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    errorCode = error.response.status; // e.g., 400, 401, 500
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    errorCode = 'No response from server';
+                } else if (error.code) {
+                    // Some network or client-side error
+                    errorCode = error.code; // e.g., ECONNABORTED, ENOTFOUND
+                }
 
-                    Swal.fire({
-                        title: 'Payment Error',
-                        text: `An error occurred while processing your payment. Error code: ${errorCode}`,
-                        icon: 'error',
-                        confirmButtonText: 'OK',
-                        confirmButtonColor: ModTheme.palette.primary.main,
-                    });
-                } finally {
-            setLoading(false);
+                Swal.fire({
+                    title: 'Payment Error',
+                    text: `An error occurred while processing your payment. Error code: ${errorCode}`,
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: ModTheme.palette.primary.main,
+                });
+            } finally {
+                setLoading(false);
             }
         }
     };
@@ -467,19 +473,17 @@ const ProductDetails = () => {
     // Handle rendering after data is loaded
     if (!productsData || !productsData.item_details) {
         return <Container sx={{
-            backgroundColor: 'secondary.background',
             padding: 2,
             mt: 15,
             mb: 10,
-            boxShadow: 10,
             minHeight: '60vh',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center'
-        }}> 
-                <Typography>Loading item details...</Typography>
-                 <CircularProgress size={54} />
+        }}>
+            <Typography>Loading item details...</Typography>
+            <CircularProgress size={54} />
         </Container>
     }
 
@@ -487,79 +491,83 @@ const ProductDetails = () => {
         <ThemeProvider theme={ModTheme}>
             <Container
                 sx={{
-                    backgroundColor: 'background.paper',
-                    // padding: 2,
                     mt: 8,
                     mb: 10,
-                    // boxShadow: 10,
-                    // maxWidth: { xs: 'xs', sm: 'sm', md: 'md', lg: 'lg', xl: 'xl' },
                 }}
             >
-            <Grid container xs={12}>
-              <Button
-                variant="text"
-                color="primary"
-                disabled={loading}
-                onClick={() => navigate(-1)}
-              >
-                <ArrowBackIcon />Go back
-              </Button>
-                </Grid>
-                <Grid container spacing={4}>
-                    <Grid item xs={6} sm={6}
+                <Grid container>
+                    <Button
+                        variant="text"
+                        color="primary"
+                        disabled={loading}
+                        onClick={() => navigate(-1)}
                     >
-                        <Carousel showArrows={false} infiniteLoop={true} autoPlay>
-                            {productsData.item_details.images.map((image, index) => (
-                                <Box
-                                    key={index}
+                        <ArrowBackIcon />Go back
+                    </Button>
+                </Grid>
+                <Box sx={{ p: 0, maxWidth: '1400px' }}>
+                    <Grid container spacing={4}>
+                        {/* Image Section */}
+                        <Grid item xs={12} md={6}>
+                            <Card elevation={0}>
+                                <CardMedia
+                                    component="img"
+                                    image={selectedImage}
+                                    alt="Main product"
                                     sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        height: { xs: '180px', md: '250px', lg: '400px'},
+                                        borderRadius: 2,
+                                        minHeight: { xs: 300, md: 450 },
+                                        maxHeight: { xs: 300, md: 450 },
+                                        maxWidth: '100%',
+                                        objectFit: 'contain',
                                     }}
-                                >
-                                    <img
-                                        src={image.image_url}
-                                        style={{
-                                            maxHeight: '100%',
-                                            objectFit: 'contain',
-                                        }}
-                                    />
-                                </Box>
-                            ))}
-                        </Carousel>
-                    </Grid>
-                    <Grid item xs={6} sm={6} sx={{pl: 0}}>
-                        <Typography variant="h6" gutterBottom>
-                            {productsData.item_details.item_name}
-                        </Typography>
-                        {
-                            discountBreakDown && discountBreakDown.total_discount_breakdown.total ? ( // Check for discountBreakDown and its total
-                                <>
-                                    <Typography component="div" color="primary" sx={{ textDecoration: 'line-through' }}>
-                                        AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
-                                    </Typography>
-                                    <Typography
-                                        component="div"
-                                        color="primary"
-                                        onClick={() => handleOpenPriceBreakdown(discountBreakDown)}
-                                        sx={{ cursor: 'pointer', textDecoration: 'underline' }}>
-                                        AED {formatPrice(discountBreakDown.total_discount_breakdown.total)}  {/* Render the correct total after discount */}
-                                    </Typography>
-                                </>
-                            ) : (
-                                // Only render this block if discountBreakDown is not true
-                                productsData.item_details.my_offer === null || productsData.item_details.my_offer === "" ? (
-                                    <Typography
-                                        variant="body1"
-                                        color="primary"
-                                        onClick={() => handleOpenPriceBreakdown(productsData.item_details)}
-                                        sx={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                    >
-                                        AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
-                                    </Typography>
-                                ) : (
+                                />
+                                <Stack direction="row" spacing={1} mt={2} sx={{ overflowX: 'auto' }}>
+                                    {productsData?.item_details.images?.map((photo, idx) => (
+                                        <img
+                                            key={idx}
+                                            src={photo.image_url}
+                                            width="60"
+                                            height="60"
+                                            alt={`thumb-${idx}`}
+                                            style={{
+                                                borderRadius: 4,
+                                                border: selectedImage === photo.image_url ? '2px solid #1a2d5a' : '2px solid transparent',
+                                                cursor: 'pointer',
+                                            }}
+                                            onClick={() => setSelectedImage(photo.image_url)}
+                                        />
+                                    ))}
+                                </Stack>
+                            </Card>
+                        </Grid>
+
+                        {/* Details Section */}
+                        <Grid item xs={12} md={6}>
+                            <Typography variant="h5" sx={{ color: '#1a2d5a', fontWeight: 'bold' }}>
+                                {productsData?.item_details.item_name || 'Product Name'}
+                            </Typography>
+
+                            <Grid container spacing={1} mt={0.5}>
+                                {productsData?.item_property_details?.map((propertyGroup, index) => (
+                                    <Grid item xs={12} sm={6} key={index}>
+                                        <Typography variant="body2" fontWeight="bold">
+                                            {propertyGroup.properties}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {propertyGroup.values?.map((val) => val.name).join(', ') || 'N/A'}
+                                        </Typography>
+                                    </Grid>
+                                ))}
+                            </Grid>
+
+                            <Box
+                                mt={0.5}
+                                sx={{
+                                    maxWidth: '30%',
+                                }}>
+                                {/* Price and Discount */}
+                                {discountBreakDown && discountBreakDown.total_discount_breakdown.total ? (
                                     <>
                                         <Typography component="div" color="primary" sx={{ textDecoration: 'line-through' }}>
                                             AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
@@ -567,157 +575,148 @@ const ProductDetails = () => {
                                         <Typography
                                             component="div"
                                             color="primary"
-                                            onClick={() => handleOpenPriceBreakdown(productsData.item_details.my_offer)}
+                                            onClick={() => handleOpenPriceBreakdown(discountBreakDown)}
                                             sx={{ cursor: 'pointer', textDecoration: 'underline' }}
                                         >
-                                            AED {formatPrice(productsData.item_details.my_offer.total_fee_breakdown.total)}
+                                            AED {formatPrice(discountBreakDown.total_discount_breakdown.total)}
                                         </Typography>
                                     </>
-                                )
-                            )
-                        }
-                        {
-                            productsData.item_details.address && (
-                                <Typography
-                                    variant="body1"
-                                    sx={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                    onClick={() => handleOpenMap(productsData.item_details.address)}>
-                                    Collection {parseAddress(productsData.item_details.address)}
-                                </Typography>
-                            )
-                        }
-                        <Typography variant="body1" color="textSecondary" paragraph>
-                            {productsData.item_details.item_description}
-                        </Typography>
-                        <Typography variant="body1" color="textSecondary" fontStyle='italic' paragraph>
-                            The chat function will become available after you purchase your item, you can ask questions related to the item in the Q&A below.
-                        </Typography>
-                        <Grid container alignItems="center" spacing={2} width="100%">
-                            {productsData.item_details.is_bid === 1 &&
-                                (productsData.item_details.my_offer === null || productsData.item_details.my_offer === "") && (
-                                    <>
-                                    <Grid item xs={12} sm={7}>
-                                        <TextField
-                                        fullWidth
-                                        size="small"
-                                        label="ENTER OFFER"
-                                        variant="outlined"
-                                        value={offerPrice}
-                                        onChange={(e) => setOfferPrice(e.target.value)}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} sm={5}>
-                                        <ButtonComponent
-                                        fullWidth
-                                        label="Offer"
-                                        size="small"
-                                        buttonVariant="contained"
-                                        textColor="primary.contrastText"
-                                        hoverTextColor="secondary.main"
-                                        onClick={() => handleOffers(productsData)}
-                                        disabled={loading || !offerPrice}
-                                        />
-                                    </Grid>
-                                    </>
-                                )
-                            }
-                            {
-                                parsedUserData && (
-                                    <>
-                                    <Grid item xs={12} sm={7}>
-                                            <TextField
-                                                fullWidth
-                                                size="small"
-                                                label="ENTER DISCOUNT CODE"
-                                                variant="outlined"
-                                                value={discountCode}
-                                                onChange={(e) => setDiscountCode(e.target.value)}
-                                            />
-                                        </Grid>
-                                    <Grid item xs={12} sm={5}>
-                                            <ButtonComponent
-                                                fullWidth
-                                                label="aPPLY DISCOUNT"
-                                                size="small"
-                                                buttonVariant="contained"
-                                                textColor="primary.contrastText"
-                                                hoverTextColor="secondary.main"
-                                                onClick={() => handleApplyDiscountCode(productsData.item_details.id)}
-                                                disabled={loading}
-                                            />
-                                        </Grid>
-                                    </>
-                                )
-                            }
+                                ) : (
+                                    // Only render this block if discountBreakDown is not true
+                                    productsData.item_details.my_offer === null || productsData.item_details.my_offer === "" ? (
+                                        <Typography
+                                            variant="body1"
+                                            color="primary"
+                                            onClick={() => handleOpenPriceBreakdown(productsData.item_details)}
+                                            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                        >
+                                            AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
+                                        </Typography>
+                                    ) : (
+                                        <>
+                                            <Typography component="div" color="primary" sx={{ textDecoration: 'line-through' }}>
+                                                AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
+                                            </Typography>
+                                            <Typography
+                                                component="div"
+                                                color="primary"
+                                                onClick={() => handleOpenPriceBreakdown(productsData.item_details.my_offer)}
+                                                sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                            >
+                                                AED {formatPrice(productsData.item_details.my_offer.total_fee_breakdown.total)}
+                                            </Typography>
+                                        </>
+                                    )
+                                )}
+                            </Box>
 
-                            {/* <Grid item xs={6} md={6}>
-                                <FormControlLabel
-                                    control={<Checkbox checked={confirmCollection} onChange={(e) => setConfirmCollection(e.target.checked)} />}
-                                    label="I can confirm it’s the buyer's responsibility to collect the item"
-                                />
-                            </Grid> */}
-                            <Grid item xs={12} md={12}>
+                            {/* Address */}
+                            {productsData?.item_details?.address && (
+                                <Typography
+                                    variant="body2"
+                                    sx={{ mt: 0, cursor: 'pointer', textDecoration: 'underline' }}
+                                    onClick={() => handleOpenMap(productsData?.item_details?.address)}
+                                >
+                                    Collection: {parseAddress(productsData?.item_details?.address)}
+                                </Typography>
+                            )}
+
+                            {/* Terms Agreement */}
+                            <Box mt={1}>
                                 <FormControlLabel
                                     control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
                                     label={
-                                        <div>
-                                            <span>I agree to all </span>
-                                            <Link href={'/terms-and-conditions'} target="_blank">terms and conditions</Link>
-                                            <span> and it is the buyers responsibility to arrange collection of the item</span>
-                                        </div>
+                                        <Typography variant="body2">
+                                            I agree to all{' '}
+                                            <Link href="/terms-and-conditions" target="_blank">terms and conditions</Link>{' '}
+                                            and it is the buyer's responsibility to arrange collection of the item.
+                                        </Typography>
                                     }
                                 />
-                            </Grid>
+                            </Box>
 
-                            <Grid item width="100%">
-                                <ButtonComponent
-                                    label={loading ? "Processing..." : "Buy Item"}
-                                    size="small"
-                                    buttonVariant="contained"
-                                    textColor="primary.contrastText"
-                                    hoverTextColor="secondary.main"
-                                    startIcon={!loading && <AddShoppingCartIcon />}
-                                    onClick={() => handleMamoCheckout(productUuid)}
-                                    disabled={loading} // Disable button while loading
-                                />
-                            </Grid>
+                            {/* Offer Field if bidding */}
+                            {productsData?.item_details?.is_bid === 1 && !productsData?.item_details?.my_offer && (
+                                <Grid container spacing={1} mt={0.5}>
+                                    <Grid item xs={12} sm={7}>
+                                        <TextField
+                                            fullWidth
+                                            size="small"
+                                            label="ENTER OFFER"
+                                            variant="outlined"
+                                            value={offerPrice}
+                                            onChange={(e) => setOfferPrice(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={5}>
+                                        <Button
+                                            fullWidth
+                                            variant="contained"
+                                            disabled={loading || !offerPrice}
+                                            onClick={() => handleOffers(productsData)}
+                                            sx={{ backgroundColor: '#1a2d5a' }}
+                                        >
+                                            Offer
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            )}
+
+                            {/* Discount Code Input */}
+                                <Grid container spacing={1} mt={0.5}>
+                                    <Grid item xs={12} sm={7}>
+                                        <TextField
+                                            fullWidth
+                                            size="small"
+                                            label="ENTER DISCOUNT CODE"
+                                            variant="outlined"
+                                            value={discountCode}
+                                            onChange={(e) => setDiscountCode(e.target.value)}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={5}>
+                                        <Button
+                                            fullWidth
+                                            variant="contained"
+                                            disabled={loading || !discountCode}
+                                            onClick={() => handleApplyDiscountCode(item.id)}
+                                            sx={{ backgroundColor: '#1a2d5a' }}
+                                        >
+                                            Apply Discount
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                                
+                            {/* Add to Cart (or Confirm) */}
+                            <Button
+                                variant="contained"
+                                disabled={!agreeRefund}
+                                sx={{
+                                    backgroundColor: '#1a2d5a',
+                                    mt: 1,
+                                    width: '100%',
+                                }}
+                            >
+                                Buy Item
+                            </Button>
+
+                            {/* Chat Info */}
+                            <Typography variant="body2" color="text.secondary" fontStyle="italic" mt={2}>
+                                The chat function will become available after you purchase your item. You can ask questions in the Q&A below.
+                            </Typography>
                         </Grid>
                     </Grid>
-                </Grid>
-                <Paper sx={{ mt: 2, p: 2 }}>
-                    <Typography variant="h6" gutterBottom>
-                        Additional Information
-                    </Typography>
-                    <Divider />
-                    <TableContainer component={Paper} sx={{ mt: 2 }}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    {productsData.item_property_details.map((info, index) => (
-                                        <TableCell key={index}>
-                                            <Typography variant="body1" fontWeight="bold">
-                                                {info.properties}
-                                            </Typography>
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow>
-                                    {productsData.item_property_details.map((info, index) => (
-                                        <TableCell key={index}>
-                                            {info.values.length > 0
-                                                ? info.values.map((value) => (
-                                                    <Typography key={value.id}>{value.name}</Typography>
-                                                ))
-                                                : 'Not Available'}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Paper>
+
+                    {/* Description */}
+                    <Box mt={2}>
+                        <Typography variant="h6" sx={{ color: '#1a2d5a' }} gutterBottom>
+                            Description
+                        </Typography>
+                        <Typography variant="body2" color="text.primary">
+                            {productsData?.item_details?.item_description || 'No description available.'}
+                        </Typography>
+                    </Box>
+                </Box>
 
                 {/* New Comments Section */}
                 <Paper sx={{ mt: 4, p: 2 }}>

@@ -37,6 +37,8 @@ import MyProductDetails from './components/UserProfileComponent/MyProductsCompon
 import FeatureItemSuccess from './components/PaymentSuccessComponent/FeatureItemSuccess';
 import VisitorPaymentSuccess from './components/PaymentSuccessComponent/VisitorPaymentSuccess'
 import CookiesPolicy from './staticPages/CookiePolicyComponent/CookiesPolicy';
+import OnYourBehalf from './components/OnYourBehalfComponent/Concierge';
+import OnYourBehalfTerms from './staticPages/OnYourBehalfTermsComponent/ConciergeTerms';
 import useHotjar from './hooks/useHotJar'
 
 function App() {
@@ -132,6 +134,7 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Home parentIsLoggedIn={isLoggedIn} userData={userData} userToken={userToken} refreshParent={handleClick}/>} />
+        <Route path="/on-your-behalf" element={<OnYourBehalf userToken={userToken} />} />
         <Route path="/product-details/:productUuid" element={<ProductDetails userToken={userToken} />} />
         <Route path="/my-product-details" element={<MyProductDetails userToken={userToken} />} />
         <Route path="/shop" element={<ProductList parentIsLoggedIn={isLoggedIn} userToken={userToken} userData={userData} />} />
@@ -153,6 +156,7 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/cookies-policy" element={<CookiesPolicy parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/buyer-and-seller-terms" element={<BuyerAndSellerTerms parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/on-your-behalf-terms" element={<OnYourBehalfTerms parentIsLoggedIn={isLoggedIn} />} />
 
         <Route
           path="/add-product"

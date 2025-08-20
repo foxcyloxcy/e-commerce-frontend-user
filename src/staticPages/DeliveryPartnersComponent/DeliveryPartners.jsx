@@ -1,65 +1,146 @@
-import React from 'react';
-import { Typography, Box, Card, CardContent, Link, CardMedia, ThemeProvider } from '@mui/material';
-import ModTheme from '../../components/ThemeComponent/ModTheme';
+import React from "react";
+import {
+    Box,
+    Typography,
+    Button,
+    Container,
+    ThemeProvider
+} from "@mui/material";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import ModTheme from "../../components/ThemeComponent/ModTheme";
 
 const DeliveryPartners = () => {
     return (
         <ThemeProvider theme={ModTheme}>
-            <Box sx={{ maxWidth: 900, margin: 'auto', marginTop: 10, marginBottom: 5, padding: 2 }}>
-                <Card>
-                    <CardContent>
-                        <Typography variant="h4" gutterBottom>
-                            Our Delivery Partners
-                        </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            Whether you’re wanting to get a sofa, wardrobe, or a dress delivered, no item is too small or too big with our delivery partners.
+            <Container maxWidth="lg" sx={{ my: { xs: 8, md: 10 } }}>
+                <Box
+                    sx={{
+                        overflow: "hidden",
+                        display: "flex",
+                        flexDirection: { xs: "column", md: "row" }, // side-by-side on web
+                    }}
+                >
+                    {/* Image Section */}
+                    <Box
+                        component="img"
+                        src="/delivery-partners-image.jpg" // Replace with your image path
+                        alt="Get your item collected"
+                        sx={{
+                            width: { xs: "100%", md: "50%" },
+                            height: { xs: 300, sm: 550, },
+                            objectFit: {xs: "cover", sm:"contain"},
+                        }}
+                    />
+
+                    {/* Content Section */}
+                    <Box
+                        sx={{
+                            textAlign: { xs: "center", md: "left" },
+                            p: { xs: 3, md: 5 },
+                            width: { md: "50%" },
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
+                        }}
+                    >
+                        <Typography
+                            variant="h5"
+                            sx={{
+                                fontWeight: "bold",
+                                mb: 1,
+                                color: "#333",
+                                fontSize: { xs: "1.1rem", sm: "1.3rem", md: "1.5rem" },
+                            }}
+                        >
+                            Get your item collected
                         </Typography>
 
-                        <Typography variant="h5" gutterBottom>
-                            Small Items
-                        </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            Contact reloved via whatsapp or send us a DM and we will help arrange collection and delivery of your item.
-                        </Typography>
-
-                        <Typography variant="h5" gutterBottom>
-                            Furniture
-                        </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            All large furniture items can be arranged by WhatsApping or emailing Mirza at Shah Movers. Quote ‘reloved’ to ensure you obtain a discounted price.
-                        </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            Contact details:
-                        </Typography>
-                        <Typography variant="body2" gutterBottom>
-                            Phone: <Link href="tel:0508579207">0508579207</Link><br />
-                            Email: <Link href="mailto:mirza@shahmovers.com">mirza@shahmovers.com</Link>
+                        <Typography
+                            variant="body1"
+                            sx={{
+                                color: "text.secondary",
+                                mb: 2,
+                                fontSize: { xs: "0.85rem", md: "1rem" },
+                            }}
+                        >
+                            Use our delivery partners to collect on your behalf, starting from
+                            just AED 40.
                         </Typography>
 
-                        <Typography variant="body1" gutterBottom>
-                            The team can also disassemble or reassemble your items.
+                        <Box sx={{
+                            width: 70,
+                            height: 70,
+                            border: '2px solid #1a2d5a',
+                            borderRadius: '50%',
+                            display: "flex",
+                            alignSelf: { xs: "center", md: "flex-start" },
+                            justifyContent: "center",
+                            alignItems:"center",
+                            mb: 1,
+                            backgroundColor: '#E3F2F7'
+                        }}>
+                            <LocalShippingIcon
+                                sx={{
+                                    fontSize: { xs: 40, md: 50 },
+                                    color: "#1a2d5a",
+                                }}
+                            /></Box>
+
+                        <Typography
+                            variant="body1"
+                            sx={{
+                                color: "text.secondary",
+                                mb: 3,
+                                fontSize: { xs: "0.85rem", md: "1rem" },
+                            }}
+                        >
+                            For larger pieces we can disassemble from the seller and assemble on
+                            arrival, so you can shop secondhand furniture with convenience.
                         </Typography>
 
-                        <Typography variant="h6" gutterBottom>
-                            Top Tip:
-                        </Typography>
-                        <Typography variant="body1" gutterBottom>
-                            Ensure you have spoken with the seller prior to using our delivery partners to check they are available to hand over your item.
+                        <Typography
+                            variant="subtitle1"
+                            sx={{
+                                fontWeight: "bold",
+                                color: "#333",
+                                mb: 1,
+                                fontSize: { xs: "1rem", md: "1.1rem" },
+                            }}
+                        >
+                            International Delivery
                         </Typography>
 
-                        <CardMedia
-                            component="img"
-                            image="/delivery-partners-image.jpg" // Update the path if needed
-                            alt="Delivery Partners"
-                            sx={{ height: 300, objectFit: 'contain', marginBottom: 2 }}
-                        />
-
-                        <Typography variant="body1" color="textSecondary">
-                            Reloved is not responsible for any of the delivery options you choose, and delivery is an additional payment from the buyer.
+                        <Typography
+                            variant="body1"
+                            sx={{
+                                color: "text.secondary",
+                                mb: 3,
+                                fontSize: { xs: "0.85rem", md: "1rem" },
+                            }}
+                        >
+                            Shopping from outside the UAE? We also offer international shipping.
+                            Just drop us a message before purchasing and we’ll confirm the
+                            options and costs with you.
                         </Typography>
-                    </CardContent>
-                </Card>
-            </Box>
+
+
+                        <a
+                            href="https://wa.me/+971521026110" target="_blank" rel="noopener noreferrer">
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    px: 3,
+                                    py: 1,
+                                    alignSelf: { xs: "center", md: "flex-start" },
+                                    "&:hover": { bgcolor: "#a0c2ff" },
+                                }}
+                            >
+                                Learn More
+                            </Button>
+                        </a>
+                    </Box>
+                </Box>
+            </Container>
         </ThemeProvider>
     );
 };

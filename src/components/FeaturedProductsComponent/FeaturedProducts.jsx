@@ -156,14 +156,14 @@ const FeaturedProducts = () => {
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 3,
+                    slidesToShow: 4,
                     slidesToScroll: 1,
                     infinite: true,
                     dots: false,
                 },
             },
             {
-                breakpoint: 600,
+                breakpoint: 900,
                 settings: {
                     dots: false,
                     slidesToShow: 2,
@@ -177,6 +177,7 @@ const FeaturedProducts = () => {
                     dots: false,
                     slidesToShow: 1,
                     slidesToScroll: 1,
+                    autoplaySpeed: 2000
                 },
             },
         ],
@@ -205,9 +206,9 @@ const FeaturedProducts = () => {
         <ThemeProvider theme={ModTheme}>
             <Box
                 sx={{
-                    padding: ModTheme.spacing(3),
-                    marginTop: 2,
-                    marginBottom: 10,
+                    px: ModTheme.spacing(4),
+                    marginTop: 1,
+                    marginBottom: 1,
                     WebkitOverflowScrolling: 'touch'
                 }}
             >
