@@ -420,13 +420,13 @@ const ProductList = (props) => {
                 <Grid container spacing={3}>
                     {
                         isSmallScreen === false ? (
-                            <Grid item md={3}>
+                            <Grid item md={2}>
                                 <Typography variant="h6" sx={{ paddingBottom: 2 }}>Filters</Typography>
                                 <Divider />
 
                                 <Typography variant="h6" gutterBottom>Price range</Typography>
                                 <Grid container spacing={2}>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={6} sm={12}>
                                         <TextField
                                             label="AED 20"
                                             placeholder="AED 20"
@@ -440,7 +440,7 @@ const ProductList = (props) => {
                                             fullWidth
                                         />
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={6} sm={12}>
                                         <TextField
                                             label="AED 50,000"
                                             placeholder="AED 50,000"
@@ -568,7 +568,7 @@ const ProductList = (props) => {
 
 
 
-                    <Grid item xs={12} sm={12} md={9} lg={9} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                    <Grid item xs={12} sm={12} md={10} sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                         {loading ? <CircularProgress size={36} /> : <MemoizedProductListGridView productsData={productsData} searchParams={searchParams} setSearchParams={setSearchParams} />}
 
                     </Grid>
