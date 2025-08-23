@@ -48,7 +48,7 @@ const DeliveryPartners = () => {
                             sx={{
                                 fontWeight: "bold",
                                 mb: 1,
-                                color: "#333",
+                                color: ModTheme.palette.primary.main,
                                 fontSize: { xs: "1.1rem", sm: "1.3rem", md: "1.5rem" },
                             }}
                         >
@@ -102,7 +102,7 @@ const DeliveryPartners = () => {
                             variant="subtitle1"
                             sx={{
                                 fontWeight: "bold",
-                                color: "#333",
+                                color: ModTheme.palette.primary.main,
                                 mb: 1,
                                 fontSize: { xs: "1rem", md: "1.1rem" },
                             }}
@@ -135,7 +135,7 @@ const DeliveryPartners = () => {
                                     "&:hover": { bgcolor: "#a0c2ff" },
                                 }}
                             >
-                                Learn More
+                                Contact reloved
                             </Button>
                         </a>
                     </Box>
