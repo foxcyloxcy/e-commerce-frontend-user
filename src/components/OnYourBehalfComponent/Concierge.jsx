@@ -75,21 +75,21 @@ const OnYourBehalf = () => {
             <Stack spacing={0.5} alignItems="center">
               <CalendarMonthIcon sx={{ fontSize: 40, color: '#255773' }} />
               <Typography variant="h6" fontWeight="bold">Book</Typography>
-              <Typography variant="body2">Choose a date & fill out the quick form</Typography>
+              <Typography variant="body2">Choose a date & fill out the quick form.</Typography>
             </Stack>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Stack spacing={0.5} alignItems="center">
               <ShoppingBagIcon sx={{ fontSize: 40, color: '#255773' }} />
-              <Typography variant="h6" fontWeight="bold">Handover your items</Typography>
-              <Typography variant="body2">We create an account on your behalf and upload your items</Typography>
+              <Typography variant="h6" fontWeight="bold">Upload on your behalf</Typography>
+              <Typography variant="body2">We create an account on your behalf and upload your items.</Typography>
             </Stack>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Stack spacing={0.5} alignItems="center">
               <AttachMoneyIcon sx={{ fontSize: 40, color: '#255773' }} />
               <Typography variant="h6" fontWeight="bold">Wait for the sale</Typography>
-              <Typography variant="body2">You will receive 100% of the product value item when it sells.</Typography>
+              <Typography variant="body2">Once sold you will receive payment directly to your chosen bank account.</Typography>
             </Stack>
           </Grid>
         </Grid>
@@ -111,7 +111,7 @@ const OnYourBehalf = () => {
           <Stack spacing={2} alignItems="flex-start">
             <Typography><CheckIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 1 }} />Clear photos</Typography>
             <Typography><CheckIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 1 }} />We price and upload</Typography>
-            {/* <Typography><CheckIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 1 }} />No upfront cost — just a small % when sold</Typography> */}
+            <Typography><CheckIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 1 }} />Hassle free</Typography>
           </Stack>
         </Paper>
 
