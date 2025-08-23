@@ -5,7 +5,7 @@ import ModTheme from '../../ThemeComponent/ModTheme';
 
 export default function ButtonComponent(props) {
     const { label, height, width, textColor, hoverTextColor, buttonVariant, component, to, size, startIcon, position,
-        bottom, type, onClick
+        bottom, type, onClick, paddingLeft, hoverBackgroundColor
      } = props;
     return (
         <ThemeProvider theme={ModTheme}>
@@ -24,10 +24,13 @@ export default function ButtonComponent(props) {
                     color: textColor,
                     '&:hover': {
                         color: hoverTextColor,
+                        boxShadow: "none",
+                        background: hoverBackgroundColor || ""
                     },
                     height: height || 'auto',
                     width: width || '100%',
                     fontSize: 'clamp(12px, 1.1vw, 1rem)',
+                    paddingLeft: paddingLeft,
                     // '@media (min-width:200px)': {
                     //     fontSize: '0.6rem',
                     // },
