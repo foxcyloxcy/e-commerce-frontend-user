@@ -112,6 +112,7 @@ const NavBar = (props) => {
                   label="Home"
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
                   hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                  hoverBackgroundColor={"none"}
                 />
                 <ButtonComponent
                   component={Link}
@@ -119,6 +120,7 @@ const NavBar = (props) => {
                   label="about"
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
                   hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                  hoverBackgroundColor={"none"}
                 />
                 <ButtonComponent
                   component={Link}
@@ -126,6 +128,7 @@ const NavBar = (props) => {
                   label="Delivery"
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
                   hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                  hoverBackgroundColor={"none"}
                 />
                 <ButtonComponent
                   component={Link}
@@ -133,6 +136,8 @@ const NavBar = (props) => {
                   label="concierge"
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
                   hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                  paddingLeft={3}
+                  hoverBackgroundColor={"none"}
                 />
                 <ButtonComponent
                   component={Link}
@@ -140,6 +145,7 @@ const NavBar = (props) => {
                   label="Shop"
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
                   hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                  hoverBackgroundColor={"none"}
                 />
                 {isLoggedIn === true ? (
                   <>
@@ -149,6 +155,7 @@ const NavBar = (props) => {
                       label="Sell"
                       textColor={isLoggedIn ? 'primary.main' : 'primary.contrastText'}
                       hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                      hoverBackgroundColor={"none"}
                     />
                     <ButtonComponent
                       component={Link}
@@ -156,6 +163,7 @@ const NavBar = (props) => {
                       label="Profile"
                       textColor={isLoggedIn ? 'primary.main' : 'primary.contrastText'}
                       hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                      hoverBackgroundColor={"none"}
                     />
                     <ButtonComponent
                       label="Logout"
@@ -163,6 +171,8 @@ const NavBar = (props) => {
                       buttonVariant="contained"
                       textColor='primary.contrastText'
                       hoverTextColor='secondary.main'
+                      hoverBackgroundColor={"none"}
+
                     />
                   </>
                 ) : (
@@ -174,6 +184,7 @@ const NavBar = (props) => {
                       buttonVariant="contained"
                       textColor='primary.contrastText'
                       hoverTextColor='secondary.main'
+                      hoverBackgroundColor={"none"}
                     />
                     <Divider orientation="vertical" flexItem />
                     <ButtonComponent
@@ -183,6 +194,7 @@ const NavBar = (props) => {
                       buttonVariant="contained"
                       textColor='primary.contrastText'
                       hoverTextColor='secondary.main'
+                      hoverBackgroundColor={"none"}
                     />
                   </>
                 )}
