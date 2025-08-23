@@ -8,9 +8,6 @@ const HomeListItem = () => {
     return (
         <ThemeProvider theme={ModTheme}>
             <Box sx={{ textAlign: 'center', py: 2, bgcolor: '#f7f7f7' }}>
-                <Typography variant="h5" gutterBottom>
-                    understand how it works
-                </Typography>
                 <a href="/how-it-works"
                     rel="noopener noreferrer">
                     <Button variant="contained" sx={{ bgcolor: '#002a4e', mr: 2 }}>
