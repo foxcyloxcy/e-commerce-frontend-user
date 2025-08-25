@@ -231,12 +231,11 @@ const FeaturedProducts = () => {
                                 sx={{
                                     position: "relative",
                                     overflow: "hidden",
-                                    height: { xs: "450px", sm: "600px" },
+                                    height: { xs: "450px", sm: "550px" },
                                     display: "flex",
                                     flexDirection: "column",
                                     padding: 0,
                                     mb: 1,
-                                    ":hover": { boxShadow: ModTheme.palette.primary.main},
                                 }}
                             >
                                 <Box
@@ -269,16 +268,15 @@ const FeaturedProducts = () => {
                                     <Typography
                                         variant="body2"
                                         color="textSecondary"
-                                        gutterBottom
                                     >
                                         {product.sub_category.name}
                                     </Typography>
 
-                                    <TruncatedText variant="h6" lines={2}>
+                                    <TruncatedText variant="h6">
                                         {product.item_name}
                                     </TruncatedText>
 
-                                    <Box sx={{ mt: 1 }}>
+                                    <Box>
                                         <Typography
                                             variant="body1"
                                             color="primary"
@@ -293,12 +291,16 @@ const FeaturedProducts = () => {
                                         </Typography>
 
                                         {product.address && (
+
                                             <Typography
                                                 variant="body2"
                                                 sx={{ cursor: "pointer", textDecoration: "underline" }}
                                                 onClick={() => handleOpenMap(product.address)}
                                             >
-                                                Collection {parseAddress(product.address)}
+                                                <TruncatedText>
+                                                    Collection {parseAddress(product.address)}
+                                                </TruncatedText>
+
                                             </Typography>
                                         )}
                                     </Box>
@@ -306,14 +308,15 @@ const FeaturedProducts = () => {
 
                                 {/* Actions */}
 
-                                <Box sx={{  px: 1, 
-                                            pb: 1, 
-                                            display: 'flex', 
-                                            // alignItems:"center",
-                                            justifyContent: "space-evenly"
-                                            // flexDirection: "column",
+                                <Box sx={{
+                                    px: 1,
+                                    pb: 1,
+                                    display: 'flex',
+                                    // alignItems:"center",
+                                    justifyContent: "space-evenly"
+                                    // flexDirection: "column",
 
-                                    }}>
+                                }}>
 
                                     <QuickViewButton onClick={() => handleOpenModal(product)}>
                                         Quick View
