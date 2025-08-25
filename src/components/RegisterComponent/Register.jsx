@@ -15,11 +15,34 @@ import { useNavigate } from 'react-router-dom';
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 import Swal from 'sweetalert2';
+import MenuItem from '@mui/material/MenuItem';
 
 export default function Register() {
     const history = useNavigate();
-    const [formValues, setFormValues] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '+971', remember: false });
-    const [formErrors, setFormErrors] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '', phoneNo: '', remember: '' });
+    const [formValues, setFormValues] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        phoneNo: '+971',
+        gender: '',
+        dob: '',
+        remember: false,
+    });
+
+    const [formErrors, setFormErrors] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        phoneNo: '',
+        gender: '',
+        dob: '',
+        remember: ''
+    });
+
     const [loading, setLoading] = useState(false);
 
     const validateEmail = (email) => {
@@ -50,6 +73,12 @@ export default function Register() {
             errors.email = 'Please enter a valid email address.';
         }
 
+        if (!formValues.phoneNo) {
+            errors.phoneNo = 'Phone Number field is required.';
+        } else if (!validatePhoneNo(formValues.phoneNo)) {
+            errors.phoneNo = 'Please use a phone number with the UAE country code.';
+        }
+
         if (!formValues.password) {
             errors.password = 'Password field is required.';
         }
@@ -58,14 +87,16 @@ export default function Register() {
             errors.confirmPassword = 'Confirm Password field is required.';
         }
 
-        if (!formValues.phoneNo) {
-            errors.phoneNo = 'Phone Number field is required.';
-        } else if (!validatePhoneNo(formValues.phoneNo)) {
-            errors.phoneNo = 'Please use a phone number with the UAE country code.';
+        if (!formValues.gender) {
+            errors.gender = 'Gender is required.';
+        }
+
+        if (!formValues.dob) {
+            errors.dob = 'Date of Birth is required.';
         }
 
         if (!formValues.remember) {
-            errors.remember = "You haven't read and accept Terms and Conditions.";
+            errors.remember = "You haven't read and accepted Terms and Conditions.";
         }
 
         setFormErrors(errors);
@@ -80,6 +111,8 @@ export default function Register() {
                     mobile_number: formValues.phoneNo,
                     first_name: formValues.firstName,
                     last_name: formValues.lastName,
+                    gender: formValues.gender,
+                    dob: formValues.dob,
                 });
 
                 if (res.status === 200) {
@@ -90,7 +123,7 @@ export default function Register() {
                         confirmButtonColor: ModTheme.palette.primary.main,
                     }).then((result) => {
                         if (result.isConfirmed) {
-                          history("/verify", { state: { email: formValues.email, password: formValues.password, mode: 'register' } });
+                            history("/verify", { state: { email: formValues.email, password: formValues.password, mode: 'register' } });
                         }
                     });
                 }
@@ -115,6 +148,14 @@ export default function Register() {
 
         if (response.data.message.mobile_number) {
             errors.phoneNo = response.data.message.mobile_number[0];
+        }
+
+        if (response.data.message.gender) {
+            errors.gender = response.data.message.gender[0];
+        }
+
+        if (response.data.message.dob) {
+            errors.dob = response.data.message.dob[0];
         }
 
         setFormErrors(errors);
@@ -223,6 +264,46 @@ export default function Register() {
                                     onChange={handleInputChange}
                                 />
                             </Grid>
+
+                            {/* Gender Field */}
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    select
+                                    size="small"
+                                    error={!!formErrors.gender}
+                                    helperText={formErrors.gender}
+                                    required
+                                    fullWidth
+                                    id="gender"
+                                    label="Gender"
+                                    name="gender"
+                                    value={formValues.gender}
+                                    onChange={handleInputChange}
+                                >
+                                    <MenuItem value="male">Male</MenuItem>
+                                    <MenuItem value="female">Female</MenuItem>
+                                    <MenuItem value="other">Other</MenuItem>
+                                </TextField>
+                            </Grid>
+
+                            {/* DOB Field */}
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    size="small"
+                                    error={!!formErrors.dob}
+                                    helperText={formErrors.dob}
+                                    required
+                                    fullWidth
+                                    id="dob"
+                                    label="Date of Birth"
+                                    name="dob"
+                                    type="date"
+                                    InputLabelProps={{ shrink: true }}
+                                    value={formValues.dob}
+                                    onChange={handleInputChange}
+                                />
+                            </Grid>
+
                             <Grid item xs={12}>
                                 <TextField
                                     size='small'
@@ -255,6 +336,7 @@ export default function Register() {
                                 />
                             </Grid>
                         </Grid>
+
                         <FormControlLabel
                             sx={{ mt: 1, mb: 0 }}
                             control={<Checkbox
