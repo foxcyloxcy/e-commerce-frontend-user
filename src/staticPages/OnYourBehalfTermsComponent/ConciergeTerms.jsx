@@ -9,7 +9,7 @@ const ConciergeTerms = () => {
                 <Typography
                     variant="h5"
                     fontWeight="bold"
-                    sx={{ color: ModTheme.palette.primary.main ,mb: 3, textAlign: 'center' }}
+                    sx={{ mb: 3, textAlign: 'center' }}
                 >
                     Reloved 'On Your Behalf' Service — Terms & Conditions
                 </Typography>
