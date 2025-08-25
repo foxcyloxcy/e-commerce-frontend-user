@@ -138,13 +138,13 @@ const FeaturedProducts = () => {
         dots: true,
         infinite: true,
         speed: 500,
-        autoplay: false,
+        autoplay: true,
         autoplaySpeed: 4000,
-        slidesToShow: 4,
+        slidesToShow: 5,
         slidesToScroll: 1,
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 1290,
                 settings: {
                     slidesToShow: 4,
                     slidesToScroll: 1,
@@ -153,12 +153,21 @@ const FeaturedProducts = () => {
                 },
             },
             {
-                breakpoint: 900,
+                breakpoint: 920,
+                settings: {
+                    dots: false,
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    initialSlide: 2,
+                },
+            },
+            {
+                breakpoint: 550,
                 settings: {
                     dots: false,
                     slidesToShow: 2,
                     slidesToScroll: 1,
-                    initialSlide: 2,
+                    autoplaySpeed: 2000
                 },
             },
             {
@@ -221,9 +230,9 @@ const FeaturedProducts = () => {
                                     alt={product.user.vendor.name}
                                     sx={{ width: 32, height: 32 }}
                                 />
-                                <Typography variant="body2" sx={{ ml: 1, }}>
-                                    {product.user.vendor.name}
-                                </Typography>
+                                    <TruncatedText variant="body2" sx={{ ml: 1, }}>
+                                        {product.user.vendor.name}
+                                    </TruncatedText>
                             </Box>
 
                             {/* Product Card */}
@@ -231,7 +240,7 @@ const FeaturedProducts = () => {
                                 sx={{
                                     position: "relative",
                                     overflow: "hidden",
-                                    height: { xs: "450px", sm: "550px" },
+                                    height: { xs: "400px", sm: "450px", md: "550", lg: "600" },
                                     display: "flex",
                                     flexDirection: "column",
                                     padding: 0,
@@ -265,12 +274,12 @@ const FeaturedProducts = () => {
                                 <Divider />
 
                                 <CardContent>
-                                    <Typography
+                                    <TruncatedText
                                         variant="body2"
                                         color="textSecondary"
                                     >
                                         {product.sub_category.name}
-                                    </Typography>
+                                    </TruncatedText>
 
                                     <TruncatedText variant="h6">
                                         {product.item_name}
@@ -292,16 +301,14 @@ const FeaturedProducts = () => {
 
                                         {product.address && (
 
-                                            <Typography
-                                                variant="body2"
+                                            <TruncatedText variant="body2"
                                                 sx={{ cursor: "pointer", textDecoration: "underline" }}
-                                                onClick={() => handleOpenMap(product.address)}
-                                            >
-                                                <TruncatedText>
-                                                    Collection {parseAddress(product.address)}
-                                                </TruncatedText>
+                                                onClick={() => handleOpenMap(product.address)}>
 
-                                            </Typography>
+                                                Collection {parseAddress(product.address)}
+
+                                            </TruncatedText>
+
                                         )}
                                     </Box>
                                 </CardContent>
