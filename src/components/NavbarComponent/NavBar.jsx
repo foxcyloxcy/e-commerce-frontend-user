@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -20,10 +20,10 @@ const NavBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const linkPathName = useLocation(Link);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
   const storageKey = secure.storageKey;
   const storagePrefix = secure.storagePrefix;
-
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const handleMenu = useCallback(() => {
     setDrawerOpen(true);
@@ -44,14 +44,24 @@ const NavBar = (props) => {
       const updatedParams = new URLSearchParams(searchParams);
 
       if (keyword) {
-        updatedParams.set("filter_keyword", keyword);
         updatedParams.set("page", 1);
+        updatedParams.set("sort", 1);
+        updatedParams.set("category_id", "");
+        updatedParams.set("category_name", "");
+        updatedParams.set("sub_category_id", "");
+        updatedParams.set("sub_category_name", "");
+        updatedParams.set("filter_min_price", "");
+        updatedParams.set("filter_max_price", "");
+        updatedParams.set("filter_keyword", keyword);
+        updatedParams.set("filter_properties", "");
         updatedParams.set("page_scroll", 0);
+
+        // ✅ Redirect with params
+        navigate(`/shop?${updatedParams.toString()}`);
       } else {
         updatedParams.delete("filter_keyword");
+        navigate(`/shop?${updatedParams.toString()}`);
       }
-
-      setSearchParams(updatedParams); // ✅ Correct way to update search params
     }
   };
 
