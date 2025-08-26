@@ -204,7 +204,7 @@ const ProductListGridView = ({ productsData, setSearchParams, searchParams }) =>
                         </CardContent>
 
                         {/* Details Button */}
-                        <Box sx={{ px: 1, pb: 2 }}>
+                        <Box sx={{ px: 1 }}>
                             <Button
                                 variant="contained"
                                 color="primary"
