@@ -106,11 +106,18 @@ const NavBar = (props) => {
           }}
         >
           <Toolbar sx={{
-            px:0
+            px: 0
           }}>
             {isSmallScreen || isMediumScreen ? (
               // Small & medium screens: stack vertically
-              <Box sx={{ width: "90%", display: 'flex', alignItems: 'center', height: '1vh', justifyContent:'flex-start', p: 0 }}>
+              <Box sx={{
+                width: linkPathName.pathname !== '/shop' ? '90%' : '100%',
+                display: 'flex',
+                alignItems: 'center',
+                height: '1vh',
+                justifyContent: linkPathName.pathname !== '/shop' ? 'flex-start' : 'center',
+                p: 0
+              }}>
                 {/* Logo */}
                 <a href="/" style={{ display: "inline-block", width: '100px', marginRight: '16px' }}>
                   <img
@@ -121,21 +128,23 @@ const NavBar = (props) => {
                 </a>
 
                 {/* Search Bar */}
-                <TextField
-                  halfwidth
-                  variant="outlined"
-                  placeholder="Search..."
-                  onKeyDown={handleSearchKeyDown}
-                  InputProps={{
-                    startAdornment: <SearchIcon sx={{ mr: 1 }} />,
-                  }}
-                  sx={{
-                    "& .MuiOutlinedInput-input": {
-                      height: "0.1vh", // Adjust as needed
-                      width: '130px'
-                    },
-                  }}
-                />
+                {linkPathName.pathname !== '/shop' && (
+                  <TextField
+                    halfwidth
+                    variant="outlined"
+                    placeholder="Search..."
+                    onKeyDown={handleSearchKeyDown}
+                    InputProps={{
+                      startAdornment: <SearchIcon sx={{ mr: 1 }} />,
+                    }}
+                    sx={{
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.1vh", // Adjust as needed
+                        width: '130px'
+                      },
+                    }}
+                  />
+                )}
               </Box>
             ) : (
               // Large screens: logo left, search right
@@ -150,20 +159,23 @@ const NavBar = (props) => {
                 </a>
 
                 {/* Search Bar */}
-                <TextField
-                  halfwidth
-                  variant="outlined"
-                  placeholder="Search..."
-                  onKeyDown={handleSearchKeyDown}
-                  InputProps={{
-                    startAdornment: <SearchIcon sx={{ mr: 1 }} />,
-                  }}
-                  sx={{
-                    "& .MuiOutlinedInput-input": {
-                      height: "1vh", // Adjust as needed
-                    },
-                  }}
-                />
+                {linkPathName.pathname !== '/shop' && (
+                  <TextField
+                    halfwidth
+                    variant="outlined"
+                    placeholder="Search..."
+                    onKeyDown={handleSearchKeyDown}
+                    InputProps={{
+                      startAdornment: <SearchIcon sx={{ mr: 1 }} />,
+                    }}
+                    sx={{
+                      "& .MuiOutlinedInput-input": {
+                        height: "1vh", // Adjust as needed
+                      },
+                    }}
+                  />
+                )}
+
               </Box>
             )}
 
@@ -182,7 +194,7 @@ const NavBar = (props) => {
                 <MenuIcon />
               </IconButton>
             ) : (
-              <Box sx={{ display: 'flex',}}>
+              <Box sx={{ display: 'flex', }}>
                 <ButtonComponent
                   component={Link}
                   to="/"
@@ -208,6 +220,8 @@ const NavBar = (props) => {
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
                   hoverTextColor={isLoggedIn ? 'secondary.main' : 'primary.light'}
                   hoverBackgroundColor={"none"}
+                  paddingLeft={2}
+                  paddingRight={2}
                   ripple={true}
                 />
                 <ButtonComponent
@@ -275,6 +289,7 @@ const NavBar = (props) => {
                       textColor='primary.contrastText'
                       hoverTextColor='secondary.main'
                       marginRight={1}
+                      marginLeft={1}
                       ripple={true}
                     />
                     <Divider orientation="vertical" flexItem />
