@@ -41,9 +41,20 @@ const OnYourBehalf = () => {
 
   return (
     <ThemeProvider theme={ModTheme}>
-      <Box sx={{ backgroundColor: '#F5F5F2', py: 10, px: 2, textAlign: 'center' }}>
-        <Typography variant="h5" fontWeight="bold" gutterBottom color="#255773">
-          No time to list?
+      <Box sx={{ backgroundColor: '#F5F5F2', py: 8, px: 2, textAlign: 'center' }}>
+        {/* Image Section */}
+        <Box
+          component="img"
+          src="/concierge_image.jpg" // Replace with your image path
+          alt="Get your item collected"
+          sx={{
+            width: { xs: "100%" },
+            height: { xs: 300 },
+            objectFit: { xs: "cover" },
+          }}
+        />
+        <Typography variant="h5" fontWeight="bold" gutterBottom color={ModTheme.palette.primary.main}>
+          Not time to list your items?
         </Typography>
         <Typography variant="subtitle1" color="text.secondary" mb={4}>
           We will come to your house, take the photos and upload on your behalf.
@@ -73,23 +84,23 @@ const OnYourBehalf = () => {
         <Grid container spacing={2} justifyContent="center" mb={4}>
           <Grid item xs={12} sm={4}>
             <Stack spacing={0.5} alignItems="center">
-              <CalendarMonthIcon sx={{ fontSize: 40, color: '#255773' }} />
+              <CalendarMonthIcon sx={{ fontSize: 40, color: ModTheme.palette.primary.main }} />
               <Typography variant="h6" fontWeight="bold">Book</Typography>
-              <Typography variant="body2">Choose a date & fill out the quick form</Typography>
+              <Typography variant="body2">Choose a date & fill out the quick form.</Typography>
             </Stack>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Stack spacing={0.5} alignItems="center">
-              <ShoppingBagIcon sx={{ fontSize: 40, color: '#255773' }} />
-              <Typography variant="h6" fontWeight="bold">Handover your items</Typography>
-              <Typography variant="body2">We create an account on your behalf and upload your items</Typography>
+              <ShoppingBagIcon sx={{ fontSize: 40, color: ModTheme.palette.primary.main }} />
+              <Typography variant="h6" fontWeight="bold">Reloved lists on your behalf</Typography>
+              <Typography variant="body2">We create an account on your behalf and upload your items.</Typography>
             </Stack>
           </Grid>
           <Grid item xs={12} sm={4}>
             <Stack spacing={0.5} alignItems="center">
-              <AttachMoneyIcon sx={{ fontSize: 40, color: '#255773' }} />
+              <AttachMoneyIcon sx={{ fontSize: 40, color: ModTheme.palette.primary.main }} />
               <Typography variant="h6" fontWeight="bold">Wait for the sale</Typography>
-              <Typography variant="body2">You will receive 100% of the product value item when it sells.</Typography>
+              <Typography variant="body2">Once your item sells you will receive the full amount in your designated bank account.</Typography>
             </Stack>
           </Grid>
         </Grid>
@@ -97,7 +108,7 @@ const OnYourBehalf = () => {
         {!showCalendly && (
           <Button
             variant="contained"
-            sx={{ bgcolor: '#1a2d5a', mb: 6 }}
+            sx={{ bgcolor: ModTheme.palette.primary.main, mb: 6 }}
             onClick={() => setShowCalendly(true)}
           >
             Book Now
@@ -111,7 +122,7 @@ const OnYourBehalf = () => {
           <Stack spacing={2} alignItems="flex-start">
             <Typography><CheckIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 1 }} />Clear photos</Typography>
             <Typography><CheckIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 1 }} />We price and upload</Typography>
-            {/* <Typography><CheckIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 1 }} />No upfront cost — just a small % when sold</Typography> */}
+            <Typography><CheckIcon fontSize="small" sx={{ verticalAlign: 'middle', mr: 1 }} />Hassle free</Typography>
           </Stack>
         </Paper>
 
@@ -125,7 +136,7 @@ const OnYourBehalf = () => {
         {!showCalendly && (
           <a href="/on-your-behalf-terms"
             rel="noopener noreferrer">
-            <Button variant="contained" sx={{ bgcolor: '#002a4e' }}>
+            <Button variant="contained" sx={{ bgcolor: ModTheme.palette.primary.main }}>
               View concierge terms and conditions
             </Button>
           </a>

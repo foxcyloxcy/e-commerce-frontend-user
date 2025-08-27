@@ -544,7 +544,7 @@ const ProductDetails = () => {
 
                         {/* Details Section */}
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h5" sx={{ color: '#1a2d5a', fontWeight: 'bold' }}>
+                            <Typography variant="h5" sx={{ color: ModTheme.palette.primary.main, fontWeight: 'bold' }}>
                                 {productsData?.item_details.item_name || 'Product Name'}
                             </Typography>
 

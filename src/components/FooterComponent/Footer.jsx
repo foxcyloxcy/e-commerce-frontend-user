@@ -44,7 +44,7 @@ const Footer = () => {
                                 alignSelf: { xs: 'center', sm:'center', md:'start'}
                                 }} />
                             <br />
-                            The UAE's easiest marketplace for reloved items.
+                            The UAE's marketplace for all secondhand items.
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
                             <Typography variant="h6">Quick Links</Typography>
@@ -67,6 +67,7 @@ const Footer = () => {
                             <Link href="/refund-policy" color="inherit" underline="hover" variant="body2">Return/Refund</Link><br />
                             <Link href="/privacy-policy" color="inherit" underline="hover" variant="body2">Privacy Policy</Link><br />
                             <Link href="/cookies-policy" color="inherit" underline="hover" variant="body2">Cookies Policy</Link><br />
+                            <Link href="/on-your-behalf-terms" color="inherit" underline="hover" variant="body2">Concierge Policy</Link><br />
                         </Grid>
                     </Grid>
             </Box>

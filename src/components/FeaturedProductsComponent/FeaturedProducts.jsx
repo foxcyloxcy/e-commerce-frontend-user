@@ -36,14 +36,9 @@ const TruncatedText = styled(Typography)({
 });
 
 const QuickViewButton = styled(Button)(({ theme }) => ({
-    position: 'absolute',
-    bottom: theme.spacing(4),
-    left: '50%',
-    transform: 'translateX(-50%)',
     background: ModTheme.palette.primary.main,
     color: '#fff',
     padding: theme.spacing(0.1, 1),
-    fontSize: '0.75rem',
     '&:hover': {
         background: ModTheme.palette.primary.dark,
         color: ModTheme.palette.secondary.main,
@@ -51,14 +46,9 @@ const QuickViewButton = styled(Button)(({ theme }) => ({
 }));
 
 const ViewInDetailsButton = styled(Button)(({ theme }) => ({
-    position: 'absolute',
-    bottom: theme.spacing(1),
-    left: '50%',
-    transform: 'translateX(-50%)',
     background: ModTheme.palette.primary.main,
     color: '#fff',
     padding: theme.spacing(0.1, 1),
-    fontSize: '0.75rem',
     '&:hover': {
         background: ModTheme.palette.primary.dark,
         color: ModTheme.palette.secondary.main,
@@ -119,7 +109,7 @@ const FeaturedProducts = () => {
     };
 
     const handleDetailsClick = (productUuid) => {
-        navigate('/product-details/'+productUuid);
+        navigate('/product-details/' + productUuid);
     };
 
     const handleOpenMap = (address) => {
@@ -149,12 +139,12 @@ const FeaturedProducts = () => {
         infinite: true,
         speed: 500,
         autoplay: true,
-        autoplaySpeed: 5000,
-        slidesToShow: 4,
+        autoplaySpeed: 4000,
+        slidesToShow: 5,
         slidesToScroll: 1,
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 1290,
                 settings: {
                     slidesToShow: 4,
                     slidesToScroll: 1,
@@ -163,16 +153,25 @@ const FeaturedProducts = () => {
                 },
             },
             {
-                breakpoint: 900,
+                breakpoint: 1080,
                 settings: {
                     dots: false,
-                    slidesToShow: 2,
+                    slidesToShow: 3,
                     slidesToScroll: 1,
                     initialSlide: 2,
                 },
             },
             {
-                breakpoint: 480,
+                breakpoint: 780,
+                settings: {
+                    dots: false,
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    autoplaySpeed: 2000
+                },
+            },
+            {
+                breakpoint: 550,
                 settings: {
                     dots: false,
                     slidesToShow: 1,
@@ -206,111 +205,158 @@ const FeaturedProducts = () => {
         <ThemeProvider theme={ModTheme}>
             <Box
                 sx={{
-                    px: ModTheme.spacing(4),
-                    marginTop: 1,
-                    marginBottom: 1,
-                    WebkitOverflowScrolling: 'touch'
+                    px: { xs: 3, md: 4 },
+                    mt: 2,
+                    mb: 3,
+                    WebkitOverflowScrolling: "touch",
                 }}
             >
-                <Typography variant="h4" align="center" gutterBottom marginBottom={1}>
+                <Typography
+                    variant="h4"
+                    align="center"
+                    gutterBottom
+                >
                     Featured Products
                 </Typography>
+
+                {/* Carousel */}
                 <Slider {...settings}>
                     {products.map((product, index) => (
-                        <Box key={index} padding={2}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', padding: 1 }}>
-                                <Avatar src={product.user.vendor.logo} alt={product.user.vendor.name} />
-                                <Typography variant="body2" sx={{ marginLeft: 1 }}>
-                                    {product.user.vendor.name}
-                                </Typography>
+                        <Box key={index} px={1}>
+                            {/* Vendor Info */}
+                            <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                                <Avatar
+                                    src={product.user.vendor.logo}
+                                    alt={product.user.vendor.name}
+                                    sx={{ width: 32, height: 32 }}
+                                />
+                                    <TruncatedText variant="body2" sx={{ ml: 1, }}>
+                                        {product.user.vendor.name}
+                                    </TruncatedText>
                             </Box>
+
+                            {/* Product Card */}
                             <Card
                                 sx={{
-                                    position: 'relative',
-                                    backgroundColor: ModTheme.palette.secondary.background,
-                                    height: 450, // Set consistent height for all cards
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    ':hover': {
-                                        boxShadow: 10,
-                                    },
+                                    position: "relative",
+                                    overflow: "hidden",
+                                    height: { xs: "400px", sm: "450px", md: "550", lg: "600" },
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    padding: 0,
+                                    mb: 1,
                                 }}
                             >
-                                <LazyLoadImage
-                                    effect="blur"
-                                    src={product.default_image ? product.default_image.image_url : product.default_image}
-                                    alt={product.name}
-                                    style={{ objectFit: 'contain', maxHeight: 200, width: '100%' }}
-                                />
+                                <Box
+                                    sx={{
+                                        width: "100%",
+                                        aspectRatio: { xs: "1/1", sm: "3/4" },
+                                        position: "relative",
+                                        overflow: "hidden",
+                                    }}
+                                >
+                                    <LazyLoadImage
+                                        src={
+                                            product.default_image
+                                                ? product.default_image.image_url
+                                                : "no image available"
+                                        }
+                                        alt={product.item_name}
+                                        effect="blur"
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            objectFit: "cover",
+                                        }}
+                                    />
+                                </Box>
+
                                 <Divider />
-                                <CardContent sx={{ flexGrow: 1, marginBottom: 2 }}>
-                                    <Typography variant="body2" color="textSecondary" gutterBottom>
+
+                                <CardContent>
+                                    <TruncatedText
+                                        variant="body2"
+                                        color="textSecondary"
+                                    >
                                         {product.sub_category.name}
-                                    </Typography>
+                                    </TruncatedText>
+
                                     <TruncatedText variant="h6">
                                         {product.item_name}
                                     </TruncatedText>
-                                    <Box
-                                        sx={{ 
-                                            display: 'flex', 
-                                            alignItems: 'flex-start', 
-                                            flexDirection:'column', 
-                                            marginTop: 1 
-                                        }}
-                                    >
+
+                                    <Box>
                                         <Typography
                                             variant="body1"
                                             color="primary"
                                             onClick={() => handleOpenPriceBreakdown(product)}
-                                            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                            sx={{
+                                                cursor: "pointer",
+                                                textDecoration: "underline",
+                                                fontWeight: 600,
+                                            }}
                                         >
                                             AED {formatPrice(product.total_fee)}
                                         </Typography>
-                                        {
-                                            product.address && (
-                                                <Typography
-                                                    variant="body1"
-                                                    sx={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                                    onClick={() => handleOpenMap(product.address)}>
-                                                    Collection {parseAddress(product.address)}
-                                                </Typography>
-                                            )
-                                        }
+
+                                        {product.address && (
+
+                                            <TruncatedText variant="body2"
+                                                sx={{ cursor: "pointer", textDecoration: "underline" }}
+                                                onClick={() => handleOpenMap(product.address)}>
+
+                                                Collection {parseAddress(product.address)}
+
+                                            </TruncatedText>
+
+                                        )}
                                     </Box>
                                 </CardContent>
-                                <CardActions>
+
+                                {/* Actions */}
+
+                                <Box sx={{
+                                    px: 1,
+                                    pb: 1,
+                                    display: 'flex',
+                                    // alignItems:"center",
+                                    justifyContent: "space-evenly"
+                                    // flexDirection: "column",
+
+                                }}>
+
                                     <QuickViewButton onClick={() => handleOpenModal(product)}>
                                         Quick View
                                     </QuickViewButton>
-                                </CardActions>
-                                <CardActions>
-                                    <ViewInDetailsButton onClick={() => handleDetailsClick(product.uuid)}>
+                                    <ViewInDetailsButton
+                                        onClick={() => handleDetailsClick(product.uuid)}
+                                    >
                                         Detail View
                                     </ViewInDetailsButton>
-                                </CardActions>
+                                </Box>
                             </Card>
                         </Box>
                     ))}
                 </Slider>
 
+                {/* Quick View Modal */}
                 <Modal
                     open={openModal}
                     onClose={handleCloseModal}
                     closeAfterTransition
                     BackdropComponent={Backdrop}
-                    BackdropProps={{
-                        timeout: 500,
-                    }}
+                    BackdropProps={{ timeout: 500 }}
                 >
                     <Fade in={openModal}>
                         <Box
                             sx={{
-                                position: 'absolute',
-                                top: '50%',
-                                left: '50%',
-                                transform: 'translate(-50%, -50%)',
+                                position: "absolute",
+                                top: "50%",
+                                left: "50%",
+                                transform: "translate(-50%, -50%)",
                                 width: 400,
-                                bgcolor: 'background.paper',
+                                bgcolor: "background.paper",
+                                borderRadius: 2,
                                 boxShadow: 24,
                                 p: 4,
                             }}
@@ -329,41 +375,50 @@ const FeaturedProducts = () => {
                                                 : selectedProduct.default_image
                                         }
                                         alt={selectedProduct.item_name}
-                                        sx={{ objectFit: 'contain' }}
+                                        sx={{ objectFit: "contain", borderRadius: 1, my: 2 }}
                                     />
-                                    <Typography variant="body2" color="textSecondary" gutterBottom>
+                                    <Typography
+                                        variant="body2"
+                                        color="textSecondary"
+                                        gutterBottom
+                                    >
                                         {selectedProduct.sub_category.name}
                                     </Typography>
                                     <Typography
-                                            variant="body1"
-                                            color="primary"
-                                            onClick={() => handleOpenPriceBreakdown(selectedProduct)}
-                                            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
-                                        >
-                                            AED {formatPrice(selectedProduct.total_fee)}
-                                        </Typography>
+                                        variant="body1"
+                                        color="primary"
+                                        onClick={() => handleOpenPriceBreakdown(selectedProduct)}
+                                        sx={{ cursor: "pointer", textDecoration: "underline" }}
+                                    >
+                                        AED {formatPrice(selectedProduct.total_fee)}
+                                    </Typography>
                                     <Typography variant="body2" sx={{ mt: 2 }}>
                                         {selectedProduct.item_description}
                                     </Typography>
-                                    <ButtonComponent
-                                        onClick={() => handleDetailsClick(selectedProduct.uuid)}
-                                        label="Buy item"
-                                        buttonVariant="contained"
-                                        textColor="primary.contrastText"
-                                        hoverTextColor="primary.main"
-                                    />
+                                    <Box mt={2}>
+                                        <ButtonComponent
+                                            onClick={() => handleDetailsClick(selectedProduct.uuid)}
+                                            label="Buy item"
+                                            buttonVariant="contained"
+                                            textColor="primary.contrastText"
+                                            hoverTextColor="primary.main"
+                                        />
+                                    </Box>
                                 </>
                             )}
                         </Box>
                     </Fade>
                 </Modal>
 
+                {/* Price Breakdown Modal */}
                 <PriceBreakdownModal
                     open={openPriceBreakdown}
                     onClose={handleClosePriceBreakdown}
                     product={selectedProduct}
                 />
-            {selectedAddress && (
+
+                {/* Map Modal */}
+                {selectedAddress && (
                     <MapViewModal
                         open={openMap}
                         onClose={handleCloseMap}

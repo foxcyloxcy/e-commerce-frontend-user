@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -7,7 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider, Box, useMediaQuery, Drawer, List, ListItem, ListItemText, Divider, Backdrop } from '@mui/material';
+import { Search as SearchIcon, FilterList as Filter, ExpandLess, ExpandMore } from '@mui/icons-material';
+import { ThemeProvider, Box, useMediaQuery, Drawer, List, ListItem, ListItemText, Divider, Backdrop, TextField } from '@mui/material';
 import ModTheme from '../ThemeComponent/ModTheme';
 import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
 import secureLocalStorage from "react-secure-storage";
@@ -19,10 +20,10 @@ const NavBar = (props) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const linkPathName = useLocation(Link);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
   const storageKey = secure.storageKey;
   const storagePrefix = secure.storagePrefix;
-
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const handleMenu = useCallback(() => {
     setDrawerOpen(true);
@@ -36,6 +37,33 @@ const NavBar = (props) => {
   const handleClose = useCallback(() => {
     setDrawerOpen(false);
   }, []);
+
+  const handleSearchKeyDown = (event) => {
+    if (event.key === "Enter") {
+      const keyword = event.target.value;
+      const updatedParams = new URLSearchParams(searchParams);
+
+      if (keyword) {
+        updatedParams.set("page", 1);
+        updatedParams.set("sort", 1);
+        updatedParams.set("category_id", "");
+        updatedParams.set("category_name", "");
+        updatedParams.set("sub_category_id", "");
+        updatedParams.set("sub_category_name", "");
+        updatedParams.set("filter_min_price", "");
+        updatedParams.set("filter_max_price", "");
+        updatedParams.set("filter_keyword", keyword);
+        updatedParams.set("filter_properties", "");
+        updatedParams.set("page_scroll", 0);
+
+        // ✅ Redirect with params
+        navigate(`/shop?${updatedParams.toString()}`);
+      } else {
+        updatedParams.delete("filter_keyword");
+        navigate(`/shop?${updatedParams.toString()}`);
+      }
+    }
+  };
 
   useEffect(() => {
     const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
@@ -77,18 +105,78 @@ const NavBar = (props) => {
             boxShadow: isLoggedIn && linkPathName.pathname !== '/shop' ? '0px 4px 20px rgba(0, 0, 0, 0.3)' : 'none',
           }}
         >
-          <Toolbar>
-
+          <Toolbar sx={{
+            px: 0
+          }}>
             {isSmallScreen || isMediumScreen ? (
-              <a href="/" style={{ height: '80px', width: '100%' }}>
-                <img src={'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png'} alt='reloved_header_logo' style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-              </a>
-            ) : (
-              <Typography component="div" sx={{ flexGrow: 1 }}>
-                <a href="/">
-                  <img src={'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png'} alt='reloved_header_logo' style={{ width: '150px', height: 'auto', objectFit: 'contain' }} />
+              // Small & medium screens: stack vertically
+              <Box sx={{
+                width: linkPathName.pathname !== '/shop' ? '90%' : '100%',
+                display: 'flex',
+                alignItems: 'center',
+                height: '1vh',
+                justifyContent: linkPathName.pathname !== '/shop' ? 'flex-start' : 'center',
+                p: 0
+              }}>
+                {/* Logo */}
+                <a href="/" style={{ display: "inline-block", width: '100px', marginRight: '16px' }}>
+                  <img
+                    src="https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png"
+                    alt="reloved_header_logo"
+                    style={{ width: "100px", height: "auto", objectFit: "contain" }}
+                  />
                 </a>
-              </Typography>
+
+                {/* Search Bar */}
+                {linkPathName.pathname !== '/shop' && (
+                  <TextField
+                    halfwidth
+                    variant="outlined"
+                    placeholder="Search..."
+                    onKeyDown={handleSearchKeyDown}
+                    InputProps={{
+                      startAdornment: <SearchIcon sx={{ mr: 1 }} />,
+                    }}
+                    sx={{
+                      "& .MuiOutlinedInput-input": {
+                        height: "0.1vh", // Adjust as needed
+                        width: '130px'
+                      },
+                    }}
+                  />
+                )}
+              </Box>
+            ) : (
+              // Large screens: logo left, search right
+              <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
+                {/* Logo */}
+                <a href="/" style={{ display: "inline-block", marginRight: "16px" }}>
+                  <img
+                    src="https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png"
+                    alt="reloved_header_logo"
+                    style={{ width: "150px", height: "auto", objectFit: "contain" }}
+                  />
+                </a>
+
+                {/* Search Bar */}
+                {linkPathName.pathname !== '/shop' && (
+                  <TextField
+                    halfwidth
+                    variant="outlined"
+                    placeholder="Search..."
+                    onKeyDown={handleSearchKeyDown}
+                    InputProps={{
+                      startAdornment: <SearchIcon sx={{ mr: 1 }} />,
+                    }}
+                    sx={{
+                      "& .MuiOutlinedInput-input": {
+                        height: "1vh", // Adjust as needed
+                      },
+                    }}
+                  />
+                )}
+
+              </Box>
             )}
 
             {isSmallScreen || isMediumScreen ? (
@@ -99,47 +187,64 @@ const NavBar = (props) => {
                 onClick={handleMenu}
                 sx={{
                   position: 'absolute',
-                  left: { xs: '90%', sm: '95%', md: '95%' }
+                  p: 0,
+                  left: { xs: '95%' }
                 }}
               >
                 <MenuIcon />
               </IconButton>
             ) : (
-              <Box sx={{ display: 'flex', gap: 2 }}>
+              <Box sx={{ display: 'flex', }}>
                 <ButtonComponent
                   component={Link}
                   to="/"
                   label="Home"
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
-                  hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                  hoverTextColor={isLoggedIn ? 'secondary.main' : 'primary.light'}
+                  hoverBackgroundColor={"none"}
+                  ripple={true}
                 />
                 <ButtonComponent
                   component={Link}
                   to="/our-story"
                   label="about"
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
-                  hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                  hoverTextColor={isLoggedIn ? 'secondary.main' : 'primary.light'}
+                  hoverBackgroundColor={"none"}
+                  ripple={true}
                 />
                 <ButtonComponent
                   component={Link}
                   to="/our-delivery-partners"
                   label="Delivery"
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
-                  hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                  hoverTextColor={isLoggedIn ? 'secondary.main' : 'primary.light'}
+                  hoverBackgroundColor={"none"}
+                  paddingLeft={2}
+                  paddingRight={2}
+                  ripple={true}
                 />
                 <ButtonComponent
                   component={Link}
                   to="/on-your-behalf"
                   label="concierge"
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
-                  hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                  hoverTextColor={isLoggedIn ? 'secondary.main' : 'primary.light'}
+                  paddingLeft={3}
+                  paddingRight={1}
+                  hoverBackgroundColor={"none"}
+                  ripple={true}
                 />
                 <ButtonComponent
                   component={Link}
                   to="/shop?page=1&sort=1&category_id=&category_name=&sub_category_id=&sub_category_name=&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties="
                   label="Shop"
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
-                  hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                  hoverTextColor={isLoggedIn ? 'secondary.main' : 'primary.light'}
+                  hoverBackgroundColor={"none"}
+                  paddingRight={0}
+                  paddingLeft={2}
+                  ripple={true}
                 />
                 {isLoggedIn === true ? (
                   <>
@@ -148,14 +253,22 @@ const NavBar = (props) => {
                       to="/add-product"
                       label="Sell"
                       textColor={isLoggedIn ? 'primary.main' : 'primary.contrastText'}
-                      hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                      hoverTextColor={isLoggedIn ? 'secondary.main' : 'primary.light'}
+                      hoverBackgroundColor={"none"}
+                      paddingLeft={0}
+                      paddingRight={0}
+                      ripple={true}
                     />
                     <ButtonComponent
                       component={Link}
                       to="/my-profile"
                       label="Profile"
                       textColor={isLoggedIn ? 'primary.main' : 'primary.contrastText'}
-                      hoverTextColor={isLoggedIn ? 'primary.main' : 'primary.light'}
+                      hoverTextColor={isLoggedIn ? 'secondary.main' : 'primary.light'}
+                      hoverBackgroundColor={"none"}
+                      paddingLeft={0}
+                      paddingRight={2}
+                      ripple={true}
                     />
                     <ButtonComponent
                       label="Logout"
@@ -163,6 +276,7 @@ const NavBar = (props) => {
                       buttonVariant="contained"
                       textColor='primary.contrastText'
                       hoverTextColor='secondary.main'
+
                     />
                   </>
                 ) : (
@@ -174,6 +288,9 @@ const NavBar = (props) => {
                       buttonVariant="contained"
                       textColor='primary.contrastText'
                       hoverTextColor='secondary.main'
+                      marginRight={1}
+                      marginLeft={1}
+                      ripple={true}
                     />
                     <Divider orientation="vertical" flexItem />
                     <ButtonComponent

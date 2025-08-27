@@ -55,19 +55,19 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
     {
       icon: <Sell sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
       title: "Shop Secondhand",
-      desc: "Filter to search, checkout without creating an account",
+      desc: "Filter, search and browse. You can checkout without even creating an account!",
       route: "/shop?page=1&sort=1&category_id=&category_name=&sub_category_id=&sub_category_name=&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties=",
     },
     {
       icon: <VerifiedUser sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
-      title: "Sell your items",
-      desc: "Upload your items or use our concierge service",
+      title: "Sell Your Items",
+      desc: "List your items without any charges, or book our concierge service.",
       route: "/add-product",
     },
     {
       icon: <LocalShipping sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
       title: "Delivery & Collection",
-      desc: "Collection & delivery within 4 hours, large items assemble included international options.",
+      desc: "We can offer collection & delivery within 4 hours within the UAE, whilst larger items can be also be assembled. International options are also available.",
       route: "/our-delivery-partners",
     },
   ];

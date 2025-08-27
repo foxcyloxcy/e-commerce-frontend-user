@@ -9,7 +9,7 @@ const ConciergeTerms = () => {
                 <Typography
                     variant="h5"
                     fontWeight="bold"
-                    sx={{ color: '#1a2d5a', mb: 3, textAlign: 'center' }}
+                    sx={{ mb: 3, textAlign: 'center' }}
                 >
                     Reloved 'On Your Behalf' Service — Terms & Conditions
                 </Typography>
@@ -18,7 +18,7 @@ const ConciergeTerms = () => {
                 <Typography variant="h6" fontWeight="bold" sx={{ mt: 3 }}>
                     1. Service Overview
                 </Typography>
-                <Typography variant="body1" sx={{ mb: 2 }}>
+                <Typography variant="body1" sx={{ mb: 2, mt: 2 }}>
                     Reloved will visit your chosen location on the agreed date and time to photograph and upload up to 30 secondhand items to your personal Reloved account. The session will last up to 1 hour.
                 </Typography>
 
@@ -47,7 +47,7 @@ const ConciergeTerms = () => {
                 </Typography>
                 <List sx={{ listStyleType: 'disc', pl: 4 }}>
                     <ListItem sx={{ display: 'list-item' }}>
-                        <ListItemText primary="The total service fee is AED 280." />
+                        <ListItemText primary="The total service fee is AED 280 / USD 78." />
                     </ListItem>
                     <ListItem sx={{ display: 'list-item' }}>
                         <ListItemText primary="Payment is required in full to confirm your appointment." />
