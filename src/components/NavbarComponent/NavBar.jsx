@@ -99,14 +99,13 @@ const NavBar = (props) => {
             display: 'flex',
             justifyContent: 'center',
             height: '60px',
-            transform: 'translate(0, 0)',
             backgroundColor: isLoggedIn ? ModTheme.palette.primary.dark : 'transparent',
             transition: linkPathName.pathname !== '/shop' ? 'background-color 0.75s, box-shadow 0.75s' : 'none',
             boxShadow: isLoggedIn && linkPathName.pathname !== '/shop' ? '0px 4px 20px rgba(0, 0, 0, 0.3)' : 'none',
           }}
         >
           <Toolbar sx={{
-            px: 0
+            px: '0 !important',
           }}>
             {isSmallScreen || isMediumScreen ? (
               // Small & medium screens: stack vertically
@@ -130,7 +129,7 @@ const NavBar = (props) => {
                 {/* Search Bar */}
                 {linkPathName.pathname !== '/shop' && (
                   <TextField
-                    halfwidth
+                    halfwidth='true'
                     variant="outlined"
                     placeholder="Search..."
                     onKeyDown={handleSearchKeyDown}
@@ -161,7 +160,7 @@ const NavBar = (props) => {
                 {/* Search Bar */}
                 {linkPathName.pathname !== '/shop' && (
                   <TextField
-                    halfwidth
+                    halfwidth='true'
                     variant="outlined"
                     placeholder="Search..."
                     onKeyDown={handleSearchKeyDown}
@@ -231,7 +230,7 @@ const NavBar = (props) => {
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
                   hoverTextColor={isLoggedIn ? 'secondary.main' : 'primary.light'}
                   paddingLeft={3}
-                  paddingRight={1}
+                  paddingRight={2}
                   hoverBackgroundColor={"none"}
                   ripple={true}
                 />
@@ -273,6 +272,7 @@ const NavBar = (props) => {
                     <ButtonComponent
                       label="Logout"
                       onClick={handleLogout}
+                      marginRight={1}
                       buttonVariant="contained"
                       textColor='primary.contrastText'
                       hoverTextColor='secondary.main'
@@ -297,6 +297,8 @@ const NavBar = (props) => {
                       component={Link}
                       to="/register"
                       label="Register"
+                      marginRight={1}
+                      marginLeft={1}
                       buttonVariant="contained"
                       textColor='primary.contrastText'
                       hoverTextColor='secondary.main'
