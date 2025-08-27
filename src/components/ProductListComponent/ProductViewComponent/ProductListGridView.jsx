@@ -16,7 +16,7 @@ import PriceBreakdownModal from '../../ReusableComponents/ModalComponent/PriceBr
 import MapViewModal from '../../ReusableComponents/ModalComponent/MapViewModal';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ModTheme from '../../ThemeComponent/ModTheme';
 
 const ProductListGridView = ({ productsData, setSearchParams, searchParams }) => {
     // console.log(productsData)
@@ -106,7 +106,7 @@ const ProductListGridView = ({ productsData, setSearchParams, searchParams }) =>
             {productsData.map((product) => (
                 <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
                     {/* Vendor Info */}
-                    <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                    <Box sx={{ display: "flex", alignItems: "center", mb: 1, mt: 2 }}>
                         <Avatar
                             src={product.user.vendor ? product.user.vendor.logo : "No image available"}
                             alt={product.user.vendor ? product.user.vendor.name : "No vendor name"}
@@ -122,7 +122,7 @@ const ProductListGridView = ({ productsData, setSearchParams, searchParams }) =>
                             position: "relative",
                             boxShadow: "none",
                             overflow: "hidden",
-                            height: {xs:"540px", sm:"600px"},
+                            height: {xs:"460px", sm:"500px", md: "600", },
                             display: "flex",
                             flexDirection: "column",
                             padding: 0
@@ -167,7 +167,7 @@ const ProductListGridView = ({ productsData, setSearchParams, searchParams }) =>
 
                         {/* Product Info */}
                         <CardContent sx={{ flexGrow: 1, p: 1 }}>
-                            <TruncatedText variant="h6">{product.item_name}</TruncatedText>
+                            <TruncatedText variant="body2" sx={{fontSize: '18px', fontWeight: 'bold', color: ModTheme.palette.primary.main}}>{product.item_name}</TruncatedText>
 
                             {/* Price */}
                             <Typography
