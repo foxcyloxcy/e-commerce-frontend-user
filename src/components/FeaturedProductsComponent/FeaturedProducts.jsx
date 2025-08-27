@@ -36,7 +36,7 @@ const TruncatedText = styled(Typography)({
 });
 
 const QuickViewButton = styled(Button)(({ theme }) => ({
-    background: ModTheme.palette.primary.main,
+    background: ModTheme.palette.primary.light,
     color: '#fff',
     padding: theme.spacing(0.1, 1),
     '&:hover': {
@@ -46,7 +46,7 @@ const QuickViewButton = styled(Button)(({ theme }) => ({
 }));
 
 const ViewInDetailsButton = styled(Button)(({ theme }) => ({
-    background: ModTheme.palette.primary.main,
+    background: ModTheme.palette.primary.light,
     color: '#fff',
     padding: theme.spacing(0.1, 1),
     '&:hover': {
@@ -331,7 +331,7 @@ const FeaturedProducts = () => {
                                     <ViewInDetailsButton
                                         onClick={() => handleDetailsClick(product.uuid)}
                                     >
-                                        Detail View
+                                        Detailed View
                                     </ViewInDetailsButton>
                                 </Box>
                             </Card>
