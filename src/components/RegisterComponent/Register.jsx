@@ -112,7 +112,7 @@ export default function Register() {
                     first_name: formValues.firstName,
                     last_name: formValues.lastName,
                     gender: formValues.gender,
-                    dob: formValues.dob,
+                    date_of_birth: formValues.dob,
                 });
 
                 if (res.status === 200) {
@@ -280,9 +280,9 @@ export default function Register() {
                                     value={formValues.gender}
                                     onChange={handleInputChange}
                                 >
-                                    <MenuItem value="male">Male</MenuItem>
-                                    <MenuItem value="female">Female</MenuItem>
-                                    <MenuItem value="other">Other</MenuItem>
+                                    <MenuItem value={0}>Other</MenuItem>
+                                    <MenuItem value={1}>Male</MenuItem>
+                                    <MenuItem value={2}>Female</MenuItem>
                                 </TextField>
                             </Grid>
 
