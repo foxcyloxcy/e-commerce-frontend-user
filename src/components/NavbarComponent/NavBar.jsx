@@ -255,7 +255,7 @@ const NavBar = (props) => {
                       hoverTextColor={isLoggedIn ? 'secondary.main' : 'primary.light'}
                       hoverBackgroundColor={"none"}
                       paddingLeft={0}
-                      paddingRight={0}
+                      paddingRight={1}
                       ripple={true}
                     />
                     <ButtonComponent
