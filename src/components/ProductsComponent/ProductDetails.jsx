@@ -543,7 +543,7 @@ const ProductDetails = () => {
 
                         {/* Details Section */}
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h5" sx={{ color: ModTheme.palette.primary.main, fontWeight: 'bold' }}>
+                            <Typography variant="body1" sx={{ color: ModTheme.palette.primary.main, fontWeight: 'bold', fontSize: "20px" }}>
                                 {productsData?.item_details.item_name || 'Product Name'}
                             </Typography>
 
@@ -560,8 +560,32 @@ const ProductDetails = () => {
                                 ))}
                             </Grid>
 
+                            {/* Description */}
+                            <Box mt={2}>
+                                <Typography variant="body2" sx={{ color: ModTheme.palette.primary.main, fontWeight: 'bold' }} gutterBottom>
+                                    Description
+                                </Typography>
+                                <Typography variant="body2" color="text.primary">
+                                    {productsData?.item_details?.item_description || 'No description available.'}
+                                </Typography>
+                            </Box>
+
+                            {/* Terms Agreement */}
+                            <Box mt={1}>
+                                <FormControlLabel
+                                    control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
+                                    label={
+                                        <Typography variant="body2">
+                                            I agree to all{' '}
+                                            <Link href="/terms-and-conditions" target="_blank">terms and conditions</Link>{' '}
+                                            and it is the buyer's responsibility to arrange collection of the item.
+                                        </Typography>
+                                    }
+                                />
+                            </Box>
+
                             <Box
-                                mt={0.5}
+                                mt={1}
                                 sx={{
                                     maxWidth: '30%',
                                 }}>
@@ -620,19 +644,18 @@ const ProductDetails = () => {
                                 </Typography>
                             )}
 
-                            {/* Terms Agreement */}
-                            <Box mt={1}>
-                                <FormControlLabel
-                                    control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
-                                    label={
-                                        <Typography variant="body2">
-                                            I agree to all{' '}
-                                            <Link href="/terms-and-conditions" target="_blank">terms and conditions</Link>{' '}
-                                            and it is the buyer's responsibility to arrange collection of the item.
-                                        </Typography>
-                                    }
-                                />
-                            </Box>
+                            {/* Add to Cart (or Confirm) */}
+                            <ButtonComponent
+                                label={loading ? "Processing..." : "Buy Item"}
+                                size="small"
+                                buttonVariant="contained"
+                                textColor="primary.contrastText"
+                                hoverTextColor="secondary.main"
+                                disabled={!agreeRefund}
+                                marginTop={1}
+                                onClick={() => handleMamoCheckout(productsData.item_details.uuid)}
+                            />
+
 
                             {/* Offer Field if bidding */}
                             {productsData?.item_details?.is_bid === 1 && !productsData?.item_details?.my_offer && (
@@ -662,43 +685,32 @@ const ProductDetails = () => {
                             )}
 
                             {/* Discount Code Input */}
-                                <Grid container spacing={1} mt={0.5}>
-                                    <Grid item xs={12} sm={7}>
-                                        <TextField
-                                            fullWidth
-                                            size="small"
-                                            label="ENTER DISCOUNT CODE"
-                                            variant="outlined"
-                                            value={discountCode}
-                                            onChange={(e) => setDiscountCode(e.target.value)}
-                                        />
+                            {
+                                parsedUserData && (
+                                    <Grid container spacing={1} mt={0.5}>
+                                        <Grid item xs={12} sm={7}>
+                                            <TextField
+                                                fullWidth
+                                                size="small"
+                                                label="ENTER DISCOUNT CODE"
+                                                variant="outlined"
+                                                value={discountCode}
+                                                onChange={(e) => setDiscountCode(e.target.value)}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={5}>
+                                            <Button
+                                                fullWidth
+                                                variant="contained"
+                                                disabled={loading || !discountCode}
+                                                onClick={() => handleApplyDiscountCode(productsData.item_details.id)}
+                                                sx={{ backgroundColor: ModTheme.palette.primary.main }}
+                                            >
+                                                Apply Discount
+                                            </Button>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs={12} sm={5}>
-                                        <Button
-                                            fullWidth
-                                            variant="contained"
-                                            disabled={loading || !discountCode}
-                                            onClick={() => handleApplyDiscountCode(productsData.item_details.id)}
-                                            sx={{ backgroundColor: ModTheme.palette.primary.main }}
-                                        >
-                                            Apply Discount
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                                
-                            {/* Add to Cart (or Confirm) */}
-                            <Button
-                                variant="contained"
-                                disabled={!agreeRefund}
-                                sx={{
-                                    backgroundColor: ModTheme.palette.primary.main,
-                                    mt: 1,
-                                    width: '100%',
-                                }}
-                                onClick={() => handleMamoCheckout(productsData.item_details.uuid)}
-                            >
-                                Buy Item
-                            </Button>
+                                )}
 
                             {/* Chat Info */}
                             <Typography variant="body2" color="text.secondary" mt={2}>
@@ -706,16 +718,6 @@ const ProductDetails = () => {
                             </Typography>
                         </Grid>
                     </Grid>
-
-                    {/* Description */}
-                    <Box mt={2}>
-                        <Typography variant="h6" sx={{ color: ModTheme.palette.primary.main }} gutterBottom>
-                            Description
-                        </Typography>
-                        <Typography variant="body2" color="text.primary">
-                            {productsData?.item_details?.item_description || 'No description available.'}
-                        </Typography>
-                    </Box>
                 </Box>
 
                 {/* New Comments Section */}
