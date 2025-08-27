@@ -139,7 +139,7 @@ const FeaturedProducts = () => {
         infinite: true,
         speed: 500,
         autoplay: true,
-        autoplaySpeed: 4000,
+        autoplaySpeed: 2000,
         slidesToShow: 5,
         slidesToScroll: 1,
         responsive: [
@@ -150,6 +150,7 @@ const FeaturedProducts = () => {
                     slidesToScroll: 1,
                     infinite: true,
                     dots: false,
+                    autoplaySpeed: 2000
                 },
             },
             {
@@ -159,6 +160,7 @@ const FeaturedProducts = () => {
                     slidesToShow: 3,
                     slidesToScroll: 1,
                     initialSlide: 2,
+                    autoplaySpeed: 2000
                 },
             },
             {
