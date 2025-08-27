@@ -75,7 +75,6 @@ const ProductDetails = () => {
                 const res = await api.get(query);
 
                 if (res.status === 200) {
-                    console.log(res.data)
                     setProductsData(res.data);
                     setSelectedImage(res.data.item_details.images[0].image_url)
                     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -249,7 +248,7 @@ const ProductDetails = () => {
         if (!isLoggedIn) {
             Swal.fire({
                 title: 'Oops!',
-                text: 'You need to login first before you can buy an item.',
+                text: 'You need to login first before you can apply discount.',
                 icon: 'error',
                 showCancelButton: true,
                 confirmButtonText: "Ok, I'll login.",
@@ -654,7 +653,7 @@ const ProductDetails = () => {
                                             variant="contained"
                                             disabled={loading || !offerPrice}
                                             onClick={() => handleOffers(productsData)}
-                                            sx={{ backgroundColor: '#1a2d5a' }}
+                                            sx={{ backgroundColor: ModTheme.palette.primary.main }}
                                         >
                                             Offer
                                         </Button>
@@ -679,8 +678,8 @@ const ProductDetails = () => {
                                             fullWidth
                                             variant="contained"
                                             disabled={loading || !discountCode}
-                                            onClick={() => handleApplyDiscountCode(item.id)}
-                                            sx={{ backgroundColor: '#1a2d5a' }}
+                                            onClick={() => handleApplyDiscountCode(productsData.item_details.id)}
+                                            sx={{ backgroundColor: ModTheme.palette.primary.main }}
                                         >
                                             Apply Discount
                                         </Button>
@@ -692,16 +691,17 @@ const ProductDetails = () => {
                                 variant="contained"
                                 disabled={!agreeRefund}
                                 sx={{
-                                    backgroundColor: '#1a2d5a',
+                                    backgroundColor: ModTheme.palette.primary.main,
                                     mt: 1,
                                     width: '100%',
                                 }}
+                                onClick={() => handleMamoCheckout(productsData.item_details.uuid)}
                             >
                                 Buy Item
                             </Button>
 
                             {/* Chat Info */}
-                            <Typography variant="body2" color="text.secondary" fontStyle="italic" mt={2}>
+                            <Typography variant="body2" color="text.secondary" mt={2}>
                                 The chat function will become available after you purchase your item. You can ask questions in the Q&A below.
                             </Typography>
                         </Grid>
@@ -709,7 +709,7 @@ const ProductDetails = () => {
 
                     {/* Description */}
                     <Box mt={2}>
-                        <Typography variant="h6" sx={{ color: '#1a2d5a' }} gutterBottom>
+                        <Typography variant="h6" sx={{ color: ModTheme.palette.primary.main }} gutterBottom>
                             Description
                         </Typography>
                         <Typography variant="body2" color="text.primary">
