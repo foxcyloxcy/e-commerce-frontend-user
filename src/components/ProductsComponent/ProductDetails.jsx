@@ -1,17 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import {
-    Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControlLabel, Checkbox, Link, CircularProgress, Button, Card, CardMedia, Stack
+    Container, Grid, Typography, Paper, Divider, Box, TextField, FormControlLabel, Checkbox, Link, CircularProgress, Button, Card, CardMedia, Stack
 
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Carousel } from 'react-responsive-carousel';
+import { styled } from '@mui/system';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';  // Make sure you have SweetAlert2 installed
 import ModTheme from '../ThemeComponent/ModTheme';
 import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import api from '../../assets/baseURL/api';
 import secureLocalStorage from 'react-secure-storage';
 import secure from '../../assets/baseURL/secure';
@@ -391,6 +390,12 @@ const ProductDetails = () => {
         setOpenPriceBreakdownModal(true);
     };
 
+    const TruncatedText = styled(Typography)({
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+    });
+
     const handleClosePriceBreakdown = () => {
         setOpenPriceBreakdownModal(false);
         setSelectedProduct(null);
@@ -549,7 +554,7 @@ const ProductDetails = () => {
 
                             <Grid container spacing={1} mt={0.5}>
                                 {productsData?.item_property_details?.map((propertyGroup, index) => (
-                                    <Grid item xs={12} sm={6} key={index}>
+                                    <Grid item xs={6} key={index}>
                                         <Typography variant="body2" fontWeight="bold">
                                             {propertyGroup.properties}
                                         </Typography>
@@ -611,7 +616,7 @@ const ProductDetails = () => {
                                             variant="body1"
                                             color="primary"
                                             onClick={() => handleOpenPriceBreakdown(productsData.item_details)}
-                                            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                            sx={{ cursor: 'pointer', textDecoration: 'underline', fontWeight: "bold", }}
                                         >
                                             AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
                                         </Typography>
@@ -624,7 +629,7 @@ const ProductDetails = () => {
                                                 component="div"
                                                 color="primary"
                                                 onClick={() => handleOpenPriceBreakdown(productsData.item_details.my_offer)}
-                                                sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                                sx={{ cursor: 'pointer', textDecoration: 'underline', fontWeight: "bold", }}
                                             >
                                                 AED {formatPrice(productsData.item_details.my_offer.total_fee_breakdown.total)}
                                             </Typography>
@@ -640,7 +645,7 @@ const ProductDetails = () => {
                                     sx={{ mt: 0, cursor: 'pointer', textDecoration: 'underline' }}
                                     onClick={() => handleOpenMap(productsData?.item_details?.address)}
                                 >
-                                    Collection: {parseAddress(productsData?.item_details?.address)}
+                                    <TruncatedText>Collection: {parseAddress(productsData?.item_details?.address)}</TruncatedText>
                                 </Typography>
                             )}
 
@@ -721,8 +726,8 @@ const ProductDetails = () => {
                 </Box>
 
                 {/* New Comments Section */}
-                <Paper sx={{ mt: 4, p: 2 }}>
-                    <Typography variant="h6" gutterBottom>
+                <Paper sx={{ mt: 2, px: 1 }}>
+                    <Typography variant="" gutterBottom>
                         Item questions and answers
                     </Typography>
                     <Divider />
@@ -776,7 +781,7 @@ const ProductDetails = () => {
                                         buttonVariant="contained"
                                         textColor="primary.contrastText"
                                         hoverTextColor="secondary.main"
-                                        sx={{ mt: 1 }}
+                                        my={1}
                                         onClick={handleCommentSubmit}
                                     />
                                 </>
@@ -800,7 +805,7 @@ const ProductDetails = () => {
                                             buttonVariant="contained"
                                             textColor="primary.contrastText"
                                             hoverTextColor="secondary.main"
-                                            sx={{ mt: 1 }}
+                                            my={1}
                                             onClick={handleCommentSubmit}
                                         />
                                     </>
