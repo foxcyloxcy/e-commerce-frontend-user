@@ -131,7 +131,7 @@ const NavBar = (props) => {
                   <TextField
                     halfwidth='true'
                     variant="outlined"
-                    placeholder="Search..."
+                    placeholder="Search user or item"
                     onKeyDown={handleSearchKeyDown}
                     InputProps={{
                       startAdornment: <SearchIcon sx={{ mr: 1 }} />,
@@ -162,7 +162,7 @@ const NavBar = (props) => {
                   <TextField
                     halfwidth='true'
                     variant="outlined"
-                    placeholder="Search..."
+                    placeholder="Search user or item"
                     onKeyDown={handleSearchKeyDown}
                     InputProps={{
                       startAdornment: <SearchIcon sx={{ mr: 1 }} />,
