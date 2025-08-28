@@ -283,7 +283,12 @@ const FeaturedProducts = () => {
                                         {product.sub_category.name}
                                     </TruncatedText>
 
-                                    <TruncatedText variant="h6">
+                                    <TruncatedText variant="body2"
+                                            sx={{
+                                                fontWeight: 'bold',
+                                                fontSize: '18px',
+                                                color: ModTheme.palette.primary.main
+                                            }}>
                                         {product.item_name}
                                     </TruncatedText>
 
