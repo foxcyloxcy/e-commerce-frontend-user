@@ -167,7 +167,7 @@ const ProductListGridView = ({ productsData, setSearchParams, searchParams }) =>
 
                         {/* Product Info */}
                         <CardContent sx={{ flexGrow: 1, p: 1 }}>
-                            <TruncatedText variant="body2" sx={{fontSize: '18px', fontWeight: 'bold', color: ModTheme.palette.primary.main}}>{product.item_name}</TruncatedText>
+                            <TruncatedText variant="body2" sx={{fontWeight: 'bold', color: ModTheme.palette.primary.main}}>{product.item_name}</TruncatedText>
 
                             {/* Price */}
                             <Typography
