@@ -286,7 +286,6 @@ const FeaturedProducts = () => {
                                     <TruncatedText variant="body2"
                                             sx={{
                                                 fontWeight: 'bold',
-                                                fontSize: '18px',
                                                 color: ModTheme.palette.primary.main
                                             }}>
                                         {product.item_name}
