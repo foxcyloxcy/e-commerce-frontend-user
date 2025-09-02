@@ -51,6 +51,7 @@ const OnYourBehalf = () => {
             width: { xs: "100%" },
             height: { xs: 300 },
             objectFit: { xs: "cover" },
+            objectPosition: "15% 5%"
           }}
         />
         <Typography variant="h5" fontWeight="bold" gutterBottom color={ModTheme.palette.primary.main}>
