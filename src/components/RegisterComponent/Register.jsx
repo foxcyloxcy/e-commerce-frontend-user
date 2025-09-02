@@ -280,9 +280,9 @@ export default function Register() {
                                     value={formValues.gender}
                                     onChange={handleInputChange}
                                 >
-                                    <MenuItem value={0}>Other</MenuItem>
-                                    <MenuItem value={1}>Male</MenuItem>
                                     <MenuItem value={2}>Female</MenuItem>
+                                    <MenuItem value={1}>Male</MenuItem>
+                                    <MenuItem value={0}>Other</MenuItem>
                                 </TextField>
                             </Grid>
 
@@ -343,7 +343,7 @@ export default function Register() {
                                 checked={formValues.remember}
                                 onChange={handleCheckboxChange}
                                 color="primary" />}
-                            label={<Typography sx={{ fontSize: { xs: '0.7rem', sm: '0.75rem', md: '0.8rem', lg: '0.85rem', xl: '1rem' } }}>I accept the <span></span>
+                            label={<Typography>I accept the <span></span>
                                 <Link href="/terms-and-conditions">
                                     Terms And Conditions
                                 </Link></Typography>}
