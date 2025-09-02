@@ -108,7 +108,7 @@ const NavBar = (props) => {
             px: '0 !important',
           }}>
             {isSmallScreen || isMediumScreen ? (
-              // Small & medium screens: stack vertically
+              // Small & medium screens: logo left, search right
               <Box sx={{
                 width: linkPathName.pathname !== '/shop' ? '90%' : '100%',
                 display: 'flex',
@@ -134,12 +134,12 @@ const NavBar = (props) => {
                     placeholder="Search user or item"
                     onKeyDown={handleSearchKeyDown}
                     InputProps={{
-                      startAdornment: <SearchIcon sx={{ mr: 1 }} />,
+                      startAdornment: <SearchIcon sx={{ ml: -1 }} />,
                     }}
                     sx={{
                       "& .MuiOutlinedInput-input": {
                         height: "0.1vh", // Adjust as needed
-                        width: '130px'
+                        width: '160px'
                       },
                     }}
                   />
