@@ -118,11 +118,11 @@ const NavBar = (props) => {
                 p: 0
               }}>
                 {/* Logo */}
-                <a href="/" style={{ display: "inline-block", width: '100px', marginRight: '16px' }}>
+                <a href="/" style={{ display: "inline-block", width: '100px', marginRight: '30px' }}>
                   <img
                     src="https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png"
                     alt="reloved_header_logo"
-                    style={{ width: "100px", height: "auto", objectFit: "contain" }}
+                    style={{ width: "140px", height: "auto", objectFit: "contain" }}
                   />
                 </a>
 
@@ -139,7 +139,8 @@ const NavBar = (props) => {
                     sx={{
                       "& .MuiOutlinedInput-input": {
                         height: "0.1vh", // Adjust as needed
-                        width: '160px'
+                        width: '160px',
+                        // fontSize: {xs:"0.8em", sm:"0.9em"}
                       },
                     }}
                   />
@@ -153,7 +154,7 @@ const NavBar = (props) => {
                   <img
                     src="https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png"
                     alt="reloved_header_logo"
-                    style={{ width: "150px", height: "auto", objectFit: "contain" }}
+                    style={{ width: "190px", height: "auto", objectFit: "contain" }}
                   />
                 </a>
 
