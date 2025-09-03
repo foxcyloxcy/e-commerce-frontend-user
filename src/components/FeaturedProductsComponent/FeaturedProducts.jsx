@@ -209,8 +209,7 @@ const FeaturedProducts = () => {
                 sx={{
                     px: { xs: 3, md: 4 },
                     mt: 2,
-                    mb: 3,
-                    WebkitOverflowScrolling: "touch",
+                    mb: 2,
                 }}
             >
                 <Typography
