@@ -30,7 +30,7 @@ export default function ButtonComponent(props) {
                     },
                     height: height || 'auto',
                     width: width || '100%',
-                    fontSize: 'clamp(12px, 1.1vw, 1rem)',
+                    fontSize: '1rem',
                     paddingLeft: paddingLeft,
                     paddingRight: paddingRight,
                     p: padding,
