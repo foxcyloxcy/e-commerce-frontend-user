@@ -210,6 +210,7 @@ const FeaturedProducts = () => {
                     px: { xs: 3, md: 4 },
                     mt: 2,
                     mb: 2,
+                    maxHeight: { xs: "600px", sm: "650px", md: "750", lg: "800" },
                 }}
             >
                 <Typography
