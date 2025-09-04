@@ -122,7 +122,7 @@ const NavBar = (props) => {
                   <img
                     src="https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png"
                     alt="reloved_header_logo"
-                    style={{ width: "140px", height: "auto", objectFit: "contain" }}
+                    style={{ width: "120px", height: "auto", objectFit: "contain" }}
                   />
                 </a>
 
