@@ -99,17 +99,16 @@ const NavBar = (props) => {
             display: 'flex',
             justifyContent: 'center',
             height: '60px',
-            transform: 'translate(0, 0)',
             backgroundColor: isLoggedIn ? ModTheme.palette.primary.dark : 'transparent',
             transition: linkPathName.pathname !== '/shop' ? 'background-color 0.75s, box-shadow 0.75s' : 'none',
             boxShadow: isLoggedIn && linkPathName.pathname !== '/shop' ? '0px 4px 20px rgba(0, 0, 0, 0.3)' : 'none',
           }}
         >
           <Toolbar sx={{
-            px: 0
+            px: '0 !important',
           }}>
             {isSmallScreen || isMediumScreen ? (
-              // Small & medium screens: stack vertically
+              // Small & medium screens: logo left, search right
               <Box sx={{
                 width: linkPathName.pathname !== '/shop' ? '90%' : '100%',
                 display: 'flex',
@@ -119,28 +118,29 @@ const NavBar = (props) => {
                 p: 0
               }}>
                 {/* Logo */}
-                <a href="/" style={{ display: "inline-block", width: '100px', marginRight: '16px' }}>
+                <a href="/" style={{ display: "inline-block", width: '100px', marginRight: '30px' }}>
                   <img
                     src="https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png"
                     alt="reloved_header_logo"
-                    style={{ width: "100px", height: "auto", objectFit: "contain" }}
+                    style={{ width: "120px", height: "auto", objectFit: "contain" }}
                   />
                 </a>
 
                 {/* Search Bar */}
                 {linkPathName.pathname !== '/shop' && (
                   <TextField
-                    halfwidth
+                    halfwidth='true'
                     variant="outlined"
-                    placeholder="Search..."
+                    placeholder="Search user or item"
                     onKeyDown={handleSearchKeyDown}
                     InputProps={{
-                      startAdornment: <SearchIcon sx={{ mr: 1 }} />,
+                      startAdornment: <SearchIcon sx={{ ml: -1 }} />,
                     }}
                     sx={{
                       "& .MuiOutlinedInput-input": {
                         height: "0.1vh", // Adjust as needed
-                        width: '130px'
+                        width: '160px',
+                        // fontSize: {xs:"0.8em", sm:"0.9em"}
                       },
                     }}
                   />
@@ -154,16 +154,16 @@ const NavBar = (props) => {
                   <img
                     src="https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png"
                     alt="reloved_header_logo"
-                    style={{ width: "150px", height: "auto", objectFit: "contain" }}
+                    style={{ width: "190px", height: "auto", objectFit: "contain" }}
                   />
                 </a>
 
                 {/* Search Bar */}
                 {linkPathName.pathname !== '/shop' && (
                   <TextField
-                    halfwidth
+                    halfwidth='true'
                     variant="outlined"
-                    placeholder="Search..."
+                    placeholder="Search user or item"
                     onKeyDown={handleSearchKeyDown}
                     InputProps={{
                       startAdornment: <SearchIcon sx={{ mr: 1 }} />,
@@ -231,7 +231,7 @@ const NavBar = (props) => {
                   textColor={isLoggedIn ? 'primary.main' : 'secondary.main'}
                   hoverTextColor={isLoggedIn ? 'secondary.main' : 'primary.light'}
                   paddingLeft={3}
-                  paddingRight={1}
+                  paddingRight={2}
                   hoverBackgroundColor={"none"}
                   ripple={true}
                 />
@@ -256,7 +256,7 @@ const NavBar = (props) => {
                       hoverTextColor={isLoggedIn ? 'secondary.main' : 'primary.light'}
                       hoverBackgroundColor={"none"}
                       paddingLeft={0}
-                      paddingRight={0}
+                      paddingRight={1}
                       ripple={true}
                     />
                     <ButtonComponent
@@ -273,6 +273,7 @@ const NavBar = (props) => {
                     <ButtonComponent
                       label="Logout"
                       onClick={handleLogout}
+                      marginRight={1}
                       buttonVariant="contained"
                       textColor='primary.contrastText'
                       hoverTextColor='secondary.main'
@@ -297,6 +298,8 @@ const NavBar = (props) => {
                       component={Link}
                       to="/register"
                       label="Register"
+                      marginRight={1}
+                      marginLeft={1}
                       buttonVariant="contained"
                       textColor='primary.contrastText'
                       hoverTextColor='secondary.main'

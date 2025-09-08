@@ -16,7 +16,7 @@ import PriceBreakdownModal from '../../ReusableComponents/ModalComponent/PriceBr
 import MapViewModal from '../../ReusableComponents/ModalComponent/MapViewModal';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ModTheme from '../../ThemeComponent/ModTheme';
 
 const ProductListGridView = ({ productsData, setSearchParams, searchParams }) => {
     // console.log(productsData)
@@ -104,16 +104,16 @@ const ProductListGridView = ({ productsData, setSearchParams, searchParams }) =>
                 alignContent: 'flex-start'
             }}>
             {productsData.map((product) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
+                <Grid item xs={6} sm={4} lg={3} key={product.id}>
                     {/* Vendor Info */}
-                    <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+                    <Box sx={{ display: "flex", alignItems: "center", mb: 1, mt: 2 }}>
                         <Avatar
                             src={product.user.vendor ? product.user.vendor.logo : "No image available"}
                             alt={product.user.vendor ? product.user.vendor.name : "No vendor name"}
                         />
-                        <Typography variant="body2" sx={{ ml: 1, fontWeight: 500 }}>
+                        <TruncatedText variant="body2" sx={{ ml: 1, fontWeight: 500 }}>
                             {product.user?.vendor?.name || "No vendor name"}
-                        </Typography>
+                        </TruncatedText>
                     </Box>
 
                     {/* Product Card */}
@@ -122,7 +122,7 @@ const ProductListGridView = ({ productsData, setSearchParams, searchParams }) =>
                             position: "relative",
                             boxShadow: "none",
                             overflow: "hidden",
-                            height: {xs:"540px", sm:"600px"},
+                            height: {xs:"320px", sm:"500px", md: "600", },
                             display: "flex",
                             flexDirection: "column",
                             padding: 0
@@ -136,7 +136,7 @@ const ProductListGridView = ({ productsData, setSearchParams, searchParams }) =>
                                     position: "absolute",
                                     top: 12,
                                     left: 12,
-                                    backgroundColor: "#255773",
+                                    backgroundColor: "#5E97C3",
                                     color: "white",
                                     fontWeight: "bold",
                                     fontSize: "0.7rem",
@@ -160,14 +160,14 @@ const ProductListGridView = ({ productsData, setSearchParams, searchParams }) =>
                                 style={{
                                     width: "100%",
                                     height: "100%",
-                                    objectFit: "cover",
+                                    objectFit: {xs:"contain" , sm:"cover"},
                                 }}
                             />
                         </Box>
 
                         {/* Product Info */}
                         <CardContent sx={{ flexGrow: 1, p: 1 }}>
-                            <TruncatedText variant="h6">{product.item_name}</TruncatedText>
+                            <TruncatedText variant="body2" sx={{fontWeight: 'bold', color: ModTheme.palette.primary.main}}>{product.item_name}</TruncatedText>
 
                             {/* Price */}
                             <Typography
@@ -185,7 +185,7 @@ const ProductListGridView = ({ productsData, setSearchParams, searchParams }) =>
 
                             {/* Collection Address */}
                             {product.address && (
-                                <Typography
+                                <TruncatedText
                                     variant="body2"
                                     sx={{
                                         mb: 1,
@@ -194,8 +194,8 @@ const ProductListGridView = ({ productsData, setSearchParams, searchParams }) =>
                                     }}
                                     onClick={() => handleOpenMap(product.address)}
                                 >
-                                    <TruncatedText variant="body2">Collection {parseAddress(product.address)}</TruncatedText>
-                                </Typography>
+                                    Collection {parseAddress(product.address)}
+                                </TruncatedText>
                             )}
 
                             <TruncatedText variant="body2">

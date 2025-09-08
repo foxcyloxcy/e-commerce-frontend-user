@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { Box, Grid, Paper, Avatar, Typography, Button, Input, IconButton, TextField } from '@mui/material';
+import { Box, Grid, Paper, Avatar, Typography, Button, Input, IconButton, TextField, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import { styled } from '@mui/system';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
@@ -30,6 +30,8 @@ const UserProfileDetails = (props) => {
         last_name: false,
         mobile_number: false,
         email: false,
+        gender: false,
+        date_of_birth: false,
     });
 
     const [updatedData, setUpdatedData] = useState({
@@ -37,6 +39,8 @@ const UserProfileDetails = (props) => {
         last_name: '',
         mobile_number: '',
         email: '',
+        gender: '',
+        date_of_birth: '',
     });
 
     const loadProfile = useCallback(async () => {
@@ -88,7 +92,7 @@ const UserProfileDetails = (props) => {
         }));
         setUpdatedData((prevState) => ({
             ...prevState,
-            [field]: userData[field],
+            [field]: userData[field] || '',
         }));
     };
 
@@ -113,7 +117,7 @@ const UserProfileDetails = (props) => {
                 }));
                 const dynamicFieldName = field.replace('_', ' ').replace(/\b\w/g, char => char.toUpperCase())
                 Swal.fire({
-                    title: successMessage,
+                    title: "Success",
                     text: `${dynamicFieldName} successfully updated.`,
                     icon: 'success',
                     confirmButtonText: 'Ok',
@@ -144,14 +148,23 @@ const UserProfileDetails = (props) => {
         loadProfile();
     }, [loadProfile]);
 
+    const profileFields = [
+        { label: 'First Name', field: 'first_name', type: 'text' },
+        { label: 'Last Name', field: 'last_name', type: 'text' },
+        { label: 'Mobile Number', field: 'mobile_number', type: 'text' },
+        { label: 'Email', field: 'email', type: 'text' },
+        { label: 'Gender', field: 'gender_text', type: 'select' },
+        { label: 'Date of Birth', field: 'date_of_birth', type: 'date' },
+    ];
+
     return (
         <ProfileInfo>
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={12}
                     sx={{
                         display: 'flex',
-                        justifyContent: {xs: 'center', sm:'center', md:'left'},
-                        alignItems: {xs:'center', sm:'center', md:'flex-start'},
+                        justifyContent: { xs: 'center', sm: 'center', md: 'left' },
+                        alignItems: { xs: 'center', sm: 'center', md: 'flex-start' },
                         flexDirection: 'column',
                         background: ModTheme.palette.primary.dark,
                         color: ModTheme.palette.secondary.main,
@@ -166,7 +179,7 @@ const UserProfileDetails = (props) => {
                         alignItems: 'center'
                     }}>
                         <Avatar
-                            alt="Annie Stacey"
+                            alt="Profile Photo"
                             src={userData.photo}
                             sx={{ width: 150, height: 150 }}
                         />
@@ -190,50 +203,65 @@ const UserProfileDetails = (props) => {
                 </Grid>
                 <Grid item xs={12} sm={12}>
                     <Box>
-                        {['First Name', 'Last Name', 'Mobile Number', 'Email'].map((label, index) => {
-                            const field = label.toLowerCase().replace(' ', '_');
-                            return (
-                                <Box key={field}
-                                    sx={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        marginLeft: 2
-                                    }}>
-                                    {isEditing[field] ? (
-                                        <>
+                        {profileFields.map(({ label, field, type }) => (
+                            <Box key={field}
+                                sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    marginLeft: 2,
+                                    marginTop: 1
+                                }}>
+                                {isEditing[field] ? (
+                                    <>
+                                        {type === 'select' ? (
+                                            <FormControl fullWidth size="small">
+                                                <InputLabel>{label}</InputLabel>
+                                                <Select
+                                                    name={field}
+                                                    value={updatedData[field]}
+                                                    onChange={handleChange}
+                                                >
+                                                    <MenuItem value="Male">Male</MenuItem>
+                                                    <MenuItem value="Female">Female</MenuItem>
+                                                    <MenuItem value="Other">Other</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                        ) : (
                                             <TextField
                                                 name={field}
+                                                type={type}
                                                 value={updatedData[field]}
                                                 onChange={handleChange}
                                                 placeholder={userData[field]}
                                                 label={label}
                                                 size="small"
                                                 fullWidth
+                                                InputLabelProps={type === 'date' ? { shrink: true } : {}}
                                             />
-                                            <IconButton onClick={() => handleSave(field)}>
-                                                <CheckIcon />
-                                            </IconButton>
-                                            <IconButton onClick={() => handleCancel(field)}>
-                                                <CancelIcon />
-                                            </IconButton>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Typography variant="body2" sx={{ flexGrow: 1 }}>
-                                                {`${label}: ${userData[field]}`}
-                                            </Typography>
-                                            <IconButton onClick={() => handleEdit(field)}>
-                                                <EditIcon />
-                                            </IconButton>
-                                        </>
-                                    )}
-                                </Box>
-                            );
-                        })}
+                                        )}
+                                        <IconButton onClick={() => handleSave(field)}>
+                                            <CheckIcon />
+                                        </IconButton>
+                                        <IconButton onClick={() => handleCancel(field)}>
+                                            <CancelIcon />
+                                        </IconButton>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Typography variant="body2" sx={{ flexGrow: 1 }}>
+                                            {`${label}: ${userData[field] || 'N/A'}`}
+                                        </Typography>
+                                        <IconButton onClick={() => handleEdit(field)}>
+                                            <EditIcon />
+                                        </IconButton>
+                                    </>
+                                )}
+                            </Box>
+                        ))}
                     </Box>
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                        <UserBankDetails userToken={userToken}/>
+                    <UserBankDetails userToken={userToken} />
                 </Grid>
             </Grid>
         </ProfileInfo >

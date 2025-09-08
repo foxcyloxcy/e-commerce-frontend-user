@@ -51,10 +51,11 @@ const OnYourBehalf = () => {
             width: { xs: "100%" },
             height: { xs: 300 },
             objectFit: { xs: "cover" },
+            objectPosition: "15% 5%"
           }}
         />
         <Typography variant="h5" fontWeight="bold" gutterBottom color={ModTheme.palette.primary.main}>
-          Not time to list your items?
+          No time to list your items?
         </Typography>
         <Typography variant="subtitle1" color="text.secondary" mb={4}>
           We will come to your house, take the photos and upload on your behalf.

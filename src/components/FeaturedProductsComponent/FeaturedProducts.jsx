@@ -36,7 +36,7 @@ const TruncatedText = styled(Typography)({
 });
 
 const QuickViewButton = styled(Button)(({ theme }) => ({
-    background: ModTheme.palette.primary.main,
+    background: ModTheme.palette.primary.light,
     color: '#fff',
     padding: theme.spacing(0.1, 1),
     '&:hover': {
@@ -46,7 +46,7 @@ const QuickViewButton = styled(Button)(({ theme }) => ({
 }));
 
 const ViewInDetailsButton = styled(Button)(({ theme }) => ({
-    background: ModTheme.palette.primary.main,
+    background: ModTheme.palette.primary.light,
     color: '#fff',
     padding: theme.spacing(0.1, 1),
     '&:hover': {
@@ -139,7 +139,7 @@ const FeaturedProducts = () => {
         infinite: true,
         speed: 500,
         autoplay: true,
-        autoplaySpeed: 4000,
+        autoplaySpeed: 2000,
         slidesToShow: 5,
         slidesToScroll: 1,
         responsive: [
@@ -150,6 +150,7 @@ const FeaturedProducts = () => {
                     slidesToScroll: 1,
                     infinite: true,
                     dots: false,
+                    autoplaySpeed: 2000
                 },
             },
             {
@@ -159,6 +160,7 @@ const FeaturedProducts = () => {
                     slidesToShow: 3,
                     slidesToScroll: 1,
                     initialSlide: 2,
+                    autoplaySpeed: 2000
                 },
             },
             {
@@ -207,8 +209,8 @@ const FeaturedProducts = () => {
                 sx={{
                     px: { xs: 3, md: 4 },
                     mt: 2,
-                    mb: 3,
-                    WebkitOverflowScrolling: "touch",
+                    mb: 2,
+                    maxHeight: { xs: "500px", sm: "550px", md: "650", lg: "700" },
                 }}
             >
                 <Typography
@@ -281,7 +283,11 @@ const FeaturedProducts = () => {
                                         {product.sub_category.name}
                                     </TruncatedText>
 
-                                    <TruncatedText variant="h6">
+                                    <TruncatedText variant="body2"
+                                            sx={{
+                                                fontWeight: 'bold',
+                                                color: ModTheme.palette.primary.main
+                                            }}>
                                         {product.item_name}
                                     </TruncatedText>
 
@@ -331,7 +337,7 @@ const FeaturedProducts = () => {
                                     <ViewInDetailsButton
                                         onClick={() => handleDetailsClick(product.uuid)}
                                     >
-                                        Detail View
+                                        Detailed View
                                     </ViewInDetailsButton>
                                 </Box>
                             </Card>

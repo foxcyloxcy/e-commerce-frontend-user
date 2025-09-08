@@ -388,7 +388,7 @@ const ProductList = (props) => {
                             <TextField
                                 fullWidth
                                 variant="outlined"
-                                placeholder="Search..."
+                                placeholder="Search user or item"
                                 // value={keyword} // Update keyword on typing
                                 onKeyDown={handleSearchKeyDown}
                                 InputProps={{

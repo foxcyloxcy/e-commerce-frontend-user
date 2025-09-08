@@ -1,17 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import {
-    Container, Grid, Typography, Paper, Divider, Box, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, FormControlLabel, Checkbox, Link, CircularProgress, Button, Card, CardMedia, Stack
+    Container, Grid, Typography, Paper, Divider, Box, TextField, FormControlLabel, Checkbox, Link, CircularProgress, Button, Card, CardMedia, Stack
 
 } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { Carousel } from 'react-responsive-carousel';
+import { styled } from '@mui/system';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';  // Make sure you have SweetAlert2 installed
 import ModTheme from '../ThemeComponent/ModTheme';
 import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import api from '../../assets/baseURL/api';
 import secureLocalStorage from 'react-secure-storage';
 import secure from '../../assets/baseURL/secure';
@@ -75,7 +74,6 @@ const ProductDetails = () => {
                 const res = await api.get(query);
 
                 if (res.status === 200) {
-                    console.log(res.data)
                     setProductsData(res.data);
                     setSelectedImage(res.data.item_details.images[0].image_url)
                     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -249,7 +247,7 @@ const ProductDetails = () => {
         if (!isLoggedIn) {
             Swal.fire({
                 title: 'Oops!',
-                text: 'You need to login first before you can buy an item.',
+                text: 'You need to login first before you can apply discount.',
                 icon: 'error',
                 showCancelButton: true,
                 confirmButtonText: "Ok, I'll login.",
@@ -391,6 +389,12 @@ const ProductDetails = () => {
         setSelectedProduct(product);
         setOpenPriceBreakdownModal(true);
     };
+
+    const TruncatedText = styled(Typography)({
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+    });
 
     const handleClosePriceBreakdown = () => {
         setOpenPriceBreakdownModal(false);
@@ -544,13 +548,13 @@ const ProductDetails = () => {
 
                         {/* Details Section */}
                         <Grid item xs={12} md={6}>
-                            <Typography variant="h5" sx={{ color: ModTheme.palette.primary.main, fontWeight: 'bold' }}>
+                            <Typography variant="body1" sx={{ color: ModTheme.palette.primary.main, fontWeight: 'bold', }}>
                                 {productsData?.item_details.item_name || 'Product Name'}
                             </Typography>
 
                             <Grid container spacing={1} mt={0.5}>
                                 {productsData?.item_property_details?.map((propertyGroup, index) => (
-                                    <Grid item xs={12} sm={6} key={index}>
+                                    <Grid item xs={6} key={index}>
                                         <Typography variant="body2" fontWeight="bold">
                                             {propertyGroup.properties}
                                         </Typography>
@@ -561,8 +565,32 @@ const ProductDetails = () => {
                                 ))}
                             </Grid>
 
+                            {/* Description */}
+                            <Box mt={2}>
+                                <Typography variant="body2" sx={{ color: ModTheme.palette.primary.main, fontWeight: 'bold' }} gutterBottom>
+                                    Description
+                                </Typography>
+                                <Typography variant="body2" color="text.primary">
+                                    {productsData?.item_details?.item_description || 'No description available.'}
+                                </Typography>
+                            </Box>
+
+                            {/* Terms Agreement */}
+                            <Box mt={1}>
+                                <FormControlLabel
+                                    control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
+                                    label={
+                                        <Typography variant="body2">
+                                            I agree to all{' '}
+                                            <Link href="/terms-and-conditions" target="_blank">terms and conditions</Link>{' '}
+                                            and it is the buyer's responsibility to arrange collection of the item.
+                                        </Typography>
+                                    }
+                                />
+                            </Box>
+
                             <Box
-                                mt={0.5}
+                                mt={1}
                                 sx={{
                                     maxWidth: '30%',
                                 }}>
@@ -588,7 +616,7 @@ const ProductDetails = () => {
                                             variant="body1"
                                             color="primary"
                                             onClick={() => handleOpenPriceBreakdown(productsData.item_details)}
-                                            sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                            sx={{ cursor: 'pointer', textDecoration: 'underline', fontWeight: "bold", }}
                                         >
                                             AED {formatPrice(productsData.item_details.total_fee_breakdown.total)}
                                         </Typography>
@@ -601,7 +629,7 @@ const ProductDetails = () => {
                                                 component="div"
                                                 color="primary"
                                                 onClick={() => handleOpenPriceBreakdown(productsData.item_details.my_offer)}
-                                                sx={{ cursor: 'pointer', textDecoration: 'underline' }}
+                                                sx={{ cursor: 'pointer', textDecoration: 'underline', fontWeight: "bold", }}
                                             >
                                                 AED {formatPrice(productsData.item_details.my_offer.total_fee_breakdown.total)}
                                             </Typography>
@@ -617,23 +645,22 @@ const ProductDetails = () => {
                                     sx={{ mt: 0, cursor: 'pointer', textDecoration: 'underline' }}
                                     onClick={() => handleOpenMap(productsData?.item_details?.address)}
                                 >
-                                    Collection: {parseAddress(productsData?.item_details?.address)}
+                                    <TruncatedText>Collection: {parseAddress(productsData?.item_details?.address)}</TruncatedText>
                                 </Typography>
                             )}
 
-                            {/* Terms Agreement */}
-                            <Box mt={1}>
-                                <FormControlLabel
-                                    control={<Checkbox checked={agreeRefund} onChange={(e) => setAgreeRefund(e.target.checked)} />}
-                                    label={
-                                        <Typography variant="body2">
-                                            I agree to all{' '}
-                                            <Link href="/terms-and-conditions" target="_blank">terms and conditions</Link>{' '}
-                                            and it is the buyer's responsibility to arrange collection of the item.
-                                        </Typography>
-                                    }
-                                />
-                            </Box>
+                            {/* Add to Cart (or Confirm) */}
+                            <ButtonComponent
+                                label={loading ? "Processing..." : "Buy Item"}
+                                size="small"
+                                buttonVariant="contained"
+                                textColor="primary.contrastText"
+                                hoverTextColor="secondary.main"
+                                disabled={!agreeRefund}
+                                marginTop={1}
+                                onClick={() => handleMamoCheckout(productsData.item_details.uuid)}
+                            />
+
 
                             {/* Offer Field if bidding */}
                             {productsData?.item_details?.is_bid === 1 && !productsData?.item_details?.my_offer && (
@@ -654,7 +681,7 @@ const ProductDetails = () => {
                                             variant="contained"
                                             disabled={loading || !offerPrice}
                                             onClick={() => handleOffers(productsData)}
-                                            sx={{ backgroundColor: '#1a2d5a' }}
+                                            sx={{ backgroundColor: ModTheme.palette.primary.main }}
                                         >
                                             Offer
                                         </Button>
@@ -663,64 +690,44 @@ const ProductDetails = () => {
                             )}
 
                             {/* Discount Code Input */}
-                                <Grid container spacing={1} mt={0.5}>
-                                    <Grid item xs={12} sm={7}>
-                                        <TextField
-                                            fullWidth
-                                            size="small"
-                                            label="ENTER DISCOUNT CODE"
-                                            variant="outlined"
-                                            value={discountCode}
-                                            onChange={(e) => setDiscountCode(e.target.value)}
-                                        />
+                            {
+                                parsedUserData && (
+                                    <Grid container spacing={1} mt={0.5}>
+                                        <Grid item xs={12} sm={7}>
+                                            <TextField
+                                                fullWidth
+                                                size="small"
+                                                label="ENTER DISCOUNT CODE"
+                                                variant="outlined"
+                                                value={discountCode}
+                                                onChange={(e) => setDiscountCode(e.target.value)}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={5}>
+                                            <Button
+                                                fullWidth
+                                                variant="contained"
+                                                disabled={loading || !discountCode}
+                                                onClick={() => handleApplyDiscountCode(productsData.item_details.id)}
+                                                sx={{ backgroundColor: ModTheme.palette.primary.main }}
+                                            >
+                                                Apply Discount
+                                            </Button>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item xs={12} sm={5}>
-                                        <Button
-                                            fullWidth
-                                            variant="contained"
-                                            disabled={loading || !discountCode}
-                                            onClick={() => handleApplyDiscountCode(item.id)}
-                                            sx={{ backgroundColor: '#1a2d5a' }}
-                                        >
-                                            Apply Discount
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                                
-                            {/* Add to Cart (or Confirm) */}
-                            <Button
-                                variant="contained"
-                                disabled={!agreeRefund}
-                                sx={{
-                                    backgroundColor: '#1a2d5a',
-                                    mt: 1,
-                                    width: '100%',
-                                }}
-                            >
-                                Buy Item
-                            </Button>
+                                )}
 
                             {/* Chat Info */}
-                            <Typography variant="body2" color="text.secondary" fontStyle="italic" mt={2}>
+                            <Typography variant="body2" color="text.secondary" mt={2}>
                                 The chat function will become available after you purchase your item. You can ask questions in the Q&A below.
                             </Typography>
                         </Grid>
                     </Grid>
-
-                    {/* Description */}
-                    <Box mt={2}>
-                        <Typography variant="h6" sx={{ color: '#1a2d5a' }} gutterBottom>
-                            Description
-                        </Typography>
-                        <Typography variant="body2" color="text.primary">
-                            {productsData?.item_details?.item_description || 'No description available.'}
-                        </Typography>
-                    </Box>
                 </Box>
 
                 {/* New Comments Section */}
-                <Paper sx={{ mt: 4, p: 2 }}>
-                    <Typography variant="h6" gutterBottom>
+                <Paper sx={{ mt: 2, px: 1 }}>
+                    <Typography variant="" gutterBottom>
                         Item questions and answers
                     </Typography>
                     <Divider />
@@ -774,7 +781,7 @@ const ProductDetails = () => {
                                         buttonVariant="contained"
                                         textColor="primary.contrastText"
                                         hoverTextColor="secondary.main"
-                                        sx={{ mt: 1 }}
+                                        my={1}
                                         onClick={handleCommentSubmit}
                                     />
                                 </>
@@ -798,7 +805,7 @@ const ProductDetails = () => {
                                             buttonVariant="contained"
                                             textColor="primary.contrastText"
                                             hoverTextColor="secondary.main"
-                                            sx={{ mt: 1 }}
+                                            my={1}
                                             onClick={handleCommentSubmit}
                                         />
                                     </>
