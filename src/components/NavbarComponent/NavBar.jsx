@@ -388,6 +388,12 @@ const NavBar = (props) => {
                   <ListItem button component={Link} to="/our-delivery-partners" onClick={handleClose}>
                     <ListItemText primary="Delivery" />
                   </ListItem>
+                  <ListItem button component={Link} to="/faq" onClick={handleClose}>
+                    <ListItemText primary="FAQ" />
+                  </ListItem>
+                  <ListItem button component={Link} to="/how-it-works" onClick={handleClose}>
+                    <ListItemText primary="How it Works" />
+                  </ListItem>
                   <ListItem button component={Link} to="/on-your-behalf" onClick={handleClose}>
                     <ListItemText primary="Concierge" />
                   </ListItem>
