@@ -47,19 +47,19 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
 
   const features = [
     {
-      icon: <Sell sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
+      icon: <Sell sx={{ fontSize: { xs: 25, sm: 30 }, color: ModTheme.palette.primary.main }} />,
       title: "Shop Secondhand",
       desc: "Filter, search and browse. You can checkout without even creating an account!",
       route: "/shop?page=1&sort=1&category_id=&category_name=&sub_category_id=&sub_category_name=&filter_min_price=&filter_max_price=&filter_keyword=&filter_properties=",
     },
     {
-      icon: <VerifiedUser sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
+      icon: <VerifiedUser sx={{ fontSize: { xs: 25, sm: 30 }, color: ModTheme.palette.primary.main }} />,
       title: "Sell Your Items",
       desc: "List your items without any charges, or book our concierge service.",
       route: "/add-product",
     },
     {
-      icon: <LocalShipping sx={{ fontSize: { xs: 25, sm: 30 }, color: "#255773" }} />,
+      icon: <LocalShipping sx={{ fontSize: { xs: 25, sm: 30 }, color: ModTheme.palette.primary.main }} />,
       title: "Delivery & Collection",
       desc: "We can offer collection & delivery within 4 hours within the UAE, whilst larger items can be also be assembled. International options are also available.",
       route: "/our-delivery-partners",
@@ -96,7 +96,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
                   sx={{
                     width: { xs: 60, sm: 70 },
                     height: { xs: 60, sm: 70 },
-                    border: '2px solid #1a2d5a',
+                    border: `2px solid ${ModTheme.palette.primary.main}`,
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
