@@ -61,7 +61,7 @@ const FeaturedHero = ({ parentIsLoggedIn }) => {
     {
       icon: <LocalShipping sx={{ fontSize: { xs: 25, sm: 30 }, color: ModTheme.palette.primary.main }} />,
       title: "Delivery & Collection",
-      desc: "We can offer collection & delivery within 4 hours within the UAE, whilst larger items can be also be assembled. International options are also available.",
+      desc: "We can offer collection & delivery within 4 hours within the UAE, whilst larger items can also be assembled. International options are also available.",
       route: "/our-delivery-partners",
     },
   ];
