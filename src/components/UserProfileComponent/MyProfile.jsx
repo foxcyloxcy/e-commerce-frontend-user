@@ -12,6 +12,8 @@ import MyItemPurchase from './MyItemPurchaseComponent/MyItemPurchase';
 import ChangePassword from './UserPasswordChangeComponent/ChangePassword';
 import secureLocalStorage from "react-secure-storage";
 import secure from '../../assets/baseURL/secure';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom'; // ✅ import useNavigate for redirect
 
 // Define the fade-in animation
 const fadeIn = keyframes`
@@ -37,6 +39,7 @@ const MyProfile = () => {
   const storagePrefix = secure.storagePrefix;
   const [activeTab, setActiveTab] = useState('Profile settings');
   const [isDrawerOpen, setDrawerOpen] = useState(false); // State for drawer
+  const navigate = useNavigate(); // ✅ initialize navigate
 
   useEffect(() => {
     const storedUserData = secureLocalStorage.getItem(`${storagePrefix}_userData`, {
@@ -56,6 +59,20 @@ const MyProfile = () => {
       setUserToken(storedUserToken);
     } else {
       setUserToken(null);
+    }
+
+    if (!userToken || !userData) {
+      Swal.fire({
+        title: 'Please log in first',
+        text: 'You need to log in to access your profile.',
+        icon: 'warning',
+        confirmButtonText: 'Go to Login',
+        confirmButtonColor: '#255773',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/login'); // ✅ redirect after confirmation
+        } 
+      });
     }
 
   }, [userToken, userData]);
