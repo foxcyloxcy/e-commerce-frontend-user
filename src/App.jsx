@@ -157,6 +157,7 @@ function App() {
         <Route path="/cookies-policy" element={<CookiesPolicy parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/buyer-and-seller-terms" element={<BuyerAndSellerTerms parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/on-your-behalf-terms" element={<OnYourBehalfTerms parentIsLoggedIn={isLoggedIn} />} />
+        <Route path="/my-profile" element={<MyProfile userToken={userToken} userData={userData} />} />
 
         <Route
           path="/add-product"
@@ -185,14 +186,14 @@ function App() {
           }
         />
 
-        <Route
+        {/* <Route
           path="/my-profile"
           element={
             <ProtectedRoute isLoggedIn={isLoggedIn}>
               <MyProfile userToken={userToken} userData={userData} />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
         <Route
           path="/view-offers"
