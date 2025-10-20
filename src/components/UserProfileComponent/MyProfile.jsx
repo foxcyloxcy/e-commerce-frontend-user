@@ -61,7 +61,7 @@ const MyProfile = () => {
       setUserToken(null);
     }
 
-    if (!userToken || !userData) {
+    if (!storedUserData || !storedUserToken) {
       Swal.fire({
         title: 'Please log in first',
         text: 'You need to log in to access your profile.',
