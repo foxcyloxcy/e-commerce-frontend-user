@@ -157,6 +157,15 @@ const UserProfileDetails = (props) => {
         { label: 'Date of Birth', field: 'date_of_birth', type: 'date' },
     ];
 
+
+    if (!userData || !userToken) {
+        return (
+        <Grid container spacing={2} marginLeft={5}>
+            <Typography>Loading...</Typography>
+        </Grid>
+        );
+    }
+
     return (
         <ProfileInfo>
             <Grid container spacing={2}>

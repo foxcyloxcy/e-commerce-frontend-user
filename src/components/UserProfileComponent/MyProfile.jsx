@@ -152,9 +152,11 @@ const MyProfile = () => {
 
   if (!userData || !userToken) {
     return (
-      <Grid container spacing={2} marginLeft={5}>
-        <Typography>Loading...</Typography>
-      </Grid>
+    <ThemeProvider theme={ModTheme}>
+      <Container sx={{ marginTop: 10, marginBottom: 5, minHeight: '70vh' }}>
+            <Typography>Loading...</Typography>
+      </Container>
+      </ThemeProvider>
     );
   }
 

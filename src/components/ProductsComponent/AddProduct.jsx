@@ -8,11 +8,14 @@ import FileInput from './FileInput'; // Import your custom FileInput component
 import ModTheme from '../ThemeComponent/ModTheme';
 import api from '../../assets/baseURL/api';
 import Swal from 'sweetalert2';
+import secureLocalStorage from "react-secure-storage";
+import secure from '../../assets/baseURL/secure';
 
 
 const AddProduct = (props) => {
   const apiKey = import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY;
   const { userToken } = props;
+  const [parsedUserData, setParsedUserData] = useState(null);
   const [productName, setProductName] = useState('');
   const [description, setDescription] = useState('');
   const [images, setImages] = useState([]);
@@ -27,6 +30,8 @@ const AddProduct = (props) => {
   const [selectedSubCategories, setSelectedSubCategories] = useState('');
   const [selectedSubCategoryId, setSelectedSubCategoryId] = useState('');
   const [selectedPropertyValues, setSelectedPropertyValues] = useState({});
+  const storageKey = secure.storageKey;
+  const storagePrefix = secure.storagePrefix;
 
   const customOrder = [
         // Baby sizes
@@ -298,7 +303,58 @@ const AddProduct = (props) => {
 
   useEffect(() => {
     loadCategories();
+
+      const storedUserData = secureLocalStorage.getItem(`${storagePrefix}_userData`, {
+        hash: storageKey,
+      });
+  
+      if (storedUserData) {
+        setParsedUserData(storedUserData);
+      } else {
+        setParsedUserData(null);
+      }
+
   }, [loadCategories]);
+
+      useEffect(() => {
+          if (parsedUserData) {
+              const  userData = JSON.parse(parsedUserData)
+              if (userData.has_bank_details === "No" || userData.vendor_bank === null) 
+                  {
+                  Swal.fire({
+                      title: 'Read me',
+                      text: "Please visit your My Profile page and create your bank details. You are required to add bank details before you can post an item.",
+                      icon: 'warning',
+                      confirmButtonText: 'Go to My Profile',
+                      confirmButtonColor: ModTheme.palette.primary.main,
+                      showCancelButton: false,
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          history("/my-profile");
+                          refreshParent()
+                      }
+                  })
+              }
+          }
+  
+      }, [parsedUserData])
+
+    if (!parsedUserData) {
+        return (
+          <ThemeProvider theme={ModTheme}>
+            <Container sx={{
+              padding: 3,
+              marginTop: 10,
+              marginBottom: 5,
+              maxWidth: { xs: '100%', sm: '80%', md: '60%', lg: '50%', xl: '40%' },
+              boxSizing: 'border-box',
+              minHeight: '60vh'
+            }}>
+              Loading....
+            </Container>
+          </ThemeProvider>
+        );
+    }
 
   return (
     <ThemeProvider theme={ModTheme}>
