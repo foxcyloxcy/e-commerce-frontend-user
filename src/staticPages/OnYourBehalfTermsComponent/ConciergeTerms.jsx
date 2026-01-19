@@ -19,7 +19,9 @@ const ConciergeTerms = () => {
                     1. Service Overview
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 2, mt: 2 }}>
-                    Reloved will visit your chosen location on the agreed date and time to photograph and upload up to 30 secondhand items to your personal Reloved account. The session will last up to 1 hour.
+                    Reloved will visit your chosen location on the agreed date and time to photograph and upload up to 20 items to your personal reloved account.
+
+                    Your items will be uploaded to your account within 72 hours.  
                 </Typography>
 
                 {/* Section 2 */}
