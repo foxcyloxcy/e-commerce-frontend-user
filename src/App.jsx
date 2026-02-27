@@ -129,7 +129,10 @@ function App() {
 
   return (
     <>
-
+      {/* <NavBar
+        parentIsLoggedIn={isLoggedIn}
+        refreshParent={handleClickLogout}
+      /> */}
       <Routes>
         <Route path="/" element={<NewHomepage parentIsLoggedIn={isLoggedIn} userData={userData} userToken={userToken} refreshParent={handleClick}/>} />
         <Route path="/on-your-behalf" element={<OnYourBehalf userToken={userToken} />} />
