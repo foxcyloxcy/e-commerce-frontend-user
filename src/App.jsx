@@ -5,7 +5,8 @@ import Login from './components/LoginComponent/Login';
 import Register from './components/RegisterComponent/Register';
 import NavBar from './components/NavbarComponent/NavBar';
 import Footer from './components/FooterComponent/Footer';
-import Home from './components/HomeComponent/Home';
+// import Home from './components/HomeComponent/Home';
+import NewHomepage from './components/NewHomePageComponent/NewHomePage';
 import ProductList from './components/ProductListComponent/ProductList';
 import ProductDetails from './components/ProductsComponent/ProductDetails';
 import AddProduct from './components/ProductsComponent/AddProduct';
@@ -128,12 +129,9 @@ function App() {
 
   return (
     <>
-      <NavBar
-        parentIsLoggedIn={isLoggedIn}
-        refreshParent={handleClickLogout}
-      />
+
       <Routes>
-        <Route path="/" element={<Home parentIsLoggedIn={isLoggedIn} userData={userData} userToken={userToken} refreshParent={handleClick}/>} />
+        <Route path="/" element={<NewHomepage parentIsLoggedIn={isLoggedIn} userData={userData} userToken={userToken} refreshParent={handleClick}/>} />
         <Route path="/on-your-behalf" element={<OnYourBehalf userToken={userToken} />} />
         <Route path="/product-details/:productUuid" element={<ProductDetails userToken={userToken} />} />
         <Route path="/my-product-details" element={<MyProductDetails userToken={userToken} />} />
