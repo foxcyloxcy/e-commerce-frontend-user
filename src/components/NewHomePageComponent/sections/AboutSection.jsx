@@ -54,7 +54,7 @@ export default function AboutSection() {
                 backgroundColor: "#25d366"
               }}
             >
-              Join Discussion
+              Join waitlist
             </Button>
 
           </Grid>
