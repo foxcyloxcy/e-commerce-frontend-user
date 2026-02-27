@@ -31,7 +31,7 @@ export default function JoinSection() {
             backgroundColor: "#25d366"
           }}
         >
-          Join Discussion
+          Join waitlist
         </Button>
 
       </Container>
