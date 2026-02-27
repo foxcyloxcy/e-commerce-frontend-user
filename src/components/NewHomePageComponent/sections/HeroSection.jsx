@@ -1,24 +1,26 @@
 import React from "react";
 import { Box, Container, Typography, Button } from "@mui/material";
+import ModTheme from "../../ThemeComponent/ModTheme";
 
 export default function HeroSection() {
   return (
     <Box
       sx={{
-        background: "#111",
+        background: "#9b9595",
         color: "white",
-        py: 10,
+        py: 38,
         textAlign: "center"
       }}
     >
       <Container maxWidth="md">
 
-        <Typography variant="h3" fontWeight="bold" gutterBottom>
-          Join the Discussion
+        <Typography variant="h3" fontWeight="bold" gutterBottom sx={{color: ModTheme.palette.primary.main}}> 
+          A New Beginning for Reloved 
         </Typography>
 
-        <Typography variant="h6">
-          We are hosting a WhatsApp discussion group
+        <Typography variant="h6" sx={{color: ModTheme.palette.primary.main}}>
+          We’re taking a break as we build something new for our community. 
+Big things are on the way. Join the waitlist for early access and updates.
         </Typography>
 
         <Button
@@ -28,7 +30,7 @@ export default function HeroSection() {
             backgroundColor: "#25d366"
           }}
         >
-          Join Discussion
+          Join waitlist
         </Button>
 
       </Container>
