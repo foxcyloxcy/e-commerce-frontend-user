@@ -10,11 +10,11 @@ import { ThemeProvider } from "@mui/material";
 
 export default function NewHomepage() {
   return (
-    <>
+    <ThemeProvider theme={ModTheme}>
       <HeroSection />
       <AboutSection />
       <BenefitsSection />
       <JoinSection />
-    </>
+    </ThemeProvider>
   );
 }
