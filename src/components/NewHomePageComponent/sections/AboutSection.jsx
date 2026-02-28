@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Container, Grid, Typography, Button } from "@mui/material";
+import ModTheme from "../../ThemeComponent/ModTheme";
+import NewUserLeadsModal from "../../ReusableComponents/ModalComponent/NewUserLeadsModal"
 
 export default function AboutSection() {
+  
+    const [openModal, setOpenModal] = useState(false);
+
   return (
-    <Box sx={{ py: 10 }}>
+    <Box sx={{ py: 10, backgroundColor: ModTheme.palette.primary.light }}>
 
       <Container maxWidth="lg">
 
@@ -19,7 +24,7 @@ export default function AboutSection() {
 
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} sx={{color : ModTheme.palette.primary.contrastText}}>
 
             <Typography variant="h4" gutterBottom>
 
@@ -47,21 +52,26 @@ export default function AboutSection() {
               Gain clarity from experts.
             </Typography>
 
-            <Button
-              variant="contained"
-              sx={{
-                mt: 2,
-                backgroundColor: "#25d366"
-              }}
-            >
-              Join waitlist
-            </Button>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: ModTheme.palette.primary.main
+          }}
+          onClick={() => setOpenModal(true)}
+        >
+          Join waitlist
+        </Button>
 
           </Grid>
 
         </Grid>
 
       </Container>
+
+            <NewUserLeadsModal
+              open={openModal}
+              handleClose={() => setOpenModal(false)}
+            />
 
     </Box>
   );
