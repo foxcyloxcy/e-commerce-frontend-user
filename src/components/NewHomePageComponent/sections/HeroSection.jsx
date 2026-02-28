@@ -16,7 +16,7 @@ export default function HeroSection() {
         backgroundRepeat: "no-repeat",
 
         color: "white",
-        py: 38,
+        py: 37,
         textAlign: "center"
       }}
     >
