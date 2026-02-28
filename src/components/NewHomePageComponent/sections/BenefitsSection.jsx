@@ -1,40 +1,91 @@
 import React from "react";
-import { Box, Container, Grid, Typography, Paper } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import ModTheme from "../../ThemeComponent/ModTheme";
 
 export default function BenefitsSection() {
+
+  const benefits = [
+    {
+      icon: "/daily-post.png",
+      text: "Daily posts"
+    },
+    {
+      icon: "/podcast.png",
+      text: "Recommended videos"
+    },
+    {
+      icon: "/q-and-a.png",
+      text: "Weekly Q&A"
+    },
+    {
+      icon: "/opportunities.png",
+      text: "Growth opportunities"
+    }
+  ];
+
   return (
-    <Box sx={{ py: 10, backgroundColor: ModTheme.palette.primary.light }}>
+    <Box
+      sx={{
+        py: 12,
+      }}
+    >
 
       <Container maxWidth="lg">
 
         <Typography
           variant="h4"
           textAlign="center"
-          gutterBottom
-          sx={{ color: ModTheme.palette.primary.main }}
+          fontWeight="bold"
+          sx={{
+            mb: 6,
+            color: ModTheme.palette.primary.main
+          }}
         >
-          What does the discussion give you?
+          What does being in the waitlist give you?
         </Typography>
 
-        <Grid container spacing={3} sx={{ mt: 3}}>
 
-          {[
-            "Daily posts",
-            "Recommended videos",
-            "Weekly Q&A",
-            "Growth opportunities"
-          ].map((item) => (
+        <Grid container>
 
-            <Grid item xs={12} md={6} lg={3} key={item}>
+          {benefits.map((item, index) => (
 
-              <Paper sx={{ p: 3, textAlign: "center", backgroundColor: ModTheme.palette.primary.contrastText }}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={3}
+              key={index}
+              sx={{
+                textAlign: "center",
+                px: 4,
+                borderRight:
+                  index !== benefits.length - 1
+                    ? "1px solid #cfcfcf"
+                    : "none"
+              }}
+            >
 
-                <Typography variant="h6">
-                  {item}
-                </Typography>
+              <Box mb={2}>
 
-              </Paper>
+                <img
+                  src={item.icon}
+                  alt={item.text}
+                  style={{
+                    height: "150px",
+                    marginBottom: "10px"
+                  }}
+                />
+
+              </Box>
+
+              <Typography
+                variant="h6"
+                sx={{
+                  color: ModTheme.palette.primary.main
+                }}
+              >
+                {item.text}
+              </Typography>
 
             </Grid>
 
