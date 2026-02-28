@@ -49,16 +49,15 @@ const Footer = () => {
                         <Grid item xs={12} sm={6} md={3}>
                             <Typography variant="h6">Quick Links</Typography>
                             <Link href="/" color="inherit" underline="hover" variant="body2">Home</Link><br />
-                            <Link href="/our-story" color="inherit" underline="hover" variant="body2">Our Story</Link><br />
+                            {/* <Link href="/our-story" color="inherit" underline="hover" variant="body2">Our Story</Link><br /> */}
                             <Link href="/contact-us" color="inherit" underline="hover" variant="body2">Contact Us</Link><br />
-                            <Link href="/our-delivery-partners" color="inherit" underline="hover" variant="body2">Delivery Partners</Link><br />
+                            {/* <Link href="/our-delivery-partners" color="inherit" underline="hover" variant="body2">Delivery Partners</Link><br />
                             <Link href="/how-it-works" color="inherit" underline="hover" variant="body2">How It Works</Link><br />
-                            <Link href="/faq" color="inherit" underline="hover" variant="body2">Frequently Asked Questions</Link><br />
+                            <Link href="/faq" color="inherit" underline="hover" variant="body2">Frequently Asked Questions</Link><br /> */}
                         </Grid>
-                        <Grid item xs={12} sm={6} md={3}>
+                        {/* <Grid item xs={12} sm={6} md={3}>
                             <Typography variant="h6">Follow Us</Typography>
                             <Link href="https://www.instagram.com/reloveduae/" color="inherit" underline="hover" variant="body2">Instagram</Link><br />
-                            {/* <Link href="https://www.facebook.com/people/Reloved-Marketplace/61564862618552/" color="inherit" underline="hover" variant="body2">Facebook</Link><br /> */}
                         </Grid>
                         <Grid item xs={12} sm={6} md={3}>
                             <Typography variant="h6">Policies</Typography>
@@ -68,7 +67,7 @@ const Footer = () => {
                             <Link href="/privacy-policy" color="inherit" underline="hover" variant="body2">Privacy Policy</Link><br />
                             <Link href="/cookies-policy" color="inherit" underline="hover" variant="body2">Cookies Policy</Link><br />
                             <Link href="/on-your-behalf-terms" color="inherit" underline="hover" variant="body2">Concierge Policy</Link><br />
-                        </Grid>
+                        </Grid> */}
                     </Grid>
             </Box>
             <Box
