@@ -29,6 +29,8 @@ const Footer = () => {
                     px: 3,
                     mt: 'auto',
                     borderTop: `1px solid ${ModTheme.palette.primary.light}`,
+                    position:"relative",
+                    zIndex: 1
                 }}
             >
 
