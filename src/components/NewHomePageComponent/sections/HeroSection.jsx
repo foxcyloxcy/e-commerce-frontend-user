@@ -12,28 +12,50 @@ export default function HeroSection() {
       sx={{
         backgroundImage: "url('/featured_new_leads.jpg')", // <-- your image
         backgroundSize: "cover",
-        backgroundPosition: {xs:"left", md:"center"},
+        backgroundPosition: {xs:"left", sm:"center", md:"center"},
         backgroundRepeat: "no-repeat",
-
+          "&::before": {
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "75%",
+          background: {xs:"rgba(0,0,0,0.3)", md:"none"},
+          zIndex: 1
+        },
         color: "white",
-        py: {xs: 19, sm: 25, md: 50 },
+        py: {xs: 19, sm: 25, md: 60 },
         textAlign: "center"
       }}
     >
-      <Container maxWidth="md" minHeight="100vh">
+      <Container  minHeight="100vh"
+      sx={{
+        maxWidth:{ xs: "800px", sm:"250px", md: "400px"},
+        position:{
+          xs:"relative", sm:"relative", md: "absolute",
+        },
+        top: "20%",
+        left: {xs:"0", sm:"30%", md:"60%"},
+        zIndex: 1
+      }}>
 
         <Typography
           variant="h4"
           fontWeight="bold"
           gutterBottom
           sx={{
-            color: ModTheme.palette.primary.main,
-            textShadow: `2px 2px ${ModTheme.palette.primary.contrastText}`,
+            color: {
+              xs: ModTheme.palette.primary.dark, 
+              sm:ModTheme.palette.primary.contrastText, 
+              md:ModTheme.palette.primary.contrastText
+            },
+
                 fontSize: {
               xs: "1.75rem",  // ~h5
               sm: "2.125rem", // ~h4
               md: "2.5rem",   // ~h3
-            }
+            },
           }}
         >
           A new beginning for Reloved
@@ -43,8 +65,12 @@ export default function HeroSection() {
           variant="h6"
           sx={{
             fontSize: { xs: "14px", sm: "16px", md: "24px" },
-            color: ModTheme.palette.primary.main,
-            textShadow: `2px 2px ${ModTheme.palette.primary.contrastText}`,
+            color: {
+              xs: ModTheme.palette.primary.dark, 
+              sm:ModTheme.palette.primary.contrastText, 
+              md:ModTheme.palette.primary.contrastText
+            },
+
             paddingBottom:2
           }}
         >
@@ -55,7 +81,7 @@ export default function HeroSection() {
         <Button
           variant="contained"
           sx={{
-            backgroundColor: ModTheme.palette.primary.main
+            backgroundColor: ModTheme.palette.primary.light
           }}
           onClick={() => setOpenModal(true)}
         >
