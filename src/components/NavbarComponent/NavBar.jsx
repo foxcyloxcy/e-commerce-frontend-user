@@ -110,24 +110,24 @@ const NavBar = (props) => {
             {isSmallScreen || isMediumScreen ? (
               // Small & medium screens: logo left, search right
               <Box sx={{
-                width: linkPathName.pathname !== '/shop' ? '90%' : '100%',
+                width: linkPathName.pathname !== '/shop' ? '100%' : '100%',
                 display: 'flex',
                 alignItems: 'center',
                 height: '1vh',
-                justifyContent: linkPathName.pathname !== '/shop' ? 'flex-start' : 'center',
+                justifyContent: linkPathName.pathname !== '/shop' ? 'center' : 'center',
                 p: 0
               }}>
-                {/* Logo */}
+
                 <a href="/" style={{ display: "inline-block", width: '100px', marginRight: '30px' }}>
                   <img
-                    src="https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png"
+                    src="https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo_white.png"
                     alt="reloved_header_logo"
                     style={{ width: "120px", height: "auto", objectFit: "contain" }}
                   />
                 </a>
 
-                {/* Search Bar */}
-                {linkPathName.pathname !== '/shop' && (
+
+                {/* {linkPathName.pathname !== '/shop' && (
                   <TextField
                     halfwidth='true'
                     variant="outlined"
@@ -140,26 +140,25 @@ const NavBar = (props) => {
                       "& .MuiOutlinedInput-input": {
                         height: "0.1vh", // Adjust as needed
                         width: '160px',
-                        // fontSize: {xs:"0.8em", sm:"0.9em"}
                       },
                     }}
                   />
-                )}
+                )} */}
               </Box>
             ) : (
               // Large screens: logo left, search right
-              <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
-                {/* Logo */}
+              <Box sx={{ display: "flex", alignItems: "center", width: "100%", justifyContent: 'center', }}>
+
                 <a href="/" style={{ display: "inline-block", marginRight: "16px" }}>
                   <img
-                    src="https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png"
+                    src="https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo_white.png"
                     alt="reloved_header_logo"
                     style={{ width: "190px", height: "auto", objectFit: "contain" }}
                   />
                 </a>
 
-                {/* Search Bar */}
-                {linkPathName.pathname !== '/shop' && (
+
+                {/* {linkPathName.pathname !== '/shop' && (
                   <TextField
                     halfwidth='true'
                     variant="outlined"
@@ -174,12 +173,12 @@ const NavBar = (props) => {
                       },
                     }}
                   />
-                )}
+                )} */}
 
               </Box>
             )}
 
-            {isSmallScreen || isMediumScreen ? (
+            {/* {isSmallScreen || isMediumScreen ? (
               <IconButton
                 edge="start"
                 color="inherit"
@@ -307,8 +306,8 @@ const NavBar = (props) => {
                   </>
                 )}
               </Box>
-            )}
-            <Drawer
+            )} */}
+            {/* <Drawer
               anchor="right"
               open={drawerOpen}
               onClose={handleClose}
@@ -413,7 +412,7 @@ const NavBar = (props) => {
                   )}
                 </List>
               </Box>
-            </Drawer>
+            </Drawer> */}
             {isMediumScreen && (
               <Backdrop
                 open={drawerOpen}
