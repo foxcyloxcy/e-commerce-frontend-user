@@ -51,9 +51,9 @@ export default function NewUserLeadsModal({ open, handleClose }) {
 
                 Swal.fire({
                     title: 'Success',
-                    text: res.data.message,
+                    text: "You have submitted your details successfully, we will keep you updated with our progress. ",
                     icon: 'success',
-                    confirmButtonColor: ModTheme.palette.primary.main
+                    confirmButtonColor: ModTheme.palette.primary.main,
                 });
 
                 setForm({
