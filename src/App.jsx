@@ -40,7 +40,6 @@ import VisitorPaymentSuccess from './components/PaymentSuccessComponent/VisitorP
 import CookiesPolicy from './staticPages/CookiePolicyComponent/CookiesPolicy';
 import OnYourBehalf from './components/OnYourBehalfComponent/Concierge';
 import OnYourBehalfTerms from './staticPages/OnYourBehalfTermsComponent/ConciergeTerms';
-import useHotjar from './hooks/useHotJar'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -125,7 +124,7 @@ function App() {
     location.replace('/login');
   };
 
-  useHotjar();
+  // useHotjar();
 
   return (
     <>
