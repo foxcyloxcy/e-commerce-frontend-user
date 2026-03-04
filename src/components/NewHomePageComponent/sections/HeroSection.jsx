@@ -38,11 +38,12 @@ export default function HeroSection() {
           variant="h6"
           sx={{
             color: ModTheme.palette.primary.dark,
-            textShadow: `0px 2px 8px #000`
+            textShadow: `0px 2px 8px #000`,
+            paddingBottom:2
           }}
         >
           We’re taking a break as we build something new for our community.
-          Big things are on the way. Join the waitlist for early access and updates.
+          Join the waitlist for early access and updates.
         </Typography>
 
         <Button
