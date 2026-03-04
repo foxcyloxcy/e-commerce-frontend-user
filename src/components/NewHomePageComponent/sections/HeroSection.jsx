@@ -12,33 +12,39 @@ export default function HeroSection() {
       sx={{
         backgroundImage: "url('/featured_new_leads.jpg')", // <-- your image
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundPosition: {xs:"left", md:"center"},
         backgroundRepeat: "no-repeat",
 
         color: "white",
-        py: 41,
+        py: {xs: 19, sm: 25, md: 50 },
         textAlign: "center"
       }}
     >
-      <Container maxWidth="md">
+      <Container maxWidth="md" minHeight="100vh">
 
         <Typography
-          variant="h3"
+          variant="h4"
           fontWeight="bold"
           gutterBottom
           sx={{
-            color: ModTheme.palette.primary.dark,
-            textShadow: `0px 2px 8px #000`
+            color: ModTheme.palette.primary.main,
+            textShadow: `2px 2px ${ModTheme.palette.primary.contrastText}`,
+                fontSize: {
+              xs: "1.75rem",  // ~h5
+              sm: "2.125rem", // ~h4
+              md: "2.5rem",   // ~h3
+            }
           }}
         >
-          A New Beginning for Reloved
+          A new beginning for Reloved
         </Typography>
 
         <Typography
           variant="h6"
           sx={{
-            color: ModTheme.palette.primary.dark,
-            textShadow: `0px 2px 8px #000`,
+            fontSize: { xs: "14px", sm: "16px", md: "24px" },
+            color: ModTheme.palette.primary.main,
+            textShadow: `2px 2px ${ModTheme.palette.primary.contrastText}`,
             paddingBottom:2
           }}
         >
