@@ -12,9 +12,9 @@ export default function NewHomepage() {
   return (
     <ThemeProvider theme={ModTheme}>
       <HeroSection />
-      <AboutSection />
-      <BenefitsSection />
-      <JoinSection />
+      {/* <AboutSection /> */}
+      {/* <BenefitsSection /> */}
+      {/* <JoinSection /> */}
     </ThemeProvider>
   );
 }
