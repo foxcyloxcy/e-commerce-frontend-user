@@ -10,13 +10,13 @@ export default function HeroSection() {
   return (
     <Box
       sx={{
-        backgroundImage: "url('/featuredHero.png')", // <-- your image
+        backgroundImage: "url('/featured_new_leads.jpg')", // <-- your image
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
 
         color: "white",
-        py: 37,
+        py: 41,
         textAlign: "center"
       }}
     >
