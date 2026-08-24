@@ -35,6 +35,7 @@ import MyItemPurchaseDetails from './components/UserProfileComponent/MyItemPurch
 import ContactUs from './staticPages/ContactUsComponent/ContactUs';
 import MyProductDetails from './components/UserProfileComponent/MyProductsComponent/MyProductDetails';
 import FeatureItemSuccess from './components/PaymentSuccessComponent/FeatureItemSuccess';
+import ConsentFormPage from './components/ConsentFormPageComponent/ConsentFormPage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState("");
@@ -138,6 +139,15 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermsAndConditions parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/buyer-and-seller-terms" element={<BuyerAndSellerTerms parentIsLoggedIn={isLoggedIn} />} />
+
+        <Route
+          path="/consent-form"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <ConsentFormPage userToken={userToken} />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/add-product"
