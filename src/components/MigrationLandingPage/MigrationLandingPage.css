@@ -1,13 +1,16 @@
 .migration-landing {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   background: #eff9ff;
 }
 
 .migration-landing-image {
   min-height: 100vh;
-  background: linear-gradient(rgba(15, 23, 42, .08), rgba(15, 23, 42, .08)), url('/reloved_founder.jpg') center/cover no-repeat;
+  background-image: url('/featured_new_leads.jpg');
+  background-size: cover;
+  background-position: 40% center;
+  background-repeat: no-repeat;
 }
 
 .migration-landing-content {
@@ -16,67 +19,73 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 48px 28px 24px;
+  padding: 56px 44px 26px;
+  background: #eff9ff;
+}
+
+.migration-landing-copy {
+  width: min(100%, 520px);
+  text-align: center;
+  margin: auto 0;
 }
 
 .migration-landing-logo {
-  width: 92px;
-  height: 92px;
+  width: min(250px, 58vw);
+  height: auto;
   object-fit: contain;
-  margin-bottom: 28px;
+  margin: 0 auto 58px;
+  display: block;
 }
 
-.migration-landing-card {
-  width: min(100%, 470px);
-  background: #fff;
-  border: 1px solid #dde8ef;
-  border-radius: 26px;
-  padding: 40px;
-  box-shadow: 0 18px 48px rgba(15, 23, 42, .06);
-  text-align: center;
-}
-
-.migration-eyebrow {
-  margin: 0 0 10px;
-  color: #61717d;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .09em;
-}
-
-.migration-landing-card h1 {
-  margin: 0 0 18px;
+.migration-landing-copy h1 {
+  margin: 0 0 26px;
   color: #111;
-  font-size: clamp(32px, 4vw, 48px);
-  line-height: 1.05;
-  font-weight: 700;
+  font-size: clamp(35px, 4.8vw, 58px);
+  line-height: 1.03;
+  font-weight: 500;
+  letter-spacing: -0.035em;
 }
 
-.migration-landing-card p {
-  color: #52616b;
-  font-size: 16px;
-  line-height: 1.65;
+.migration-landing-copy p {
+  width: min(100%, 430px);
+  margin: 0 auto 18px;
+  color: #111;
+  font-size: clamp(16px, 1.35vw, 20px);
+  line-height: 1.48;
+  font-weight: 400;
 }
 
 .migration-landing-actions {
-  display: grid;
-  gap: 13px;
-  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 42px;
 }
 
 .migration-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-width: 172px;
   min-height: 48px;
-  padding: 12px 18px;
+  padding: 12px 22px;
   border-radius: 999px;
   border: 1px solid #111;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 15px;
+  line-height: 1;
   text-decoration: none;
   cursor: pointer;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.migration-button:hover {
+  opacity: .86;
+}
+
+.migration-button:active {
+  transform: translateY(1px);
 }
 
 .migration-button-primary {
@@ -85,13 +94,13 @@
 }
 
 .migration-button-secondary {
-  background: #fff;
+  background: transparent;
   color: #111;
 }
 
 .migration-landing-copyright {
-  margin: 24px 0 0;
-  color: #6c7d87;
+  margin: 32px 0 0;
+  color: #111;
   font-size: 12px;
   text-align: center;
 }
@@ -102,15 +111,26 @@
   }
 
   .migration-landing-image {
-    min-height: 32vh;
+    min-height: 44vh;
+    background-position: 36% center;
   }
 
   .migration-landing-content {
-    min-height: 68vh;
-    justify-content: flex-start;
+    min-height: 56vh;
+    padding: 36px 22px 22px;
   }
 
-  .migration-landing-card {
-    padding: 28px 22px;
+  .migration-landing-logo {
+    margin-bottom: 34px;
+  }
+
+  .migration-landing-actions {
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 30px;
+  }
+
+  .migration-button {
+    width: 100%;
   }
 }
