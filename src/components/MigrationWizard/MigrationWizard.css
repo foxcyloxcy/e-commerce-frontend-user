@@ -24,7 +24,7 @@
 
 .migration-card {
   width: min(100%, 465px);
-  margin: 0 auto;
+  margin: 0 auto 18px;
   background: #fff;
   border: 1px solid #d9e7ef;
   border-radius: 18px;
@@ -32,8 +32,88 @@
   overflow: hidden;
 }
 
+.migration-wizard-card fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+
 .migration-wizard-card {
   padding: 0;
+}
+
+.migration-preference-panel {
+  padding: 22px 26px 24px;
+}
+
+.migration-preference-panel h2 {
+  margin: 0 0 14px;
+  font-size: 20px;
+  line-height: 1.1;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.migration-pref-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 0;
+  color: #111;
+  font-size: 14px;
+  line-height: 1.35;
+  cursor: pointer;
+}
+
+.migration-pref-option + .migration-pref-option {
+  border-top: 1px solid #e5eef4;
+}
+
+.migration-pref-option input {
+  width: 18px;
+  height: 18px;
+  accent-color: #78b8d7;
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.migration-pref-option.selected span {
+  font-weight: 600;
+}
+
+.migration-decline-copy {
+  margin: 0 0 8px 28px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #f4fbff;
+  border: 1px solid #d7e8f2;
+}
+
+.migration-decline-copy p {
+  margin: 0 0 10px;
+  color: #526672;
+  font-size: 12px;
+}
+
+.migration-delete-link {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: #111;
+  text-decoration: underline;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.migration-content-disabled fieldset {
+  opacity: .42;
+}
+
+.migration-content-disabled .migration-helper {
+  opacity: .62;
 }
 
 .migration-card-title {
@@ -83,7 +163,8 @@
 .migration-ok,
 .migration-deadline,
 .migration-muted,
-.migration-helper {
+.migration-helper,
+.migration-review-block {
   margin-left: 26px;
   margin-right: 26px;
 }
@@ -315,6 +396,26 @@
   color: #647985;
 }
 
+.migration-review-block {
+  margin-top: 18px;
+  margin-bottom: 14px;
+  padding: 14px;
+  border: 1px solid #dce8ef;
+  border-radius: 12px;
+  background: #f9fdff;
+}
+
+.migration-review-block h3 {
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.migration-review-block p {
+  margin: 7px 0;
+  color: #111;
+}
+
 .migration-options {
   display: grid;
   gap: 11px;
@@ -406,7 +507,8 @@
   .migration-wordmark { width: 136px; margin-bottom: 22px; }
   .migration-card { width: min(100%, 430px); }
   .migration-card-title, .migration-form-grid, .migration-listings, .migration-options, .migration-card-footer { padding-left: 18px; padding-right: 18px; }
-  .migration-error, .migration-warning, .migration-ok, .migration-deadline, .migration-muted, .migration-helper, .migration-link-button { margin-left: 18px; margin-right: 18px; }
+  .migration-error, .migration-warning, .migration-ok, .migration-deadline, .migration-muted, .migration-helper, .migration-link-button, .migration-review-block { margin-left: 18px; margin-right: 18px; }
+  .migration-preference-panel { padding-left: 18px; padding-right: 18px; }
   .migration-select-all { padding-left: 18px; padding-right: 18px; }
   .migration-listing { grid-template-columns: auto 52px minmax(0, 1fr); }
   .migration-listing img { width: 52px; height: 52px; }
