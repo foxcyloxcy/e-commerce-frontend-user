@@ -6,7 +6,7 @@ import Register from './components/RegisterComponent/Register';
 import NavBar from './components/NavbarComponent/NavBar';
 import Footer from './components/FooterComponent/Footer';
 // import Home from './components/HomeComponent/Home';
-import NewHomepage from './components/NewHomePageComponent/NewHomePage';
+// import NewHomepage from './components/NewHomePageComponent/NewHomePage';
 import ProductList from './components/ProductListComponent/ProductList';
 import ProductDetails from './components/ProductsComponent/ProductDetails';
 import AddProduct from './components/ProductsComponent/AddProduct';
@@ -51,7 +51,7 @@ function App() {
   const storageKey = secure.storageKey;
   const storagePrefix = secure.storagePrefix;
   const location = useLocation();
-  const isMigrationPage = location.pathname === '/reloved-to-taggy' || location.pathname.startsWith('/migration');
+  const isMigrationPage = location.pathname === '/' || location.pathname === '/reloved-to-taggy' || location.pathname.startsWith('/migration');
 
   useEffect(() => {
     const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
@@ -138,7 +138,7 @@ function App() {
         refreshParent={handleClickLogout}
       />}
       <Routes>
-        <Route path="/" element={<NewHomepage parentIsLoggedIn={isLoggedIn} userData={userData} userToken={userToken} refreshParent={handleClick}/>} />
+        <Route path="/" element={<MigrationLandingPage parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/reloved-to-taggy" element={<MigrationLandingPage parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/on-your-behalf" element={<OnYourBehalf userToken={userToken} />} />
         <Route path="/product-details/:productUuid" element={<ProductDetails userToken={userToken} />} />

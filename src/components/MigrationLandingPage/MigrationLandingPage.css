@@ -11,11 +11,12 @@
 }
 
 .migration-landing-content {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 48px 28px;
+  padding: 48px 28px 24px;
 }
 
 .migration-landing-logo {
@@ -86,6 +87,13 @@
 .migration-button-secondary {
   background: #fff;
   color: #111;
+}
+
+.migration-landing-copyright {
+  margin: 24px 0 0;
+  color: #6c7d87;
+  font-size: 12px;
+  text-align: center;
 }
 
 @media (max-width: 820px) {

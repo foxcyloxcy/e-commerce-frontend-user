@@ -34,6 +34,7 @@ export default function MigrationLandingPage({ parentIsLoggedIn }) {
             <button className="migration-button migration-button-secondary" type="button" onClick={reviewAccount}>Review my Reloved account</button>
           </div>
         </div>
+        <p className="migration-landing-copyright">© {new Date().getFullYear()} Reloved. All rights reserved.</p>
       </section>
     </main>
   );
