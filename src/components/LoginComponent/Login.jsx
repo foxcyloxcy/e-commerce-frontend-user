@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Button,
   CssBaseline,
@@ -22,6 +22,7 @@ export default function Login({ refreshParent }) {
   const storageKey = secure.storageKey;
   const storagePrefix = secure.storagePrefix;
   const history = useNavigate();
+  const [searchParams] = useSearchParams();
   const [formValues, setFormValues] = useState({ email: '', password: '' });
   const [formErrors, setFormErrors] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
@@ -76,7 +77,7 @@ export default function Login({ refreshParent }) {
             });
   
             refreshParent();
-            history("/");
+            history(searchParams.get('redirect') || "/");
 
           }else{
             Swal.fire({

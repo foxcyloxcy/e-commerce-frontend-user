@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Login from './components/LoginComponent/Login';
 import Register from './components/RegisterComponent/Register';
 import NavBar from './components/NavbarComponent/NavBar';
@@ -40,6 +40,8 @@ import VisitorPaymentSuccess from './components/PaymentSuccessComponent/VisitorP
 import CookiesPolicy from './staticPages/CookiePolicyComponent/CookiesPolicy';
 import OnYourBehalf from './components/OnYourBehalfComponent/Concierge';
 import OnYourBehalfTerms from './staticPages/OnYourBehalfTermsComponent/ConciergeTerms';
+import MigrationLandingPage from './components/MigrationLandingPage/MigrationLandingPage';
+import MigrationWizard, { MigrationConfirmationPage } from './components/MigrationWizard/MigrationWizard';
 // import useHotjar from './hooks/useHotJar'
 
 function App() {
@@ -48,6 +50,8 @@ function App() {
   const [userToken, setUserToken] = useState("");
   const storageKey = secure.storageKey;
   const storagePrefix = secure.storagePrefix;
+  const location = useLocation();
+  const isMigrationPage = location.pathname === '/reloved-to-taggy' || location.pathname.startsWith('/migration');
 
   useEffect(() => {
     const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
@@ -122,19 +126,20 @@ function App() {
 
     setIsLoggedIn(false);
 
-    location.replace('/login');
+    window.location.replace('/login');
   };
 
   // useHotjar();
 
   return (
     <>
-      <NavBar
+      {!isMigrationPage && <NavBar
         parentIsLoggedIn={isLoggedIn}
         refreshParent={handleClickLogout}
-      />
+      />}
       <Routes>
         <Route path="/" element={<NewHomepage parentIsLoggedIn={isLoggedIn} userData={userData} userToken={userToken} refreshParent={handleClick}/>} />
+        <Route path="/reloved-to-taggy" element={<MigrationLandingPage parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/on-your-behalf" element={<OnYourBehalf userToken={userToken} />} />
         <Route path="/product-details/:productUuid" element={<ProductDetails userToken={userToken} />} />
         <Route path="/my-product-details" element={<MyProductDetails userToken={userToken} />} />
@@ -159,6 +164,15 @@ function App() {
         <Route path="/buyer-and-seller-terms" element={<BuyerAndSellerTerms parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/on-your-behalf-terms" element={<OnYourBehalfTerms parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/my-profile" element={<MyProfile userToken={userToken} userData={userData} />} />
+
+        <Route
+          path="/migration"
+          element={isLoggedIn ? <MigrationWizard userToken={userToken} /> : <Navigate to={`/login?redirect=${encodeURIComponent('/migration')}`} replace />}
+        />
+        <Route
+          path="/migration/confirmation"
+          element={isLoggedIn ? <MigrationConfirmationPage userToken={userToken} /> : <Navigate to={`/login?redirect=${encodeURIComponent('/migration/confirmation')}`} replace />}
+        />
 
         <Route
           path="/add-product"
@@ -251,7 +265,7 @@ function App() {
         />
 
       </Routes>
-      <Footer />
+      {!isMigrationPage && <Footer />}
     </>
   );
 }
