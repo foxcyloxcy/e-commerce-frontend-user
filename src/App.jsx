@@ -52,6 +52,8 @@ function App() {
   const storagePrefix = secure.storagePrefix;
   const location = useLocation();
   const isMigrationPage = location.pathname === '/' || location.pathname === '/reloved-to-taggy' || location.pathname.startsWith('/migration');
+  const loginRedirect = new URLSearchParams(location.search).get('redirect');
+  const safeLoginRedirect = ['/migration', '/migration/confirmation'].includes(loginRedirect) ? loginRedirect : '';
 
   useEffect(() => {
     const storedIsLoggedIn = secureLocalStorage.getItem(`${storagePrefix}_isLoggedIn`, {
@@ -249,9 +251,9 @@ function App() {
         <Route
           path="/login"
           element={
-            <PublicRoute isLoggedIn={isLoggedIn}>
-              <Login refreshParent={handleClick} />
-            </PublicRoute>
+            isLoggedIn
+              ? <Navigate to={safeLoginRedirect || '/'} replace />
+              : <Login refreshParent={handleClick} />
           }
         />
 

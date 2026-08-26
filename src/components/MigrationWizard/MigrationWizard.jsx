@@ -11,7 +11,8 @@ const DECISIONS = {
   DELETE: 'DELETE_REQUESTED',
 };
 
-const taggyUrl = import.meta.env.VITE_TAGGY_URL || 'https://taggy.com';
+const taggyUrl = import.meta.env.VITE_TAGGY_URL || 'https://taggy.ae';
+const relovedWordmark = 'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png';
 
 const emptyProfile = {
   first_name: '', last_name: '', email: '', mobile_number: '', address: '', gender: 0, date_of_birth: '', member_since: '',
@@ -137,53 +138,49 @@ export default function MigrationWizard({ userToken }) {
   const canOpenTerms = decision === DECISIONS.ACCOUNT_ITEMS || decision === DECISIONS.ACCOUNT_ONLY;
   const canSubmit = decision && acknowledged && !(decision === DECISIONS.ACCOUNT_ITEMS && selectedEligibleItems.length === 0);
 
-  if (loading) return <MigrationShell><div className="migration-card">Loading your Reloved migration review...</div></MigrationShell>;
+  if (loading) return <MigrationShell step={step} title="Your details"><div className="migration-card">Loading your Reloved migration review...</div></MigrationShell>;
 
   return (
-    <MigrationShell>
+    <MigrationShell step={step} title={step === 1 ? 'Your details' : step === 2 ? 'Your listings' : 'Move to Taggy'}>
       <section className="migration-card migration-wizard-card">
-        <div className="migration-card-header">
-          <img src="/reloved_icon.png" alt="Reloved" className="migration-logo" />
-          <StepIndicator step={step} />
-        </div>
         {error && <div className="migration-error" role="alert">{error}</div>}
         {migrationCase?.response_deadline && <p className="migration-deadline">Response deadline: {formatDate(migrationCase.response_deadline)}</p>}
 
         {step === 1 && (
           <>
-            <h1>Step 1 of 3 — Your details</h1>
-            <p className="migration-muted">Review and update the profile information you want prepared for Taggy. Your original Reloved account record will not be changed by this step.</p>
+            <CardTitle title="Your profile details" step={step} />
             <div className="migration-form-grid">
               <Field label="First name" value={profile.first_name} onChange={(v) => setProfile({ ...profile, first_name: v })} required />
               <Field label="Last name" value={profile.last_name} onChange={(v) => setProfile({ ...profile, last_name: v })} required />
               <Field label="Email address" type="email" value={profile.email} onChange={(v) => setProfile({ ...profile, email: v })} required />
-              <Field label="Phone number" value={profile.mobile_number} onChange={(v) => setProfile({ ...profile, mobile_number: v })} />
+              <label className="migration-field"><span>Address</span><textarea value={profile.address || ''} onChange={(e) => setProfile({ ...profile, address: e.target.value })} /></label>
               <Field label="Date of birth" type="date" value={profile.date_of_birth || ''} onChange={(v) => setProfile({ ...profile, date_of_birth: v })} />
+              <Field label="Phone number" value={profile.mobile_number} onChange={(v) => setProfile({ ...profile, mobile_number: v })} />
               <Field label="Member since" value={formatDate(profile.member_since)} readOnly />
-              <label className="migration-field migration-field-wide"><span>Address</span><textarea value={profile.address || ''} onChange={(e) => setProfile({ ...profile, address: e.target.value })} /></label>
             </div>
-            <div className="migration-actions migration-actions-end"><button className="migration-primary" type="button" onClick={saveProfileAndNext} disabled={saving}>{saving ? 'Saving...' : 'Next'}</button></div>
+            <p className="migration-helper">These details are saved as your Taggy migration draft only. Your Reloved profile is not changed.</p>
+            <div className="migration-card-footer"><button className="migration-primary" type="button" onClick={saveProfileAndNext} disabled={saving}>{saving ? 'Saving...' : 'Next'}</button></div>
           </>
         )}
 
         {step === 2 && (
           <>
-            <h1>Step 2 of 3 — Your listings</h1>
+            <CardTitle title="Your current items" step={step} />
             <p className="migration-muted">Only Taggy-supported fashion listings can be transferred. Unsupported listings are shown but cannot be selected.</p>
             <label className="migration-select-all">
               <input ref={selectAllRef} type="checkbox" checked={allEligibleSelected} onChange={(e) => setAllEligible(e.target.checked)} disabled={eligibleItems.length === 0} />
-              <span>Select all eligible listings</span>
+              <span>Select all items</span>
             </label>
             <div className="migration-listings" aria-label="Your Reloved listings">
               {items.length ? items.map((item) => <ListingRow key={item.source_item_id} item={item} onChange={setItemSelected} />) : <div className="migration-empty">No listings were found for your account.</div>}
             </div>
-            <div className="migration-actions"><button className="migration-secondary" type="button" onClick={() => setStep(1)}>Previous</button><button className="migration-primary" type="button" onClick={saveItemsAndNext} disabled={saving}>{saving ? 'Saving...' : 'Next'}</button></div>
+            <div className="migration-card-footer migration-card-footer-split"><button className="migration-secondary" type="button" onClick={() => setStep(1)}>Previous</button><button className="migration-primary" type="button" onClick={saveItemsAndNext} disabled={saving}>{saving ? 'Saving...' : 'Next'}</button></div>
           </>
         )}
 
         {step === 3 && (
           <>
-            <h1>Step 3 of 3 — Move to Taggy</h1>
+            <CardTitle title="Migration preference" step={step} />
             <p className="migration-muted">Choose one preference. No consent is recorded until you complete the required confirmation and the server saves your decision.</p>
             <div className="migration-options">
               <Choice checked={decision === DECISIONS.ACCOUNT_ITEMS} disabled={selectedEligibleItems.length === 0} onChange={() => chooseDecision(DECISIONS.ACCOUNT_ITEMS)} title="I agree to migrate my profile details and selected eligible listings to Taggy" text={`${selectedEligibleItems.length} eligible listing(s) currently selected.`} />
@@ -198,7 +195,7 @@ export default function MigrationWizard({ userToken }) {
             {decision && !acknowledged && <div className="migration-warning">Please review and acknowledge the required confirmation before submitting.</div>}
             {acknowledged && <div className="migration-ok">Required confirmation acknowledged.</div>}
 
-            <div className="migration-actions"><button className="migration-secondary" type="button" onClick={() => setStep(2)}>Previous</button><button className="migration-primary" type="button" onClick={submitDecision} disabled={!canSubmit || saving}>{saving ? 'Saving...' : 'Confirm Preference'}</button></div>
+            <div className="migration-card-footer migration-card-footer-split"><button className="migration-secondary" type="button" onClick={() => setStep(2)}>Previous</button><button className="migration-primary" type="button" onClick={submitDecision} disabled={!canSubmit || saving}>{saving ? 'Saving...' : 'Confirm Preference'}</button></div>
           </>
         )}
       </section>
@@ -224,7 +221,6 @@ export function MigrationConfirmationPage({ userToken }) {
   return (
     <MigrationShell>
       <section className="migration-card migration-confirmation-card">
-        <img src="/reloved_icon.png" alt="Reloved" className="migration-logo" />
         {error && <><h1>Your migration preference is not complete</h1><p>{error}</p></>}
         {!error && !data && <p>Loading confirmation...</p>}
         {data && <ConfirmationCopy data={data} />}
@@ -242,12 +238,13 @@ function ConfirmationCopy({ data }) {
   return <><h1>Your preference has been saved</h1><p>You have chosen not to migrate your Reloved account or listings to Taggy.</p><p>Nothing will be transferred to Taggy. Your existing Reloved information will continue to be handled in accordance with the applicable Reloved privacy and data-retention policy.</p><p>Thank you for taking the time to confirm your preference.</p></>;
 }
 
-function MigrationShell({ children }) { return <main className="migration-page">{children}</main>; }
+function MigrationShell({ children, step, title }) { return <main className="migration-page"><img src={relovedWordmark} alt="Reloved" className="migration-wordmark" />{step && title && <h1 className="migration-page-title">Step {step} of 3 — {title}</h1>}{children}</main>; }
 
+function CardTitle({ title, step }) { return <div className="migration-card-title"><div><h2>{title}</h2><StepIndicator step={step} /></div><span>Step {step}/3</span></div>; }
 function StepIndicator({ step }) { return <div className="migration-steps" aria-label={`Step ${step} of 3`}>{[1,2,3].map((s) => <span key={s} className={s <= step ? 'active' : ''} />)}</div>; }
 function Field({ label, value, onChange, type = 'text', readOnly = false, required = false }) { return <label className="migration-field"><span>{label}</span><input type={type} value={value || ''} readOnly={readOnly} required={required} onChange={(e) => onChange?.(e.target.value)} /></label>; }
 function Choice({ checked, onChange, title, text, disabled }) { return <label className={`migration-choice ${checked ? 'selected' : ''} ${disabled ? 'disabled' : ''}`}><input type="radio" name="migration-decision" checked={checked} onChange={onChange} disabled={disabled} /><span><strong>{title}</strong><small>{text}</small></span></label>; }
-function ListingRow({ item, onChange }) { return <label className={`migration-listing ${!item.eligible ? 'unsupported' : ''}`}><input type="checkbox" checked={!!item.selected && item.eligible} disabled={!item.eligible} onChange={(e) => onChange(item.source_item_id, e.target.checked)} /><img src={item.thumbnail_url || '/reloved_icon.png'} alt="" /><span className="listing-main"><strong>{item.item_name}</strong><small>{[item.size, item.condition].filter(Boolean).join(' · ') || 'Details saved from Reloved'}</small>{!item.eligible && <em>Not eligible for Taggy</em>}</span><span className="listing-side"><strong>AED {item.price}</strong><small className={item.active ? 'active' : ''}>{item.active ? 'Active' : item.status_name}</small></span></label>; }
+function ListingRow({ item, onChange }) { return <label className={`migration-listing ${!item.eligible ? 'unsupported' : ''}`}><input type="checkbox" checked={!!item.selected && item.eligible} disabled={!item.eligible} onChange={(e) => onChange(item.source_item_id, e.target.checked)} /><img src={item.thumbnail_url || '/reloved_icon.png'} alt="" /><span className="listing-main"><strong>{item.item_name}</strong><small>{[item.size, item.condition].filter(Boolean).join(' / ') || 'Details saved from Reloved'}</small><small>AED {item.price}</small><small>AED {item.price} incl.</small>{!item.eligible && <em>Not eligible for Taggy</em>}</span><span className="listing-side"><small className={item.active ? 'active' : ''}>{item.active ? 'Active listing' : item.status_name}</small></span></label>; }
 
 function TermsModal({ decision, consent, selectedCount, onClose, onAccept }) { return <Modal title="Migration terms & data confirmation" onClose={onClose} onAccept={onAccept}><p>{consent?.content}</p><ul><li>Your reviewed migration profile will be provided to Taggy.</li><li>{decision === DECISIONS.ACCOUNT_ITEMS ? `${selectedCount} selected eligible listing(s) will be prepared for transfer.` : 'Your listings will not be transferred.'}</li><li>Taggy is a separate live marketplace and additional account setup or verification may be required.</li><li>You confirm the information you reviewed is accurate.</li></ul></Modal>; }
 function DeclineModal({ decision, consent, onClose, onAccept }) { const deleting = decision === DECISIONS.DELETE; return <Modal title={deleting ? 'Confirm deletion request' : 'Confirm no migration'} onClose={onClose} onAccept={onAccept}><p>{consent?.content}</p><p>{deleting ? 'Nothing will transfer to Taggy. A deletion request will be recorded; legal, regulatory and backup retention requirements may still apply.' : 'Nothing from your Reloved account or listings will be transferred to Taggy. This is different from requesting deletion.'}</p></Modal>; }

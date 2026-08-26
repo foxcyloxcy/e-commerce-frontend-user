@@ -23,6 +23,8 @@ export default function Login({ refreshParent }) {
   const storagePrefix = secure.storagePrefix;
   const history = useNavigate();
   const [searchParams] = useSearchParams();
+  const requestedRedirect = searchParams.get('redirect');
+  const safeRedirect = ['/migration', '/migration/confirmation'].includes(requestedRedirect) ? requestedRedirect : '/';
   const [formValues, setFormValues] = useState({ email: '', password: '' });
   const [formErrors, setFormErrors] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
@@ -77,7 +79,7 @@ export default function Login({ refreshParent }) {
             });
   
             refreshParent();
-            history(searchParams.get('redirect') || "/");
+            history(safeRedirect);
 
           }else{
             Swal.fire({

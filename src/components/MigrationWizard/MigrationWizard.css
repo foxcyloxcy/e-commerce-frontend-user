@@ -1,58 +1,416 @@
-.migration-page { min-height: 100vh; background: #eff9ff; padding: 46px 18px 72px; color: #111; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-.migration-card { width: min(100%, 820px); margin: 0 auto; background: #fff; border: 1px solid #dce9f1; border-radius: 28px; padding: 34px; box-shadow: 0 18px 50px rgba(15, 23, 42, .06); }
-.migration-card-header { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 22px; }
-.migration-logo { width: 70px; height: 70px; object-fit: contain; display: block; margin: 0 auto 16px; }
-.migration-card-header .migration-logo { margin: 0; }
-.migration-steps { display: flex; gap: 8px; }
-.migration-steps span { width: 42px; height: 5px; border-radius: 999px; background: #d8e5ed; }
-.migration-steps span.active { background: #111; }
-.migration-card h1 { margin: 0 0 10px; font-size: clamp(25px, 4vw, 38px); line-height: 1.12; }
-.migration-card h2 { font-size: 20px; margin: 0 0 16px; }
-.migration-muted, .migration-deadline, .migration-card p { color: #536570; line-height: 1.6; }
-.migration-deadline { font-size: 13px; margin-top: -8px; }
-.migration-error, .migration-warning, .migration-ok { border-radius: 14px; padding: 12px 14px; margin: 14px 0; font-size: 14px; }
+.migration-page {
+  min-height: 100vh;
+  background: #eff9ff;
+  padding: 34px 16px 54px;
+  color: #111;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.migration-wordmark {
+  width: 156px;
+  height: auto;
+  display: block;
+  margin: 0 auto 28px;
+}
+
+.migration-page-title {
+  margin: 0 auto 24px;
+  text-align: center;
+  font-size: clamp(24px, 3vw, 34px);
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+.migration-card {
+  width: min(100%, 465px);
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #d9e7ef;
+  border-radius: 18px;
+  box-shadow: 0 12px 35px rgba(32, 74, 96, .08);
+  overflow: hidden;
+}
+
+.migration-wizard-card {
+  padding: 0;
+}
+
+.migration-card-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px 26px 14px;
+  border-bottom: 1px solid #e5eef4;
+}
+
+.migration-card-title h2 {
+  margin: 0 0 12px;
+  font-size: 22px;
+  line-height: 1.05;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.migration-card-title > span {
+  color: #607480;
+  font-size: 12px;
+  white-space: nowrap;
+  padding-top: 2px;
+}
+
+.migration-steps {
+  display: flex;
+  width: 168px;
+  height: 4px;
+  border-radius: 999px;
+  background: #d7e8f2;
+  overflow: hidden;
+}
+
+.migration-steps span {
+  flex: 1;
+  background: transparent;
+}
+
+.migration-steps span.active {
+  background: #78b8d7;
+}
+
+.migration-error,
+.migration-warning,
+.migration-ok,
+.migration-deadline,
+.migration-muted,
+.migration-helper {
+  margin-left: 26px;
+  margin-right: 26px;
+}
+
+.migration-muted,
+.migration-deadline,
+.migration-helper,
+.migration-card p {
+  color: #526672;
+  line-height: 1.48;
+  font-size: 13px;
+}
+
+.migration-deadline {
+  margin-top: 18px;
+}
+
+.migration-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  padding: 22px 26px 14px;
+}
+
+.migration-field {
+  display: grid;
+  gap: 6px;
+  color: #111;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.migration-field input,
+.migration-field textarea {
+  width: 100%;
+  border: 1px solid #d9e4eb;
+  border-radius: 9px;
+  min-height: 42px;
+  padding: 9px 12px;
+  background: #fff;
+  color: #111;
+  font: inherit;
+  font-weight: 400;
+}
+
+.migration-field textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+.migration-field input[readonly] {
+  background: #f7fbfd;
+  color: #687985;
+}
+
+.migration-field input:focus,
+.migration-field textarea:focus {
+  outline: 3px solid rgba(120, 184, 215, .22);
+  border-color: #78b8d7;
+}
+
+.migration-helper {
+  margin-top: 6px;
+  margin-bottom: 20px;
+}
+
+.migration-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  padding: 18px 26px 24px;
+  border-top: 1px solid #e5eef4;
+}
+
+.migration-card-footer-split {
+  justify-content: space-between;
+}
+
+.migration-primary,
+.migration-secondary,
+.migration-link-button {
+  min-height: 42px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.migration-card-footer .migration-primary {
+  min-width: 138px;
+}
+
+.migration-primary {
+  background: #111;
+  color: #fff;
+  border: 1px solid #111;
+}
+
+.migration-secondary {
+  background: #fff;
+  color: #111;
+  border: 1px solid #cbdce5;
+}
+
+.migration-primary:disabled,
+.migration-secondary:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.migration-error,
+.migration-warning,
+.migration-ok {
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-top: 14px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
 .migration-error { background: #fff1f2; color: #9f1239; border: 1px solid #fecdd3; }
 .migration-warning { background: #fff7ed; color: #9a3412; border: 1px solid #fed7aa; }
 .migration-ok { background: #ecfdf5; color: #065f46; border: 1px solid #bbf7d0; }
-.migration-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 26px; }
-.migration-field { display: grid; gap: 7px; font-size: 13px; font-weight: 700; color: #4b5d68; }
-.migration-field-wide { grid-column: 1 / -1; }
-.migration-field input, .migration-field textarea { width: 100%; border: 1px solid #d6e1e8; border-radius: 14px; padding: 13px 14px; font: inherit; color: #111; font-weight: 500; background: #fff; }
-.migration-field textarea { min-height: 92px; resize: vertical; }
-.migration-field input[readonly] { background: #f7fafc; color: #64748b; }
-.migration-field input:focus, .migration-field textarea:focus { outline: 3px solid rgba(14, 165, 233, .13); border-color: #8ac3de; }
-.migration-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 26px; }
-.migration-actions-end { justify-content: flex-end; }
-.migration-primary, .migration-secondary, .migration-link-button { border-radius: 999px; min-height: 46px; padding: 11px 22px; font-weight: 800; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
-.migration-primary { background: #111; color: #fff; border: 1px solid #111; }
-.migration-secondary { background: #fff; color: #111; border: 1px solid #cad7df; }
-.migration-primary:disabled, .migration-secondary:disabled { opacity: .45; cursor: not-allowed; }
-.migration-link-button { background: transparent; border: 0; color: #111; text-decoration: underline; padding-left: 0; }
-.migration-select-all { display: flex; align-items: center; gap: 11px; border: 1px solid #dce7ee; border-radius: 16px; padding: 14px; margin: 20px 0 12px; font-weight: 800; }
-.migration-listings { max-height: 430px; overflow: auto; display: grid; gap: 10px; padding-right: 4px; }
-.migration-listing { display: grid; grid-template-columns: auto 66px minmax(0, 1fr) auto; align-items: center; gap: 14px; border: 1px solid #dce7ee; border-radius: 18px; padding: 12px; background: #fff; }
-.migration-listing.unsupported { background: #f8fafc; opacity: .72; }
-.migration-listing input[type='checkbox'], .migration-select-all input, .migration-choice input, .migration-ack input { width: 20px; height: 20px; accent-color: #111; }
-.migration-listing img { width: 66px; height: 66px; object-fit: cover; border-radius: 14px; background: #edf4f8; }
-.listing-main { min-width: 0; display: grid; gap: 4px; }
-.listing-main strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.listing-main small, .listing-side small { color: #647985; }
-.listing-main em { color: #9a3412; font-size: 12px; font-style: normal; font-weight: 800; }
-.listing-side { text-align: right; display: grid; gap: 6px; }
-.listing-side small.active { color: #047857; font-weight: 800; }
-.migration-empty { border: 1px dashed #bad0dc; border-radius: 16px; padding: 26px; text-align: center; color: #647985; }
-.migration-options { display: grid; gap: 12px; margin-top: 22px; }
-.migration-choice { display: flex; align-items: flex-start; gap: 12px; border: 1px solid #dce7ee; border-radius: 18px; padding: 16px; cursor: pointer; }
-.migration-choice.selected { border-color: #111; box-shadow: inset 0 0 0 1px #111; }
-.migration-choice.disabled { opacity: .45; cursor: not-allowed; background: #f8fafc; }
-.migration-choice span { display: grid; gap: 5px; }
-.migration-choice small { color: #647985; line-height: 1.5; }
-.migration-modal-backdrop { position: fixed; inset: 0; background: rgba(15, 23, 42, .48); display: grid; place-items: center; padding: 18px; z-index: 2000; }
-.migration-modal { width: min(100%, 620px); max-height: 86vh; overflow: auto; background: #fff; border-radius: 24px; padding: 28px; box-shadow: 0 25px 80px rgba(0,0,0,.22); }
-.migration-modal ul { color: #536570; line-height: 1.65; }
-.migration-ack { display: flex; align-items: flex-start; gap: 10px; border: 1px solid #dce7ee; border-radius: 14px; padding: 13px; margin-top: 18px; font-weight: 700; }
-.migration-confirmation-card { width: min(100%, 560px); text-align: center; padding: 42px 34px; }
-.migration-confirmation-card h1 { margin-bottom: 12px; }
+
+.migration-select-all {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 26px 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.migration-listing input[type='checkbox'],
+.migration-select-all input,
+.migration-choice input,
+.migration-ack input {
+  width: 18px;
+  height: 18px;
+  accent-color: #78b8d7;
+  flex: 0 0 auto;
+}
+
+.migration-listings {
+  max-height: 430px;
+  overflow: auto;
+  display: grid;
+  gap: 10px;
+  padding: 4px 26px 18px;
+}
+
+.migration-listing {
+  display: grid;
+  grid-template-columns: auto 58px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #dce8ef;
+  border-radius: 12px;
+  padding: 10px;
+  background: #fff;
+}
+
+.migration-listing.unsupported {
+  opacity: .58;
+  background: #f7fbfd;
+}
+
+.migration-listing img {
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #edf5f9;
+}
+
+.listing-main {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.listing-main strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.listing-main small,
+.listing-side small {
+  color: #5d707a;
+  font-size: 12px;
+}
+
+.listing-main em {
+  color: #9a3412;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.listing-side {
+  align-self: start;
+  padding-top: 2px;
+}
+
+.listing-side small.active {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 5px 9px;
+  background: #e7f7ee;
+  color: #22804e;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.migration-empty {
+  border: 1px dashed #b9d2df;
+  border-radius: 12px;
+  padding: 22px;
+  text-align: center;
+  color: #647985;
+}
+
+.migration-options {
+  display: grid;
+  gap: 11px;
+  padding: 18px 26px 8px;
+}
+
+.migration-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  border: 1px solid #dce8ef;
+  border-radius: 12px;
+  padding: 13px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.migration-choice.selected {
+  border-color: #78b8d7;
+  background: #f2faff;
+  box-shadow: inset 0 0 0 1px #78b8d7;
+}
+
+.migration-choice.disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  background: #f8fafc;
+}
+
+.migration-choice span { display: grid; gap: 4px; }
+.migration-choice strong { font-size: 14px; font-weight: 600; }
+.migration-choice small { color: #5d707a; line-height: 1.42; font-size: 12px; }
+
+.migration-link-button {
+  margin: 8px 26px 0;
+  border: 0;
+  background: transparent;
+  color: #111;
+  text-decoration: underline;
+  padding-left: 0;
+}
+
+.migration-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, .45);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  z-index: 2000;
+}
+
+.migration-modal {
+  width: min(100%, 560px);
+  max-height: 86vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: 0 25px 80px rgba(0,0,0,.20);
+}
+
+.migration-modal h2 { margin-top: 0; font-weight: 500; }
+.migration-modal p, .migration-modal ul { color: #526672; line-height: 1.55; }
+
+.migration-ack {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  border: 1px solid #dce8ef;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 16px;
+  font-weight: 500;
+}
+
+.migration-confirmation-card {
+  width: min(100%, 465px);
+  text-align: center;
+  padding: 30px 28px;
+}
+
+.migration-confirmation-card h1 { margin: 0 0 12px; font-weight: 500; }
+.migration-confirmation-card h2 { margin: 0 0 16px; font-size: 19px; font-weight: 500; }
 .migration-final-link { margin-top: 18px; }
 
-@media (max-width: 680px) { .migration-page { padding: 22px 12px 46px; } .migration-card { padding: 22px 16px; border-radius: 22px; } .migration-form-grid { grid-template-columns: 1fr; } .migration-card-header { align-items: flex-start; } .migration-steps span { width: 30px; } .migration-listing { grid-template-columns: auto 56px minmax(0, 1fr); } .migration-listing img { width: 56px; height: 56px; } .listing-side { grid-column: 3; text-align: left; display: flex; gap: 10px; } .migration-actions { flex-direction: column-reverse; align-items: stretch; } .migration-primary, .migration-secondary { width: 100%; } }
+@media (max-width: 680px) {
+  .migration-page { padding: 26px 12px 42px; }
+  .migration-wordmark { width: 136px; margin-bottom: 22px; }
+  .migration-card { width: min(100%, 430px); }
+  .migration-card-title, .migration-form-grid, .migration-listings, .migration-options, .migration-card-footer { padding-left: 18px; padding-right: 18px; }
+  .migration-error, .migration-warning, .migration-ok, .migration-deadline, .migration-muted, .migration-helper, .migration-link-button { margin-left: 18px; margin-right: 18px; }
+  .migration-select-all { padding-left: 18px; padding-right: 18px; }
+  .migration-listing { grid-template-columns: auto 52px minmax(0, 1fr); }
+  .migration-listing img { width: 52px; height: 52px; }
+  .listing-side { grid-column: 3; padding-top: 0; }
+  .migration-card-footer { flex-direction: column-reverse; align-items: stretch; }
+  .migration-card-footer .migration-primary, .migration-card-footer .migration-secondary { width: 100%; }
+}
