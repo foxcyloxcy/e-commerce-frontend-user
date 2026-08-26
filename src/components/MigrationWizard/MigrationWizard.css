@@ -66,6 +66,23 @@
   cursor: pointer;
 }
 
+.migration-pref-option > span {
+  display: grid;
+  gap: 5px;
+}
+
+.migration-pref-option strong {
+  font-weight: 600;
+}
+
+.migration-pref-option p {
+  margin: 0;
+  color: #5d707a;
+  font-size: 12px;
+  line-height: 1.42;
+  font-weight: 400;
+}
+
 .migration-pref-option + .migration-pref-option {
   border-top: 1px solid #e5eef4;
 }
@@ -78,8 +95,8 @@
   margin-top: 1px;
 }
 
-.migration-pref-option.selected span {
-  font-weight: 600;
+.migration-pref-option.selected {
+  border-color: #78b8d7;
 }
 
 .migration-decline-copy {
@@ -258,7 +275,8 @@
   justify-content: center;
 }
 
-.migration-card-footer .migration-primary {
+.migration-card-footer .migration-primary,
+.migration-card-footer .migration-secondary {
   min-width: 138px;
 }
 
@@ -396,6 +414,48 @@
   color: #647985;
 }
 
+.migration-final-preferences {
+  display: grid;
+  gap: 10px;
+  padding: 18px 26px 16px;
+}
+
+.migration-final-preferences .migration-pref-option {
+  padding: 13px;
+  border: 1px solid #dce8ef;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.migration-final-preferences .migration-pref-option + .migration-pref-option {
+  border-top: 1px solid #dce8ef;
+}
+
+.migration-final-preferences .migration-pref-option.selected {
+  border-color: #78b8d7;
+  background: #f5fbff;
+  box-shadow: inset 0 0 0 1px #78b8d7;
+}
+
+.migration-selected-count {
+  color: #111 !important;
+  font-weight: 500 !important;
+}
+
+.migration-link-button-inline {
+  margin: 4px 0 0 !important;
+  min-height: auto;
+  padding: 0;
+  justify-self: start;
+  font-size: 12px;
+}
+
+.migration-warning-inline {
+  margin: 4px 0 0 !important;
+  padding: 9px 10px;
+  font-size: 12px;
+}
+
 .migration-review-block {
   margin-top: 18px;
   margin-bottom: 14px;
@@ -506,7 +566,7 @@
   .migration-page { padding: 26px 12px 42px; }
   .migration-wordmark { width: 136px; margin-bottom: 22px; }
   .migration-card { width: min(100%, 430px); }
-  .migration-card-title, .migration-form-grid, .migration-listings, .migration-options, .migration-card-footer { padding-left: 18px; padding-right: 18px; }
+  .migration-card-title, .migration-form-grid, .migration-listings, .migration-options, .migration-final-preferences, .migration-card-footer { padding-left: 18px; padding-right: 18px; }
   .migration-error, .migration-warning, .migration-ok, .migration-deadline, .migration-muted, .migration-helper, .migration-link-button, .migration-review-block { margin-left: 18px; margin-right: 18px; }
   .migration-preference-panel { padding-left: 18px; padding-right: 18px; }
   .migration-select-all { padding-left: 18px; padding-right: 18px; }

@@ -160,11 +160,13 @@ export default function MigrationWizard({ userToken }) {
 
   return (
     <MigrationShell step={step} title={pageTitle}>
-      <PreferencePanel
-        preference={preference}
-        onChange={choosePreference}
-        onDeleteRequest={() => setModal('delete')}
-      />
+      {step < 3 && (
+        <PreferencePanel
+          preference={preference}
+          onChange={choosePreference}
+          onDeleteRequest={() => setModal('delete')}
+        />
+      )}
 
       {error && <div className="migration-error migration-card" role="alert">{error}</div>}
       {migrationCase?.response_deadline && <p className="migration-deadline">Response deadline: {formatDate(migrationCase.response_deadline)}</p>}
@@ -219,35 +221,53 @@ export default function MigrationWizard({ userToken }) {
       )}
 
       {step === 3 && (
-        <section className="migration-card migration-wizard-card">
-          <CardTitle title="Review and confirm" step={step} />
-          {preference === PREFERENCES.AGREE ? (
-            <>
-              <div className="migration-review-block">
-                <h3>Your migration includes:</h3>
-                <p>✓ Your reviewed Reloved account/profile details</p>
-                {selectedEligibleItems.length > 0 ? <p>✓ {selectedEligibleItems.length} selected eligible listing(s)</p> : <p>— No listings selected</p>}
-              </div>
-              <button className="migration-link-button" type="button" onClick={() => setModal('terms')}>View migration terms &amp; data confirmation</button>
-              {!acknowledged && <div className="migration-warning">Please review and acknowledge the migration terms before submitting.</div>}
-              {acknowledged && <div className="migration-ok">Migration terms and data confirmation acknowledged.</div>}
-              <div className="migration-card-footer migration-card-footer-split">
-                <button className="migration-secondary" type="button" onClick={() => setStep(2)}>Previous</button>
-                <button className="migration-primary" type="button" onClick={() => submitDecision(finalAgreeDecision)} disabled={!acknowledged || saving}>{saving ? 'Saving...' : 'Confirm Preference'}</button>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="migration-review-block">
-                <p>Nothing from your Reloved account or listings will be transferred to Taggy.</p>
-                <p>Your existing Reloved information will remain with Reloved and will continue to be handled in accordance with the applicable Reloved privacy and data-retention policy.</p>
-              </div>
-              <div className="migration-card-footer migration-card-footer-split">
-                <button className="migration-secondary" type="button" onClick={() => setStep(1)}>Previous</button>
-                <button className="migration-primary" type="button" onClick={() => setModal('decline')} disabled={preference !== PREFERENCES.DECLINE || saving}>Confirm Preference</button>
-              </div>
-            </>
-          )}
+        <section className="migration-card migration-wizard-card migration-final-card">
+          <CardTitle title="Migration preference" step={step} />
+          <div className="migration-final-preferences">
+            <PreferenceOption
+              checked={preference === PREFERENCES.DECLINE}
+              onChange={() => choosePreference(PREFERENCES.DECLINE)}
+              label="I don't want to migrate my profile details and items to Taggy"
+            >
+              <p>Your Reloved profile and listings will not be transferred to Taggy.</p>
+              {preference === PREFERENCES.DECLINE && (
+                <button type="button" className="migration-delete-link" onClick={(event) => { event.preventDefault(); setModal('delete'); }}>Request deletion of my Reloved data</button>
+              )}
+            </PreferenceOption>
+
+            <PreferenceOption
+              checked={preference === PREFERENCES.AGREE}
+              onChange={() => choosePreference(PREFERENCES.AGREE)}
+              label="I agree to migrate my profile details and selected items to Taggy"
+            >
+              <p>Your profile details and the checked listings above will be included in the migration.</p>
+              {preference === PREFERENCES.AGREE && (
+                <>
+                  <p className="migration-selected-count">
+                    {selectedEligibleItems.length > 0
+                      ? `${selectedEligibleItems.length} eligible listing(s) selected`
+                      : 'No listings selected — only your account/profile will migrate.'}
+                  </p>
+                  <button className="migration-link-button migration-link-button-inline" type="button" onClick={(event) => { event.preventDefault(); setModal('terms'); }}>View migration terms &amp; data confirmation</button>
+                  {!acknowledged && (
+                    <div className="migration-warning migration-warning-inline">
+                      Before you can confirm migration, please open <strong>Migration terms &amp; data confirmation</strong>, review the information, and accept the acknowledgement.
+                    </div>
+                  )}
+                  {acknowledged && <div className="migration-ok migration-warning-inline">Migration terms and data confirmation acknowledged.</div>}
+                </>
+              )}
+            </PreferenceOption>
+          </div>
+
+          <div className="migration-card-footer migration-card-footer-split">
+            <button className="migration-secondary" type="button" onClick={() => setStep(preference === PREFERENCES.DECLINE ? 1 : 2)}>Previous</button>
+            {preference === PREFERENCES.DECLINE ? (
+              <button className="migration-primary" type="button" onClick={() => setModal('decline')} disabled={saving}>Confirm preference</button>
+            ) : (
+              <button className="migration-primary" type="button" onClick={() => submitDecision(finalAgreeDecision)} disabled={preference !== PREFERENCES.AGREE || !acknowledged || saving}>{saving ? 'Saving...' : 'Confirm preference'}</button>
+            )}
+          </div>
         </section>
       )}
 
@@ -318,8 +338,8 @@ function PreferencePanel({ preference, onChange, onDeleteRequest }) {
   );
 }
 
-function PreferenceOption({ checked, onChange, label }) {
-  return <label className={`migration-pref-option ${checked ? 'selected' : ''}`}><input type="checkbox" checked={checked} onChange={onChange} /><span>{label}</span></label>;
+function PreferenceOption({ checked, onChange, label, children }) {
+  return <label className={`migration-pref-option ${checked ? 'selected' : ''}`}><input type="checkbox" checked={checked} onChange={onChange} /><span><strong>{label}</strong>{children}</span></label>;
 }
 
 function CardTitle({ title, step }) {
