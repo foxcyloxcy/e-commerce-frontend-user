@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import api from '../../assets/baseURL/api';
 import './MigrationWizard.css';
 
@@ -226,6 +227,7 @@ export default function MigrationWizard({ userToken }) {
           <div className="migration-final-preferences">
             <PreferenceOption
               checked={preference === PREFERENCES.DECLINE}
+              muted={preference === PREFERENCES.AGREE}
               onChange={() => choosePreference(PREFERENCES.DECLINE)}
               label="I don't want to migrate my profile details and items to Taggy"
             >
@@ -237,6 +239,7 @@ export default function MigrationWizard({ userToken }) {
 
             <PreferenceOption
               checked={preference === PREFERENCES.AGREE}
+              muted={preference === PREFERENCES.DECLINE}
               onChange={() => choosePreference(PREFERENCES.AGREE)}
               label="I agree to migrate my profile details and selected items to Taggy"
             >
@@ -296,18 +299,22 @@ export function MigrationConfirmationPage({ userToken }) {
         {error && <><h1>Your migration preference is not complete</h1><p>{error}</p></>}
         {!error && !data && <p>Loading confirmation...</p>}
         {data && <ConfirmationCopy data={data} />}
-        <a className="migration-primary migration-final-link" href={taggyUrl}>Go to Taggy</a>
+        <a className="migration-primary migration-final-link" href={taggyUrl}>Explore Taggy</a>
       </section>
     </MigrationShell>
   );
 }
 
 function ConfirmationCopy({ data }) {
-  const count = data.selected_item_count || 0;
-  if (data.decision === DECISIONS.ACCOUNT_ITEMS) return <><h1>Thank you</h1><h2>Your migration preference has been confirmed.</h2><p>Your Reloved account details and <strong>{count} selected eligible listing(s)</strong> will be prepared for migration to Taggy.</p><p>Thank you for taking the time to review and confirm your information.</p></>;
-  if (data.decision === DECISIONS.ACCOUNT_ONLY) return <><h1>Thank you</h1><h2>Your migration preference has been confirmed.</h2><p>Your Reloved account details will be prepared for migration to Taggy.</p><p>Your listings will not be transferred.</p></>;
-  if (data.decision === DECISIONS.DELETE) return <><h1>Your request has been saved</h1><p>Nothing will be transferred to Taggy and your deletion request has been recorded.</p></>;
-  return <><h1>Your preference has been saved.</h1><p>Nothing from your Reloved account or listings will be transferred to Taggy.</p></>;
+  if (data.decision === DECISIONS.ACCOUNT_ITEMS || data.decision === DECISIONS.ACCOUNT_ONLY) {
+    return <><div className="migration-confirmation-icon"><MailOutlineIcon fontSize="inherit" /></div><h1>Migration in progress</h1><p>Once your request is completed, we'll notify you at your registered email.</p><p>In the meantime, feel free to explore Taggy.</p></>;
+  }
+
+  if (data.decision === DECISIONS.DELETE) {
+    return <><div className="migration-confirmation-icon"><MailOutlineIcon fontSize="inherit" /></div><h1>Your request has been saved</h1><p>Nothing will be transferred to Taggy and your deletion request has been recorded.</p></>;
+  }
+
+  return <><div className="migration-confirmation-icon"><MailOutlineIcon fontSize="inherit" /></div><h1>Your preference has been saved.</h1><p>Nothing from your Reloved account or listings will be transferred to Taggy.</p></>;
 }
 
 function MigrationShell({ children, step, title }) {
@@ -320,6 +327,7 @@ function PreferencePanel({ preference, onChange, onDeleteRequest }) {
       <h2>Migration preference</h2>
       <PreferenceOption
         checked={preference === PREFERENCES.DECLINE}
+        muted={preference === PREFERENCES.AGREE}
         onChange={() => onChange(PREFERENCES.DECLINE)}
         label="I don't want to migrate my profile details and items to Taggy"
       />
@@ -331,6 +339,7 @@ function PreferencePanel({ preference, onChange, onDeleteRequest }) {
       )}
       <PreferenceOption
         checked={preference === PREFERENCES.AGREE}
+        muted={preference === PREFERENCES.DECLINE}
         onChange={() => onChange(PREFERENCES.AGREE)}
         label="I agree to migrate my profile details and selected items to Taggy"
       />
@@ -338,8 +347,8 @@ function PreferencePanel({ preference, onChange, onDeleteRequest }) {
   );
 }
 
-function PreferenceOption({ checked, onChange, label, children }) {
-  return <label className={`migration-pref-option ${checked ? 'selected' : ''}`}><input type="checkbox" checked={checked} onChange={onChange} /><span><strong>{label}</strong>{children}</span></label>;
+function PreferenceOption({ checked, muted, onChange, label, children }) {
+  return <label className={`migration-pref-option ${checked ? 'selected' : ''} ${muted ? 'muted' : ''}`}><input type="checkbox" checked={checked} onChange={onChange} /><span><strong>{label}</strong>{children}</span></label>;
 }
 
 function CardTitle({ title, step }) {
