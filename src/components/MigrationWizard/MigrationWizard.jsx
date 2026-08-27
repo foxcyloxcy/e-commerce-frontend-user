@@ -2,8 +2,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import { Document, Page, pdfjs } from 'react-pdf';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
 import api from '../../assets/baseURL/api';
 import './MigrationWizard.css';
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
 
 const DECISIONS = {
   ACCOUNT_ITEMS: 'CONSENT_ACCOUNT_AND_ITEMS',
@@ -354,9 +359,21 @@ function ListingRow({ item, onChange }) {
 }
 
 function TermsModal({ selectedCount, onClose, onAccept }) {
-  const summary = selectedCount > 0
-    ? `Your reviewed Reloved account details and ${selectedCount} selected eligible listing(s) will be included in this migration request.`
-    : 'Your reviewed Reloved account details will be included in this migration request. No listings are currently selected.';
+  const viewerRef = useRef(null);
+  const [numPages, setNumPages] = useState(0);
+  const [pageWidth, setPageWidth] = useState(0);
+  const [pdfError, setPdfError] = useState(false);
+
+  useEffect(() => {
+    const viewer = viewerRef.current;
+    if (!viewer) return undefined;
+
+    const updateWidth = () => setPageWidth(Math.max(0, viewer.clientWidth - (window.innerWidth <= 680 ? 20 : 40)));
+    updateWidth();
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(viewer);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <Modal
@@ -366,11 +383,31 @@ function TermsModal({ selectedCount, onClose, onAccept }) {
       onClose={onClose}
       onAccept={onAccept}
     >
-      <p className="migration-terms-summary">{summary}</p>
-      <div className="migration-pdf-viewer">
-        <iframe src={migrationTermsUrl} title="Reloved to Taggy Migration Terms and Conditions" />
+      <div className="migration-terms-summary" aria-label="Your migration includes">
+        <strong>Your migration includes:</strong>
+        <span>✓ Your reviewed Reloved account/profile details</span>
+        <span>{selectedCount > 0 ? `✓ ${selectedCount} selected eligible listing${selectedCount === 1 ? '' : 's'}` : '— No listings selected'}</span>
       </div>
-      <a className="migration-pdf-link" href={migrationTermsUrl} target="_blank" rel="noreferrer">Open full Migration Terms</a>
+      <div ref={viewerRef} className="migration-pdf-viewer" aria-label="Reloved to Taggy Migration Terms document">
+        <Document
+          file={migrationTermsUrl}
+          loading={<p className="migration-pdf-status">Loading Migration Terms…</p>}
+          error={<p className="migration-pdf-status migration-pdf-error">The embedded document could not be displayed on this device.</p>}
+          onLoadSuccess={({ numPages: loadedPages }) => { setNumPages(loadedPages); setPdfError(false); }}
+          onLoadError={() => setPdfError(true)}
+        >
+          {pageWidth > 0 && Array.from({ length: numPages }, (_, index) => (
+            <Page
+              key={`migration-terms-page-${index + 1}`}
+              pageNumber={index + 1}
+              width={pageWidth}
+              devicePixelRatio={Math.min(window.devicePixelRatio || 1, 1.5)}
+              loading={<p className="migration-pdf-status">Loading page {index + 1}…</p>}
+            />
+          ))}
+        </Document>
+      </div>
+      <a className="migration-pdf-link" href={migrationTermsUrl} target="_blank" rel="noreferrer">{pdfError ? 'Open PDF separately' : 'Having trouble? Open PDF separately'}</a>
     </Modal>
   );
 }
@@ -390,6 +427,8 @@ function Modal({ title, children, onClose, onAccept, acknowledgementLabel = 'I h
 
   useEffect(() => {
     const dialog = dialogRef.current;
+    const previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     dialog?.focus();
 
     const handler = (event) => {
@@ -422,11 +461,12 @@ function Modal({ title, children, onClose, onAccept, acknowledgementLabel = 'I h
     window.addEventListener('keydown', handler);
     return () => {
       window.removeEventListener('keydown', handler);
+      document.body.style.overflow = previousBodyOverflow;
       returnFocusRef.current?.focus?.();
     };
   }, [onClose]);
 
-  return <div className="migration-modal-backdrop" onClick={onClose}><section ref={dialogRef} className={`migration-modal ${className}`} role="dialog" aria-modal="true" aria-labelledby="migration-modal-title" tabIndex="-1" onClick={(e) => e.stopPropagation()}><h2 id="migration-modal-title">{title}</h2>{children}<label className="migration-ack"><input type="checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)} /> <span>{acknowledgementLabel}</span></label><div className="migration-actions"><button className="migration-secondary" type="button" onClick={onClose}>Close</button><button className="migration-primary" type="button" disabled={!checked} onClick={onAccept}>Accept & continue</button></div></section></div>;
+  return <div className="migration-modal-backdrop" onClick={onClose}><section ref={dialogRef} className={`migration-modal ${className}`} role="dialog" aria-modal="true" aria-labelledby="migration-modal-title" tabIndex="-1" onClick={(e) => e.stopPropagation()}><header className="migration-modal-header"><h2 id="migration-modal-title">{title}</h2><button className="migration-modal-close" type="button" aria-label="Close dialog" onClick={onClose}>×</button></header>{children}<label className="migration-ack"><input type="checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)} /> <span>{acknowledgementLabel}</span></label><div className="migration-actions"><button className="migration-secondary" type="button" onClick={onClose}>Close</button><button className="migration-primary" type="button" disabled={!checked} onClick={onAccept}>Accept & continue</button></div></section></div>;
 }
 
 function renderApiError(err) {

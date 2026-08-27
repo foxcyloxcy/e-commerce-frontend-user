@@ -238,25 +238,43 @@
 .migration-modal-backdrop { position: fixed; inset: 0; background: rgba(37, 87, 115, .45); display: grid; place-items: center; padding: 18px; z-index: 2000; }
 .migration-modal { width: min(100%, 560px); max-height: 86vh; overflow: auto; background: #FFFFFF; border-radius: 18px; padding: 26px; box-shadow: 0 25px 80px rgba(37,87,115,.20); }
 .migration-modal:focus { outline: 3px solid rgba(94, 151, 195, .35); outline-offset: 2px; }
-.migration-modal h2 { margin-top: 0; color: #255773; font-family: 'Playfair Display', serif; font-weight: 500; }
+.migration-modal-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.migration-modal h2 { margin: 0; color: #255773; font-family: 'Playfair Display', serif; font-weight: 500; }
+.migration-modal-close { width: 34px; height: 34px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid #B8D4E6; border-radius: 50%; background: #FFFFFF; color: #255773; font: 400 25px/1 Poppins, sans-serif; cursor: pointer; }
+.migration-modal-close:hover { background: #E3F2F7; }
+.migration-modal-close:focus-visible { outline: 3px solid rgba(94, 151, 195, .35); }
 .migration-modal p, .migration-modal ul { color: #606060; line-height: 1.55; }
 .migration-ack { display: flex; align-items: flex-start; gap: 10px; border: 1px solid #B8D4E6; border-radius: 12px; padding: 12px; margin-top: 16px; font-weight: 500; color: #255773; }
 .migration-ack span { font-size: 13px; line-height: 1.45; }
 .migration-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px; }
 
 .migration-terms-modal {
-  width: min(100%, 820px);
-  height: min(760px, 88vh);
-  max-height: 88vh;
+  width: min(1100px, 94vw);
+  height: 92vh;
+  max-height: 92vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
-.migration-terms-modal h2 { flex: 0 0 auto; margin-bottom: 10px; }
-.migration-terms-summary { flex: 0 0 auto; margin: 0 0 12px; font-size: 13px; }
-.migration-pdf-viewer { flex: 1 1 auto; min-height: 250px; overflow: hidden; border: 1px solid #B8D4E6; background: #F5F5F2; }
-.migration-pdf-viewer iframe { display: block; width: 100%; height: 100%; border: 0; }
-.migration-pdf-link { flex: 0 0 auto; align-self: flex-start; margin-top: 8px; color: #255773; font-size: 13px; font-weight: 600; text-decoration: underline; }
+.migration-terms-modal .migration-modal-header { flex: 0 0 auto; margin-bottom: 10px; }
+.migration-terms-summary { flex: 0 0 auto; display: grid; gap: 4px; margin: 0 0 12px; color: #606060; font-size: 13px; line-height: 1.45; }
+.migration-terms-summary strong { color: #255773; font-weight: 600; }
+.migration-pdf-viewer {
+  flex: 1 1 auto;
+  min-height: 260px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 20px;
+  border: 1px solid #B8D4E6;
+  background: #EAEAE7;
+}
+.migration-pdf-viewer .react-pdf__Document { display: grid; justify-items: center; gap: 18px; }
+.migration-pdf-viewer .react-pdf__Page { max-width: 100%; background: #FFFFFF; box-shadow: 0 3px 14px rgba(37, 87, 115, .14); }
+.migration-pdf-viewer .react-pdf__Page canvas { display: block; max-width: 100%; height: auto !important; }
+.migration-pdf-status { margin: 30px 16px !important; text-align: center; color: #606060; }
+.migration-pdf-error { color: #9f1239 !important; }
+.migration-pdf-link { flex: 0 0 auto; align-self: flex-start; margin-top: 7px; color: #255773; font-size: 12px; font-weight: 500; text-decoration: underline; }
 .migration-terms-modal .migration-ack,
 .migration-terms-modal .migration-actions { flex: 0 0 auto; }
 
@@ -279,9 +297,11 @@
   .listing-side { grid-column: 3; padding-top: 0; }
   .migration-card-footer { flex-direction: column-reverse; align-items: stretch; }
   .migration-card-footer .migration-primary, .migration-card-footer .migration-secondary { width: 100%; }
-  .migration-modal-backdrop { padding: 10px; }
-  .migration-terms-modal { height: 88vh; padding: 18px; }
-  .migration-pdf-viewer { min-height: 220px; }
+  .migration-modal-backdrop { padding: 8px; }
+  .migration-terms-modal { width: calc(100vw - 16px); height: 92vh; max-height: 92vh; padding: 16px; }
+  .migration-terms-modal h2 { font-size: 21px; }
+  .migration-pdf-viewer { min-height: 220px; padding: 10px; }
+  .migration-pdf-viewer .react-pdf__Document { gap: 10px; }
   .migration-actions { margin-top: 14px; }
   .migration-actions .migration-primary,
   .migration-actions .migration-secondary { padding-left: 14px; padding-right: 14px; }
