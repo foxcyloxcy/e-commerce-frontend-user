@@ -18,6 +18,7 @@ const PREFERENCES = {
 };
 
 const taggyUrl = import.meta.env.VITE_TAGGY_URL || 'https://taggy.ae';
+const migrationTermsUrl = '/legal/2026-08-31-RelovedtoTaggyTermsandConditions.pdf';
 const relovedWordmark = 'https://reloved-prod.s3.eu-west-1.amazonaws.com/asset/reloved_header_logo.png';
 
 const emptyProfile = {
@@ -234,7 +235,7 @@ export default function MigrationWizard({ userToken }) {
       )}
 
 
-      {modal === 'terms' && <TermsModal decision={finalAgreeDecision} consent={consentFor(finalAgreeDecision)} selectedCount={selectedEligibleItems.length} onClose={() => setModal(null)} onAccept={() => { setAcknowledged(true); setModal(null); }} />}
+      {modal === 'terms' && <TermsModal selectedCount={selectedEligibleItems.length} onClose={() => setModal(null)} onAccept={() => { setAcknowledged(true); setModal(null); }} />}
       {modal === 'decline' && <DeclineModal consent={consentFor(DECISIONS.DECLINE)} onClose={() => setModal(null)} onAccept={() => submitDecision(DECISIONS.DECLINE)} />}
       {modal === 'delete' && <DeleteModal consent={consentFor(DECISIONS.DELETE)} onClose={() => setModal(null)} onAccept={() => submitDecision(DECISIONS.DELETE)} />}
     </MigrationShell>
@@ -352,8 +353,26 @@ function ListingRow({ item, onChange }) {
   return <label className={`migration-listing ${!item.eligible ? 'unsupported' : ''}`}><input type="checkbox" checked={!!item.selected && item.eligible} disabled={!item.eligible} onChange={(e) => onChange(item.source_item_id, e.target.checked)} /><img src={item.thumbnail_url || '/reloved_icon.png'} alt="" /><span className="listing-main"><strong>{item.item_name}</strong><small>{[item.size, item.condition].filter(Boolean).join(' / ') || 'Details saved from Reloved'}</small><small>AED {item.price}</small><small>AED {item.price} incl.</small>{!item.eligible && <em>Not eligible for Taggy</em>}</span><span className="listing-side"><small className={item.active ? 'active' : ''}>{item.active ? 'Active listing' : item.status_name}</small></span></label>;
 }
 
-function TermsModal({ decision, consent, selectedCount, onClose, onAccept }) {
-  return <Modal title="Migration terms & data confirmation" onClose={onClose} onAccept={onAccept}><p>{consent?.content}</p><ul><li>Your reviewed migration profile will be provided to Taggy.</li><li>{decision === DECISIONS.ACCOUNT_ITEMS ? `${selectedCount} selected eligible listing(s) will be prepared for transfer.` : 'No listings are selected, so your listings will not be transferred.'}</li><li>Taggy is a separate live marketplace and additional account setup or verification may be required.</li><li>You confirm the information you reviewed is accurate.</li></ul></Modal>;
+function TermsModal({ selectedCount, onClose, onAccept }) {
+  const summary = selectedCount > 0
+    ? `Your reviewed Reloved account details and ${selectedCount} selected eligible listing(s) will be included in this migration request.`
+    : 'Your reviewed Reloved account details will be included in this migration request. No listings are currently selected.';
+
+  return (
+    <Modal
+      title="Migration terms & data confirmation"
+      className="migration-terms-modal"
+      acknowledgementLabel="I confirm that I have reviewed the Reloved to Taggy Migration Terms and understand the information included in my selected migration option."
+      onClose={onClose}
+      onAccept={onAccept}
+    >
+      <p className="migration-terms-summary">{summary}</p>
+      <div className="migration-pdf-viewer">
+        <iframe src={migrationTermsUrl} title="Reloved to Taggy Migration Terms and Conditions" />
+      </div>
+      <a className="migration-pdf-link" href={migrationTermsUrl} target="_blank" rel="noreferrer">Open full Migration Terms</a>
+    </Modal>
+  );
 }
 
 function DeclineModal({ consent, onClose, onAccept }) {
@@ -364,15 +383,50 @@ function DeleteModal({ consent, onClose, onAccept }) {
   return <Modal title="Confirm deletion request" onClose={onClose} onAccept={onAccept}><p>{consent?.content}</p><p>Nothing will transfer to Taggy. A deletion request will be recorded; legal, regulatory and backup retention requirements may still apply.</p></Modal>;
 }
 
-function Modal({ title, children, onClose, onAccept }) {
+function Modal({ title, children, onClose, onAccept, acknowledgementLabel = 'I have read and acknowledge this confirmation.', className = '' }) {
   const [checked, setChecked] = useState(false);
+  const dialogRef = useRef(null);
+  const returnFocusRef = useRef(document.activeElement);
+
   useEffect(() => {
-    const handler = (e) => e.key === 'Escape' && onClose();
+    const dialog = dialogRef.current;
+    dialog?.focus();
+
+    const handler = (event) => {
+      if (event.key === 'Escape') {
+        onClose();
+        return;
+      }
+
+      if (event.key !== 'Tab' || !dialog) return;
+      const focusable = [...dialog.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), iframe, [tabindex]:not([tabindex="-1"])')];
+      if (!focusable.length) {
+        event.preventDefault();
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === dialog)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      } else if (!dialog.contains(document.activeElement)) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
     window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
+    return () => {
+      window.removeEventListener('keydown', handler);
+      returnFocusRef.current?.focus?.();
+    };
   }, [onClose]);
 
-  return <div className="migration-modal-backdrop" onClick={onClose}><section className="migration-modal" role="dialog" aria-modal="true" aria-labelledby="migration-modal-title" onClick={(e) => e.stopPropagation()}><h2 id="migration-modal-title">{title}</h2>{children}<label className="migration-ack"><input type="checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)} /> I have read and acknowledge this confirmation.</label><div className="migration-actions"><button className="migration-secondary" type="button" onClick={onClose}>Close</button><button className="migration-primary" type="button" disabled={!checked} onClick={onAccept}>Accept & continue</button></div></section></div>;
+  return <div className="migration-modal-backdrop" onClick={onClose}><section ref={dialogRef} className={`migration-modal ${className}`} role="dialog" aria-modal="true" aria-labelledby="migration-modal-title" tabIndex="-1" onClick={(e) => e.stopPropagation()}><h2 id="migration-modal-title">{title}</h2>{children}<label className="migration-ack"><input type="checkbox" checked={checked} onChange={(e) => setChecked(e.target.checked)} /> <span>{acknowledgementLabel}</span></label><div className="migration-actions"><button className="migration-secondary" type="button" onClick={onClose}>Close</button><button className="migration-primary" type="button" disabled={!checked} onClick={onAccept}>Accept & continue</button></div></section></div>;
 }
 
 function renderApiError(err) {
