@@ -39,7 +39,7 @@
 .migration-wizard-card { padding: 0; }
 .migration-wizard-card fieldset { border: 0; margin: 0; padding: 0; min-inline-size: 0; }
 
-.migration-preference-panel { padding: 22px 26px 24px; }
+.migration-preference-panel { padding: 0; }
 .migration-preference-panel h2,
 .migration-card-title h2 {
   color: #255773;
@@ -47,22 +47,26 @@
   font-weight: 500;
   letter-spacing: -0.01em;
 }
-.migration-preference-panel h2 { margin: 0 0 14px; font-size: 20px; line-height: 1.1; }
+.migration-preference-panel h2 { font-size: 20px; }
+.migration-preference-options { display: grid; gap: 10px; padding: 18px 26px 20px; }
 
 .migration-pref-option {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  padding: 12px 0;
+  padding: 13px;
+  border: 1px solid #B8D4E6;
+  border-radius: 12px;
+  background: #FFFFFF;
   color: #606060;
   font-size: 14px;
   line-height: 1.35;
   cursor: pointer;
 }
-.migration-pref-option > span { display: grid; gap: 5px; }
+.migration-pref-option > span { min-width: 0; display: grid; gap: 5px; }
 .migration-pref-option strong { color: #255773; font-weight: 600; }
 .migration-pref-option p { margin: 0; color: #606060; font-size: 12px; line-height: 1.42; font-weight: 400; }
-.migration-pref-option + .migration-pref-option { border-top: 1px solid #E3F2F7; }
+.migration-pref-option + .migration-pref-option { border-top: 1px solid #B8D4E6; }
 .migration-pref-option input,
 .migration-listing input[type='checkbox'],
 .migration-select-all input,
@@ -74,17 +78,23 @@
   flex: 0 0 auto;
 }
 .migration-pref-option input { margin-top: 1px; }
-.migration-pref-option.selected { border-color: #5E97C3; }
+.migration-pref-option.selected {
+  border-color: #5E97C3;
+  background: #F4FBFF;
+  box-shadow: inset 0 0 0 1px #5E97C3;
+}
 .migration-pref-option.muted { opacity: .46; }
 
 .migration-decline-copy {
-  margin: 0 0 8px 28px;
+  margin-top: 4px;
   padding: 10px 12px;
   border-radius: 10px;
   background: #E3F2F7;
   border: 1px solid #B8D4E6;
+  color: #606060;
+  font-size: 12px;
+  line-height: 1.5;
 }
-.migration-decline-copy p { margin: 0 0 10px; color: #606060; font-size: 12px; }
 .migration-delete-link {
   border: 0;
   background: transparent;
@@ -209,11 +219,6 @@
 .listing-side small.active { display: inline-flex; align-items: center; border-radius: 999px; padding: 5px 9px; background: #e7f7ee; color: #22804e; font-weight: 600; white-space: nowrap; }
 .migration-empty { border: 1px dashed #B8D4E6; border-radius: 12px; padding: 22px; text-align: center; color: #606060; }
 
-.migration-final-preferences { display: grid; gap: 10px; padding: 18px 26px 16px; }
-.migration-final-preferences .migration-pref-option { padding: 13px; border: 1px solid #B8D4E6; border-radius: 12px; background: #FFFFFF; }
-.migration-final-preferences .migration-pref-option + .migration-pref-option { border-top: 1px solid #B8D4E6; }
-.migration-final-preferences .migration-pref-option.selected { border-color: #5E97C3; background: #F4FBFF; box-shadow: inset 0 0 0 1px #5E97C3; }
-.migration-selected-count { color: #255773 !important; font-weight: 500 !important; }
 .migration-link-button { border: 0; background: transparent; color: #255773; text-decoration: underline; }
 .migration-link-button-inline { margin: 4px 0 0 !important; min-height: auto; padding: 0; justify-self: start; font-size: 12px; }
 .migration-warning-inline { margin: 4px 0 0 !important; padding: 9px 10px; font-size: 12px; }
@@ -248,9 +253,8 @@
   .migration-page { padding: 26px 12px 42px; }
   .migration-wordmark { width: 136px; margin-bottom: 22px; }
   .migration-card { width: min(100%, 430px); }
-  .migration-card-title, .migration-form-grid, .migration-listings, .migration-options, .migration-final-preferences, .migration-card-footer { padding-left: 18px; padding-right: 18px; }
+  .migration-card-title, .migration-form-grid, .migration-listings, .migration-options, .migration-preference-options, .migration-card-footer { padding-left: 18px; padding-right: 18px; }
   .migration-error, .migration-warning, .migration-ok, .migration-deadline, .migration-muted, .migration-helper, .migration-link-button, .migration-review-block { margin-left: 18px; margin-right: 18px; }
-  .migration-preference-panel { padding-left: 18px; padding-right: 18px; }
   .migration-select-all { padding-left: 18px; padding-right: 18px; }
   .migration-listing { grid-template-columns: auto 52px minmax(0, 1fr); }
   .migration-listing img { width: 52px; height: 52px; }
