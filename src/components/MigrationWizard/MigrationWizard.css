@@ -1,31 +1,32 @@
 .migration-page {
   min-height: 100vh;
   background: #E3F2F7;
-  padding: 34px 16px 54px;
+  padding: 34px 40px 54px;
   color: #606060;
   font-family: Poppins, sans-serif;
 }
 
 .migration-shell-header {
-  width: min(100%, 700px);
+  position: relative;
+  width: 100%;
+  min-height: 42px;
   margin: 0 auto 28px;
-  display: grid;
-  grid-template-columns: minmax(72px, 1fr) auto minmax(72px, 1fr);
-  align-items: center;
-  gap: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .migration-wordmark {
-  grid-column: 2;
   width: 156px;
   height: auto;
   display: block;
-  margin: 0;
+  margin: 0 auto;
 }
 
 .migration-logout-control {
-  grid-column: 3;
-  justify-self: end;
+  position: absolute;
+  top: 0;
+  right: 0;
   width: fit-content;
 }
 
@@ -155,7 +156,7 @@
   width: min(100%, 465px);
   margin: -2px auto 18px;
   padding: 0 12px;
-  color: #9f1239;
+  color: #255773;
   font-size: 13px;
   font-weight: 600;
   line-height: 1.45;
@@ -310,8 +311,9 @@
 
 @media (max-width: 680px) {
   .migration-page { padding: 26px 12px 42px; }
-  .migration-shell-header { margin-bottom: 22px; gap: 8px; }
+  .migration-shell-header { min-height: 38px; margin-bottom: 22px; }
   .migration-wordmark { width: 136px; }
+  .migration-logout-control .MuiButton-root { font-size: 13px; padding: 6px 10px; }
   .migration-card { width: min(100%, 430px); }
   .migration-card-title, .migration-form-grid, .migration-listings, .migration-options, .migration-preference-options, .migration-card-footer { padding-left: 18px; padding-right: 18px; }
   .migration-error, .migration-warning, .migration-ok, .migration-muted, .migration-helper, .migration-link-button, .migration-review-block { margin-left: 18px; margin-right: 18px; }
@@ -329,4 +331,9 @@
   .migration-actions { margin-top: 14px; }
   .migration-actions .migration-primary,
   .migration-actions .migration-secondary { padding-left: 14px; padding-right: 14px; }
+}
+
+@media (max-width: 340px) {
+  .migration-shell-header { min-height: 78px; }
+  .migration-logout-control { top: 44px; }
 }

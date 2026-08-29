@@ -192,7 +192,7 @@ export default function MigrationWizard({ userToken, onLogout }) {
       </PreferencePanel>
 
       {error && <div className="migration-error migration-card" role="alert">{error}</div>}
-      {migrationCase?.response_deadline && <p className="migration-deadline">Response deadline: 30 September 2026, 11:59 PM UAE time</p>}
+      {migrationCase?.response_deadline && <p className="migration-deadline">Response deadline: 30 September 2026</p>}
 
       {step === 1 && (
         <section className={`migration-card migration-wizard-card ${disabledContent ? 'migration-content-disabled' : ''}`}>
@@ -291,7 +291,6 @@ function MigrationShell({ children, step, title, onLogout }) {
   return (
     <main className="migration-page">
       <header className="migration-shell-header">
-        <span aria-hidden="true" />
         <img src={relovedWordmark} alt="Reloved" className="migration-wordmark" />
         <div className="migration-logout-control">
           <ButtonComponent
