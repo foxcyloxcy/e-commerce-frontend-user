@@ -22,16 +22,13 @@ export default function MigrationLandingPage({ parentIsLoggedIn }) {
       <section className="migration-landing-content">
         <div className="migration-landing-copy">
           <img src={relovedWordmark} alt="Reloved" className="migration-landing-logo" />
-          <h1>Reloved is moving to Taggy</h1>
+          <h1>Move your Reloved account<br />to Taggy</h1>
           <p>
-            We’re excited to introduce the next home for the Reloved community.
-          </p>
-          <p>
-            If you have an existing Reloved account, log in to review your profile and current listings, then choose what you’d like to move across to Taggy.
+            Review the profile information and listings currently stored in our database. Choose which items you would like to migrate, then provide your migration consent below.
           </p>
           <div className="migration-landing-actions">
             <a className="migration-button migration-button-primary" href={taggyUrl}>Go to Taggy</a>
-            <button className="migration-button migration-button-secondary" type="button" onClick={reviewAccount}>Review my Reloved account</button>
+            <button className="migration-button migration-button-secondary" type="button" onClick={reviewAccount}>Login to Migrate Data</button>
           </div>
         </div>
         <p className="migration-landing-copyright">Copyright © Reloved 2026</p>

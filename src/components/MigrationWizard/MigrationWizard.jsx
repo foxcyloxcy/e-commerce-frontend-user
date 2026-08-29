@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
@@ -140,10 +141,12 @@ export default function MigrationWizard({ userToken }) {
   };
 
   const setItemSelected = (sourceItemId, selected) => {
+    setAcknowledged(false);
     setItems((prev) => prev.map((item) => item.source_item_id === sourceItemId ? { ...item, selected: item.eligible ? selected : false } : item));
   };
 
   const setAllEligible = (selected) => {
+    setAcknowledged(false);
     setItems((prev) => prev.map((item) => ({ ...item, selected: item.eligible ? selected : false })));
   };
 
@@ -273,14 +276,14 @@ export function MigrationConfirmationPage({ userToken }) {
 
 function ConfirmationCopy({ data }) {
   if (data.decision === DECISIONS.ACCOUNT_ITEMS || data.decision === DECISIONS.ACCOUNT_ONLY) {
-    return <><div className="migration-confirmation-icon"><MailOutlineIcon fontSize="inherit" /></div><h1>Migration in progress</h1><p>Once your request is completed, we'll notify you at your registered email.</p><p>In the meantime, feel free to explore Taggy.</p></>;
+    return <><div className="migration-confirmation-icon"><MailOutlineIcon fontSize="inherit" /></div><h1>Migration in progress</h1><p>Once your request is completed, we'll notify you at your registered email. In the meantime, feel free to explore Taggy.</p></>;
   }
 
   if (data.decision === DECISIONS.DELETE) {
-    return <><div className="migration-confirmation-icon"><MailOutlineIcon fontSize="inherit" /></div><h1>Your request has been saved</h1><p>Nothing will be transferred to Taggy and your deletion request has been recorded.</p></>;
+    return <><div className="migration-confirmation-icon migration-confirmation-icon-delete"><DeleteOutlineIcon fontSize="inherit" /></div><h1>Don&apos;t want to migrate</h1><p>Your deletion request has been received and will be processed in line with applicable data-processing and retention requirements.</p></>;
   }
 
-  return <><div className="migration-confirmation-icon"><MailOutlineIcon fontSize="inherit" /></div><h1>Your preference has been saved.</h1><p>Nothing from your Reloved account or listings will be transferred to Taggy.</p></>;
+  return <><div className="migration-confirmation-icon"><MailOutlineIcon fontSize="inherit" /></div><h1>Your migration preference was saved</h1><p>Your Reloved account and listings will not be transferred to Taggy. Your Reloved information remains handled under the applicable Reloved privacy and retention policy.</p></>;
 }
 
 function MigrationShell({ children, step, title }) {
@@ -362,7 +365,6 @@ function TermsModal({ selectedCount, onClose, onAccept }) {
   const viewerRef = useRef(null);
   const [numPages, setNumPages] = useState(0);
   const [pageWidth, setPageWidth] = useState(0);
-  const [pdfError, setPdfError] = useState(false);
 
   useEffect(() => {
     const viewer = viewerRef.current;
@@ -393,8 +395,7 @@ function TermsModal({ selectedCount, onClose, onAccept }) {
           file={migrationTermsUrl}
           loading={<p className="migration-pdf-status">Loading Migration Terms…</p>}
           error={<p className="migration-pdf-status migration-pdf-error">The embedded document could not be displayed on this device.</p>}
-          onLoadSuccess={({ numPages: loadedPages }) => { setNumPages(loadedPages); setPdfError(false); }}
-          onLoadError={() => setPdfError(true)}
+          onLoadSuccess={({ numPages: loadedPages }) => setNumPages(loadedPages)}
         >
           {pageWidth > 0 && Array.from({ length: numPages }, (_, index) => (
             <Page
@@ -407,7 +408,6 @@ function TermsModal({ selectedCount, onClose, onAccept }) {
           ))}
         </Document>
       </div>
-      <a className="migration-pdf-link" href={migrationTermsUrl} target="_blank" rel="noreferrer">{pdfError ? 'Open PDF separately' : 'Having trouble? Open PDF separately'}</a>
     </Modal>
   );
 }
