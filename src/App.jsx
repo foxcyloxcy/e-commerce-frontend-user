@@ -115,7 +115,7 @@ function App() {
     }
   };
 
-  const handleClickLogout = async () => {
+  const handleClickLogout = async (redirectTo = '/login') => {
     secureLocalStorage.removeItem(`${storagePrefix}_userData`, {
       hash: storageKey,
     });
@@ -127,9 +127,13 @@ function App() {
     });
 
     setIsLoggedIn(false);
+    setUserData('');
+    setUserToken('');
 
-    window.location.replace('/login');
+    window.location.replace(redirectTo);
   };
+
+  const handleMigrationLogout = () => handleClickLogout('/');
 
   // useHotjar();
 
@@ -169,11 +173,11 @@ function App() {
 
         <Route
           path="/migration"
-          element={isLoggedIn ? <MigrationWizard userToken={userToken} /> : <Navigate to={`/login?redirect=${encodeURIComponent('/migration')}`} replace />}
+          element={isLoggedIn ? <MigrationWizard key={userToken} userToken={userToken} onLogout={handleMigrationLogout} /> : <Navigate to={`/login?redirect=${encodeURIComponent('/migration')}`} replace />}
         />
         <Route
           path="/migration/confirmation"
-          element={isLoggedIn ? <MigrationConfirmationPage userToken={userToken} /> : <Navigate to={`/login?redirect=${encodeURIComponent('/migration/confirmation')}`} replace />}
+          element={isLoggedIn ? <MigrationConfirmationPage key={userToken} userToken={userToken} onLogout={handleMigrationLogout} /> : <Navigate to={`/login?redirect=${encodeURIComponent('/migration/confirmation')}`} replace />}
         />
 
         <Route

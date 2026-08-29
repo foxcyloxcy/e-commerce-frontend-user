@@ -7,6 +7,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import api from '../../assets/baseURL/api';
+import ButtonComponent from '../ReusableComponents/ButtonComponent/ButtonComponent';
 import './MigrationWizard.css';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url).toString();
@@ -38,7 +39,7 @@ const emptyProfile = {
   member_since: '',
 };
 
-export default function MigrationWizard({ userToken }) {
+export default function MigrationWizard({ userToken, onLogout }) {
   const navigate = useNavigate();
   const selectAllRef = useRef(null);
   const [step, setStep] = useState(1);
@@ -165,11 +166,11 @@ export default function MigrationWizard({ userToken }) {
   const pageTitle = step === 1 ? 'Your details' : step === 2 ? 'Your listings' : 'Move to Taggy';
 
   if (loading) {
-    return <MigrationShell step={step} title={pageTitle}><div className="migration-card migration-loading">Loading your Reloved migration review...</div></MigrationShell>;
+    return <MigrationShell step={step} title={pageTitle} onLogout={onLogout}><div className="migration-card migration-loading">Loading your Reloved migration review...</div></MigrationShell>;
   }
 
   return (
-    <MigrationShell step={step} title={pageTitle}>
+    <MigrationShell step={step} title={pageTitle} onLogout={onLogout}>
       <PreferencePanel
         step={step}
         preference={preference}
@@ -191,7 +192,7 @@ export default function MigrationWizard({ userToken }) {
       </PreferencePanel>
 
       {error && <div className="migration-error migration-card" role="alert">{error}</div>}
-      {migrationCase?.response_deadline && <p className="migration-deadline">Response deadline: {formatDate(migrationCase.response_deadline)}</p>}
+      {migrationCase?.response_deadline && <p className="migration-deadline">Response deadline: 30 September 2026, 11:59 PM UAE time</p>}
 
       {step === 1 && (
         <section className={`migration-card migration-wizard-card ${disabledContent ? 'migration-content-disabled' : ''}`}>
@@ -250,7 +251,7 @@ export default function MigrationWizard({ userToken }) {
   );
 }
 
-export function MigrationConfirmationPage({ userToken }) {
+export function MigrationConfirmationPage({ userToken, onLogout }) {
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
   const authHeaders = useMemo(() => ({ Authorization: `Bearer ${userToken}` }), [userToken]);
@@ -263,7 +264,7 @@ export function MigrationConfirmationPage({ userToken }) {
   }, [authHeaders, userToken]);
 
   return (
-    <MigrationShell>
+    <MigrationShell onLogout={onLogout}>
       <section className="migration-card migration-confirmation-card">
         {error && <><h1>Your migration preference is not complete</h1><p>{error}</p></>}
         {!error && !data && <p>Loading confirmation...</p>}
@@ -286,8 +287,28 @@ function ConfirmationCopy({ data }) {
   return <><div className="migration-confirmation-icon"><MailOutlineIcon fontSize="inherit" /></div><h1>Your migration preference was saved</h1><p>Your Reloved account and listings will not be transferred to Taggy. Your Reloved information remains handled under the applicable Reloved privacy and retention policy.</p></>;
 }
 
-function MigrationShell({ children, step, title }) {
-  return <main className="migration-page"><img src={relovedWordmark} alt="Reloved" className="migration-wordmark" />{step && title && <h1 className="migration-page-title">Step {step} of 3 — {title}</h1>}{children}</main>;
+function MigrationShell({ children, step, title, onLogout }) {
+  return (
+    <main className="migration-page">
+      <header className="migration-shell-header">
+        <span aria-hidden="true" />
+        <img src={relovedWordmark} alt="Reloved" className="migration-wordmark" />
+        <div className="migration-logout-control">
+          <ButtonComponent
+            label="Logout"
+            onClick={onLogout}
+            width="auto"
+            padding="8px 14px"
+            buttonVariant="contained"
+            textColor="primary.contrastText"
+            hoverTextColor="secondary.main"
+          />
+        </div>
+      </header>
+      {step && title && <h1 className="migration-page-title">Step {step} of 3 — {title}</h1>}
+      {children}
+    </main>
+  );
 }
 
 function PreferencePanel({ step, preference, acknowledged, onChange, onOpenTerms, onDeleteRequest, children }) {

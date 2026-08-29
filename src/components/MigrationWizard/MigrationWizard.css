@@ -6,11 +6,27 @@
   font-family: Poppins, sans-serif;
 }
 
+.migration-shell-header {
+  width: min(100%, 700px);
+  margin: 0 auto 28px;
+  display: grid;
+  grid-template-columns: minmax(72px, 1fr) auto minmax(72px, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+
 .migration-wordmark {
+  grid-column: 2;
   width: 156px;
   height: auto;
   display: block;
-  margin: 0 auto 28px;
+  margin: 0;
+}
+
+.migration-logout-control {
+  grid-column: 3;
+  justify-self: end;
+  width: fit-content;
 }
 
 .migration-page-title {
@@ -128,16 +144,23 @@
 .migration-error,
 .migration-warning,
 .migration-ok,
-.migration-deadline,
 .migration-muted,
 .migration-helper,
 .migration-review-block { margin-left: 26px; margin-right: 26px; }
 
 .migration-muted,
-.migration-deadline,
 .migration-helper,
 .migration-card p { color: #606060; line-height: 1.48; font-size: 13px; }
-.migration-deadline { margin-top: 18px; }
+.migration-deadline {
+  width: min(100%, 465px);
+  margin: -2px auto 18px;
+  padding: 0 12px;
+  color: #9f1239;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+  text-align: center;
+}
 
 .migration-form-grid { display: grid; grid-template-columns: 1fr; gap: 14px; padding: 22px 26px 14px; }
 .migration-field { display: grid; gap: 6px; color: #255773; font-size: 13px; font-weight: 500; }
@@ -287,10 +310,11 @@
 
 @media (max-width: 680px) {
   .migration-page { padding: 26px 12px 42px; }
-  .migration-wordmark { width: 136px; margin-bottom: 22px; }
+  .migration-shell-header { margin-bottom: 22px; gap: 8px; }
+  .migration-wordmark { width: 136px; }
   .migration-card { width: min(100%, 430px); }
   .migration-card-title, .migration-form-grid, .migration-listings, .migration-options, .migration-preference-options, .migration-card-footer { padding-left: 18px; padding-right: 18px; }
-  .migration-error, .migration-warning, .migration-ok, .migration-deadline, .migration-muted, .migration-helper, .migration-link-button, .migration-review-block { margin-left: 18px; margin-right: 18px; }
+  .migration-error, .migration-warning, .migration-ok, .migration-muted, .migration-helper, .migration-link-button, .migration-review-block { margin-left: 18px; margin-right: 18px; }
   .migration-select-all { padding-left: 18px; padding-right: 18px; }
   .migration-listing { grid-template-columns: auto 52px minmax(0, 1fr); }
   .migration-listing img { width: 52px; height: 52px; }
