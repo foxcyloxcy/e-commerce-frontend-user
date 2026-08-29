@@ -238,7 +238,7 @@
 .listing-main strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #255773; font-size: 14px; font-weight: 600; }
 .listing-main small,
 .listing-side small { color: #606060; font-size: 12px; }
-.listing-main em { color: #9a6b12; font-size: 12px; font-style: normal; font-weight: 600; }
+.listing-main em { color: #255773; font-size: 12px; font-style: normal; font-weight: 600; }
 .listing-side { align-self: start; padding-top: 2px; }
 .listing-side small.active { display: inline-flex; align-items: center; border-radius: 999px; padding: 5px 9px; background: #e7f7ee; color: #22804e; font-weight: 600; white-space: nowrap; }
 .migration-empty { border: 1px dashed #B8D4E6; border-radius: 12px; padding: 22px; text-align: center; color: #606060; }
