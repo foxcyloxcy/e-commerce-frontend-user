@@ -45,7 +45,9 @@ export default function MigrationWizard({ userToken, onLogout }) {
   const [step, setStep] = useState(1);
   const [migrationCase, setMigrationCase] = useState(null);
   const [profile, setProfile] = useState(emptyProfile);
-  const [profileErrors, setProfileErrors] = useState({ address: '', date_of_birth: '' });
+  const [profileErrors, setProfileErrors] = useState({
+    first_name: '', last_name: '', email: '', mobile_number: '', address: '', date_of_birth: '',
+  });
   const [items, setItems] = useState([]);
   const [consentVersions, setConsentVersions] = useState([]);
   const [preference, setPreference] = useState('');
@@ -117,18 +119,21 @@ export default function MigrationWizard({ userToken, onLogout }) {
 
   const updateProfileField = (field, value) => {
     setProfile((current) => ({ ...current, [field]: value }));
-    if (field === 'address' || field === 'date_of_birth') {
-      setProfileErrors((current) => ({ ...current, [field]: '' }));
-    }
+    setProfileErrors((current) => ({ ...current, [field]: '' }));
   };
 
   const validateRequiredProfile = () => {
+    const email = profile.email?.trim() || '';
     const errors = {
+      first_name: profile.first_name?.trim() ? '' : 'First name is required.',
+      last_name: profile.last_name?.trim() ? '' : 'Last name is required.',
+      email: !email ? 'Email address is required.' : (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : 'Enter a valid email address.'),
+      mobile_number: profile.mobile_number?.trim() ? '' : 'Phone number is required.',
       address: profile.address?.trim() ? '' : 'Address is required.',
       date_of_birth: profile.date_of_birth ? '' : 'Date of birth is required.',
     };
     setProfileErrors(errors);
-    return !errors.address && !errors.date_of_birth;
+    return !Object.values(errors).some(Boolean);
   };
 
   const saveProfileAndNext = async () => {
@@ -216,16 +221,16 @@ export default function MigrationWizard({ userToken, onLogout }) {
           <CardTitle title="Your profile details" step={step} />
           <fieldset disabled={disabledContent}>
             <div className="migration-form-grid">
-              <Field label="First name" value={profile.first_name} onChange={(v) => updateProfileField('first_name', v)} required />
-              <Field label="Last name" value={profile.last_name} onChange={(v) => updateProfileField('last_name', v)} required />
-              <Field label="Email address" type="email" value={profile.email} onChange={(v) => updateProfileField('email', v)} required />
+              <Field label="First name" value={profile.first_name} onChange={(v) => updateProfileField('first_name', v)} required error={profileErrors.first_name} errorId="migration-first-name-error" />
+              <Field label="Last name" value={profile.last_name} onChange={(v) => updateProfileField('last_name', v)} required error={profileErrors.last_name} errorId="migration-last-name-error" />
+              <Field label="Email address" type="email" value={profile.email} onChange={(v) => updateProfileField('email', v)} required error={profileErrors.email} errorId="migration-email-error" />
               <label className="migration-field">
                 <span>Address <span className="migration-required" aria-hidden="true">*</span></span>
                 <textarea value={profile.address || ''} required aria-invalid={!!profileErrors.address} aria-describedby={profileErrors.address ? 'migration-address-error' : undefined} onChange={(e) => updateProfileField('address', e.target.value)} />
                 {profileErrors.address && <small id="migration-address-error" className="migration-field-error">{profileErrors.address}</small>}
               </label>
               <Field label="Date of birth" type="date" value={profile.date_of_birth || ''} onChange={(v) => updateProfileField('date_of_birth', v)} required error={profileErrors.date_of_birth} errorId="migration-dob-error" />
-              <Field label="Phone number" value={profile.mobile_number} onChange={(v) => updateProfileField('mobile_number', v)} />
+              <Field label="Phone number" value={profile.mobile_number} onChange={(v) => updateProfileField('mobile_number', v)} required error={profileErrors.mobile_number} errorId="migration-phone-error" />
               <Field label="Member since" value={formatDate(profile.member_since)} readOnly />
             </div>
           </fieldset>
