@@ -13,7 +13,7 @@ export default function MigrationLandingPage({ parentIsLoggedIn }) {
       navigate('/migration');
       return;
     }
-    navigate(`/login?redirect=${encodeURIComponent('/migration')}`);
+    navigate('/login?redirect=/migration');
   };
 
   return (
@@ -22,13 +22,16 @@ export default function MigrationLandingPage({ parentIsLoggedIn }) {
       <section className="migration-landing-content">
         <div className="migration-landing-copy">
           <img src={relovedWordmark} alt="Reloved" className="migration-landing-logo" />
-          <h1>Move your Reloved account<br />to Taggy</h1>
+          <h1>Reloved is moving to<br />Taggy</h1>
           <p>
-            Review the profile information and listings currently stored in our database. Choose which items you would like to migrate, then provide your migration consent below.
+            We’re excited to introduce the next home<br />for the Reloved community.
+          </p>
+          <p>
+            If you have an existing Reloved account,<br />log in to review your profile and current<br />listings, then choose what you’d like to<br />move across to Taggy.
           </p>
           <div className="migration-landing-actions">
             <a className="migration-button migration-button-primary" href={taggyUrl}>Go to Taggy</a>
-            <button className="migration-button migration-button-secondary" type="button" onClick={reviewAccount}>Login to Migrate Data</button>
+            <button className="migration-button migration-button-secondary" type="button" onClick={reviewAccount}>Review my Reloved account</button>
           </div>
         </div>
         <p className="migration-landing-copyright">Copyright © Reloved 2026</p>

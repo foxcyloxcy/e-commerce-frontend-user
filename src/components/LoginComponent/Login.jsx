@@ -188,11 +188,6 @@ export default function Login({ refreshParent }) {
                   Forgot password?
                 </Link>
               </Grid>
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  Don't have an account? Register here
-                </Link>
-              </Grid>
             </Grid>
           </Box>
         </Box>

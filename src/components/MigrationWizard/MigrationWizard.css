@@ -181,6 +181,10 @@
 .migration-field input[readonly] { background: #F5F5F2; color: #606060; }
 .migration-field input:focus,
 .migration-field textarea:focus { outline: 3px solid rgba(94, 151, 195, .20); border-color: #5E97C3; }
+.migration-field input[aria-invalid='true'],
+.migration-field textarea[aria-invalid='true'] { border-color: #9f1239; }
+.migration-required, .migration-field-error { color: #9f1239; }
+.migration-field-error { font-size: 12px; font-weight: 400; }
 .migration-helper { margin-top: 6px; margin-bottom: 20px; }
 
 .migration-card-footer {

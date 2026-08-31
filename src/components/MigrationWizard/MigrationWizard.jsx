@@ -45,6 +45,7 @@ export default function MigrationWizard({ userToken, onLogout }) {
   const [step, setStep] = useState(1);
   const [migrationCase, setMigrationCase] = useState(null);
   const [profile, setProfile] = useState(emptyProfile);
+  const [profileErrors, setProfileErrors] = useState({ address: '', date_of_birth: '' });
   const [items, setItems] = useState([]);
   const [consentVersions, setConsentVersions] = useState([]);
   const [preference, setPreference] = useState('');
@@ -114,8 +115,24 @@ export default function MigrationWizard({ userToken, onLogout }) {
     setAcknowledged(false);
   };
 
+  const updateProfileField = (field, value) => {
+    setProfile((current) => ({ ...current, [field]: value }));
+    if (field === 'address' || field === 'date_of_birth') {
+      setProfileErrors((current) => ({ ...current, [field]: '' }));
+    }
+  };
+
+  const validateRequiredProfile = () => {
+    const errors = {
+      address: profile.address?.trim() ? '' : 'Address is required.',
+      date_of_birth: profile.date_of_birth ? '' : 'Date of birth is required.',
+    };
+    setProfileErrors(errors);
+    return !errors.address && !errors.date_of_birth;
+  };
+
   const saveProfileAndNext = async () => {
-    if (preference !== PREFERENCES.AGREE) return;
+    if (preference !== PREFERENCES.AGREE || !validateRequiredProfile()) return;
     setSaving(true);
     setError('');
     try {
@@ -199,12 +216,16 @@ export default function MigrationWizard({ userToken, onLogout }) {
           <CardTitle title="Your profile details" step={step} />
           <fieldset disabled={disabledContent}>
             <div className="migration-form-grid">
-              <Field label="First name" value={profile.first_name} onChange={(v) => setProfile({ ...profile, first_name: v })} required />
-              <Field label="Last name" value={profile.last_name} onChange={(v) => setProfile({ ...profile, last_name: v })} required />
-              <Field label="Email address" type="email" value={profile.email} onChange={(v) => setProfile({ ...profile, email: v })} required />
-              <label className="migration-field"><span>Address</span><textarea value={profile.address || ''} onChange={(e) => setProfile({ ...profile, address: e.target.value })} /></label>
-              <Field label="Date of birth" type="date" value={profile.date_of_birth || ''} onChange={(v) => setProfile({ ...profile, date_of_birth: v })} />
-              <Field label="Phone number" value={profile.mobile_number} onChange={(v) => setProfile({ ...profile, mobile_number: v })} />
+              <Field label="First name" value={profile.first_name} onChange={(v) => updateProfileField('first_name', v)} required />
+              <Field label="Last name" value={profile.last_name} onChange={(v) => updateProfileField('last_name', v)} required />
+              <Field label="Email address" type="email" value={profile.email} onChange={(v) => updateProfileField('email', v)} required />
+              <label className="migration-field">
+                <span>Address <span className="migration-required" aria-hidden="true">*</span></span>
+                <textarea value={profile.address || ''} required aria-invalid={!!profileErrors.address} aria-describedby={profileErrors.address ? 'migration-address-error' : undefined} onChange={(e) => updateProfileField('address', e.target.value)} />
+                {profileErrors.address && <small id="migration-address-error" className="migration-field-error">{profileErrors.address}</small>}
+              </label>
+              <Field label="Date of birth" type="date" value={profile.date_of_birth || ''} onChange={(v) => updateProfileField('date_of_birth', v)} required error={profileErrors.date_of_birth} errorId="migration-dob-error" />
+              <Field label="Phone number" value={profile.mobile_number} onChange={(v) => updateProfileField('mobile_number', v)} />
               <Field label="Member since" value={formatDate(profile.member_since)} readOnly />
             </div>
           </fieldset>
@@ -373,8 +394,8 @@ function StepIndicator({ step }) {
   return <div className="migration-steps" aria-label={`Step ${step} of 3`}>{[1, 2, 3].map((s) => <span key={s} className={s <= step ? 'active' : ''} />)}</div>;
 }
 
-function Field({ label, value, onChange, type = 'text', readOnly = false, required = false }) {
-  return <label className="migration-field"><span>{label}</span><input type={type} value={value || ''} readOnly={readOnly} required={required} onChange={(e) => onChange?.(e.target.value)} /></label>;
+function Field({ label, value, onChange, type = 'text', readOnly = false, required = false, error = '', errorId }) {
+  return <label className="migration-field"><span>{label}{required && <> <span className="migration-required" aria-hidden="true">*</span></>}</span><input type={type} value={value || ''} readOnly={readOnly} required={required} aria-invalid={!!error} aria-describedby={error ? errorId : undefined} onChange={(e) => onChange?.(e.target.value)} />{error && <small id={errorId} className="migration-field-error">{error}</small>}</label>;
 }
 
 function ListingRow({ item, onChange }) {
