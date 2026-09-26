@@ -5,8 +5,7 @@ import Login from './components/LoginComponent/Login';
 import Register from './components/RegisterComponent/Register';
 import NavBar from './components/NavbarComponent/NavBar';
 import Footer from './components/FooterComponent/Footer';
-// import Home from './components/HomeComponent/Home';
-import NewHomepage from './components/NewHomePageComponent/NewHomePage';
+import Home from './components/HomeComponent/Home';
 import ProductList from './components/ProductListComponent/ProductList';
 import ProductDetails from './components/ProductsComponent/ProductDetails';
 import AddProduct from './components/ProductsComponent/AddProduct';
@@ -144,7 +143,7 @@ function App() {
         refreshParent={handleClickLogout}
       />}
       <Routes>
-        <Route path="/" element={<NewHomepage parentIsLoggedIn={isLoggedIn} userData={userData} userToken={userToken} refreshParent={handleClick} />} />
+        <Route path="/" element={<Home parentIsLoggedIn={isLoggedIn} userData={userData} userToken={userToken} refreshParent={handleClick} />} />
         <Route path="/reloved-to-taggy" element={<MigrationLandingPage parentIsLoggedIn={isLoggedIn} />} />
         <Route path="/on-your-behalf" element={<OnYourBehalf userToken={userToken} />} />
         <Route path="/product-details/:productUuid" element={<ProductDetails userToken={userToken} />} />
